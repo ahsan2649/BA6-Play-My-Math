@@ -1,11 +1,25 @@
 using System;
+using UnityEngine;
 
 namespace Programming.Fraction_Engine
 {
+    [Serializable]
     public class Fraction
     {
-        public readonly int Numerator;
-        public readonly int Denominator;
+        
+        public int Numerator
+        {
+            get => numerator;
+            private set => numerator = value;
+        }
+        [SerializeField] private int numerator;
+        
+        public int Denominator
+        {
+            get => denominator;
+            private set => denominator = value;
+        }
+        [SerializeField] private int denominator;
 
 
         public Fraction(int numerator, int denominator)
@@ -15,8 +29,8 @@ namespace Programming.Fraction_Engine
                 throw new ArgumentException("Denominator cannot be zero.", nameof(denominator));
             }
         
-            this.Numerator = numerator;
-            this.Denominator = denominator;
+            this.numerator = numerator;
+            this.denominator = denominator;
         }
 
 
@@ -24,7 +38,7 @@ namespace Programming.Fraction_Engine
 
         public override string ToString()
         {
-            return $"{Numerator} / {Denominator}";
+            return $"{numerator} / {denominator}";
         }
     
         protected bool Equals(Fraction other)
@@ -42,7 +56,7 @@ namespace Programming.Fraction_Engine
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Numerator, Denominator);
+            return HashCode.Combine(numerator, denominator);
         }
 
         #endregion
@@ -53,46 +67,46 @@ namespace Programming.Fraction_Engine
         public static bool operator ==(Fraction a, Fraction b)
         {
             return 
-                a.LowestTerm().Numerator == b.LowestTerm().Numerator &&
-                a.LowestTerm().Denominator == b.LowestTerm().Denominator;
+                a.LowestTerm().numerator == b.LowestTerm().numerator &&
+                a.LowestTerm().denominator == b.LowestTerm().denominator;
         }
 
         // Inequality
         public static bool operator !=(Fraction a, Fraction b)
         {
             return 
-                a.LowestTerm().Numerator != b.LowestTerm().Numerator ||
-                a.LowestTerm().Denominator != b.LowestTerm().Denominator;
+                a.LowestTerm().numerator != b.LowestTerm().numerator ||
+                a.LowestTerm().denominator != b.LowestTerm().denominator;
         }
 
         // LessThan
         public static bool operator <(Fraction a, Fraction b)
         {
-            int lcm = LeastCommonMultiple(a.Denominator, b.Denominator);
-            return a.Numerator * (lcm / a.Denominator) < b.Numerator * (lcm / b.Denominator);
+            int lcm = LeastCommonMultiple(a.denominator, b.denominator);
+            return a.numerator * (lcm / a.denominator) < b.numerator * (lcm / b.denominator);
         }
 
         // GreaterThan
         public static bool operator >(Fraction a, Fraction b)
         { 
-            int lcm = LeastCommonMultiple(a.Denominator, b.Denominator);
-            return a.Numerator * (lcm / a.Denominator) > b.Numerator * (lcm / b.Denominator);
+            int lcm = LeastCommonMultiple(a.denominator, b.denominator);
+            return a.numerator * (lcm / a.denominator) > b.numerator * (lcm / b.denominator);
         }
 
         // Positive
         public static Fraction operator +(Fraction a) => a;
     
         // Negative
-        public static Fraction operator -(Fraction a) => new Fraction(-a.Numerator, a.Denominator);
+        public static Fraction operator -(Fraction a) => new Fraction(-a.numerator, a.denominator);
 
         // Add
         public static Fraction operator +(Fraction a, Fraction b)
         {
-            int lcm = LeastCommonMultiple(a.Denominator, b.Denominator);
+            int lcm = LeastCommonMultiple(a.denominator, b.denominator);
 
             return new Fraction(
-                a.Numerator * (lcm / a.Denominator) +
-                b.Numerator * (lcm / b.Denominator),
+                a.numerator * (lcm / a.denominator) +
+                b.numerator * (lcm / b.denominator),
                 lcm
             );
         }
@@ -103,16 +117,16 @@ namespace Programming.Fraction_Engine
     
         // Multiply
         public static Fraction operator *(Fraction a, Fraction b)
-            => new Fraction(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
+            => new Fraction(a.numerator * b.numerator, a.denominator * b.denominator);
     
         // Divide
         public static Fraction operator /(Fraction a, Fraction b)
         {
-            if (b.Numerator == 0)
+            if (b.numerator == 0)
             {
                 throw new DivideByZeroException();
             }
-            return new Fraction(a.Numerator * b.Denominator, a.Denominator * b.Numerator);
+            return new Fraction(a.numerator * b.denominator, a.denominator * b.numerator);
         }
 
         #endregion
@@ -121,8 +135,8 @@ namespace Programming.Fraction_Engine
 
         public Fraction LowestTerm()
         {
-            int gcd = GreatestCommonDivisor(Numerator, Denominator);
-            return new Fraction(Numerator / gcd, Denominator / gcd);
+            int gcd = GreatestCommonDivisor(numerator, denominator);
+            return new Fraction(numerator / gcd, denominator / gcd);
         }
         static int GreatestCommonDivisor(int a, int b) 
         { 
