@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 
 namespace Programming.Fraction_Engine
@@ -133,11 +134,6 @@ namespace Programming.Fraction_Engine
 
         #region Helpers
 
-        public Fraction LowestTerm()
-        {
-            int gcd = GreatestCommonDivisor(numerator, denominator);
-            return new Fraction(numerator / gcd, denominator / gcd);
-        }
         static int GreatestCommonDivisor(int a, int b) 
         { 
             if (a == 0) 
@@ -147,7 +143,35 @@ namespace Programming.Fraction_Engine
         static int LeastCommonMultiple(int a, int b) 
         { 
             return (a / GreatestCommonDivisor(a, b)) * b; 
-        } 
+        }
+        
+        #endregion Helpers
+
+        #region Modifiers
+
+        
+
+        public Fraction LowestTerm()
+        {
+            int gcd = GreatestCommonDivisor(numerator, denominator);
+            return SimplifyBy(gcd);
+        }
+        
+
+        public Fraction SimplifyBy(int value)
+        {
+            if (Numerator % value != 0 || Denominator % value != 0)
+            {
+                return this;
+            }
+
+            return new Fraction(Numerator / value, Denominator / value);
+        }
+
+        public Fraction ExpandBy(int value)
+        {
+            return new Fraction(Numerator * value, Denominator * value);
+        }
 
         #endregion
 

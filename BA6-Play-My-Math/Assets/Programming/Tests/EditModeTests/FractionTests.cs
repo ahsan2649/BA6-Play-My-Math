@@ -103,5 +103,33 @@ public class FractionTests
         UnityEngine.Assertions.Assert.AreEqual(a/c, new Fraction(21, 16));
         UnityEngine.Assertions.Assert.AreEqual(c/b, new Fraction(18, 35));
     }
+
+    [Test]
+    public void _8_SimplifyFraction()
+    {
+        var a = new Fraction(8, 12);
+        var b = new Fraction(3, 6);
+        var c = new Fraction(3, 5);
+        var d = new Fraction(18, 27);
+        
+        UnityEngine.Assertions.Assert.AreEqual(a.SimplifyBy(2), new Fraction(4,6));
+        UnityEngine.Assertions.Assert.AreEqual(a.SimplifyBy(4), new Fraction(2,3));
+        UnityEngine.Assertions.Assert.AreEqual(a.SimplifyBy(2).SimplifyBy(2), new Fraction(2,3));
+        UnityEngine.Assertions.Assert.AreEqual(b.SimplifyBy(3), new Fraction(1,2));
+        UnityEngine.Assertions.Assert.AreEqual(c.SimplifyBy(5), new Fraction(3,5));
+        UnityEngine.Assertions.Assert.AreEqual(d.SimplifyBy(9), new Fraction(2,3));
+    }
+
+    [Test]
+    public void _9_ExpandFraction()
+    {
+        var a = new Fraction(3, 8);
+        var b = new Fraction(7, 9);
+        
+        UnityEngine.Assertions.Assert.AreEqual(a.ExpandBy(3), new Fraction(9, 24));
+        UnityEngine.Assertions.Assert.AreEqual(a.ExpandBy(3).ExpandBy(2), new Fraction(18, 48));
+        UnityEngine.Assertions.Assert.AreEqual(b.ExpandBy(3).SimplifyBy(3), b);
+
+    }
     
 }
