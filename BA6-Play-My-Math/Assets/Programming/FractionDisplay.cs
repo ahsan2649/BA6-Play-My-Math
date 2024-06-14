@@ -8,7 +8,7 @@ public class FractionDisplay : MonoBehaviour
     public Card card;
     void Awake()
     {
-        if(card.value.Denominator == 1)
+        if(card.value.Denominator == 0)
         {
             transform.GetChild(1).GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Midline;
             transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = card.value.Numerator.ToString();

@@ -29,7 +29,7 @@ namespace Programming.Fraction_Engine
             {
                 throw new ArgumentException("Denominator cannot be zero.", nameof(denominator));
             }
-        
+
             this.numerator = numerator;
             this.denominator = denominator;
         }
