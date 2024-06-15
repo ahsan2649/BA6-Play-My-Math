@@ -17,7 +17,7 @@ public class FillEnemy : MonoBehaviour
         {
             int randomSpawn = Random.Range(0, tempEnemies.Count);
             Instantiate(card, new Vector3(enemyPlacement[i] + 960, 300 + 540, 0), Quaternion.identity, parentCanvas.transform);
-            card.GetComponent<FractionDisplay>().cardInfo = tempEnemies[randomSpawn];
+            card.GetComponent<CardDisplay>().cardInfo = tempEnemies[randomSpawn];
             tempEnemies.RemoveAt(randomSpawn);
         }
     }

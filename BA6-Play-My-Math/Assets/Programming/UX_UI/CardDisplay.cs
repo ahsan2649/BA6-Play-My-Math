@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Serialization;
 
-public class FractionDisplay : MonoBehaviour
+public class CardDisplay : MonoBehaviour
 {
     [FormerlySerializedAs("card")] public CardInfo cardInfo;
     void Awake()

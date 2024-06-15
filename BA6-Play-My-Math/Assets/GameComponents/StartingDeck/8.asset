@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value:
     numerator: 8
-    denominator: 0
+    denominator: 1
