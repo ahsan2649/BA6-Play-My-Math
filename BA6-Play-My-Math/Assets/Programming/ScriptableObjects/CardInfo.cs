@@ -4,7 +4,7 @@ using Programming.Fraction_Engine;
 using UnityEngine;
 
 [CreateAssetMenu (fileName = "New Fraction", menuName = "Card")]
-public class Card : ScriptableObject
+public class CardInfo : ScriptableObject
 {
     public Fraction value;
 }

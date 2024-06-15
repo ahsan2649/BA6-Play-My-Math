@@ -6,8 +6,8 @@ public class FillCards : MonoBehaviour
 {
     public Canvas parentCanvas;
     public GameObject card;
-    [SerializeField] List<Card> cards = new List<Card>();
-    List<Card> tempCards =new List<Card>();
+    [SerializeField] List<CardInfo> cards = new List<CardInfo>();
+    List<CardInfo> tempCards =new List<CardInfo>();
     [SerializeField] Transform[] cardPlacement = new Transform[5]; 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +17,7 @@ public class FillCards : MonoBehaviour
         {
             int randomSpawn = Random.Range(0, tempCards.Count);
             Instantiate(card, new Vector3(cardPlacement[i].position.x+ 960, -400+540, 0), Quaternion.identity, cardPlacement[i].gameObject.transform);
-            card.GetComponent<FractionDisplay>().card = tempCards[randomSpawn];
+            card.GetComponent<FractionDisplay>().cardInfo = tempCards[randomSpawn];
             tempCards.RemoveAt(randomSpawn);
         }
     }
