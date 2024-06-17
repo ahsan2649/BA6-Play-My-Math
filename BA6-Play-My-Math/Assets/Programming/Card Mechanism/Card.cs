@@ -4,12 +4,12 @@ namespace Programming.Card_Mechanism
 {
     public class Card : ICardable
     {
+        private Fraction _value;
         public Card(Fraction value)
         {
             _value = value;
         }
 
-        private Fraction _value;
         public Fraction GetValue()
         {
             return _value;

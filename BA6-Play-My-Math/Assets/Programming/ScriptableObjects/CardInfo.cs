@@ -11,10 +11,4 @@ public class CardInfo : ScriptableObject, IFractionable
     {
         return value;
     }
-
-    public Fraction SetValue(Fraction newValue)
-    {
-        value = newValue;
-        return value;
-    }
 }
