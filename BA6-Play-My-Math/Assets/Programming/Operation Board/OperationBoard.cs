@@ -9,15 +9,12 @@ namespace Programming.Operation_Board {
         Subtract,
         Multiply,
         Divide,
-        Simplify,
-        Expand,
     }
 
     public class OperationBoard : IFractionable {
         private ICardable _activeCard;
         private ICardable _additionalCard;
         private OperationType _currentOperation = OperationType.Nop;
-        private int _modificationAmount;
 
         public event Action UpdateVisual;
 
@@ -38,33 +35,9 @@ namespace Programming.Operation_Board {
                     OperationType.Subtract => operation,
                     OperationType.Multiply => operation,
                     OperationType.Divide => operation,
-                    OperationType.Simplify => throw new ArgumentOutOfRangeException(nameof(operation), operation, null),
-                    OperationType.Expand => throw new ArgumentOutOfRangeException(nameof(operation), operation, null),
                     _ => throw new ArgumentOutOfRangeException(nameof(operation), operation, null)
                 });
             }
-        }
-
-        public void ModifyCard(OperationType operation, int modificationAmount)
-        {
-            if (_additionalCard != null)
-            {
-                throw new InvalidOperationException("Expand/Simplify only works on a single card");
-            }
-
-            _currentOperation = operation switch
-            {
-                OperationType.Nop => throw new ArgumentOutOfRangeException(nameof(operation), operation, null),
-                OperationType.Add => throw new ArgumentOutOfRangeException(nameof(operation), operation, null),
-                OperationType.Subtract => throw new ArgumentOutOfRangeException(nameof(operation), operation, null),
-                OperationType.Multiply => throw new ArgumentOutOfRangeException(nameof(operation), operation, null),
-                OperationType.Divide => throw new ArgumentOutOfRangeException(nameof(operation), operation, null),
-                OperationType.Simplify => operation,
-                OperationType.Expand => operation,
-                _ => throw new ArgumentOutOfRangeException(nameof(operation), operation, null)
-            };
-            _modificationAmount = modificationAmount;
-            UpdateVisual?.Invoke();
         }
 
         public ICardable PopCard()
@@ -114,8 +87,8 @@ namespace Programming.Operation_Board {
                     OperationType.Subtract => _activeCard.GetValue() - _additionalCard.GetValue(),
                     OperationType.Multiply => _activeCard.GetValue() * _additionalCard.GetValue(),
                     OperationType.Divide => _activeCard.GetValue() / _additionalCard.GetValue(),
-                    OperationType.Simplify => throw new ArgumentOutOfRangeException(),
-                    OperationType.Expand => throw new ArgumentOutOfRangeException(),
+                    
+                    
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -129,8 +102,6 @@ namespace Programming.Operation_Board {
                     OperationType.Subtract => throw new ArgumentOutOfRangeException(),
                     OperationType.Multiply => throw new ArgumentOutOfRangeException(),
                     OperationType.Divide => throw new ArgumentOutOfRangeException(),
-                    OperationType.Simplify => _activeCard.GetValue().SimplifyBy(_modificationAmount),
-                    OperationType.Expand => _activeCard.GetValue().ExpandBy(_modificationAmount),
                     _ => throw new ArgumentOutOfRangeException()
                 }; 
             }
