@@ -20,5 +20,17 @@ namespace Programming.Card_Mechanism
             _value = newValue;
             return _value;
         }
+
+
+        public void Expand(int amount)
+        {
+            SetValue(GetValue().ExpandBy(amount));
+        }
+
+        public void Simplify(int amount)
+        {
+            SetValue(GetValue().SimplifyBy(amount));
+            
+        }
     }
 }
