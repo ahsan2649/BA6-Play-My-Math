@@ -2,12 +2,21 @@ using Programming.Fraction_Engine;
 
 namespace Programming.Card_Mechanism
 {
-    public class Card : ICardable
+    /// <summary>
+    /// 
+    /// </summary>
+    public class NumberCard : IFractionableCard
     {
         private Fraction _value;
-        public Card(Fraction value)
+        
+        public NumberCard(Fraction value)
         {
             _value = value;
+        }
+
+        public bool IsFraction()
+        {
+            return GetValue().Denominator > 1;
         }
 
         public Fraction GetValue()
@@ -31,6 +40,11 @@ namespace Programming.Card_Mechanism
         {
             SetValue(GetValue().SimplifyBy(amount));
             
+        }
+
+        public string GetDisplayText()
+        {
+            return GetValue().ToString();
         }
     }
 }
