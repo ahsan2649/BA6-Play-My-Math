@@ -3,26 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Serialization;
+using Programming.Card_Mechanism;
 
 public class CardDisplay : MonoBehaviour
 {
-    [FormerlySerializedAs("card")] public CardInfo cardInfo;
 
-    [SerializeField] GameObject highlight; 
+    [SerializeField] GameObject highlight;
+
+    public NumberCard thisCard;
     void Awake()
     {
         switchHighlight();
-        if(cardInfo.value.Denominator == 1)
+        if(thisCard.GetValue().Denominator == 1)
         {
             transform.GetChild(2).GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Midline;
-            transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = cardInfo.value.Numerator.ToString();
+            transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = thisCard.GetValue().Numerator.ToString();
             transform.GetChild(3).gameObject.SetActive(false);
             transform.GetChild(4).gameObject.SetActive(false);
         }
         else
         {
-            transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = cardInfo.value.Numerator.ToString();
-            transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = cardInfo.value.Denominator.ToString();
+            transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = thisCard.GetValue().Numerator.ToString();
+            transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = thisCard.GetValue().Denominator.ToString(); 
         }
 
     }
