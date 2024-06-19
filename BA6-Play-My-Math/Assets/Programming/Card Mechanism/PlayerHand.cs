@@ -1,10 +1,25 @@
 using System.Collections.Generic;
 using Programming.Fraction_Engine;
+using UnityEngine;
 
 namespace Programming.Card_Mechanism {
-    public class PlayerHand {
-        private List<ICardable> _cards;
 
+    public class PlayerHand {   
+        private List<ICardable> _cards;
+        public int handsize;
+
+        void Start()
+        {
+            handsize = 5;
+        }
+
+        void Update()
+        {
+            if(_cards.Count < handsize)
+            {
+                //push card;
+            }
+        }
         public void PushCard(ICardable newCard)
         {
             _cards.Add(newCard);
@@ -15,6 +30,11 @@ namespace Programming.Card_Mechanism {
         {
             NumberCard newCard = new NumberCard(new Fraction(numeratorCard.GetValue().Numerator,
                 denominatorCard.GetValue().Numerator));
+            if (!newCard.IsFraction())
+            {
+                Fraction fraction = new Fraction(newCard.GetValue().Numerator / newCard.GetValue().Denominator, 1);
+                newCard.SetValue(fraction);
+            }
             _cards.Remove(numeratorCard);
             _cards.Remove(denominatorCard);
             _cards.Add(newCard);

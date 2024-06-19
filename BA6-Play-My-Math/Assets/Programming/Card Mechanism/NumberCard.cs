@@ -16,7 +16,13 @@ namespace Programming.Card_Mechanism
 
         public bool IsFraction()
         {
-            return GetValue().Denominator > 1;
+            if(GetValue().Numerator % GetValue().Denominator == 0)
+            {
+                Fraction fraction = new Fraction(GetValue().Numerator / GetValue().Denominator, 1);
+                SetValue(fraction);
+                return false; 
+            }
+            else { return true; }
         }
 
         public Fraction GetValue()

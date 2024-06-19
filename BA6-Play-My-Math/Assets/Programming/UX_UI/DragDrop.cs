@@ -23,6 +23,9 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
         image.raycastTarget = false;
+
+        //highlight number cards  (needs cards )
+        //if this is not a fraction, highlight all cards in hand that are not a fraction
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -39,9 +42,18 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log("test1");
             if (hit.transform.tag == "CardSlot")
             {
+                transform.SetParent(hit.transform);
+            }
+            else if(hit.transform.tag == "Card")
+            {
+                transform.SetParent(hit.transform);
+                //createfraction (still needs the card class )
+            }
+            else if (hit.transform.tag == "OperationBoardSlot")
+            {
+                // if card is a fraction set parent that slot otherwise go back to former parent
                 transform.SetParent(hit.transform);
             }
             else

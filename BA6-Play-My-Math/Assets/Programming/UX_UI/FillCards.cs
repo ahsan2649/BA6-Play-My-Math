@@ -16,7 +16,7 @@ public class FillCards : MonoBehaviour
         for(int i = 0; i< cardPlacement.Length; i++)
         {
             int randomSpawn = Random.Range(0, tempCards.Count);
-            Instantiate(card, new Vector3(cardPlacement[i].position.x+ 960, -400+540, 0), Quaternion.identity, cardPlacement[i].gameObject.transform);
+            Instantiate(card, cardPlacement[i].position, cardPlacement[i].rotation, cardPlacement[i].gameObject.transform);
             card.GetComponent<CardDisplay>().cardInfo = tempCards[randomSpawn];
             tempCards.RemoveAt(randomSpawn);
         }
