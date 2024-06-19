@@ -18,8 +18,6 @@ namespace Programming.Card_Mechanism
         {
             if(GetValue().Numerator % GetValue().Denominator == 0)
             {
-                Fraction fraction = new Fraction(GetValue().Numerator / GetValue().Denominator, 1);
-                SetValue(fraction);
                 return false; 
             }
             else { return true; }
