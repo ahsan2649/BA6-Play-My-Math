@@ -1,46 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.Serialization;
 using Programming.Card_Mechanism;
 
-public class CardDisplay : MonoBehaviour
+/* Base class for displaying Cards in the Game
+ */
+
+namespace Programming.UX_UI
 {
-
-    [SerializeField] GameObject highlight;
-
-    public NumberCard thisCard;
-    void Awake()
+    public abstract class CardDisplay : MonoBehaviour
     {
-        switchHighlight();
-        if(thisCard.GetValue().Denominator == 1)
-        {
-            transform.GetChild(2).GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Midline;
-            transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = thisCard.GetValue().Numerator.ToString();
-            transform.GetChild(3).gameObject.SetActive(false);
-            transform.GetChild(4).gameObject.SetActive(false);
-        }
-        else
-        {
-            transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = thisCard.GetValue().Numerator.ToString();
-            transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = thisCard.GetValue().Denominator.ToString(); 
-        }
+        [SerializeField] GameObject highlight;
 
-    }
-    
+        public ICardable cardBaseObject;
 
-    public void switchHighlight()
-    {
-        if(highlight.activeSelf == true)
+        public abstract void UpdateVisual();
+        public abstract string GetName(); 
+        
+        public void SwitchHighlight()
         {
-            highlight.SetActive(false);
-        }
-        else
-        {
-            highlight.SetActive(true);
+            highlight.SetActive(!highlight.activeSelf);
         }
     }
-
-
 }

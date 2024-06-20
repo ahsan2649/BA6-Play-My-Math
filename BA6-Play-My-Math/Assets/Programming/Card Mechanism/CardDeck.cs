@@ -7,46 +7,51 @@ using UnityEngine;
 namespace Programming.Card_Mechanism {
     public class CardDeck
     {
-        public List<ICardable> FullDeck; 
-        public Queue<ICardable> RoundDeck;
+        public List<ICardable> fullDeck; 
+        public Queue<ICardable> roundDeck;
+
+        public CardDeck(List<ICardable> startingDeck)
+        {
+            InitializeDeck(startingDeck);
+        }
         
         public void InitializeDeck(List<ICardable> startingDeck)
         {
-            FullDeck = new List<ICardable>(); 
+            fullDeck = new List<ICardable>(); 
             foreach (ICardable card in startingDeck)
             {
-                FullDeck.Add(card);
+                fullDeck.Add(card);
             }
         }
         
         public ICardable CreateAndShuffleRoundDeck()
         {
-            RoundDeck = new Queue<ICardable>();
-            List<ICardable> FullDeckCopy = new List<ICardable>(FullDeck); 
+            roundDeck = new Queue<ICardable>();
+            List<ICardable> FullDeckCopy = new List<ICardable>(fullDeck); 
             
-            for (int i = FullDeckCopy.Count; i > 0; i++)
+            for (int i = FullDeckCopy.Count; i > 0; i--)
             {
                 int RandomInt = Random.Range(0, FullDeckCopy.Count); 
-                RoundDeck.Enqueue(FullDeckCopy[RandomInt]);
+                roundDeck.Enqueue(FullDeckCopy[RandomInt]);
                 FullDeckCopy.RemoveAt(RandomInt);
             }
             
-            return RoundDeck.Dequeue();
+            return roundDeck.Dequeue();
         }
         
         public ICardable PopCard()
         {
-            return RoundDeck.Dequeue();
+            return roundDeck.Dequeue();
         }
 
         public void AddCard(ICardable card)
         {
-            FullDeck.Add(card);
+            fullDeck.Add(card);
         }
 
         public void RemoveCard(ICardable card)
         {
-            FullDeck.Remove(card); 
+            fullDeck.Remove(card); 
         }
     }
 }

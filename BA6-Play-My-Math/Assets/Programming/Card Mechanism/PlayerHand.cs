@@ -3,29 +3,15 @@ using Programming.Fraction_Engine;
 using UnityEngine;
 
 namespace Programming.Card_Mechanism {
-
     public class PlayerHand {   
-        private List<ICardable> _cards;
-        public int handsize;
-
-        void Start()
-        {
-            handsize = 5;
-        }
-
-        void Update()
-        {
-            if(_cards.Count < handsize)
-            {
-                //push card;
-            }
-        }
-        public void PushCard(ICardable newCard)
+        public List<ICardable> _cards = new List<ICardable>();
+        public int handsize = 2;
+        
+        public void PushCard(ICardable newCard) 
         {
             _cards.Add(newCard);
         }
     
-
         public void CreateFraction(ref IFractionableCard numeratorCard, ref IFractionableCard denominatorCard)
         {
             NumberCard newCard = new NumberCard(new Fraction(numeratorCard.GetValue().Numerator,

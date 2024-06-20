@@ -11,8 +11,5 @@ public class CardSlot : MonoBehaviour, IDropHandler
         GameObject dropped = eventData.pointerDrag;
         DragDrop dragDrop = dropped.GetComponent<DragDrop>();
         dragDrop.parentAfterDrag = transform;
-       
     }
-
- 
 }
