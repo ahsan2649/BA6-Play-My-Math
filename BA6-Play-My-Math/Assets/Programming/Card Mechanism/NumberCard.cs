@@ -1,10 +1,9 @@
+using System;
 using Programming.Fraction_Engine;
 
 namespace Programming.Card_Mechanism
 {
-    /// <summary>
-    /// 
-    /// </summary>
+    [Serializable]
     public class NumberCard : IFractionableCard
     {
         private Fraction _value;

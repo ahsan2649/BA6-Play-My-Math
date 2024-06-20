@@ -32,7 +32,7 @@ public class CardDisplay : MonoBehaviour
 
     public void switchHighlight()
     {
-        if(highlight.active == true)
+        if(highlight.activeSelf == true)
         {
             highlight.SetActive(false);
         }
