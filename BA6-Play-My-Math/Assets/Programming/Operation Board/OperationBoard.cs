@@ -1,5 +1,6 @@
 using System;
 using Programming.Card_Mechanism;
+using Programming.Enemy;
 using Programming.Fraction_Engine;
 
 namespace Programming.Operation_Board {
@@ -83,9 +84,13 @@ namespace Programming.Operation_Board {
             throw new InvalidOperationException();
         }
 
-        public void Attack()
+        public void Attack(EnemyQueue enemyQueue, ref Enemy.Enemy enemy)
         {
-            
+            if (enemyQueue.RemoveEnemy(ref enemy) != null)
+            {
+                RemoveCard(ref LeftOperand); 
+                //TODO: Draw new Card (e.g. add the draw on the same UI-Button or do a GetComponent)
+            }
         }
 
         public Fraction GetValue()
