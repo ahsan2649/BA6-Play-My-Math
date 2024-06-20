@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public Transform parentAfterDrag;
 
     private RectTransform rectTransform;
+    private Vector3 offset;
 
     private void Awake()
     {
@@ -20,9 +22,11 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         Debug.Log("BeginDrag");
         parentAfterDrag = transform.parent;
-        transform.SetParent(transform.root);
+        transform.SetParent(transform.parent.transform.parent);
         transform.SetAsLastSibling();
         image.raycastTarget = false;
+
+        offset = transform.position - GetHitPoint();
 
         //highlight number cards  (needs cards )
         //if this is not a fraction, highlight all cards in hand that are not a fraction
@@ -30,7 +34,10 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta;
+        // rectTransform.anchoredPosition += eventData.delta;
+        transform.position = GetHitPoint() + offset;
+
+
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -39,6 +46,8 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+
 
         if (Physics.Raycast(ray, out hit))
         {
@@ -61,7 +70,18 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                 transform.SetParent(parentAfterDrag);
             }
         }
+        transform.localPosition = new Vector3(transform.position.x, transform.position.y, 0f);
+        transform.localRotation = Quaternion.Euler(0, 0, 0);
         image.raycastTarget = true;
+    }
+
+    Vector3 GetHitPoint()
+    {
+        Plane plane = new Plane(Camera.main.transform.forward, transform.position);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        float dist;
+        plane.Raycast(ray, out dist);
+        return ray.GetPoint(dist);
     }
 }
  
