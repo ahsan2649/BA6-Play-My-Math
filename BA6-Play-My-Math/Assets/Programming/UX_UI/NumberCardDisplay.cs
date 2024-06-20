@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Programming.Card_Mechanism;
+using Programming.Fraction_Engine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -9,16 +10,21 @@ namespace Programming.UX_UI
 {
     public class NumberCardDisplay : CardDisplay
     {
-        private IFractionableCard cardBaseFraction;
+        private NumberCard cardBaseFraction;
 
+        [SerializeField] private Fraction value; 
         [SerializeField] private TMP_Text numeratorText;
         [SerializeField] private TMP_Text vinculum; 
         [SerializeField] private TMP_Text denominatorText;
+
+        public override void UpdateValue()
+        {
+            cardBaseFraction = (NumberCard) cardBaseObject;
+            value = cardBaseFraction.GetValue(); 
+        }
         
         public override void UpdateVisual()
         {
-            cardBaseFraction = (IFractionableCard) cardBaseObject;
-
             numeratorText.SetText(cardBaseFraction.GetValue().Numerator.ToString());
             denominatorText.SetText(cardBaseFraction.GetValue().Denominator.ToString());
 

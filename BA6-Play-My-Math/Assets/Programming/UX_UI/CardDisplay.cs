@@ -12,10 +12,11 @@ namespace Programming.UX_UI
 {
     public abstract class CardDisplay : MonoBehaviour
     {
-        [SerializeField] GameObject highlight;
+        [SerializeField] GameObject highlight; 
 
-        public ICardable cardBaseObject;
+        public ICardable cardBaseObject; 
 
+        public abstract void UpdateValue(); 
         public abstract void UpdateVisual();
         public abstract string GetName(); 
         

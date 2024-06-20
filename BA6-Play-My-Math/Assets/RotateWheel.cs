@@ -25,12 +25,12 @@ public class RotateWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        float rotationx = wheel.transform.localEulerAngles.x;
+        float rotationx = wheel.transform.localEulerAngles.x; 
         if(rotationx >= 360)
         {
             rotationx -= 360;
         }
-     
+        
         Debug.Log(rotationx);
         if (rotationx >= 0 && rotationx <= 45)
         {

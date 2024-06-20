@@ -5452,18 +5452,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingFractions:
-  - numerator: 1
-    denominator: 2
-  - numerator: 2
-    denominator: 3
-  - numerator: 3
-    denominator: 5
-  - numerator: 4
-    denominator: 7
-  - numerator: 5
-    denominator: 9
-  - numerator: 6
-    denominator: 11
+  - _value:
+      numerator: 13
+      denominator: 7
+  - _value:
+      numerator: 11
+      denominator: 6
+  - _value:
+      numerator: 9
+      denominator: 5
+  - _value:
+      numerator: 7
+      denominator: 4
+  - _value:
+      numerator: 5
+      denominator: 2
+  - _value:
+      numerator: 3
+      denominator: 2
   playerHandUI: {fileID: 1183358978}
   numberCardUIPrefab: {fileID: 5202013119088838432, guid: 38860cdda4f259245a776eb03aef7b34,
     type: 3}

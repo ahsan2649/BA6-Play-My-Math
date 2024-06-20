@@ -5,6 +5,7 @@ using UnityEngine;
  * and a RoundDeck, which is used for each individual battleRound (shuffled from the FullDeck at the Start of Rounds)
  */
 namespace Programming.Card_Mechanism {
+    //[System.Serializable] TODO?: stuff is not visible in the Inspector
     public class CardDeck
     {
         public List<ICardable> fullDeck; 

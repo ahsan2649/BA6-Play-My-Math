@@ -3,9 +3,16 @@ using Programming.Fraction_Engine;
 using UnityEngine;
 
 namespace Programming.Card_Mechanism {
-    public class PlayerHand {   
-        public List<ICardable> _cards = new List<ICardable>();
+    [System.Serializable] //TODO?: idk whether this should be serialised, but it's useful in order to see in the inspector whether stuff works properly
+    public class PlayerHand { 
+        public List<ICardable> _cards; //TODO: Also not visible in Inspector :(
         public int handsize = 2;
+
+        public PlayerHand(int handsize)
+        {
+            this.handsize = handsize;
+            _cards = new List<ICardable>(); 
+        }
         
         public void PushCard(ICardable newCard) 
         {

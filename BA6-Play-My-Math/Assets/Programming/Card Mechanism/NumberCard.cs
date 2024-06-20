@@ -1,11 +1,13 @@
 using System;
 using Programming.Fraction_Engine;
+using UnityEngine;
 
 namespace Programming.Card_Mechanism
 {
     [Serializable]
     public class NumberCard : IFractionableCard
     {
+        [SerializeField] 
         private Fraction _value;
         
         public NumberCard(Fraction value)

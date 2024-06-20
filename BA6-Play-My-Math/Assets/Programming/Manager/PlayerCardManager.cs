@@ -1,24 +1,21 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using UnityEngine;
 using Programming.Card_Mechanism;
 using Programming.Fraction_Engine;
 using Programming.UX_UI;
-using UnityEngine;
-using Programming.UX_UI;
-using UnityEngine.Serialization;
 
 namespace Programming.Manager
 {
     public class PlayerCardManager : MonoBehaviour
     {
         private List<ICardable> startingDeckICardables;
-        [SerializeField] private List<Fraction> startingFractions = new List<Fraction>(); 
-
+        [SerializeField] private List<NumberCard> startingFractions;
+        
+        [SerializeField]
         private PlayerHand playerHand;
         [SerializeField] private GameObject playerHandUI;
-        [SerializeField] private GameObject numberCardUIPrefab; 
+        [SerializeField] private GameObject numberCardUIPrefab;
         [SerializeField] private GameObject specialCardUIPrefab; 
         
         private CardDeck cardDeck;
@@ -31,7 +28,7 @@ namespace Programming.Manager
         
         void Start()
         {
-            playerHand = new PlayerHand();
+            playerHand = new PlayerHand(3);
             cardDeck = new CardDeck(CreateStartingDeck());
             cardBin = new CardBin(); 
             
@@ -42,14 +39,11 @@ namespace Programming.Manager
         private List<ICardable> CreateStartingDeck()
         {
             startingDeckICardables = new List<ICardable>(); 
-                
-            /*
-            foreach (Fraction fraction in startingFractions)
+               
+            foreach (NumberCard numberCard in startingFractions)
             {
-                NumberCard card = new NumberCard(fraction);
-                startingDeckICardables.Add(card); 
+                startingDeckICardables.Add(numberCard); 
             }
-            */
             
             //temporary code for testing whether all the other stuff works
             for (int i = 1; i <= 10; i++)
@@ -86,12 +80,12 @@ namespace Programming.Manager
             
             GameObject newCardGameObject;
             CardDisplay cardDisplay; 
-            if (card is IFractionableCard)
+            if (card is NumberCard)
             {
                 newCardGameObject = Instantiate(numberCardUIPrefab);
                 cardDisplay = newCardGameObject.GetComponent<NumberCardDisplay>(); 
             }
-            else if (card is ISpecialCard)
+            else if (card is SpecialCard)
             {
                 newCardGameObject = Instantiate(specialCardUIPrefab);
                 cardDisplay = newCardGameObject.GetComponent<SpecialCardDisplay>();
@@ -101,7 +95,8 @@ namespace Programming.Manager
                 throw new NotImplementedException(); 
             }
             
-            cardDisplay.cardBaseObject = card; 
+            cardDisplay.cardBaseObject = card;
+            cardDisplay.UpdateValue(); 
             cardDisplay.UpdateVisual();
             cardDisplay.name = cardDisplay.GetName();
             
@@ -120,6 +115,16 @@ namespace Programming.Manager
             Destroy(cardObject);
         }
 
+        public void WinRound()
+        {
+            //TODO
+        }
+
+        public void AddReward()
+        {
+            //TODO
+        }
+        
         public void ReshuffleDeck()
         {
             cardDeck.CreateAndShuffleRoundDeck(); 

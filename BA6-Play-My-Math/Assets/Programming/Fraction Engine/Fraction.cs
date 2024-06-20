@@ -6,7 +6,6 @@ namespace Programming.Fraction_Engine
     [Serializable]
     public class Fraction
     {
-        
         public int Numerator
         {
             get => numerator;
