@@ -5403,8 +5403,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2071877180}
-  - component: {fileID: 2071877179}
   - component: {fileID: 2071877181}
+  - component: {fileID: 2071877182}
   m_Layer: 0
   m_Name: PlayerCardManager
   m_TagString: Untagged
@@ -5412,27 +5412,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2071877179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2071877178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 865f6ec359f728947a65ffe00340c99e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentCanvas: {fileID: 0}
-  card: {fileID: 5202013119088838432, guid: 38860cdda4f259245a776eb03aef7b34, type: 3}
-  cards: []
-  cardPlacement:
-  - {fileID: 1410005372}
-  - {fileID: 1101163130}
-  - {fileID: 2083065573}
-  - {fileID: 1926690303}
-  - {fileID: 1553597430}
 --- !u!4 &2071877180
 Transform:
   m_ObjectHideFlags: 0
@@ -5460,6 +5439,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39aaa3e3dac4a354cb5f3488bbf0aabb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2071877182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071877178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa993d4a7639fa54d9cb05d8d4b500f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingFractions:
+  - numerator: 1
+    denominator: 2
+  - numerator: 2
+    denominator: 3
+  - numerator: 3
+    denominator: 5
+  - numerator: 4
+    denominator: 7
+  - numerator: 5
+    denominator: 9
+  - numerator: 6
+    denominator: 11
+  playerHandUI: {fileID: 1183358978}
+  numberCardUIPrefab: {fileID: 5202013119088838432, guid: 38860cdda4f259245a776eb03aef7b34,
+    type: 3}
+  specialCardUIPrefab: {fileID: 5202013119088838432, guid: 0c5ac00ba4f458f4c8035376c30b3bfa,
+    type: 3}
+  cardDeckUI: {fileID: 1511446561}
+  cardDeck3D: {fileID: 1338079522}
+  cardBinUI: {fileID: 1603710046}
+  cardBin3D: {fileID: 0}
+  Debug_DiscardThis: {fileID: 0}
 --- !u!224 &2083065573 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5647531836151232560, guid: a15dff5da97995843b80ecae720be846,
