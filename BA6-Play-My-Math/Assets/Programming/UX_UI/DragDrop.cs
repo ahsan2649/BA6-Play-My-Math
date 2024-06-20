@@ -65,6 +65,11 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                 // if card is a fraction set parent that slot otherwise go back to former parent
                 transform.SetParent(hit.transform);
             }
+            else if (hit.transform.tag == "Bin")
+            {
+                // if card is a fraction set parent that slot otherwise go back to former parent
+                transform.SetParent(hit.transform);
+            }
             else
             {
                 transform.SetParent(parentAfterDrag);

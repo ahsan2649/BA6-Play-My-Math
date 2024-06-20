@@ -8,6 +8,7 @@ TagManager:
   - CardSlot
   - Card
   - OperationBoardSlot
+  - Bin
   layers:
   - Default
   - TransparentFX
