@@ -12,7 +12,12 @@ namespace Programming.UX_UI
         private IFractionableCard cardBaseFraction;
 
         [SerializeField] private TMP_Text descriptionText;
-        
+
+        public override void UpdateValue()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override void UpdateVisual()
         {
             //TODO: Set Visual of cardBaseFraction

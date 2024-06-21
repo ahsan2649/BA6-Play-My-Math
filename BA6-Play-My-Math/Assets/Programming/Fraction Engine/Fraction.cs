@@ -32,6 +32,16 @@ namespace Programming.Fraction_Engine
             this.denominator = denominator;
         }
 
+        public bool IsWhole()
+        {
+            return denominator == 1;
+        }
+
+        public bool IsOne()
+        {
+            return numerator == 1 && denominator == 1;
+        }
+
 
         #region Overrides
 

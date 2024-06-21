@@ -35,5 +35,10 @@ namespace Programming.Operation_Board {
         {
             Debug.Log("UpdatedVisual");
         }
+
+        public void SetOperand(ref Fraction operand, Fraction value)
+        {
+            operand = value;
+        }
     }
 }
