@@ -49,9 +49,9 @@ namespace Programming.Card_Mechanism {
                 return;
             }
 
-            var dragCard = eventData.pointerDrag.GetComponent<NumberCardComponent>();
-            dragCard.oldValue = dragCard.Value;
-            dragCard.Value = new Fraction(dragCard.Value.Numerator, Value.Numerator);
+            var draggedCard = eventData.pointerDrag.GetComponent<NumberCardComponent>();
+            draggedCard.oldValue = draggedCard.Value;
+            draggedCard.Value = new Fraction(draggedCard.Value.Numerator, Value.Numerator);
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -63,8 +63,8 @@ namespace Programming.Card_Mechanism {
                 return;
             }
 
-            var dragCard = eventData.pointerDrag.GetComponent<NumberCardComponent>();
-            dragCard.Value = dragCard.oldValue;
+            var draggedCard = eventData.pointerDrag.GetComponent<NumberCardComponent>();
+            draggedCard.Value = draggedCard.oldValue;
         }
 
         public void OnDrop(PointerEventData eventData)
@@ -77,14 +77,14 @@ namespace Programming.Card_Mechanism {
             }
 
             var playerHand = GameObject.Find("Player Hand").GetComponent<PlayerHandComponent>();
-            var droppedCardSlot = eventData.pointerDrag.GetComponentInParent<CardSlotComponent>();
-            var droppedCard = playerHand.HandPop(ref droppedCardSlot);
+            var droppedCardSlot = eventData.pointerDrag.GetComponentInParent<HandSlotComponent>();
+            var newCard = playerHand.HandPop(ref droppedCardSlot);
 
-            var droppedCardNumber = droppedCard.GetComponent<NumberCardComponent>();
-            var thisCardSlot = GetComponentInParent<CardSlotComponent>();
+            var newCardNumber = newCard.GetComponent<NumberCardComponent>();
+            var thisCardSlot = GetComponentInParent<HandSlotComponent>();
             
-            droppedCardNumber.oldValue = droppedCardNumber.Value = new Fraction(droppedCardNumber.Value.Numerator, value.Numerator);
-            thisCardSlot.SetCard(droppedCard);
+            newCardNumber.oldValue = newCardNumber.Value = new Fraction(newCardNumber.Value.Numerator, value.Numerator);
+            thisCardSlot.SetCard(newCard);
             playerHand.HandPush(GameObject.Find("Deck").GetComponent<DeckComponent>().DeckPop());
             
             Destroy(gameObject);

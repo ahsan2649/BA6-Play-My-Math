@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Programming.Card_Mechanism {
-    public class BinComponent : MonoBehaviour, IDropHandler {
+    public class BinComponent : MonoBehaviour, IDropHandler, IPointerEnterHandler {
         private List<BaseCardComponent> _disCards = new List<BaseCardComponent>();
 
         public void PutCardInBin(BaseCardComponent baseCard)
@@ -18,12 +18,17 @@ namespace Programming.Card_Mechanism {
         public void OnDrop(PointerEventData eventData)
         {
             var playerHand = GameObject.Find("Player Hand").GetComponent<PlayerHandComponent>();
-            var droppedCardSlot = eventData.pointerDrag.GetComponentInParent<CardSlotComponent>();
+            var droppedCardSlot = eventData.pointerDrag.GetComponentInParent<HandSlotComponent>();
             var droppedCard = playerHand.HandPop(ref droppedCardSlot); 
             PutCardInBin(droppedCard);
             StartCoroutine(droppedCard.DiscardAnimation());
             
             playerHand.HandPush(GameObject.Find("Deck").GetComponent<DeckComponent>().DeckPop());;
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            Debug.Log("Pointer enter bin!");
         }
     }
 }

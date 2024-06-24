@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace Programming.Card_Mechanism {
-    public class CardSlotComponent : MonoBehaviour {
+    public class HandSlotComponent : MonoBehaviour {
         private BaseCardComponent _baseCardInSlot;
         
 

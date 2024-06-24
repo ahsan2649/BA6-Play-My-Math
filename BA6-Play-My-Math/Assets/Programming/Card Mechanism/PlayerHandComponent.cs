@@ -4,11 +4,11 @@ using UnityEngine.InputSystem;
 
 namespace Programming.Card_Mechanism {
     public class PlayerHandComponent : MonoBehaviour {
-        private CardSlotComponent[] _cardSlots;
+        private HandSlotComponent[] _cardSlots;
 
         private void Awake()
         {
-            _cardSlots = GetComponentsInChildren<CardSlotComponent>();
+            _cardSlots = GetComponentsInChildren<HandSlotComponent>();
         }
 
         // Start is called before the first frame update
@@ -24,7 +24,7 @@ namespace Programming.Card_Mechanism {
 
         public void HandPush(BaseCardComponent baseCard)
         {
-            foreach (CardSlotComponent slot in _cardSlots)
+            foreach (HandSlotComponent slot in _cardSlots)
             {
                 if (slot.HasCard())
                 {
@@ -39,7 +39,7 @@ namespace Programming.Card_Mechanism {
             }
         }
 
-        public BaseCardComponent HandPop(ref CardSlotComponent slot)
+        public BaseCardComponent HandPop(ref HandSlotComponent slot)
         {
             var returningCard = slot.UnsetCard();
             return returningCard;

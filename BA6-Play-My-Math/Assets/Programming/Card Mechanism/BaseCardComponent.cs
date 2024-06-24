@@ -13,8 +13,9 @@ namespace Programming.Card_Mechanism {
         {
             _rectTransform = GetComponent<RectTransform>();
             _canvas = GetComponent<Canvas>();
-            _canvas.worldCamera = Camera.main;
             _canvasGroup = GetComponent<CanvasGroup>();
+            
+            _canvas.worldCamera = Camera.main;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -54,7 +55,7 @@ namespace Programming.Card_Mechanism {
             {
                 _canvasGroup.blocksRaycasts = false;
 
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, transform.parent.rotation, 1f);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, transform.parent.rotation, 2f);
                 yield return null;
             }
 
