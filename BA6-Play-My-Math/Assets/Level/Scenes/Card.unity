@@ -152,8 +152,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 771191528}
-  - {fileID: 1720970402}
   - {fileID: 1715340082}
+  - {fileID: 1720970402}
   - {fileID: 1963416049}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -532,6 +532,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0e2baab44cd334bbe680f7e4a9dc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _originSlot: {fileID: 0}
+  _cardInSlot: {fileID: 0}
+  _operationBoard: {fileID: 0}
 --- !u!1 &857675276
 GameObject:
   m_ObjectHideFlags: 0
@@ -1590,6 +1593,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0e2baab44cd334bbe680f7e4a9dc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _originSlot: {fileID: 0}
+  _cardInSlot: {fileID: 0}
+  _operationBoard: {fileID: 0}
 --- !u!1 &1742044391
 GameObject:
   m_ObjectHideFlags: 0

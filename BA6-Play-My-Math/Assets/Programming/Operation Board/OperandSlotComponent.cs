@@ -1,3 +1,4 @@
+using System;
 using Programming.Card_Mechanism;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,7 +9,13 @@ namespace Programming.Operation_Board {
 
         public NumberCardComponent _cardInSlot;
 
-        // Start is called before the first frame update
+        public OperationBoardComponent _operationBoard;
+
+        private void OnEnable()
+        {
+            _operationBoard = GetComponentInParent<OperationBoardComponent>();
+        }
+
         void Start()
         {
             Debug.Log("OperandSlot working!");
