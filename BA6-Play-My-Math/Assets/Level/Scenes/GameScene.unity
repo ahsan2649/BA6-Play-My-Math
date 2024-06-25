@@ -242,27 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberCardPrefab: {fileID: 4476395966626981575, guid: 46ec8f4777f7d78408077aa7b4db821d,
     type: 3}
-  startingDeck:
-  - numerator: 5
-    denominator: 1
-  - numerator: 4
-    denominator: 1
-  - numerator: 8
-    denominator: 1
-  - numerator: 7
-    denominator: 1
-  - numerator: 2
-    denominator: 1
-  - numerator: 3
-    denominator: 1
-  - numerator: 1
-    denominator: 1
-  - numerator: 8
-    denominator: 1
-  - numerator: 9
-    denominator: 1
-  - numerator: 4
-    denominator: 1
+  _startingDeck: {fileID: 0}
 --- !u!4 &94918440
 Transform:
   m_ObjectHideFlags: 0
@@ -1674,7 +1654,7 @@ Transform:
   m_GameObject: {fileID: 348594494}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 13.376}
+  m_LocalPosition: {x: 0, y: -0.25, z: 13.376}
   m_LocalScale: {x: 30, y: 0.5, z: 30.448172}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6368,7 +6348,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 330590060}
@@ -6443,7 +6423,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944378499}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 8616276468678558677, guid: 02eb2b3b10ff49b45bd56a5abf4f4c2e, type: 3}
 --- !u!1 &1993998058
 GameObject:
   m_ObjectHideFlags: 0
