@@ -9,8 +9,8 @@ namespace Programming.Operation_Board
     [Serializable]
     public class OperationTextPair
     {
-        [SerializeField] Operation operation;
-        [SerializeField] GameObject value;
+        public Operation operation;
+        public GameObject value;
     }
     public enum Operation
     {
@@ -25,8 +25,8 @@ namespace Programming.Operation_Board
         RectTransform _rectTransform;
         Canvas _canvas;
         CanvasGroup _canvasGroup;
-        public Operation currentOperation = Operation.Nop;
         [SerializeField] List<OperationTextPair> _operationTextPairs;
+        public Operation currentOperation = Operation.Nop;
 
         [SerializeField] GameObject Cylinder;
     
@@ -61,15 +61,49 @@ namespace Programming.Operation_Board
             {
                 Debug.Log("Swipe down");
                 StartCoroutine(RotateDown());
+                ShiftOp(true);
             }
 
             if (direction.y > 0.4f)
             {
                 Debug.Log("Swipe Up");
                 StartCoroutine(RotateUp());
+                ShiftOp(false);
             }
-        
+
+            UpdateOp();
             GetComponentInParent<OperationBoardComponent>().UpdateVisual();
+        }
+
+        private void UpdateOp()
+        {
+            foreach (var pair in _operationTextPairs)
+            {
+                pair.value?.SetActive(false);
+                if (currentOperation == pair.operation)
+                {
+                    pair.value?.SetActive(true);
+                }
+            }
+        }
+
+        private void ShiftOp(bool direction)
+        {
+            if (direction)
+            {
+                currentOperation++;
+                if ((int)currentOperation >= Enum.GetValues(typeof(Operation)).Length)
+                {
+                    currentOperation = 0;
+                }
+                return;
+            }
+            
+            currentOperation--;
+            if ((int)currentOperation < 0)
+            {
+                currentOperation = (Operation)(Enum.GetValues(typeof(Operation)).Length - 1);
+            }
         }
 
         public void OnDrag(PointerEventData eventData)
