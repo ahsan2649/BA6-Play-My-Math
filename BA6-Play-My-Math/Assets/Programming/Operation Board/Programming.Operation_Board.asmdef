@@ -1,0 +1,17 @@
+{
+    "name": "Programming.Operation_Board",
+    "rootNamespace": "",
+    "references": [
+        "GUID:565867f7f5ed3cd49881170e95330a5f",
+        "GUID:c8b7f80adf28d6747a379788a3d946c0"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

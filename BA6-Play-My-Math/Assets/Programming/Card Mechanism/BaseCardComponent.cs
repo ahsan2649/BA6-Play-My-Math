@@ -13,9 +13,12 @@ namespace Programming.Card_Mechanism {
         {
             _rectTransform = GetComponent<RectTransform>();
             _canvas = GetComponent<Canvas>();
-            _canvas.worldCamera = Camera.main;
             _canvasGroup = GetComponent<CanvasGroup>();
+            
+            _canvas.worldCamera = Camera.main;
         }
+
+        #region Drag
 
         public void OnBeginDrag(PointerEventData eventData)
         {
@@ -36,6 +39,10 @@ namespace Programming.Card_Mechanism {
             _canvasGroup.blocksRaycasts = true;
         }
 
+        #endregion
+
+        #region Animations
+
         public IEnumerator MoveToNewParent()
         {
             while (Vector3.Distance(transform.position, transform.parent.position) > 0.01f)
@@ -54,7 +61,7 @@ namespace Programming.Card_Mechanism {
             {
                 _canvasGroup.blocksRaycasts = false;
 
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, transform.parent.rotation, 1f);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, transform.parent.rotation, 2f);
                 yield return null;
             }
 
@@ -70,5 +77,7 @@ namespace Programming.Card_Mechanism {
                 yield return null;
             }
         }
+
+        #endregion
     }
 }

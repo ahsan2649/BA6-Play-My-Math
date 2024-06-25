@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-namespace Programming.Card_Mechanism {
-    public class NumberCardComponent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDropHandler {
-        [SerializeField] Fraction value;
+namespace Programming.Card_Mechanism
+{
+    public class NumberCardComponent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDropHandler
+    {
         public Fraction oldValue;
+        [SerializeField] Fraction value;
 
         public Fraction Value
         {
@@ -41,54 +43,74 @@ namespace Programming.Card_Mechanism {
                 Value.Denominator.ToString();
         }
 
+        #region Pointer
+
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (eventData.pointerDrag == null || !value.IsWhole() ||
-                !eventData.pointerDrag.GetComponent<NumberCardComponent>().value.IsWhole() || value.IsOne())
+            var draggedCard = eventData.pointerDrag;
+            if (draggedCard == null)
             {
                 return;
             }
 
-            var dragCard = eventData.pointerDrag.GetComponent<NumberCardComponent>();
-            dragCard.oldValue = dragCard.Value;
-            dragCard.Value = new Fraction(dragCard.Value.Numerator, Value.Numerator);
+            var draggedCardNumber = draggedCard.GetComponent<NumberCardComponent>();
+            if (!draggedCardNumber.Value.IsWhole() || !Value.IsWhole() || Value.IsOne())
+            {
+                return;
+            }
+
+            draggedCardNumber.oldValue = draggedCardNumber.Value;
+            draggedCardNumber.Value = new Fraction(draggedCardNumber.Value.Numerator, Value.Numerator);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (eventData.pointerDrag == null || !value.IsWhole() ||
-                !eventData.pointerDrag.GetComponent<NumberCardComponent>().oldValue.IsWhole() || value.IsOne()) 
+            var draggedCard = eventData.pointerDrag;
+            if (draggedCard == null)
             {
-                Debug.Log("Dragging nothing!");
                 return;
             }
 
-            var dragCard = eventData.pointerDrag.GetComponent<NumberCardComponent>();
-            dragCard.Value = dragCard.oldValue;
+            var draggedCardNumber = eventData.pointerDrag.GetComponent<NumberCardComponent>();
+            if (!draggedCardNumber.oldValue.IsWhole() || !value.IsWhole() || value.IsOne())
+            {
+                return;
+            }
+
+            draggedCardNumber.Value = draggedCardNumber.oldValue;
         }
+
+        #endregion
 
         public void OnDrop(PointerEventData eventData)
         {
-            if (eventData.pointerDrag == null || !value.IsWhole() ||
-                !eventData.pointerDrag.GetComponent<NumberCardComponent>().oldValue.IsWhole() || value.IsOne())
+            var droppedCard = eventData.pointerDrag;
+            if (droppedCard == null)
             {
-                Debug.Log("Dragging nothing!");
                 return;
             }
 
-            var playerHand = GameObject.Find("Player Hand").GetComponent<PlayerHandComponent>();
-            var droppedCardSlot = eventData.pointerDrag.GetComponentInParent<CardSlotComponent>();
-            var droppedCard = playerHand.HandPop(ref droppedCardSlot);
-
             var droppedCardNumber = droppedCard.GetComponent<NumberCardComponent>();
-            var thisCardSlot = GetComponentInParent<CardSlotComponent>();
-            
-            droppedCardNumber.oldValue = droppedCardNumber.Value = new Fraction(droppedCardNumber.Value.Numerator, value.Numerator);
-            thisCardSlot.SetCard(droppedCard);
-            playerHand.HandPush(GameObject.Find("Deck").GetComponent<DeckComponent>().DeckPop());
-            
-            Destroy(gameObject);
+            if (!droppedCardNumber.oldValue.IsWhole() || !value.IsWhole() || value.IsOne())
+            {
+                return;
+            }
 
+            // Step 1: Remove DroppedCard from its slot in the player hand
+            var playerHand = GameObject.Find("Player Hand").GetComponent<PlayerHandComponent>();
+            var droppedCardSlot = droppedCard.GetComponentInParent<HandSlotComponent>();
+            playerHand.HandPop(ref droppedCardSlot);
+
+            // Step 2: Update Dropped Card with the fraction made by the Zählers
+            droppedCardNumber.oldValue = droppedCardNumber.Value = new Fraction(droppedCardNumber.Value.Numerator, value.Numerator);
+
+            // Step 3: Set dropped card to the slot this card is in
+            var thisCardSlot = GetComponentInParent<HandSlotComponent>();
+            thisCardSlot.SetCard(droppedCard.GetComponent<BaseCardComponent>());
+            
+            // Draw another card and destroy this one
+            playerHand.HandPush(GameObject.Find("Deck").GetComponent<DeckComponent>().DeckPop());
+            Destroy(gameObject);
         }
     }
 }
