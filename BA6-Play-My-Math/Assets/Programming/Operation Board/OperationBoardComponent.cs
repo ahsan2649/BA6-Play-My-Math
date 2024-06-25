@@ -20,12 +20,13 @@ namespace Programming.Operation_Board
 
         public void UpdateVisual()
         {
-            
+            // Refer to OperationBoardVisualizer.cs
         }
 
         private void OnValidate()
         {
             UpdateVisual();
         }
+        
     }
 }

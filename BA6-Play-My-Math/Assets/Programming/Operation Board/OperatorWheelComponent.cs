@@ -1,14 +1,16 @@
+using System;
 using System.Collections;
-using TMPro;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Programming.Operation_Board
 {
+    [Serializable]
     public class OperationTextPair
     {
-        public Operation operation;
-        public GameObject value;
+        [SerializeField] Operation operation;
+        [SerializeField] GameObject value;
     }
     public enum Operation
     {
@@ -24,7 +26,7 @@ namespace Programming.Operation_Board
         Canvas _canvas;
         CanvasGroup _canvasGroup;
         public Operation currentOperation = Operation.Nop;
-        public TextMeshProUGUI[] _operationText;
+        [SerializeField] List<OperationTextPair> _operationTextPairs;
 
         [SerializeField] GameObject Cylinder;
     
