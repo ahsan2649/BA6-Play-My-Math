@@ -53,6 +53,8 @@ namespace Programming.Operation_Board {
 
                 StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().MoveToNewParent());
                 StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().RotateToNewParent());
+                
+                GetComponentInParent<OperationBoardComponent>().UpdateVisual();
                 return;
             }
 
@@ -66,6 +68,7 @@ namespace Programming.Operation_Board {
 
             StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().MoveToNewParent());
             StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().RotateToNewParent());
+            GetComponentInParent<OperationBoardComponent>().UpdateVisual();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
