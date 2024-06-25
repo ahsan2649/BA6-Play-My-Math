@@ -10,7 +10,6 @@ namespace Programming.Operation_Board
         private OperandSlotComponent _rightOperand;
         
         private OperatorWheelComponent _operationWheel;
-        public Operation currentOperation = Operation.Nop;
 
         private void OnEnable()
         {

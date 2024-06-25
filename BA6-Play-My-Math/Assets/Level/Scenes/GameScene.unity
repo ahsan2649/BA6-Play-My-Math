@@ -242,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberCardPrefab: {fileID: 4476395966626981575, guid: 46ec8f4777f7d78408077aa7b4db821d,
     type: 3}
-  _startingDeck: {fileID: 0}
+  _startingDeck: {fileID: 11400000, guid: ca41782fe37a562438b66eac8f67c61b, type: 2}
 --- !u!4 &94918440
 Transform:
   m_ObjectHideFlags: 0
@@ -1006,7 +1006,7 @@ GameObject:
   - component: {fileID: 268762832}
   - component: {fileID: 268762831}
   m_Layer: 5
-  m_Name: FractionOfOBord
+  m_Name: FractionPreview
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1449,7 +1449,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86848797fa371ae419f137ebfc8f2c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentOperation: 0
 --- !u!1 &345777060
 GameObject:
   m_ObjectHideFlags: 0
@@ -6332,7 +6331,7 @@ GameObject:
   - component: {fileID: 1944378502}
   - component: {fileID: 1944378501}
   m_Layer: 5
-  m_Name: Brewingboard
+  m_Name: DisplayArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6562,6 +6561,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ae17dd5f8a2ad4f8febff1a281fcfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentOperation: 0
+  _operationText: []
   Cylinder: {fileID: 458666938}
 --- !u!114 &2020451923
 MonoBehaviour:

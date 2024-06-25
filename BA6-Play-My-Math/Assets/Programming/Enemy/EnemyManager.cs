@@ -9,7 +9,7 @@ namespace Programming.Enemy
         void Start()
         {
             // Vin has some function for that
-            // LevelGeneration.generateEnemyCue();
+             
         }
 
         // Update is called once per frame

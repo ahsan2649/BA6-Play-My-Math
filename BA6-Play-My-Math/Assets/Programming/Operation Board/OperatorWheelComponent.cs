@@ -1,9 +1,15 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Programming.Operation_Board
 {
+    public class OperationTextPair
+    {
+        public Operation operation;
+        public GameObject value;
+    }
     public enum Operation
     {
         Nop,
@@ -17,6 +23,8 @@ namespace Programming.Operation_Board
         RectTransform _rectTransform;
         Canvas _canvas;
         CanvasGroup _canvasGroup;
+        public Operation currentOperation = Operation.Nop;
+        public TextMeshProUGUI[] _operationText;
 
         [SerializeField] GameObject Cylinder;
     
@@ -83,5 +91,7 @@ namespace Programming.Operation_Board
                 yield return new WaitForSeconds(1f / 30f);
             }
         }
+
+        
     }
 }
