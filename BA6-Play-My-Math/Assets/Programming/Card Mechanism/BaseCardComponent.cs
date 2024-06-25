@@ -18,6 +18,8 @@ namespace Programming.Card_Mechanism {
             _canvas.worldCamera = Camera.main;
         }
 
+        #region Drag
+
         public void OnBeginDrag(PointerEventData eventData)
         {
             _canvasGroup.blocksRaycasts = false;
@@ -36,6 +38,10 @@ namespace Programming.Card_Mechanism {
             StartCoroutine(RotateToNewParent());
             _canvasGroup.blocksRaycasts = true;
         }
+
+        #endregion
+
+        #region Animations
 
         public IEnumerator MoveToNewParent()
         {
@@ -71,5 +77,7 @@ namespace Programming.Card_Mechanism {
                 yield return null;
             }
         }
+
+        #endregion
     }
 }

@@ -3,10 +3,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Programming.Operation_Board {
-    public class OperandSlotComponent : MonoBehaviour, IDropHandler, IPointerEnterHandler {
-        private HandSlotComponent _originSlot;
+    public class OperandSlotComponent : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler {
+        public HandSlotComponent _originSlot;
 
-        private NumberCardComponent _cardInSlot;
+        public NumberCardComponent _cardInSlot;
 
         // Start is called before the first frame update
         void Start()
@@ -24,20 +24,17 @@ namespace Programming.Operation_Board {
             var droppedCard = eventData.pointerDrag;
             if (droppedCard == null)
             {
-                Debug.Log("Dropped nothing!");
                 return;
             }
 
             var droppedCardNumberComponent = droppedCard.GetComponent<NumberCardComponent>();
             if (droppedCardNumberComponent == null)
             {
-                Debug.Log("Not dropping a number type card");
                 return;
             }
 
             if (droppedCardNumberComponent.Value.IsWhole())
             {
-                Debug.Log("Not dropping a fraction card");
                 return;
             }
 
@@ -66,7 +63,27 @@ namespace Programming.Operation_Board {
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log("Pointer Enter!");
+            
+        }
+
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            var draggedCard = eventData.pointerDrag;
+            if (draggedCard == null)
+            {
+                return;
+            }
+
+            var draggedCardNumber = draggedCard.GetComponent<NumberCardComponent>();
+            if (draggedCardNumber != _cardInSlot)
+            {
+                return;
+            }
+            
+            _originSlot.SetCard(draggedCardNumber.GetComponent<BaseCardComponent>());
+            _originSlot = null;
+            _cardInSlot = null;
         }
     }
 }

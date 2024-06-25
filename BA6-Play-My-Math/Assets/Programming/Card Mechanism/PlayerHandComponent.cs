@@ -6,7 +6,7 @@ namespace Programming.Card_Mechanism {
     public class PlayerHandComponent : MonoBehaviour {
         private HandSlotComponent[] _cardSlots;
 
-        private void Awake()
+        private void OnEnable()
         {
             _cardSlots = GetComponentsInChildren<HandSlotComponent>();
         }
@@ -34,7 +34,11 @@ namespace Programming.Card_Mechanism {
                 if (baseCard != null)
                 {
                     slot.SetCard(baseCard);
+                    StartCoroutine(baseCard.MoveToNewParent());
+                    StartCoroutine(baseCard.RotateToNewParent());
+
                 }
+
                 break;
             }
         }

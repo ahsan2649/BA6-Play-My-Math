@@ -18,8 +18,16 @@ namespace Programming.Card_Mechanism {
         public void OnDrop(PointerEventData eventData)
         {
             var playerHand = GameObject.Find("Player Hand").GetComponent<PlayerHandComponent>();
-            var droppedCardSlot = eventData.pointerDrag.GetComponentInParent<HandSlotComponent>();
-            var droppedCard = playerHand.HandPop(ref droppedCardSlot); 
+
+            var droppedCard = eventData.pointerDrag.GetComponent<BaseCardComponent>();
+            var droppedCardSlot = droppedCard.GetComponentInParent<HandSlotComponent>();
+            
+            if (droppedCardSlot != null)
+            {
+                playerHand.HandPop(ref droppedCardSlot);
+            }
+            
+            
             PutCardInBin(droppedCard);
             StartCoroutine(droppedCard.DiscardAnimation());
             
