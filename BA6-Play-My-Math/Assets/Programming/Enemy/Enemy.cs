@@ -2,7 +2,7 @@ using Programming.Fraction_Engine;
 
 namespace Programming.Enemy
 {
-    public class Enemy : IFractionable
+    public class Enemy
     {
         private Fraction fraction; 
     
