@@ -18,7 +18,7 @@ namespace Programming.Fraction_Engine
             get => denominator;
             private set => denominator = value;
         }
-        [SerializeField] private int denominator;
+        [SerializeField] private int denominator = 1;
 
 
         public Fraction(int numerator, int denominator)

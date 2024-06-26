@@ -1,41 +1,32 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Programming.Operation_Board;
 using UnityEngine;
 
-public enum Operation
+namespace Programming.Operation_Board
 {
-    Nop,
-    Add,
-    Subtract,
-    Multiply,
-    Divide,
-}
-
-public class OperationBoardComponent : MonoBehaviour
-{
-    private OperandSlotComponent _leftOperand;
-    private OperandSlotComponent _rightOperand;
-    private OperatorWheelComponent _operationWheel;
-    public Operation currentOperation = Operation.Nop;
-
-    private void OnEnable()
+    public class OperationBoardComponent : MonoBehaviour
     {
-        _leftOperand = transform.Find("LeftOperand").GetComponent<OperandSlotComponent>();
-        _rightOperand = transform.Find("RightOperand").GetComponent<OperandSlotComponent>();
-        _operationWheel = transform.Find("Wheel").GetComponent<OperatorWheelComponent>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
+        private OperandSlotComponent _leftOperand;
+       
+        private OperandSlotComponent _rightOperand;
         
-    }
+        private OperatorWheelComponent _operationWheel;
 
-    // Update is called once per frame
-    void Update()
-    {
+        private void OnEnable()
+        {
+            _leftOperand = transform.Find("LeftOperand").GetComponent<OperandSlotComponent>();
+            _rightOperand = transform.Find("RightOperand").GetComponent<OperandSlotComponent>();
+            _operationWheel = transform.Find("Wheel").GetComponent<OperatorWheelComponent>();
+        }
+
+        public void UpdateVisual()
+        {
+            // Refer to OperationBoardVisualizer.cs
+        }
+
+        private void OnValidate()
+        {
+            UpdateVisual();
+        }
         
     }
 }
