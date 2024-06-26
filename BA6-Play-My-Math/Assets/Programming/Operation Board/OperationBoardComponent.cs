@@ -11,6 +11,7 @@ namespace Programming.Operation_Board
         
         private OperatorWheelComponent _operationWheel;
 
+        [SerializeField]
         private FractionVisualizer _fractionVisualizer; 
         
         private void OnEnable()
@@ -22,7 +23,10 @@ namespace Programming.Operation_Board
 
         public void UpdateVisual()
         {
-            _fractionVisualizer.UpdateVisuals(_leftOperand._cardInSlot.Value); 
+            _fractionVisualizer.UpdateVisuals(
+                _leftOperand._cardInSlot?.Value, 
+                _rightOperand._cardInSlot?.Value, 
+                _operationWheel.currentOperation); 
         }
 
         private void OnValidate()
