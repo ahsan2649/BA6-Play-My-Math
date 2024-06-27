@@ -8,14 +8,13 @@ namespace Programming.Operation_Board
     public class OperationBoardComponent : MonoBehaviour
     {
         private OperandSlotComponent _leftOperand;
-       
+
         private OperandSlotComponent _rightOperand;
-        
+
         private OperatorWheelComponent _operationWheel;
 
-        [SerializeField]
-        private FractionVisualizer _fractionVisualizer; 
-        
+        [SerializeField] private FractionVisualizer _fractionVisualizer;
+
         private void OnEnable()
         {
             _leftOperand = transform.Find("LeftOperand").GetComponent<OperandSlotComponent>();
@@ -26,9 +25,9 @@ namespace Programming.Operation_Board
         public void UpdateVisual()
         {
             _fractionVisualizer?.UpdateVisuals(
-                _leftOperand._cardInSlot?.Value, 
-                _rightOperand._cardInSlot?.Value, 
-                _operationWheel.currentOperation); 
+                _leftOperand._cardInSlot?.Value,
+                _rightOperand._cardInSlot?.Value,
+                _operationWheel.currentOperation);
         }
 
         private void OnValidate()
@@ -50,13 +49,15 @@ namespace Programming.Operation_Board
                 return;
             }
 
-            if (_operationWheel.currentOperation == Operation.Add || _operationWheel.currentOperation == Operation.Subtract)
+            if (_operationWheel.currentOperation == Operation.Add ||
+                _operationWheel.currentOperation == Operation.Subtract)
             {
                 if (_leftOperand._cardInSlot.Value.Denominator != _rightOperand._cardInSlot.Value.Denominator)
                 {
                     Debug.LogError("Denominators are unequal, can't perform add or subtract");
                     return;
                 }
+
                 Fraction result = _operationWheel.currentOperation switch
                 {
                     Operation.Add => _leftOperand._cardInSlot.Value + _rightOperand._cardInSlot.Value,
@@ -68,7 +69,8 @@ namespace Programming.Operation_Board
                 return;
             }
 
-            if (_operationWheel.currentOperation == Operation.Multiply || _operationWheel.currentOperation == Operation.Divide)
+            if (_operationWheel.currentOperation == Operation.Multiply ||
+                _operationWheel.currentOperation == Operation.Divide)
             {
                 Fraction result = _operationWheel.currentOperation switch
                 {
@@ -94,6 +96,5 @@ namespace Programming.Operation_Board
             Hand.HandPush(GameObject.Find("Deck").GetComponent<DeckComponent>().DeckPop());
             Debug.Log(value);
         }
-        
     }
 }
