@@ -1,9 +1,10 @@
 using UnityEngine;
 
-namespace Programming.Card_Mechanism {
-    public class HandSlotComponent : MonoBehaviour {
+namespace Programming.Card_Mechanism
+{
+    public class HandSlotComponent : MonoBehaviour
+    {
         private BaseCardComponent _baseCardInSlot;
-        
 
         public void SetCard(BaseCardComponent baseCard)
         {
@@ -24,6 +25,6 @@ namespace Programming.Card_Mechanism {
             return _baseCardInSlot;
         }
 
-        public bool HasCard() { return _baseCardInSlot != null; }
+        public bool HasCard() => _baseCardInSlot != null;
     }
 }

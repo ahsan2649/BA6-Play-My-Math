@@ -91,9 +91,9 @@ namespace Programming.Operation_Board
             _rightOperand._cardInSlot = null;
             Destroy(rightCard.gameObject);
 
-            _leftOperand._cardInSlot.Value = value;
-            var Hand = GameObject.Find("Player Hand").GetComponent<PlayerHandComponent>();
-            Hand.HandPush(GameObject.Find("Deck").GetComponent<DeckComponent>().DeckPop());
+            _leftOperand._cardInSlot.oldValue = _leftOperand._cardInSlot.Value = value;
+            
+            PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
             Debug.Log(value);
         }
     }
