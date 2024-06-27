@@ -12,6 +12,9 @@ namespace Programming.Operation_Board
         
         private OperatorWheelComponent _operationWheel;
 
+        [SerializeField]
+        private FractionVisualizer _fractionVisualizer; 
+        
         private void OnEnable()
         {
             _leftOperand = transform.Find("LeftOperand").GetComponent<OperandSlotComponent>();
@@ -21,12 +24,15 @@ namespace Programming.Operation_Board
 
         public void UpdateVisual()
         {
-            // Refer to OperationBoardVisualizer.cs
+            _fractionVisualizer.UpdateVisuals(
+                _leftOperand._cardInSlot?.Value, 
+                _rightOperand._cardInSlot?.Value, 
+                _operationWheel.currentOperation); 
         }
 
         private void OnValidate()
         {
-            UpdateVisual();
+            //UpdateVisual();
         }
 
         public void FinalizeOperation()
