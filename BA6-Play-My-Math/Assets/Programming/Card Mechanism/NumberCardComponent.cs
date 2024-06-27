@@ -97,9 +97,8 @@ namespace Programming.Card_Mechanism
             }
 
             // Step 1: Remove DroppedCard from its slot in the player hand
-            var playerHand = GameObject.Find("Player Hand").GetComponent<PlayerHandComponent>();
             var droppedCardSlot = droppedCard.GetComponentInParent<HandSlotComponent>();
-            playerHand.HandPop(ref droppedCardSlot);
+            PlayerHandComponent.Instance.HandPop(ref droppedCardSlot);
 
             // Step 2: Update Dropped Card with the fraction made by the Zählers
             droppedCardNumber.oldValue = droppedCardNumber.Value = new Fraction(droppedCardNumber.Value.Numerator, value.Numerator);
@@ -109,7 +108,7 @@ namespace Programming.Card_Mechanism
             thisCardSlot.SetCard(droppedCard.GetComponent<BaseCardComponent>());
             
             // Draw another card and destroy this one
-            playerHand.HandPush(GameObject.Find("Deck").GetComponent<DeckComponent>().DeckPop());
+            PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
             Destroy(gameObject);
         }
     }

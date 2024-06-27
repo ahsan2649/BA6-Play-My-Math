@@ -1,30 +1,42 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
-namespace Programming.Card_Mechanism {
-    public class PlayerHandComponent : MonoBehaviour {
-        private HandSlotComponent[] _cardSlots;
+namespace Programming.Card_Mechanism
+{
+    public class PlayerHandComponent : MonoBehaviour
+    {
+        public static PlayerHandComponent Instance { get; private set; }
+        [SerializeField] private HandSlotComponent[] cardSlots;
 
         private void OnEnable()
         {
-            _cardSlots = GetComponentsInChildren<HandSlotComponent>();
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+            }
+
+            cardSlots = GetComponentsInChildren<HandSlotComponent>();
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            DeckComponent deck = GameObject.Find("Deck").GetComponent<DeckComponent>();
-            for (int i = 0; i < _cardSlots.Length; i++)
+            for (int i = 0; i < cardSlots.Length; i++)
             {
-                HandPush(deck.DeckPop());
+                HandPush(DeckComponent.Instance.DeckPop());
             }
         }
 
 
         public void HandPush(BaseCardComponent baseCard)
         {
-            foreach (HandSlotComponent slot in _cardSlots)
+            foreach (HandSlotComponent slot in cardSlots)
             {
                 if (slot.HasCard())
                 {
@@ -36,7 +48,6 @@ namespace Programming.Card_Mechanism {
                     slot.SetCard(baseCard);
                     StartCoroutine(baseCard.MoveToNewParent());
                     StartCoroutine(baseCard.RotateToNewParent());
-
                 }
 
                 break;
