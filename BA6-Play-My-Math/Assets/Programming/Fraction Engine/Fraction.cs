@@ -49,7 +49,8 @@ namespace Programming.Fraction_Engine
         {
             return $"{numerator} / {denominator}";
         }
-    
+        
+        
         protected bool Equals(Fraction other)
         {
             return this == other;

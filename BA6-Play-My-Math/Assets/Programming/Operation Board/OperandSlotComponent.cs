@@ -9,11 +9,9 @@ namespace Programming.Operation_Board {
 
         public NumberCardComponent _cardInSlot;
 
-        public OperationBoardComponent _operationBoard;
 
         private void OnEnable()
         {
-            _operationBoard = GetComponentInParent<OperationBoardComponent>();
         }
 
         void Start()

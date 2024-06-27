@@ -1,4 +1,5 @@
 using System;
+using Programming.Card_Mechanism;
 using Programming.Fraction_Engine;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ namespace Programming.Operation_Board
 
         public void UpdateVisual()
         {
-            _fractionVisualizer.UpdateVisuals(
+            _fractionVisualizer?.UpdateVisuals(
                 _leftOperand._cardInSlot?.Value, 
                 _rightOperand._cardInSlot?.Value, 
                 _operationWheel.currentOperation); 
@@ -39,11 +40,13 @@ namespace Programming.Operation_Board
         {
             if (_leftOperand._cardInSlot == null || _rightOperand._cardInSlot == null)
             {
+                Debug.LogError("Need two filled slots to calculate!");
                 return;
             }
 
             if (_operationWheel.currentOperation == Operation.Nop)
             {
+                Debug.LogError("Operation can't be Nop!");
                 return;
             }
 
@@ -60,18 +63,36 @@ namespace Programming.Operation_Board
                     Operation.Subtract => _leftOperand._cardInSlot.Value - _rightOperand._cardInSlot.Value,
                     _ => throw new ArgumentOutOfRangeException()
                 };
+                Debug.Log(result);
+                SetFinalizedCard(result);
+                return;
             }
 
             if (_operationWheel.currentOperation == Operation.Multiply || _operationWheel.currentOperation == Operation.Divide)
             {
                 Fraction result = _operationWheel.currentOperation switch
                 {
-                    Operation.Multiply => _leftOperand._cardInSlot.Value + _rightOperand._cardInSlot.Value,
-                    Operation.Divide => _leftOperand._cardInSlot.Value - _rightOperand._cardInSlot.Value,
+                    Operation.Multiply => _leftOperand._cardInSlot.Value * _rightOperand._cardInSlot.Value,
+                    Operation.Divide => _leftOperand._cardInSlot.Value / _rightOperand._cardInSlot.Value,
                     _ => throw new ArgumentOutOfRangeException()
                 };
+                Debug.Log(result);
+                SetFinalizedCard(result);
+                return;
             }
+        }
 
+        void SetFinalizedCard(Fraction value)
+        {
+            var rightCard = _rightOperand._originSlot.UnsetCard();
+            _rightOperand._originSlot = null;
+            _rightOperand._cardInSlot = null;
+            Destroy(rightCard.gameObject);
+
+            _leftOperand._cardInSlot.Value = value;
+            var Hand = GameObject.Find("Player Hand").GetComponent<PlayerHandComponent>();
+            Hand.HandPush(GameObject.Find("Deck").GetComponent<DeckComponent>().DeckPop());
+            Debug.Log(value);
         }
         
     }
