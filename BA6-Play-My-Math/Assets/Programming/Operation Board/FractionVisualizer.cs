@@ -1,210 +1,332 @@
 // #define GetFactor(Vector2 primeFactor) (int)Mathf.Max(primeFactor.x, primeFactor.y)
-
+    
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Programming.ExtensionMethods;
 using Programming.Fraction_Engine;
 using Programming.Operation_Board;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class FractionVisualizer : MonoBehaviour
 {
-    [Serializable]
-    public class PrimeFactors
+    public enum VisualisationInputType
     {
-        public List<Vector2> factors; 
+        Shorten, 
+        Expand, 
+        LeftOperand,
+        RightOperand, 
+        Operator
+    }
+
+    private enum VisMode
+    {
+        Shorten, 
+        Expand, 
+        Left,
+        RightNop, 
+        Add, 
+        Sub, 
+        Mult, 
+        Div, 
+        FullBoard
+    }
+    
+    [Serializable]
+    public class Vector2Array
+    {
+        public Vector2[] factors;
+    }
+
+    public struct OffsetAndSpacing
+    {
+        public OffsetAndSpacing(Vector2[] primeFactors, Vector3 boardSize)
+        {
+            columnsAndRows = Vector2.one;
+            for (int i = 0; i < primeFactors.Length; i++)
+            {
+                columnsAndRows *= primeFactors[i];
+            }
+
+            figureSpacing = new Vector3(boardSize.x / columnsAndRows.x, 0, boardSize.z / columnsAndRows.y);
+            baseOffset = new Vector3(-boardSize.x / 2 + figureSpacing.x / 2, 0, boardSize.z / 2 - figureSpacing.z / 2);
+        }
+        
+        public Vector2 columnsAndRows;
+        public Vector3 baseOffset; 
+        public Vector3 figureSpacing;
+
+        public Vector3 CalculatePosition(Vector2 coordinates)
+        {
+            return baseOffset + new Vector3(coordinates.x * figureSpacing.x, 0, coordinates.y * figureSpacing.z);
+        }
+    }
+    
+    private struct FractionVisualisationData
+    {
+        public Fraction Fraction;
+        public FractionVisualiserFigureParent visualData; 
+        public OffsetAndSpacing OffsetAndSpacing;
+        public Vector2[] PackingCoordinates; 
     }
     
     //REFERENCES
-    [SerializeField] private GameObject fractionAFigureCollection;
-    [SerializeField] private GameObject fractionBFigureCollection;
-    [SerializeField] private MeshFilter boardMeshFilter; 
-    
+    [FormerlySerializedAs("fractionAFigureParent")] [SerializeField] private FractionVisualiserFigureParent mainFractionFigureParent;
+    [FormerlySerializedAs("fractionBFigureParent")] [SerializeField] private FractionVisualiserFigureParent secondaryFractionFigureParent;
+    [SerializeField] private MeshFilter boardMeshFilter;
+
     //EDITOR VARIABLES
     [SerializeField] private Mesh[] boardMeshes;
-    [FormerlySerializedAs("figurePrefab")] [SerializeField] private GameObject[] figurePrefabs;
-    [SerializeField] private PrimeFactors[] primeFactors; 
-    [SerializeField] private int xSpacingMultiplier;
-    [FormerlySerializedAs("ySpacingMultiplier")] [SerializeField] private int zSpacingMultiplier;
-    [SerializeField] private Vector3 boardSize; 
-    
+
+    [FormerlySerializedAs("figurePrefab")] [SerializeField]
+    private GameObject[] figurePrefabs;
+    [SerializeField] private Vector2Array[] numbersToPrimeFactors;
+    [SerializeField] private Vector3 boardSize;
+
     //CODE VARIABLES
-    private Fraction _fractionA;
-    public Fraction FractionA
-    {
-        get { return _fractionA; }
-        set {
-            if (value != _fractionA)
-            {
-                _fractionA = value; 
-                StartRecursiveFigureSpawning(fractionAFigureCollection, 0, _fractionA.Numerator, _fractionA.Denominator);
-            }
-        }
-    }
+    private Dictionary<VisMode, FractionVisualisationData> VisualisationDataMap = new Dictionary<VisMode, FractionVisualisationData>(); 
     
-    private Fraction _fractionB;
-    public Fraction FractionB
-    {
-        get { return _fractionB; }
-        set {
-            if (_fractionB != value)
-            {
-                _fractionB = value; 
-                //Start Recursive Figure Spawning etc
-            }
-        }
-    }
+    private Vector2[] _fractionADivisorOrder;
+    private Operation _operation; 
 
-    private Operation _operation;
-
-    public Operation Operation
-    {
-        get { return _operation; }
-        set {
-            if (value != _operation)
-            {
-                _operation = value;
-                //Start Recursive Figure Spawning etc
-            }
-        }
-    }
-    
     //MONOBEHAVIOUR FUNCTIONS
-    
+
     //OWN FUNCTIONS
-    public void UpdateVisuals(Fraction fractionA, Fraction fractionB = null, Operation operation = Operation.Nop)
-    { 
-        boardMeshFilter.mesh = boardMeshes[fractionA.Denominator];
-        
-        StartRecursiveFigureSpawning(fractionAFigureCollection, 0, fractionA.Numerator, fractionA.Denominator);
-    }
-    
-    public void StartRecursiveFigureSpawning(GameObject parent, int minIndex, int maxIndex, int denominator)
+    public void AddVisuals(VisualisationInputType mode, Fraction fraction = null)
     {
-        for (int i = parent.transform.childCount -1; i >= 0; i--)
+        FractionVisualisationData visualisationData = new FractionVisualisationData();
+        
+        switch (mode)
         {
-            if (Application.isEditor)
-            {
-                DestroyImmediate(parent.transform.GetChild(i).gameObject);
-            }
-            else
-            {
-                Destroy(parent.transform.GetChild(i).gameObject);
-            }
-        }
-        
-        Vector2 columnsAndRows = Vector2.one;  
-        for(int i = 0; i < primeFactors[denominator].factors.Count; i++)
-        {
-            columnsAndRows *= primeFactors[denominator].factors[i]; 
-        }
-        
-        Vector3 figureSpacing = new Vector3(xSpacingMultiplier/columnsAndRows.x, 0, zSpacingMultiplier/columnsAndRows.y);
-        Vector3 baseOffset = new Vector3(-boardSize.x / 2 + figureSpacing.x / 2, 0, boardSize.z / 2 - figureSpacing.z / 2); 
-        
-        Vector3 coordinates = Vector3.zero;
-        int figureIndex = 0;
-        
-        /* seperate divisors into ones by which the fractions can be shortened and other, then put the two lists together to have a fill-up order
-         */
-        // 6/36 -> 2*3 / 2v, 2h, 3h, 3v
-        // => (2v, 3h, 2h, 3v)
-        // make two lists (one for divisors, one for non-divisors)
-        
-        Vector2[] divisorOrder = new Vector2[primeFactors[denominator].factors.Count];
-        {
-            List<Vector2> numeratorDivisors = new List<Vector2>(); 
-            List<Vector2> notNumeratorDivisors = new List<Vector2>();
-            int numeratorCopy = minIndex;
-            int denominatorCopy = denominator;
-            
-            foreach (Vector2 primeFactor in primeFactors[denominator].factors)
-            {
-                int factor = (int)Mathf.Max(primeFactor.x, primeFactor.y); 
-                if (numeratorCopy % factor == 0)
+            case VisualisationInputType.LeftOperand:
+                if (VisualisationDataMap.Count == 0)
                 {
-                    numeratorDivisors.Add(primeFactor);
-                    numeratorCopy /= factor; 
+                    VisualisationDataMap.Add(VisMode.Left, visualisationData);
+                    visualisationData.OffsetAndSpacing = new OffsetAndSpacing(numbersToPrimeFactors[fraction.Denominator].factors, boardSize);
+                    visualisationData.PackingCoordinates = CalculatePackingCoordinates(fraction.Numerator, fraction.Denominator); 
+
+                    SpawnFigures(transform.GetChild(0), visualisationData.PackingCoordinates, visualisationData.OffsetAndSpacing, 0, fraction.Numerator);
+                    transform.GetChild(0).GetComponent<FractionVisualiserFigureParent>().UpdateChildrenVisuals(); 
+                    visualisationData.visualData = transform.GetChild(0).GetComponent<FractionVisualiserFigureParent>();
+
                 }
                 else
                 {
-                    notNumeratorDivisors.Add(primeFactor);
+                    VisualisationDataMap.Clear(); //ZyKa!
+                    //Check for other stuff
                 }
-                denominatorCopy /= factor; 
-                
-                columnsAndRows *= primeFactor;
+                break; 
+            case VisualisationInputType.RightOperand:
+                if (VisualisationDataMap.Count == 0)
+                {
+                    
+                }
+                else
+                {
+                    
+                }
+                switch (_operation)
+                {
+                    case Operation.Nop:
 
-                divisorOrder = notNumeratorDivisors.Concat(numeratorDivisors).ToArray(); 
-            }
-        } 
+                        break; 
+                    case Operation.Add:
+
+                        break; 
+                    case Operation.Subtract:
+
+                        break; 
+                    case Operation.Multiply:
+
+                        break; 
+                    case Operation.Divide:
+
+                        break; 
+                }
+                break; 
+            case VisualisationInputType.Shorten:
+                if (VisualisationDataMap.Count == 0)
+                {
+                    //TODO: Visualise the Shortening
+                }
+                else
+                {
+                    //TODO: Check what's there & act according to it
+                }
+                break; 
+            case VisualisationInputType.Expand:
+                if (VisualisationDataMap.Count == 0)
+                {
+                    //TODO: Visualise the Expanding
+                }
+                else
+                {
+                    //TODO: Check what's there & act according to it
+                }
+                break;
+            case VisualisationInputType.Operator:
+                if (VisualisationDataMap.ContainsKey(VisMode.Left) && VisualisationDataMap.ContainsKey(VisMode.RightNop))
+                {
+                    //TODO: Act accordingly
+                }
+                break; 
+        }
+    }
+    
+    public void RemoveVisuals(VisualisationInputType mode)
+    {
+        switch (mode)
+        {
+            case VisualisationInputType.LeftOperand:
+                switch (_operation)
+                {
+                    
+                }
+                break; 
+            case VisualisationInputType.RightOperand:
+                switch (_operation)
+                {
+                    
+                }
+                break; 
+            case VisualisationInputType.Shorten:
+                //Check whether there is left/right/full, act accordingly
+                break; 
+            case VisualisationInputType.Expand:
+                //Check whether there is left/right/full, act accordingly
+                break;
+        }
+    }
+
+    public void UpdateVisuals()
+    {
+        //TODO update visuals of figures
+    }
+
+    public void UpdateOperator(Operation operation)
+    {
+        _operation = operation;
+        //TODO: Update Fraction Visuals
+    }
+    
+    private Vector2[] CalculatePackingCoordinates(int numerator, int denominator)
+    {
+        Vector2[] packingCoordinates = new Vector2[denominator]; 
+        Vector2[] divisorOrder = OrderPrimeFactors(numbersToPrimeFactors[denominator].factors, numerator, denominator);
+
+        if (debug_divisorOrder.Length > 0)
+        {
+            divisorOrder = debug_divisorOrder;
+        }
         
-        RecursiveFigureSpawning(divisorOrder, 0, 0, minIndex, figureIndex, coordinates, denominator, denominator, parent, figureSpacing, baseOffset);
-    }
-    
-    private void RecursiveFigureSpawning(
-        Vector2[] packingOrder, int recursionDepth, 
-        int minIndex, int maxIndex, int figureIndex,
-        Vector2 coordinates, int denominator, int dividedDenominator,
-        GameObject figureParent, Vector3 figureSpacing, Vector3 figureBasicOffset
-    )
-    {
-        if (figureIndex >= maxIndex || figureIndex+dividedDenominator <= minIndex)
+        RecursiveCalculateFigurePositions(divisorOrder, 0, 0, Vector2.zero, denominator, ref packingCoordinates);
+
+        return packingCoordinates; 
+        
+        void RecursiveCalculateFigurePositions(Vector2[] divisorOrder, int recursionDepth,
+            int figureIndex, Vector2 coordinates,
+            int dividedDenominator, ref Vector2[] packingOrder)
         {
-            return; 
-        }
-        if (recursionDepth >= packingOrder.Length)
-        {
-            SpawnFigure(figureParent, denominator, figureBasicOffset, figureSpacing, coordinates);
-            Debug.Log("spawningCoordinates: " + coordinates);
-        }
-        else
-        {
-            Vector2 primeFactor = packingOrder[recursionDepth]; 
-            
-            Debug.Log("coord" + coordinates + ", rD" + recursionDepth + ", pF" + primeFactor + " index" + figureIndex);
-            
-            coordinates *= primeFactor;
-            dividedDenominator /= (int) Mathf.Max(primeFactor.x, primeFactor.y);
-            
-            for (int i = 0; i < (int) Mathf.Max(primeFactor.x, primeFactor.y); i++)
+            if (recursionDepth >= divisorOrder.Length)
             {
-                RecursiveFigureSpawning(packingOrder, recursionDepth + 1, 
-                    minIndex, maxIndex, 
-                    figureIndex + dividedDenominator * i, 
-                    coordinates + (primeFactor.x > primeFactor.y ? Vector2.right : Vector2.down) * i, denominator, 
-                    dividedDenominator, figureParent, figureSpacing, figureBasicOffset);
+                packingOrder[figureIndex] = coordinates; 
+            }
+            else
+            {
+                Vector2 primeFactor = divisorOrder[recursionDepth];
+
+                Debug.Log("coord" + coordinates + ", rD" + recursionDepth + ", pF" + primeFactor + " index" + figureIndex);
+
+                coordinates *= primeFactor;
+                dividedDenominator /= (int)Mathf.Max(primeFactor.x, primeFactor.y);
+
+                for (int i = 0; i < (int)Mathf.Max(primeFactor.x, primeFactor.y); i++)
+                {
+                    RecursiveCalculateFigurePositions(divisorOrder, recursionDepth + 1,
+                        figureIndex + dividedDenominator * i,
+                        coordinates + (primeFactor.x > primeFactor.y ? Vector2.right : Vector2.down) * i,
+                        dividedDenominator, ref packingOrder);
+                }
             }
         }
     }
-    
-    public void SpawnFigure(GameObject parent, int denominator, 
-        Vector3 baseOffset, Vector3 spacing, Vector2 coordinates)
+
+    private void SpawnFigures(Transform figureParent, Vector2[] packingCoordinates, OffsetAndSpacing offsetAndSpacing, int minIndex, int maxIndex)
     {
-        GameObject figure = Instantiate(figurePrefabs[denominator], parent.transform); 
-        figure.transform.localPosition = baseOffset + new Vector3(coordinates.x * spacing.x, 0, coordinates.y * spacing.z);
+        figureParent.transform.DestroyAllChildren();
+        for (int i = minIndex; i < maxIndex; i++)
+        {
+            SpawnFigure(figureParent, figurePrefabs[packingCoordinates.Length], offsetAndSpacing, packingCoordinates[i]);
+        }
     }
     
+    public void SpawnFigure(Transform parent, GameObject figurePrefab, OffsetAndSpacing offsetAndSpacing,
+        Vector2 coordinates)
+    {
+        GameObject figure = Instantiate(figurePrefab, parent.transform);
+        figure.transform.localPosition = offsetAndSpacing.CalculatePosition(coordinates);
+        //updating visuals is done afterwards via the parent
+    }
+
+    public Vector2[] OrderPrimeFactors(Vector2[] unorderedDivisors, int numerator, int denominator) 
+    {
+        List<Vector2> numeratorDivisors = new List<Vector2>();
+        List<Vector2> notNumeratorDivisors = new List<Vector2>();
+        int numeratorCopy = numerator;
+        int denominatorCopy = denominator;
+
+        foreach (Vector2 primeFactor in unorderedDivisors)
+        {
+            int factor = (int)Mathf.Max(primeFactor.x, primeFactor.y);
+            if (numeratorCopy % factor == 0)
+            {
+                numeratorDivisors.Add(primeFactor);
+                numeratorCopy /= factor;
+            }
+            else
+            {
+                notNumeratorDivisors.Add(primeFactor);
+            }
+
+            denominatorCopy /= factor;
+        }
+
+        return notNumeratorDivisors.Concat(numeratorDivisors).ToArray();
+    }
+
     public void MoveFigureAfterOperation()
     {
-        throw new NotImplementedException(); 
+        throw new NotImplementedException();
     }
-    
-    //DEBUG & EDITOR HELPERS
-    public int debug_numerator;
-    public int debug_denominator;
 
-    [ContextMenu("Debug_StartRecursiveFigureSpawning")]
-    public void Debug_StartRecursiveFigureSpawning()
+    //DEBUG & EDITOR HELPERS
+    public Vector2[] debug_divisorOrder;
+    public Fraction debug_fraction;
+    public VisualisationInputType debug_VisInputType; 
+    
+    [ContextMenu("Debug_UpdateMainFraction")]
+    public void Debug_UpdateMainFraction()
     {
-        StartRecursiveFigureSpawning(fractionAFigureCollection, 0, debug_numerator, debug_denominator);
+        // UpdateCard(debug_NumberCardComponent); //TODO Test!
+    }
+
+    [ContextMenu("Debug_AddCardVisuals")]
+    public void Debug_AddCardVisuals()
+    {
+        AddVisuals(debug_VisInputType, debug_fraction);
     }
     
+    [ContextMenu("Debug_RemoveCardVisuals")]
+    public void Debug_RemoveCardVisuals()
+    {
+        RemoveVisuals(debug_VisInputType);
+    }
+
     [ContextMenu("Editor_GrabMeshesPrefabs")]
     public void Editor_GrabMeshesAndPrefabs()
     {
-        throw new NotImplementedException(); 
+        throw new NotImplementedException();
         // Mesh[] boardsMeshes = Resources.LoadAll<Mesh>(boardsPath);
         // GameObject[] figurePrefabs = Resources.LoadAll<GameObject>(figuresPath); 
         // UnityEngine.Object[] figureObjects = (GameObject[])AssetDatabase.LoadAllAssetsAtPath(figuresPath); 

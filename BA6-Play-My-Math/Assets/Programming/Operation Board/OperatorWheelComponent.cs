@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Programming.ExtensionMethods;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -72,7 +73,8 @@ namespace Programming.Operation_Board
             }
 
             UpdateOp();
-            GetComponentInParent<OperationBoardComponent>().UpdateVisual();
+            this.GetComponentInSiblings<FractionVisualizer>().RemoveVisuals(FractionVisualizer.VisualisationInputType.Operator);
+            this.GetComponentInSiblings<FractionVisualizer>().AddVisuals(FractionVisualizer.VisualisationInputType.Operator);
         }
 
         private void UpdateOp()

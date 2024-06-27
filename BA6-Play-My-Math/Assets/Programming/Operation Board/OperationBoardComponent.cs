@@ -21,14 +21,6 @@ namespace Programming.Operation_Board
             _operationWheel = transform.Find("Wheel").GetComponent<OperatorWheelComponent>();
         }
 
-        public void UpdateVisual()
-        {
-            _fractionVisualizer.UpdateVisuals(
-                _leftOperand._cardInSlot?.Value, 
-                _rightOperand._cardInSlot?.Value, 
-                _operationWheel.currentOperation); 
-        }
-
         private void OnValidate()
         {
             //UpdateVisual();

@@ -1,5 +1,6 @@
 using System;
 using Programming.Card_Mechanism;
+using Programming.ExtensionMethods;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -45,6 +46,7 @@ namespace Programming.Operation_Board {
                 return;
             }
 
+            FractionVisualizer visualizer = this.GetComponentInSiblings<FractionVisualizer>();
             if (_cardInSlot == null)
             {
                 _originSlot = droppedCard.GetComponentInParent<HandSlotComponent>();
@@ -53,8 +55,10 @@ namespace Programming.Operation_Board {
 
                 StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().MoveToNewParent());
                 StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().RotateToNewParent());
+
+                visualizer.RemoveVisuals(FractionVisualizer.VisualisationInputType.LeftOperand);
+                visualizer.AddVisuals(FractionVisualizer.VisualisationInputType.LeftOperand, droppedCardNumberComponent.Value); 
                 
-                GetComponentInParent<OperationBoardComponent>().UpdateVisual();
                 return;
             }
 
@@ -68,9 +72,10 @@ namespace Programming.Operation_Board {
 
             StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().MoveToNewParent());
             StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().RotateToNewParent());
-            GetComponentInParent<OperationBoardComponent>().UpdateVisual();
+            
+            visualizer.AddVisuals(FractionVisualizer.VisualisationInputType.LeftOperand, droppedCardNumberComponent.Value); 
         }
-
+        
         public void OnPointerEnter(PointerEventData eventData)
         {
             
