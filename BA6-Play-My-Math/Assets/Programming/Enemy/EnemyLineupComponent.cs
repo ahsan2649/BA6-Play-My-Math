@@ -37,7 +37,7 @@ namespace Programming.Enemy
         }
 
         [ContextMenu("Pop Enemy")]
-        public EnemyComponent PopEnemy()
+        public EnemyComponent EnemyPop()
         {
             if (_enemiesInLineup.Count == 0)
             {
