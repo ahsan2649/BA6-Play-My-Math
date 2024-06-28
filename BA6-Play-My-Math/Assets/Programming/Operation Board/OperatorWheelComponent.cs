@@ -76,8 +76,7 @@ namespace Programming.Operation_Board
             }
 
             UpdateOp();
-            this.GetComponentInSiblings<FractionVisualizer>().RemoveVisuals(FractionVisualizer.VisualisationInputType.Operator);
-            this.GetComponentInSiblings<FractionVisualizer>().AddVisuals(FractionVisualizer.VisualisationInputType.Operator);
+            //TODO Visual Update
         }
 
         private void UpdateOp()

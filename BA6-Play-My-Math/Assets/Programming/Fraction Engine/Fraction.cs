@@ -42,6 +42,10 @@ namespace Programming.Fraction_Engine
             return numerator == 1 && denominator == 1;
         }
 
+        public bool IsBetween(float a, float b)
+        {
+            return (float) numerator / denominator >= a && (float) numerator / denominator <= b; 
+        }
 
         #region Overrides
 
@@ -96,12 +100,33 @@ namespace Programming.Fraction_Engine
             return a.numerator * (lcm / a.denominator) < b.numerator * (lcm / b.denominator);
         }
 
+        public static bool operator <(Fraction a, int b)
+        {
+            return ((float)a.numerator / a.denominator) < b; 
+        }
+        
+        public static bool operator <(Fraction a, float b)
+        {
+            return ((float)a.numerator / a.denominator) < b; 
+        }
+        
         // GreaterThan
         public static bool operator >(Fraction a, Fraction b)
         { 
             int lcm = LeastCommonMultiple(a.denominator, b.denominator);
             return a.numerator * (lcm / a.denominator) > b.numerator * (lcm / b.denominator);
         }
+
+        public static bool operator >(Fraction a, int b)
+        {
+            return ((float)a.numerator / a.denominator) > b; 
+        }
+        
+        public static bool operator >(Fraction a, float b)
+        {
+            return ((float)a.numerator / a.denominator) > b; 
+        }
+        
 
         // Positive
         public static Fraction operator +(Fraction a) => a;

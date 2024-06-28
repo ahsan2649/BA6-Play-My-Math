@@ -53,9 +53,8 @@ namespace Programming.Operation_Board {
 
                 StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().MoveToNewParent());
                 StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().RotateToNewParent());
-
-                visualizer.RemoveVisuals(FractionVisualizer.VisualisationInputType.LeftOperand);
-                visualizer.AddVisuals(FractionVisualizer.VisualisationInputType.LeftOperand, droppedCardNumberComponent.Value); 
+                
+                //TODO Visualise
                 
                 return;
             }
@@ -71,7 +70,7 @@ namespace Programming.Operation_Board {
             StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().MoveToNewParent());
             StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().RotateToNewParent());
             
-            visualizer.AddVisuals(FractionVisualizer.VisualisationInputType.LeftOperand, droppedCardNumberComponent.Value); 
+            //TODO Visualise
         }
         
         public void OnPointerEnter(PointerEventData eventData)
