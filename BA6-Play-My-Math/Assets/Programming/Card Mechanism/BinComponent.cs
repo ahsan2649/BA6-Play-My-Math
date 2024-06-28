@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -5,6 +6,18 @@ using UnityEngine.EventSystems;
 namespace Programming.Card_Mechanism {
     public class BinComponent : MonoBehaviour, IDropHandler, IPointerEnterHandler {
         private List<BaseCardComponent> _disCards = new List<BaseCardComponent>();
+        public static BinComponent Instance { get; private set; }
+        private void OnEnable()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+            }
+        }
 
         public void PutCardInBin(BaseCardComponent baseCard)
         {
@@ -17,21 +30,20 @@ namespace Programming.Card_Mechanism {
 
         public void OnDrop(PointerEventData eventData)
         {
-            var playerHand = GameObject.Find("Player Hand").GetComponent<PlayerHandComponent>();
 
             var droppedCard = eventData.pointerDrag.GetComponent<BaseCardComponent>();
             var droppedCardSlot = droppedCard.GetComponentInParent<HandSlotComponent>();
             
             if (droppedCardSlot != null)
             {
-                playerHand.HandPop(ref droppedCardSlot);
+                PlayerHandComponent.Instance.HandPop(ref droppedCardSlot);
             }
             
             
             PutCardInBin(droppedCard);
             StartCoroutine(droppedCard.DiscardAnimation());
             
-            playerHand.HandPush(GameObject.Find("Deck").GetComponent<DeckComponent>().DeckPop());;
+            PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
         }
 
         public void OnPointerEnter(PointerEventData eventData)

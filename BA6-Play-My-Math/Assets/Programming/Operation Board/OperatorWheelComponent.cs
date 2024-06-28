@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Programming.ExtensionMethods;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -20,6 +21,7 @@ namespace Programming.Operation_Board
         Multiply,
         Divide,
     }
+    
     public class OperatorWheelComponent : MonoBehaviour, IBeginDragHandler,IDragHandler, IEndDragHandler
     {
         RectTransform _rectTransform;
@@ -31,13 +33,15 @@ namespace Programming.Operation_Board
         [SerializeField] GameObject Cylinder;
     
         Vector2 _dragStart, _dragEnd;
-        private void Awake()
+        private void OnEnable()
         {
             _rectTransform = GetComponent<RectTransform>();
             _canvas = GetComponent<Canvas>();
             _canvasGroup = GetComponent<CanvasGroup>();
             
             _canvas.worldCamera = Camera.main;
+            
+            UpdateOp();
         }
     
 
@@ -72,7 +76,8 @@ namespace Programming.Operation_Board
             }
 
             UpdateOp();
-            GetComponentInParent<OperationBoardComponent>().UpdateVisual();
+            this.GetComponentInSiblings<FractionVisualizer>().RemoveVisuals(FractionVisualizer.VisualisationInputType.Operator);
+            this.GetComponentInSiblings<FractionVisualizer>().AddVisuals(FractionVisualizer.VisualisationInputType.Operator);
         }
 
         private void UpdateOp()
