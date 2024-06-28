@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_BoardPattern
+  m_Name: M_BoardPattern_Enemy1
   m_Shader: {fileID: -6465566751694194690, guid: 973a7293a82bc494ebe882a299dd91cd,
     type: 3}
   m_Parent: {fileID: 0}
@@ -66,8 +66,8 @@ Material:
     - _Outline_Intensity: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _X_Amount: 4
-    - _Y_Amount: 4
+    - _X_Amount: 3
+    - _Y_Amount: 3
     m_Colors:
-    - _Outline_Color: {r: 0, g: 0.8893428, b: 1, a: 0}
+    - _Outline_Color: {r: 1, g: 0, b: 0.2712016, a: 0}
   m_BuildTextureStacks: []
