@@ -69,5 +69,5 @@ Material:
     - _X_Amount: 3
     - _Y_Amount: 3
     m_Colors:
-    - _Outline_Color: {r: 0, g: 0.8002429, b: 1, a: 0}
+    - _Outline_Color: {r: 0.5990566, g: 0.9198112, b: 1, a: 0}
   m_BuildTextureStacks: []
