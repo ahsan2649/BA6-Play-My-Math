@@ -13,7 +13,7 @@ namespace Programming.Enemy
             enemy.enabled = true;
         }
 
-        public EnemyComponent UnsetEnemy(EnemyComponent enemy)
+        public EnemyComponent UnsetEnemy()
         {
             var returningEnemy = _enemyInZone;
             _enemyInZone = null;

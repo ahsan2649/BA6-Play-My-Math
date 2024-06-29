@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Starting Deck
   m_EditorClassIdentifier: 
   numbers:
-  - numerator: 4
+  - numerator: 3
     denominator: 1
   - numerator: 4
     denominator: 1
@@ -26,7 +26,7 @@ MonoBehaviour:
   - numerator: 6
     denominator: 1
   - numerator: 8
-    denominator: 0
+    denominator: 1
   - numerator: 8
     denominator: 1
   - numerator: 8

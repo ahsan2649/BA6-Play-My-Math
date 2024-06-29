@@ -1,53 +1,52 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Programming.Enemy;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class EnemyZoneComponent : MonoBehaviour
-{
-    public static EnemyZoneComponent Instance { get; private set; }
-    [FormerlySerializedAs("cardSlots")] [SerializeField] private EnemySlotComponent[] enemySlots;
-
-    private void OnEnable()
+namespace Programming.Enemy {
+    public class EnemyZoneComponent : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-        
-        enemySlots = GetComponentsInChildren<EnemySlotComponent>();
-    }
+        public static EnemyZoneComponent Instance { get; private set; }
+        public EnemySlotComponent[] enemySlots;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        for (int i = 0; i < enemySlots.Length; i++)
+        private void OnEnable()
         {
-            ZonePush(EnemyLineupComponent.Instance.EnemyPop());
-        }
-    }
-
-    public void ZonePush(EnemyComponent enemy)
-    {
-        foreach (EnemySlotComponent slot in enemySlots)
-        {
-            if (slot.HasEnemy())
+            if (Instance != null && Instance != this)
             {
-                continue;
+                Destroy(this);
             }
-
-            if (enemy != null)
+            else
             {
-                slot.SetEnemy(enemy);
+                Instance = this;
             }
+            
+            
+            enemySlots = GetComponentsInChildren<EnemySlotComponent>();
+        }
 
-            break;
+        // Start is called before the first frame update
+        void Start()
+        {
+            for (int i = 0; i < enemySlots.Length; i++)
+            {
+                ZonePush(EnemyLineupComponent.Instance.EnemyPop());
+            }
+        }
+
+        public void ZonePush(EnemyComponent enemy)
+        {
+            foreach (EnemySlotComponent slot in enemySlots)
+            {
+                if (slot.HasEnemy())
+                {
+                    continue;
+                }
+
+                if (enemy != null)
+                {
+                    slot.SetEnemy(enemy);
+                    StartCoroutine(enemy.MoveToNewParent());
+                }
+
+                break;
+            }
         }
     }
 }

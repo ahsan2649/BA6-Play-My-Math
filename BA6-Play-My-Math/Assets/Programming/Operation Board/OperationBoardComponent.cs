@@ -1,5 +1,6 @@
 using System;
 using Programming.Card_Mechanism;
+using Programming.Enemy;
 using Programming.Fraction_Engine;
 using UnityEngine;
 
@@ -7,19 +8,17 @@ namespace Programming.Operation_Board
 {
     public class OperationBoardComponent : MonoBehaviour
     {
-        private OperandSlotComponent _leftOperand;
+        [SerializeField] OperandSlotComponent _leftOperand;
 
-        private OperandSlotComponent _rightOperand;
+        [SerializeField] OperandSlotComponent _rightOperand;
 
-        private OperatorWheelComponent _operationWheel;
+        [SerializeField] OperatorWheelComponent _operationWheel;
 
-        [SerializeField] private FractionVisualizer _fractionVisualizer;
+        [SerializeField] FractionVisualizer _fractionVisualizer;
 
         private void OnEnable()
         {
-            _leftOperand = transform.Find("LeftOperand").GetComponent<OperandSlotComponent>();
-            _rightOperand = transform.Find("RightOperand").GetComponent<OperandSlotComponent>();
-            _operationWheel = transform.Find("Wheel").GetComponent<OperatorWheelComponent>();
+
         }
         
         public void FinalizeOperation()
@@ -82,6 +81,32 @@ namespace Programming.Operation_Board
             
             PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
             Debug.Log(value);
+        }
+
+        public void AttackEnemy()
+        {
+            var attackCardNumber = _leftOperand._cardInSlot.Value;
+            foreach (var enemySlot in EnemyZoneComponent.Instance.enemySlots)
+            {
+                if (!enemySlot.HasEnemy())
+                {
+                    continue;
+                }
+
+                if (attackCardNumber == enemySlot.GetEnemy().Value)
+                {
+                    var destroyedEnemy = enemySlot.UnsetEnemy();
+                    Destroy(destroyedEnemy.gameObject);
+                    EnemyZoneComponent.Instance.ZonePush(EnemyLineupComponent.Instance.EnemyPop());
+
+                    var leftCard = _leftOperand._originSlot.UnsetCard();
+                    _leftOperand._originSlot = null;
+                    _leftOperand._cardInSlot = null;
+                    Destroy(leftCard.gameObject);
+                    
+                    PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
+                }
+            }
         }
     }
 }

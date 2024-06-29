@@ -2,17 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Programming.ExtensionMethods;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Programming.Operation_Board
 {
-    [Serializable]
-    public class OperationTextPair
-    {
-        public Operation operation;
-        public GameObject value;
-    }
     public enum Operation
     {
         Nop,
@@ -27,9 +23,9 @@ namespace Programming.Operation_Board
         RectTransform _rectTransform;
         Canvas _canvas;
         CanvasGroup _canvasGroup;
-        [SerializeField] List<OperationTextPair> _operationTextPairs;
+ 
         public Operation currentOperation = Operation.Nop;
-
+        [SerializeField] private TextMeshProUGUI OperationText;
         [SerializeField] GameObject Cylinder;
     
         Vector2 _dragStart, _dragEnd;
@@ -81,14 +77,14 @@ namespace Programming.Operation_Board
 
         private void UpdateOp()
         {
-            foreach (var pair in _operationTextPairs)
-            {
-                pair.value?.SetActive(false);
-                if (currentOperation == pair.operation)
-                {
-                    pair.value?.SetActive(true);
-                }
-            }
+            OperationText.text = currentOperation switch {
+                Operation.Nop => "Nop",
+                Operation.Add => "+",
+                Operation.Subtract => "-",
+                Operation.Multiply => "\u00d7",
+                Operation.Divide => "\u00f7",
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
 
         private void ShiftOp(bool direction)
@@ -117,18 +113,18 @@ namespace Programming.Operation_Board
 
         public IEnumerator RotateDown()
         {
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 9; i++)
             {
-                Cylinder.transform.Rotate(Vector3.right, -3f, Space.World);
-                yield return new WaitForSeconds(1f / 30f);
+                Cylinder.transform.Rotate(Vector3.right, -10f, Space.World);
+                yield return new WaitForSeconds(1f / 60f);
             }
         }
         public IEnumerator RotateUp()
         {
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 9; i++)
             {
-                Cylinder.transform.Rotate(Vector3.right, 3f, Space.World);
-                yield return new WaitForSeconds(1f / 30f);
+                Cylinder.transform.Rotate(Vector3.right, 10f, Space.World);
+                yield return new WaitForSeconds(1f / 60f);
             }
         }
 

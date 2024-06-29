@@ -31,6 +31,7 @@ namespace Programming.Enemy
                     var newEnemy =
                         GameObject.Instantiate(enemyPrefab, transform.position, Quaternion.identity, transform);
                     newEnemy.GetComponent<EnemyComponent>().Value = value;
+                    newEnemy.GetComponent<EnemyComponent>().UpdateDisplay();
                     _enemiesInLineup.Add(newEnemy.GetComponent<EnemyComponent>());
                 }
             }
