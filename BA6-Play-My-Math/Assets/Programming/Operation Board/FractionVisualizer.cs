@@ -1,5 +1,3 @@
-// #define GetFactor(Vector2 primeFactor) (int)Mathf.Max(primeFactor.x, primeFactor.y)
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +5,6 @@ using Programming.ExtensionMethods;
 using Programming.Fraction_Engine;
 using Programming.Operation_Board;
 using UnityEngine;
-using UnityEngine.Serialization;
-
-//TODO: fix bug where one Fraction somehow sets the value of the other Fraction
 
 public class FractionVisualizer : MonoBehaviour
 {
@@ -23,8 +18,18 @@ public class FractionVisualizer : MonoBehaviour
     }
 
     [Serializable]
-    public class Vector2Array
+    public struct Vector2Array
     {
+        public Vector2Array(Vector2[] factors)
+        {
+            this.factors = factors;
+        }
+
+        public Vector2Array(List<Vector2> factors)
+        {
+            this.factors = factors.ToArray();
+        }
+
         public Vector2[] factors;
     }
 
@@ -79,10 +84,9 @@ public class FractionVisualizer : MonoBehaviour
     [SerializeField] private FractionVisualiserFigureParent rightVisualParent;
     [SerializeField] private FractionVisualiserFigureParent rightChangeVisualParent;
 
-    [SerializeField] private MeshFilter boardMeshFilter;
+    [SerializeField] private MeshRenderer boardRenderer;
 
     //EDITOR VARIABLES
-    [SerializeField] private Mesh[] boardMeshes;
     [SerializeField] private GameObject[] figurePrefabs;
     [SerializeField] private Vector2Array[] numbersToPrimeFactors;
     [SerializeField] private Vector3 boardSize;
@@ -97,13 +101,15 @@ public class FractionVisualizer : MonoBehaviour
     //MONOBEHAVIOUR FUNCTIONS
     private void Awake()
     {
+        transform.DestroyAllGrandChildren();
     }
 
     public void VisualiseOperation(Operation operation)
     {
         _operation = operation;
 
-        if (!(VisualisationDataMap.ContainsKey(VisualisationType.Left) && VisualisationDataMap.ContainsKey(VisualisationType.Right)))
+        if (!(VisualisationDataMap.ContainsKey(VisualisationType.Left) &&
+              VisualisationDataMap.ContainsKey(VisualisationType.Right)))
         {
             return;
         }
@@ -114,32 +120,27 @@ public class FractionVisualizer : MonoBehaviour
     //OWN FUNCTIONS
     public void VisualiseFraction(Fraction fraction, VisualisationType visualisationType)
     {
-        if (fraction.Equals(null))
-        {
-            return;
-        }
-        
         switch (visualisationType)
         {
             case VisualisationType.Left:
                 VisualiseLeftCard(fraction);
                 if (VisualisationDataMap.ContainsKey(VisualisationType.Right))
                 {
-                    VisualiseRightCard(VisualisationDataMap[VisualisationType.Right].Fraction);
+                    VisualiseRightCard(VisualisationDataMap[VisualisationType.Right].Fraction); 
                 }
-                break; 
+                break;
             case VisualisationType.Right:
                 VisualiseRightCard(fraction);
-                break; 
+                break;
             case VisualisationType.LeftChange:
-                throw new NotImplementedException(); 
-                break; 
+                throw new NotImplementedException();
+                break;
             case VisualisationType.RightChange:
-                throw new NotImplementedException(); 
-                break; 
+                throw new NotImplementedException();
+                break;
             case VisualisationType.NONE:
-                throw new NotSupportedException(); 
-                break; 
+                throw new NotSupportedException();
+                break;
         }
     }
 
@@ -150,11 +151,13 @@ public class FractionVisualizer : MonoBehaviour
             VisualisationDataMap[VisualisationType.Left].VisualisationParent.transform.DestroyAllChildren();
             VisualisationDataMap.Remove(VisualisationType.Left);
         }
-        if (fraction.Equals(null))
+
+        if (fraction is null)
         {
+            UpdateBoard(Vector2.one);
             return;
         }
-        
+
         FractionVisualisationData visualisationData =
             new FractionVisualisationData(
                 fraction,
@@ -162,12 +165,14 @@ public class FractionVisualizer : MonoBehaviour
                 fraction.Numerator,
                 leftVisualParent,
                 new OffsetAndSpacing(numbersToPrimeFactors[fraction.Denominator].factors, boardSize),
-                CalculatePackingCoordinates(fraction) 
+                CalculatePackingCoordinates(fraction)
             );
 
         VisualisationDataMap.Add(VisualisationType.Left, visualisationData);
-        
+
         SpawnFigures(visualisationData);
+
+        UpdateBoard(visualisationData.OffsetAndSpacing.columnsAndRows);
     }
 
     private void VisualiseRightCard(Fraction fraction)
@@ -177,22 +182,33 @@ public class FractionVisualizer : MonoBehaviour
             VisualisationDataMap[VisualisationType.Right].VisualisationParent.transform.DestroyAllChildren();
             VisualisationDataMap.Remove(VisualisationType.Right);
         }
-        
+
+        if (fraction is null)
+        {
+            return; 
+        }
+
         //Deleting for replacement / removing of cards
         Operation operationCopy = _operation;
         int minIndex = 0;
         int maxIndex = 0;
-        
+
         //checking for leftCard
-        FractionVisualisationData leftData; 
+        FractionVisualisationData leftData;
         Fraction leftFraction = null;
         if (VisualisationDataMap.TryGetValue(VisualisationType.Left, out leftData))
         {
-            leftFraction = leftData.Fraction; 
+            leftFraction = leftData.Fraction;
         }
         else
         {
             leftFraction = new Fraction(0, 1); //needs a value to avoid compilation errpr
+            operationCopy = Operation.Nop;
+        }
+
+        if ((_operation == Operation.Add || _operation == Operation.Subtract) && 
+            leftFraction.Denominator != fraction.Denominator)
+        {
             operationCopy = Operation.Nop;
         }
 
@@ -211,48 +227,59 @@ public class FractionVisualizer : MonoBehaviour
                 packingCoordinates = CalculatePackingCoordinates(fraction);
                 break;
             case Operation.Add:
-                if (!(fraction + leftFraction).IsBetween(0, 1))
+                if (!(leftFraction + fraction).IsBetween(0, 1))
                 {
-                    throw new NotImplementedException();
+                    Debug.LogError(leftFraction + " + " + fraction + " = " + (leftFraction / fraction) +
+                                   " is not between 0 and 1 -> not yet implemented");
+                    return;
                 }
+
                 minIndex = leftFraction.Numerator;
                 maxIndex = leftFraction.Numerator + fraction.Numerator;
                 offsetAndSpacing = leftData.OffsetAndSpacing;
                 packingCoordinates = leftData.PackingCoordinates;
                 break;
             case Operation.Subtract:
-                if (!(fraction - leftFraction).IsBetween(0, 1))
+                if (!(leftFraction - fraction).IsBetween(0, 1))
                 {
-                    throw new NotImplementedException();
+                    Debug.LogError(leftFraction + " - " + fraction + " = " + (leftFraction / fraction) +
+                                   " is not between 0 and 1 -> not yet implemented");
+                    return;
                 }
+
                 minIndex = leftFraction.Numerator - fraction.Numerator;
                 maxIndex = leftFraction.Numerator;
                 offsetAndSpacing = leftData.OffsetAndSpacing;
                 packingCoordinates = leftData.PackingCoordinates;
                 break;
             case Operation.Multiply:
-                if (!(fraction * leftFraction).IsBetween(0, 1))
+                if (!(leftFraction * fraction).IsBetween(0, 1))
                 {
-                    throw new NotImplementedException();
+                    Debug.LogError(leftFraction + " * " + fraction + " = " + (leftFraction / fraction) +
+                                   " is not between 0 and 1 -> not yet implemented");
+                    return;
                 }
+
                 minIndex = 0;
                 maxIndex = leftFraction.Numerator * fraction.Numerator;
                 offsetAndSpacing = new OffsetAndSpacing(
-                    numbersToPrimeFactors[leftFraction.Denominator].factors.Concat(
-                        numbersToPrimeFactors[fraction.Denominator].factors).ToArray(),
+                    numbersToPrimeFactors[leftFraction.Denominator * fraction.Denominator].factors,
                     boardSize);
+                Debug.Log(leftFraction * fraction);
                 packingCoordinates = CalculatePackingCoordinates(leftFraction * fraction);
                 break;
             case Operation.Divide:
-                if (!(fraction / leftFraction).IsBetween(0, 1))
+                if (!(leftFraction / fraction).IsBetween(0, 1))
                 {
-                    throw new NotImplementedException();
+                    Debug.LogError(leftFraction + "/ " + fraction + " = " + (leftFraction / fraction) +
+                                   " is not between 0 and 1 -> not yet implemented");
+                    return;
                 }
+
                 minIndex = 0;
                 maxIndex = leftFraction.Numerator * fraction.Denominator;
                 offsetAndSpacing = new OffsetAndSpacing(
-                    numbersToPrimeFactors[leftFraction.Denominator].factors.Concat(
-                        numbersToPrimeFactors[fraction.Numerator].factors).ToArray(),
+                    numbersToPrimeFactors[leftFraction.Denominator * fraction.Numerator].factors.ToArray(),
                     boardSize);
                 packingCoordinates = CalculatePackingCoordinates(leftFraction / fraction);
                 break;
@@ -272,6 +299,12 @@ public class FractionVisualizer : MonoBehaviour
 
         VisualisationDataMap.Add(VisualisationType.Right, visualisationData);
         SpawnFigures(visualisationData);
+    }
+
+    private void UpdateBoard(Vector2 columnsAndRows)
+    {
+        boardRenderer.materials[0].SetFloat("_X_Amount", columnsAndRows.x);
+        boardRenderer.materials[0].SetFloat("_Y_Amount", columnsAndRows.y);
     }
 
     //TODO: Expand, Shorten & Operator
@@ -304,8 +337,7 @@ public class FractionVisualizer : MonoBehaviour
             {
                 Vector2 primeFactor = divisorOrder[recursionDepth];
 
-                Debug.Log("coord" + coordinates + ", rD" + recursionDepth + ", pF" + primeFactor + " index" +
-                          figureIndex);
+                // Debug.Log("coord" + coordinates + ", rD" + recursionDepth + ", pF" + primeFactor + " index" + figureIndex);
 
                 coordinates *= primeFactor;
                 dividedDenominator /= (int)Mathf.Max(primeFactor.x, primeFactor.y);
@@ -321,38 +353,41 @@ public class FractionVisualizer : MonoBehaviour
         }
     }
 
-    private void SpawnFigures(Transform figureParent, Vector2[] packingCoordinates, OffsetAndSpacing offsetAndSpacing,
-        int minIndex, int maxIndex)
-    {
-        figureParent.transform.DestroyAllChildren();
-        for (int i = minIndex; i < maxIndex; i++)
-        {
-            SpawnFigure(figureParent, figurePrefabs[packingCoordinates.Length], offsetAndSpacing,
-                packingCoordinates[i]);
-        }
-    }
-
     private void SpawnFigures(FractionVisualisationData visualisationData)
     {
         visualisationData.VisualisationParent.transform.DestroyAllChildren();
         for (int i = visualisationData.MinIndex; i < visualisationData.MaxIndex; i++)
         {
-            SpawnFigure(
-                visualisationData.VisualisationParent.transform,
-                figurePrefabs[visualisationData.PackingCoordinates.Length],
-                visualisationData.OffsetAndSpacing,
-                visualisationData.PackingCoordinates[i]);
+            if (visualisationData.PackingCoordinates.Length <= 12)
+            {
+                SpawnFigure(
+                    visualisationData.VisualisationParent.transform,
+                    figurePrefabs[visualisationData.PackingCoordinates.Length],
+                    visualisationData.OffsetAndSpacing,
+                    visualisationData.PackingCoordinates[i]);
+            }
+            else
+            {
+                GameObject newFigure = SpawnFigure(
+                    visualisationData.VisualisationParent.transform,
+                    figurePrefabs[0],
+                    visualisationData.OffsetAndSpacing,
+                    visualisationData.PackingCoordinates[i]);
+                Vector3 spacing = visualisationData.OffsetAndSpacing.figureSpacing; 
+                newFigure.transform.localScale = new Vector3(spacing.x * 0.75f / boardSize.x, 3, spacing.z * 0.75f / boardSize.z); 
+            }
         }
 
         visualisationData.VisualisationParent.UpdateChildrenVisuals();
     }
 
-    public void SpawnFigure(Transform parent, GameObject figurePrefab, OffsetAndSpacing offsetAndSpacing,
+    public GameObject SpawnFigure(Transform parent, GameObject figurePrefab, OffsetAndSpacing offsetAndSpacing,
         Vector2 coordinates)
     {
         GameObject figure = Instantiate(figurePrefab, parent.transform);
         figure.transform.localPosition = offsetAndSpacing.CalculatePosition(coordinates);
         //updating visuals is done afterwards via the parent
+        return figure; 
     }
 
     public Vector2[] OrderPrimeFactors(Vector2[] unorderedDivisors, int numerator, int denominator)
@@ -388,19 +423,96 @@ public class FractionVisualizer : MonoBehaviour
 
     //DEBUG & EDITOR HELPERS
     public Vector2[] debug_divisorOrder;
-    public Fraction debug_fraction;
-    public VisualisationType debug_VisInputType;
+    public Fraction debug_leftFraction;
+    public Fraction debug_rightFraction;
+    public Vector2 columnsAndRows;
     public Operation debug_operation;
+    public int Editor_PrimeFactorGenerationMax;
 
-    [ContextMenu("Debug_UpdateFraction")]
+    [ContextMenu("Editor_GeneratePrimeFactorsForNumbers")]
+    public void Editor_GeneratePrimeFactorsForNumbers()
+    {
+        List<int> primeNumbers = new List<int>{2, 3};
+
+        numbersToPrimeFactors = new Vector2Array[Editor_PrimeFactorGenerationMax];
+        numbersToPrimeFactors[0] = new Vector2Array();
+        numbersToPrimeFactors[1] = new Vector2Array(new Vector2[] { new(1, 1) });
+        numbersToPrimeFactors[2] = new Vector2Array(new Vector2[] { new(1, 2) });
+        numbersToPrimeFactors[3] = new Vector2Array(new Vector2[] { new(3, 1) });
+        numbersToPrimeFactors[4] = new Vector2Array(new Vector2[] { new(1, 2), new (2, 1) });
+
+        for (int i = 5; i < Editor_PrimeFactorGenerationMax; i++)
+        {
+            numbersToPrimeFactors[i] =
+                new Vector2Array(FindPrimeFactorsForNumber(i, primeNumbers));
+            if (numbersToPrimeFactors[i].factors.Length == 1)
+            {
+                primeNumbers.Add(i);
+            }
+        }
+
+        List<Vector2> FindPrimeFactorsForNumber(int number, List<int> primeNumbersToCheck)
+        {
+            int dividedNumber = number;
+            List<Vector2> primeFactors = new List<Vector2>();
+            bool horizontal = true;
+            //checking 2 seperately because it's the only one that starts vertically
+            if (dividedNumber % 2 == 0)
+            {
+                dividedNumber /= 2;
+                primeFactors.Add(new Vector2(1, 2));
+                //horizontal = true; 
+            }
+            foreach (int prime in primeNumbersToCheck)
+            {
+                while (dividedNumber % prime == 0)
+                {
+                    dividedNumber /= prime;
+                    primeFactors.Add(horizontal ? new Vector2(prime, 1) : new Vector2(1, prime));
+                    horizontal = !horizontal;
+                }
+            }
+
+            if (primeFactors.Count == 0)
+            {
+                primeFactors.Add(horizontal? new Vector2(number, 1) : new Vector2(1, number));
+            }
+
+            return primeFactors;
+        }
+    }    
+    
+    [ContextMenu("Debug_UpdateVisuals")]
     public void Debug_UpdateFraction()
     {
-        VisualiseFraction(debug_fraction, debug_VisInputType);
+        transform.DestroyAllGrandChildren();
+        _operation = debug_operation; 
+        
+        if (debug_leftFraction.Denominator == 0)
+        {
+            VisualiseFraction(null, VisualisationType.Left);
+        }
+        else
+        {
+            VisualiseFraction(debug_leftFraction, VisualisationType.Left);
+        }
+        
+        if (debug_rightFraction.Denominator == 0)
+        {
+            VisualiseFraction(null, VisualisationType.Right);
+        }
+        else
+        {
+            VisualiseFraction(debug_rightFraction, VisualisationType.Right);
+        }
     }
 
-    [ContextMenu("Debug_UpdateOperator")]
-    public void Debug_UpdateOperator()
+    [ContextMenu("Debug_PrintFractions")]
+    public void Debug_PrintFractions()
     {
-        VisualiseOperation(debug_operation);
+        foreach (FractionVisualisationData vd in VisualisationDataMap.Values)
+        {
+            Debug.Log(vd.Fraction);
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace Programming.Operation_Board
         [Serializable]
         public struct FiguresVisualData
         {
-            public Material figureMaterial;    
+            public Material figureMaterial;   
         }
 
         public FiguresVisualData visualData; 

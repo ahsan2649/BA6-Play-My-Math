@@ -20,6 +20,14 @@ namespace Programming.ExtensionMethods
             }
         }
 
+        public static void DestroyAllGrandChildren(this Transform transform)
+        {
+            foreach (Transform child in transform)
+            {
+                child.DestroyAllChildren();
+            }
+        }
+
         public static MonoBehaviour GetMonoBehaviourFromSibling(this Transform transform)
         {
             return transform.parent.GetComponentInChildren<MonoBehaviour>(); 

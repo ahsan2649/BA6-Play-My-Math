@@ -1335,6 +1335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _originSlot: {fileID: 0}
   _cardInSlot: {fileID: 0}
+  _leftOrRightOperand: 0
 --- !u!1 &786440917
 GameObject:
   m_ObjectHideFlags: 0
@@ -3349,6 +3350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _originSlot: {fileID: 0}
   _cardInSlot: {fileID: 0}
+  _leftOrRightOperand: 0
 --- !u!1 &1742044391
 GameObject:
   m_ObjectHideFlags: 0
@@ -3378,9 +3380,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af72e15b7e54f724f81c62ba5295f995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingDeck: {fileID: 11400000, guid: ca41782fe37a562438b66eac8f67c61b, type: 2}
   numberCardPrefab: {fileID: 4476395966626981575, guid: 46ec8f4777f7d78408077aa7b4db821d,
     type: 3}
-  _startingDeck: {fileID: 11400000, guid: ca41782fe37a562438b66eac8f67c61b, type: 2}
 --- !u!4 &1742044393
 Transform:
   m_ObjectHideFlags: 0
@@ -3425,6 +3427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5e7b8ddd7527d49af0cdff2348bf38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardSlots: []
 --- !u!4 &1780062381
 Transform:
   m_ObjectHideFlags: 0
