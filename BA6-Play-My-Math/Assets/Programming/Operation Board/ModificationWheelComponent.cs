@@ -157,7 +157,7 @@ namespace Programming.Operation_Board {
             }
 
             var draggedCardNumber = draggedCard.GetComponent<NumberCardComponent>();
-            if (draggedCardNumber.Value.IsWhole())
+            if (draggedCardNumber.Value.IsWhole() && !draggedCardNumber.Value.IsOne())
             {
                 return;
             }
