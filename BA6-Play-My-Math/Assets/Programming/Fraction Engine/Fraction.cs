@@ -186,7 +186,7 @@ namespace Programming.Fraction_Engine
         // Multiply
         public static Fraction operator *(Fraction a, Fraction b)
             => new Fraction(a.numerator * b.numerator, a.denominator * b.denominator);
-    
+
         // Divide
         public static Fraction operator /(Fraction a, Fraction b)
         {
@@ -223,11 +223,15 @@ namespace Programming.Fraction_Engine
             int gcd = GreatestCommonDivisor(numerator, denominator);
             return SimplifyBy(gcd);
         }
-        
 
+        public bool CanSimplifyBy(int value)
+        {
+            return Numerator % value == 0 && Denominator % value == 0; 
+        }
+        
         public Fraction SimplifyBy(int value)
         {
-            if (Numerator % value != 0 || Denominator % value != 0)
+            if (!CanSimplifyBy(value))
             {
                 return this;
             }

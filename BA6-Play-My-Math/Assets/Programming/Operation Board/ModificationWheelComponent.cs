@@ -14,7 +14,8 @@ namespace Programming.Operation_Board {
         Seven = 7,
     }
 
-    enum ModifyType {
+    public enum ModifyType {
+        None, 
         Simplify,
         Expand
     }
