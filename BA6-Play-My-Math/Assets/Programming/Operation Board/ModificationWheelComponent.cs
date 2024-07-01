@@ -1,25 +1,13 @@
 using System;
 using System.Collections;
 using Programming.Card_Mechanism;
+using Programming.Fraction_Engine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
 namespace Programming.Operation_Board {
-    enum ModifyValue {
-        Two = 2,
-        Three = 3,
-        Five = 5,
-        Seven = 7,
-    }
-
-    public enum ModifyType {
-        None, 
-        Simplify,
-        Expand
-    }
-
     public class ModificationWheelComponent : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler {
         [SerializeField] ModifyType _modifyType;
         [SerializeField] ModifyValue _currentModifyValue;

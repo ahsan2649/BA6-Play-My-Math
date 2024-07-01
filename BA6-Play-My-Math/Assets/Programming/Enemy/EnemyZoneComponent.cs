@@ -42,7 +42,7 @@ namespace Programming.Enemy {
                 if (enemy != null)
                 {
                     slot.SetEnemy(enemy);
-                    StartCoroutine(enemy.MoveToNewParent());
+                    // StartCoroutine(enemy.MoveToNewParent());
                 }
 
                 break;

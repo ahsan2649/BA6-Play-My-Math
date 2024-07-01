@@ -1,9 +1,12 @@
+using Programming.Operation_Board;
 using UnityEngine;
 
 namespace Programming.Enemy
 {
     public class EnemySlotComponent : MonoBehaviour
     {
+        [SerializeField] private FractionVisualizer _visualizer; 
+        
         private EnemyComponent _enemyInZone;
 
         public void SetEnemy(EnemyComponent enemy)
@@ -11,6 +14,7 @@ namespace Programming.Enemy
             _enemyInZone = enemy;
             enemy.transform.SetParent(transform);
             enemy.enabled = true;
+            _visualizer.VisualiseFraction(_enemyInZone.Value, FractionVisualizer.VisualisationType.Left);
         }
 
         public EnemyComponent UnsetEnemy()

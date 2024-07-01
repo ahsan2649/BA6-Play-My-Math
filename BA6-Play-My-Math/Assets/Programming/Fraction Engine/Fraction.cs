@@ -3,6 +3,28 @@ using UnityEngine;
 
 namespace Programming.Fraction_Engine
 {
+    public enum ModifyType {
+        None, 
+        Simplify,
+        Expand
+    }
+    
+    public enum Operation
+    {
+        Nop,
+        Add,
+        Subtract,
+        Multiply,
+        Divide,
+    }
+
+    public enum ModifyValue {
+        Two = 2,
+        Three = 3,
+        Five = 5,
+        Seven = 7,
+    }
+    
     [Serializable]
     public class Fraction
     {

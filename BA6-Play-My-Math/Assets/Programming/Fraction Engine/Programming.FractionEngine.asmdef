@@ -1,7 +1,9 @@
 {
     "name": "Programming.Fraction",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:c43d4a961dead0c4a90182630fda708a"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

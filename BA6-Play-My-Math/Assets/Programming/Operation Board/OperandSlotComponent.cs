@@ -11,7 +11,7 @@ namespace Programming.Operation_Board {
         public NumberCardComponent _cardInSlot;
 
         public FractionVisualizer.VisualisationType _leftOrRightOperand; 
-
+        
         private void OnEnable()
         {
         }

@@ -246,16 +246,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2100000, guid: 968d1def8fac1034dbb542bbcd8c6e4a, type: 2}
     - target: {fileID: -7511558181221131132, guid: 0363f0e3a27acfd449f83b411b563a1b,
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2100000, guid: 4c6641b14b5d8c84193b79c9efd2dae9, type: 2}
     - target: {fileID: 919132149155446097, guid: 0363f0e3a27acfd449f83b411b563a1b,
         type: 3}
       propertyPath: m_Name
-      value: DisplayArea
+      value: PlayerDisplayArea
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

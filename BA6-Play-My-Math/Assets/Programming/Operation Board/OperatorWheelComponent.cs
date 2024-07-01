@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Programming.ExtensionMethods;
+using Programming.Fraction_Engine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,15 +10,6 @@ using UnityEngine.UI;
 
 namespace Programming.Operation_Board
 {
-    public enum Operation
-    {
-        Nop,
-        Add,
-        Subtract,
-        Multiply,
-        Divide,
-    }
-    
     public class OperatorWheelComponent : MonoBehaviour, IBeginDragHandler,IDragHandler, IEndDragHandler
     {
         RectTransform _rectTransform;
