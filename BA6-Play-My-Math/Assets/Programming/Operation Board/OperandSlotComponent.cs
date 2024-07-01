@@ -1,14 +1,16 @@
-using System;
 using Programming.Card_Mechanism;
-using Programming.ExtensionMethods;
+using Programming.Fraction_Engine;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 namespace Programming.Operation_Board
 {
     public class OperandSlotComponent : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
     {
+        RectTransform _rectTransform;
+        Canvas _canvas;
+        CanvasGroup _canvasGroup;
+        
         [HideInInspector] public HandSlotComponent _originSlot;
 
 
@@ -19,6 +21,7 @@ namespace Programming.Operation_Board
             {
                 _cardInSlot = value;
                 OperationBoardComponent.Instance._fractionVisualizer.VisualiseFraction(CardInSlot?.Value, visType);
+                FightButtonComponent.Instance.EnableFighting(value != null ? value.Value : new Fraction(0, 1));
             }
         }
 
@@ -26,6 +29,15 @@ namespace Programming.Operation_Board
 
         [SerializeField] [HideInInspector] private NumberCardComponent _cardInSlot;
 
+        private void OnEnable()
+        {
+            _rectTransform = GetComponent<RectTransform>();
+            _canvas = GetComponent<Canvas>();
+            _canvasGroup = GetComponent<CanvasGroup>();
+            
+            _canvas.worldCamera = Camera.main;
+        }
+        
         void Start()
         {
             Debug.Log("OperandSlot working!");

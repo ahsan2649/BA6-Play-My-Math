@@ -510,7 +510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af72e15b7e54f724f81c62ba5295f995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingDeck: {fileID: 0}
+  startingDeck: {fileID: 11400000, guid: ca41782fe37a562438b66eac8f67c61b, type: 2}
   numberCardPrefab: {fileID: 4476395966626981575, guid: 46ec8f4777f7d78408077aa7b4db821d,
     type: 3}
 --- !u!4 &94918440
@@ -2012,6 +2012,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86848797fa371ae419f137ebfc8f2c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _leftOperand: {fileID: 0}
+  _rightOperand: {fileID: 0}
+  _operationWheel: {fileID: 0}
   _fractionVisualizer: {fileID: 0}
 --- !u!1 &339456408
 GameObject:
@@ -4375,6 +4378,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _originSlot: {fileID: 0}
+  visType: 1
   _cardInSlot: {fileID: 0}
 --- !u!225 &1134920069
 CanvasGroup:
@@ -4484,18 +4488,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ae17dd5f8a2ad4f8febff1a281fcfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _operationTextPairs:
-  - operation: 0
-    value: {fileID: 38932457}
-  - operation: 1
-    value: {fileID: 2142875961}
-  - operation: 2
-    value: {fileID: 1259967488}
-  - operation: 3
-    value: {fileID: 2054521295}
-  - operation: 4
-    value: {fileID: 749352848}
   currentOperation: 0
+  OperationText: {fileID: 0}
   Cylinder: {fileID: 668871392}
 --- !u!114 &1171034652
 MonoBehaviour:
@@ -5578,18 +5572,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ae17dd5f8a2ad4f8febff1a281fcfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _operationTextPairs:
-  - operation: 0
-    value: {fileID: 1812230934}
-  - operation: 1
-    value: {fileID: 183503712}
-  - operation: 2
-    value: {fileID: 1827549661}
-  - operation: 3
-    value: {fileID: 2080121869}
-  - operation: 4
-    value: {fileID: 93086675}
   currentOperation: 0
+  OperationText: {fileID: 0}
   Cylinder: {fileID: 1631844774}
 --- !u!114 &1396812432
 MonoBehaviour:
@@ -7957,6 +7941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _originSlot: {fileID: 0}
+  visType: 3
   _cardInSlot: {fileID: 0}
 --- !u!225 &1916904033
 CanvasGroup:
@@ -8713,18 +8698,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ae17dd5f8a2ad4f8febff1a281fcfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _operationTextPairs:
-  - operation: 0
-    value: {fileID: 1032029100}
-  - operation: 1
-    value: {fileID: 732696846}
-  - operation: 2
-    value: {fileID: 1356146502}
-  - operation: 3
-    value: {fileID: 1949253572}
-  - operation: 4
-    value: {fileID: 1640635829}
   currentOperation: 0
+  OperationText: {fileID: 0}
   Cylinder: {fileID: 458666938}
 --- !u!114 &2020451923
 MonoBehaviour:
@@ -9105,7 +9080,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5e7b8ddd7527d49af0cdff2348bf38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSlots: []
+  cardSlots:
+  - {fileID: 1750964588}
+  - {fileID: 1382718483}
+  - {fileID: 98724696}
+  - {fileID: 1212459918}
 --- !u!4 &2073567926
 Transform:
   m_ObjectHideFlags: 0

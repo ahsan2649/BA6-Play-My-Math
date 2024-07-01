@@ -9,7 +9,7 @@ namespace Programming.Card_Mechanism
         public void SetCard(BaseCardComponent baseCard)
         {
             _baseCardInSlot = baseCard;
-            baseCard.transform.SetParent(transform, true);
+            baseCard.transform.SetParent(transform);
             baseCard.enabled = true;
         }
 

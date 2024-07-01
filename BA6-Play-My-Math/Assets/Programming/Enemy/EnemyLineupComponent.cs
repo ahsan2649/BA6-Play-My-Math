@@ -24,9 +24,11 @@ namespace Programming.Enemy
             }
 
             // Need to populate enemies with Vin's generation algorithm
-            foreach (Fraction value in enemyLineup == null ? 
-                     LevelGeneration.generateEnemyCue(10) : 
-                     enemyLineup.enemyList)
+
+            foreach (Fraction value in
+                     (enemyLineup == null || enemyLineup.enemyList.Count == 0)
+                         ? LevelGeneration.generateEnemyCue(10)
+                         : enemyLineup.enemyList)
             {
                 var newEnemy =
                     GameObject.Instantiate(enemyPrefab, transform.position, Quaternion.identity, transform);
