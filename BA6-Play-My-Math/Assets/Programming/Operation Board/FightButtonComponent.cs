@@ -53,7 +53,7 @@ public class FightButtonComponent : MonoBehaviour, IPointerClickHandler
                 continue;
             }
 
-            if (enemySlot.GetEnemy().Value == value)
+            if (enemySlot.GetEnemy().Value.Denominator == value.Denominator && enemySlot.GetEnemy().Value.Numerator == value.Numerator)
             {
                 gameObject.SetActive(true);
                 break; 
