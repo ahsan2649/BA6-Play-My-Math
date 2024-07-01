@@ -9,6 +9,8 @@ namespace Programming.Card_Mechanism {
         Canvas _canvas;
         CanvasGroup _canvasGroup;
 
+        [SerializeField] private float MoveDelta, RotateDelta, MoveSpeed, RotateSpeed, ScaleSpeed;
+
         private void OnEnable()
         {
             _rectTransform = GetComponent<RectTransform>();
@@ -48,8 +50,8 @@ namespace Programming.Card_Mechanism {
             while (Vector3.Distance(transform.position, transform.parent.position) > 0.01f)
             {
                 _canvasGroup.blocksRaycasts = false;
-                transform.position = Vector3.MoveTowards(transform.position, transform.parent.position, 0.15f);
-                yield return new WaitForSeconds(0.2f);
+                transform.position = Vector3.MoveTowards(transform.position, transform.parent.position, MoveDelta);
+                yield return new WaitForSeconds(MoveSpeed);
             }
 
             _canvasGroup.blocksRaycasts = true;
@@ -61,8 +63,8 @@ namespace Programming.Card_Mechanism {
             {
                 _canvasGroup.blocksRaycasts = false;
 
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, transform.parent.rotation, 2f);
-                yield return new WaitForSeconds(0.2f);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, transform.parent.rotation, RotateDelta);
+                yield return new WaitForSeconds(RotateSpeed);
             }
 
             _canvasGroup.blocksRaycasts = true;
@@ -74,7 +76,7 @@ namespace Programming.Card_Mechanism {
             {
                 _canvasGroup.blocksRaycasts = false;
                 transform.localScale *= 0.95f;
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(ScaleSpeed);
             }
         }
 
