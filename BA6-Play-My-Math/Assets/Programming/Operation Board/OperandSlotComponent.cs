@@ -21,7 +21,10 @@ namespace Programming.Operation_Board
             {
                 _cardInSlot = value;
                 OperationBoardComponent.Instance._fractionVisualizer.VisualiseFraction(CardInSlot?.Value, visType);
-                FightButtonComponent.Instance.EnableFighting(value != null ? value.Value : new Fraction(0, 1));
+                if (visType == FractionVisualizer.VisualisationType.Left)
+                {
+                    FightButtonComponent.Instance.EnableFighting(value != null ? value.Value : new Fraction(0, 1));
+                }
             }
         }
 
