@@ -3,11 +3,16 @@ using Programming.Card_Mechanism;
 using Programming.Enemy;
 using Programming.Fraction_Engine;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Programming.Operation_Board
 {
-    public class OperationBoardComponent : MonoBehaviour
+    public class OperationBoardComponent : MonoBehaviour, IDropHandler
     {
+        RectTransform _rectTransform;
+        Canvas _canvas;
+        CanvasGroup _canvasGroup;
+
         [SerializeField] OperandSlotComponent _leftOperand;
 
         [SerializeField] OperandSlotComponent _rightOperand;
@@ -16,8 +21,8 @@ namespace Programming.Operation_Board
 
         [SerializeField] public FractionVisualizer _fractionVisualizer;
 
-        public static OperationBoardComponent Instance; 
-        
+        public static OperationBoardComponent Instance;
+
         private void OnEnable()
         {
             if (Instance != null && Instance != this)
@@ -28,8 +33,14 @@ namespace Programming.Operation_Board
             {
                 Instance = this;
             }
+
+            _rectTransform = GetComponent<RectTransform>();
+            _canvas = GetComponent<Canvas>();
+            _canvasGroup = GetComponent<CanvasGroup>();
+
+            _canvas.worldCamera = Camera.main;
         }
-        
+
         public void FinalizeOperation()
         {
             if (_leftOperand.CardInSlot == null || _rightOperand.CardInSlot == null)
@@ -87,7 +98,7 @@ namespace Programming.Operation_Board
             Destroy(rightCard.gameObject);
 
             _leftOperand.CardInSlot.oldValue = _leftOperand.CardInSlot.Value = value;
-            
+
             PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
             Debug.Log(value);
         }
@@ -98,6 +109,7 @@ namespace Programming.Operation_Board
             {
                 return;
             }
+
             var attackCardNumber = _leftOperand.CardInSlot.Value;
             foreach (var enemySlot in EnemyZoneComponent.Instance.enemySlots)
             {
@@ -116,10 +128,54 @@ namespace Programming.Operation_Board
                     _leftOperand._originSlot = null;
                     _leftOperand.CardInSlot = null;
                     Destroy(leftCard.gameObject);
-                    
+
                     PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
                 }
             }
+        }
+
+        public void OnDrop(PointerEventData eventData)
+        {
+            var droppedCard = eventData.pointerDrag;
+            if (droppedCard == null)
+            {
+                return;
+            }
+
+            var droppedCardNumberComponent = droppedCard.GetComponent<NumberCardComponent>();
+            if (droppedCardNumberComponent == null)
+            {
+                return;
+            }
+
+            if (droppedCardNumberComponent.Value.IsWhole())
+            {
+                return;
+            }
+
+            if (_leftOperand.CardInSlot == null)
+            {
+                DropCardInSlot(_leftOperand, droppedCard, droppedCardNumberComponent);
+                return;
+            }
+            
+            if (_rightOperand.CardInSlot == null)
+            {
+                DropCardInSlot(_rightOperand, droppedCard, droppedCardNumberComponent);
+            }
+        }
+
+        public void DropCardInSlot(OperandSlotComponent operandSlot, GameObject droppedCard,
+            NumberCardComponent droppedCardNumberComponent)
+        {
+            operandSlot._originSlot = droppedCard.GetComponentInParent<HandSlotComponent>();
+            operandSlot.CardInSlot = droppedCardNumberComponent;
+            droppedCard.transform.SetParent(operandSlot.transform);
+
+            StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().MoveToNewParent());
+            StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().RotateToNewParent());
+
+            return;
         }
     }
 }
