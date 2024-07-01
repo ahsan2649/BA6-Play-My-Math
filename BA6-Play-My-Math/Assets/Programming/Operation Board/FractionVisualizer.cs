@@ -173,7 +173,6 @@ namespace Programming.Operation_Board
                     break;
                 case VisualisationType.None:
                     throw new NotSupportedException();
-                    break;
             }
         }
         #endregion
@@ -191,6 +190,12 @@ namespace Programming.Operation_Board
             {
                 UpdateBoard(Vector2Int.one);
                 return;
+            }
+
+            if (!fraction.IsBetween(0, 1))
+            {
+                NotBetween01(fraction);
+                return; 
             }
             
             FractionVisualisationData visualisationData =
@@ -265,8 +270,7 @@ namespace Programming.Operation_Board
                     }
                     if (!(leftFraction + rightFraction).IsBetween(0, 1))
                     {
-                        Debug.LogError(leftFraction + " + " + rightFraction + " = " + (leftFraction / rightFraction) +
-                                       " is not between 0 and 1 -> not yet implemented");
+                        NotBetween01(leftFraction + rightFraction);
                         return;
                     }
                     visualisedIndeces = Enumerable.Range(leftFraction.Numerator, rightFraction.Numerator).ToArray(); 
@@ -281,8 +285,7 @@ namespace Programming.Operation_Board
                     }
                     if (!(leftFraction - rightFraction).IsBetween(0, 1))
                     {
-                        Debug.LogError(leftFraction + " - " + rightFraction + " = " + (leftFraction / rightFraction) +
-                                       " is not between 0 and 1 -> not yet implemented");
+                        NotBetween01(leftFraction + rightFraction);
                         return;
                     }
                     visualisedIndeces = Enumerable.Range(leftFraction.Numerator - rightFraction.Numerator, rightFraction.Numerator).ToArray(); 
@@ -292,8 +295,7 @@ namespace Programming.Operation_Board
                 case Operation.Multiply:
                     if (!(leftFraction * rightFraction).IsBetween(0, 1))
                     {
-                        Debug.LogError(leftFraction + " * " + rightFraction + " = " + (leftFraction / rightFraction) +
-                                       " is not between 0 and 1 -> not yet implemented");
+                        NotBetween01(leftFraction + rightFraction);
                         return;
                     }
                     visualisedIndeces = MultiplyVisualisedIndeces(leftData, rightFraction); 
@@ -789,6 +791,12 @@ namespace Programming.Operation_Board
         public void Debug_GetVisualisationDataAsList()
         {
             debug_VisualisationData = _visualisationDataMap.Values.ToArray(); 
+        }
+
+        public void NotBetween01(Fraction fraction)
+        {
+            UpdateBoard(numbersToPrimeFactors[fraction.Denominator].factors.Aggregate(Vector2Int.one, (product, factor) => product * factor));
+            Debug.LogError("Visualised Fraction: " + fraction + " is not between 0 and 1 -> not implemented");
         }
         #endregion
     }
