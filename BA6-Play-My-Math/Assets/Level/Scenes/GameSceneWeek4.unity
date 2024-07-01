@@ -9257,7 +9257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ae17dd5f8a2ad4f8febff1a281fcfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentOperation: 0
+  currentOperation: 1
   OperationText: {fileID: 7470758284379111677}
   Cylinder: {fileID: 5065041928483642067}
 --- !u!33 &4919280353239763200
