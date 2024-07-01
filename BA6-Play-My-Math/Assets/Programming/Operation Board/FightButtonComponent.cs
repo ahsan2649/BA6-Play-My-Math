@@ -26,6 +26,15 @@ public class FightButtonComponent : MonoBehaviour, IPointerClickHandler
             Instance = this;
         }
         
+        _rectTransform = GetComponent<RectTransform>();
+        _canvas = GetComponent<Canvas>();
+        _canvasGroup = GetComponent<CanvasGroup>();
+            
+        _canvas.worldCamera = Camera.main;
+    }
+
+    private void Start()
+    {
         gameObject.SetActive(false);
     }
 
