@@ -218,6 +218,7 @@ public class LevelGeneration : MonoBehaviour
             { ExpandingAndSimplifying.ExpansionPhase.SingleThree, 1f },
             { ExpandingAndSimplifying.ExpansionPhase.Multicomp, 1f },
             { ExpandingAndSimplifying.ExpansionPhase.MulticompOther, 1f },
+            { ExpandingAndSimplifying.ExpansionPhase.NoneBase, 1f },
         };
 
         /// Multiplication
@@ -343,7 +344,7 @@ public class LevelGeneration : MonoBehaviour
     /// </summary>
     public static class ExpandingAndSimplifying
     {
-        public enum ExpansionPhase { SingleTwo, SingleThree, Multicomp, MulticompOther }
+        public enum ExpansionPhase { SingleTwo, SingleThree, Multicomp, MulticompOther, NoneBase }
         public enum ExpandingBaseFractionPhase { PickFromSimplyfiedCombinedFractions, PickFromAdditionSubtraction }
 
         // Refs for Calculation based on phase
@@ -352,7 +353,8 @@ public class LevelGeneration : MonoBehaviour
             { ExpansionPhase.SingleTwo,              new int[] {2 } },
             { ExpansionPhase.SingleThree,            new int[] {3 } },
             { ExpansionPhase.Multicomp,              new int[] {8,9 } },
-            { ExpansionPhase.MulticompOther,         new int[] {5,7 } },
+            { ExpansionPhase.MulticompOther,         new int[] {6,12 } },
+            { ExpansionPhase.NoneBase,                new int[] {5,7 } },
         };
 
         /// <summary>
