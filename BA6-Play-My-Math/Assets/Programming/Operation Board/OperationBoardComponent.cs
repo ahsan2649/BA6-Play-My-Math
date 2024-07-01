@@ -14,16 +14,25 @@ namespace Programming.Operation_Board
 
         [SerializeField] OperatorWheelComponent _operationWheel;
 
-        [SerializeField] FractionVisualizer _fractionVisualizer;
+        [SerializeField] public FractionVisualizer _fractionVisualizer;
 
+        public static OperationBoardComponent Instance; 
+        
         private void OnEnable()
         {
-
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+            }
         }
         
         public void FinalizeOperation()
         {
-            if (_leftOperand._cardInSlot == null || _rightOperand._cardInSlot == null)
+            if (_leftOperand.CardInSlot == null || _rightOperand.CardInSlot == null)
             {
                 Debug.LogError("Need two filled slots to calculate!");
                 return;
@@ -38,7 +47,7 @@ namespace Programming.Operation_Board
             if (_operationWheel.currentOperation == Operation.Add ||
                 _operationWheel.currentOperation == Operation.Subtract)
             {
-                if (_leftOperand._cardInSlot.Value.Denominator != _rightOperand._cardInSlot.Value.Denominator)
+                if (_leftOperand.CardInSlot.Value.Denominator != _rightOperand.CardInSlot.Value.Denominator)
                 {
                     Debug.LogError("Denominators are unequal, can't perform add or subtract");
                     return;
@@ -46,8 +55,8 @@ namespace Programming.Operation_Board
 
                 Fraction result = _operationWheel.currentOperation switch
                 {
-                    Operation.Add => _leftOperand._cardInSlot.Value + _rightOperand._cardInSlot.Value,
-                    Operation.Subtract => _leftOperand._cardInSlot.Value - _rightOperand._cardInSlot.Value,
+                    Operation.Add => _leftOperand.CardInSlot.Value + _rightOperand.CardInSlot.Value,
+                    Operation.Subtract => _leftOperand.CardInSlot.Value - _rightOperand.CardInSlot.Value,
                     _ => throw new ArgumentOutOfRangeException()
                 };
                 Debug.Log(result);
@@ -60,8 +69,8 @@ namespace Programming.Operation_Board
             {
                 Fraction result = _operationWheel.currentOperation switch
                 {
-                    Operation.Multiply => _leftOperand._cardInSlot.Value * _rightOperand._cardInSlot.Value,
-                    Operation.Divide => _leftOperand._cardInSlot.Value / _rightOperand._cardInSlot.Value,
+                    Operation.Multiply => _leftOperand.CardInSlot.Value * _rightOperand.CardInSlot.Value,
+                    Operation.Divide => _leftOperand.CardInSlot.Value / _rightOperand.CardInSlot.Value,
                     _ => throw new ArgumentOutOfRangeException()
                 };
                 Debug.Log(result);
@@ -74,10 +83,10 @@ namespace Programming.Operation_Board
         {
             var rightCard = _rightOperand._originSlot.UnsetCard();
             _rightOperand._originSlot = null;
-            _rightOperand._cardInSlot = null;
+            _rightOperand.CardInSlot = null;
             Destroy(rightCard.gameObject);
 
-            _leftOperand._cardInSlot.oldValue = _leftOperand._cardInSlot.Value = value;
+            _leftOperand.CardInSlot.oldValue = _leftOperand.CardInSlot.Value = value;
             
             PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
             Debug.Log(value);
@@ -85,7 +94,7 @@ namespace Programming.Operation_Board
 
         public void AttackEnemy()
         {
-            var attackCardNumber = _leftOperand._cardInSlot.Value;
+            var attackCardNumber = _leftOperand.CardInSlot.Value;
             foreach (var enemySlot in EnemyZoneComponent.Instance.enemySlots)
             {
                 if (!enemySlot.HasEnemy())
@@ -101,7 +110,7 @@ namespace Programming.Operation_Board
 
                     var leftCard = _leftOperand._originSlot.UnsetCard();
                     _leftOperand._originSlot = null;
-                    _leftOperand._cardInSlot = null;
+                    _leftOperand.CardInSlot = null;
                     Destroy(leftCard.gameObject);
                     
                     PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());

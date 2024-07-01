@@ -64,7 +64,6 @@ namespace Programming.Operation_Board
             }
 
             UpdateOp();
-            //TODO Visual Update
         }
 
         private void UpdateOp()
@@ -77,6 +76,8 @@ namespace Programming.Operation_Board
                 Operation.Divide => "\u00f7",
                 _ => throw new ArgumentOutOfRangeException()
             };
+            
+            OperationBoardComponent.Instance._fractionVisualizer.VisualiseOperation(currentOperation);
         }
 
         private void ShiftOp(bool direction)

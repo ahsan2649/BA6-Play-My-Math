@@ -35,6 +35,7 @@ namespace Programming.Operation_Board {
             {
                 ModifyType.Simplify => "\u00f7",
                 ModifyType.Expand => "\u00d7",
+                ModifyType.None => "None", 
                 _ => throw new ArgumentOutOfRangeException()
             };
             

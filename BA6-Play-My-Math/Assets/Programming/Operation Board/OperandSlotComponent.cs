@@ -3,27 +3,31 @@ using Programming.Card_Mechanism;
 using Programming.ExtensionMethods;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 namespace Programming.Operation_Board {
     public class OperandSlotComponent : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler {
-        public HandSlotComponent _originSlot;
+        [HideInInspector] public HandSlotComponent _originSlot;
 
-        public NumberCardComponent _cardInSlot;
-
-        public FractionVisualizer.VisualisationType _leftOrRightOperand; 
         
-        private void OnEnable()
+        public NumberCardComponent CardInSlot
         {
+            get => _cardInSlot;
+            set
+            {
+                _cardInSlot = value;
+                OperationBoardComponent.Instance._fractionVisualizer.VisualiseFraction(CardInSlot?.Value, visType);
+            }
         }
+
+        [Tooltip("left or right slot")]
+        public FractionVisualizer.VisualisationType visType;
+
+        [SerializeField] [HideInInspector] private NumberCardComponent _cardInSlot;
 
         void Start()
         {
             Debug.Log("OperandSlot working!");
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
         }
 
         public void OnDrop(PointerEventData eventData)
@@ -45,33 +49,28 @@ namespace Programming.Operation_Board {
                 return;
             }
 
-            FractionVisualizer visualizer = this.GetComponentInSiblings<FractionVisualizer>();
-            if (_cardInSlot == null)
+            if (CardInSlot == null)
             {
                 _originSlot = droppedCard.GetComponentInParent<HandSlotComponent>();
-                _cardInSlot = droppedCardNumberComponent;
+                CardInSlot = droppedCardNumberComponent;
                 droppedCard.transform.SetParent(transform);
 
                 StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().MoveToNewParent());
                 StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().RotateToNewParent());
                 
-                //TODO Visualise
-                
                 return;
             }
 
-            _cardInSlot.transform.SetParent(_originSlot.transform);
-            StartCoroutine(_cardInSlot.GetComponent<BaseCardComponent>().MoveToNewParent());
-            StartCoroutine(_cardInSlot.GetComponent<BaseCardComponent>().RotateToNewParent());
+            CardInSlot.transform.SetParent(_originSlot.transform);
+            StartCoroutine(CardInSlot.GetComponent<BaseCardComponent>().MoveToNewParent());
+            StartCoroutine(CardInSlot.GetComponent<BaseCardComponent>().RotateToNewParent());
 
             _originSlot = droppedCard.GetComponentInParent<HandSlotComponent>();
-            _cardInSlot = droppedCardNumberComponent;
+            CardInSlot = droppedCardNumberComponent;
             droppedCard.transform.SetParent(transform);
 
             StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().MoveToNewParent());
             StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().RotateToNewParent());
-            
-            //TODO Visualise
         }
         
         public void OnPointerEnter(PointerEventData eventData)
@@ -89,14 +88,14 @@ namespace Programming.Operation_Board {
             }
 
             var draggedCardNumber = draggedCard.GetComponent<NumberCardComponent>();
-            if (draggedCardNumber != _cardInSlot)
+            if (draggedCardNumber != CardInSlot)
             {
                 return;
             }
             
             _originSlot.SetCard(draggedCardNumber.GetComponent<BaseCardComponent>());
             _originSlot = null;
-            _cardInSlot = null;
+            CardInSlot = null;
         }
     }
 }

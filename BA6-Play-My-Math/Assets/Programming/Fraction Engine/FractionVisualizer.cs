@@ -191,19 +191,24 @@ namespace Programming.Operation_Board
                 return;
             }
 
+            int[] visualisedIndeces = Enumerable.Range(0, fraction.Numerator).ToArray();
+            OffsetAndSpacing offsetAndSpacing =
+                new OffsetAndSpacing(numbersToPrimeFactors[fraction.Denominator].factors, boardSize);
+            Vector2Int[] packingCoordinates = CalculatePackingCoordinatesViaDivisors(fraction); 
+            
             if (!fraction.IsBetween(0, 1))
             {
-                NotBetween01(fraction);
+                NotBetween01Error(fraction, out offsetAndSpacing, out visualisedIndeces, out packingCoordinates);
                 return; 
             }
             
             FractionVisualisationData visualisationData =
                 new FractionVisualisationData(
                     fraction,
-                    Enumerable.Range(0, fraction.Numerator).ToArray(), 
+                    visualisedIndeces, 
                     leftVisualParent,
-                    new OffsetAndSpacing(numbersToPrimeFactors[fraction.Denominator].factors, boardSize),
-                    CalculatePackingCoordinatesViaDivisors(fraction)
+                    offsetAndSpacing,
+                    packingCoordinates
                 );
 
             _visualisationDataMap.Add(VisualisationType.Left, visualisationData);
@@ -269,8 +274,8 @@ namespace Programming.Operation_Board
                     }
                     if (!(leftFraction + rightFraction).IsBetween(0, 1))
                     {
-                        NotBetween01(leftFraction + rightFraction);
-                        return;
+                        NotBetween01Error(leftFraction + rightFraction, out offsetAndSpacing, out visualisedIndeces, out packingCoordinates);
+                        break; 
                     }
                     visualisedIndeces = Enumerable.Range(leftFraction.Numerator, rightFraction.Numerator).ToArray(); 
                     offsetAndSpacing = leftData.OffsetAndSpacing;
@@ -284,8 +289,8 @@ namespace Programming.Operation_Board
                     }
                     if (!(leftFraction - rightFraction).IsBetween(0, 1))
                     {
-                        NotBetween01(leftFraction + rightFraction);
-                        return;
+                        NotBetween01Error(leftFraction + rightFraction, out offsetAndSpacing, out visualisedIndeces, out packingCoordinates);
+                        break; 
                     }
                     visualisedIndeces = Enumerable.Range(leftFraction.Numerator - rightFraction.Numerator, rightFraction.Numerator).ToArray(); 
                     offsetAndSpacing = leftData.OffsetAndSpacing;
@@ -294,8 +299,8 @@ namespace Programming.Operation_Board
                 case Operation.Multiply:
                     if (!(leftFraction * rightFraction).IsBetween(0, 1))
                     {
-                        NotBetween01(leftFraction + rightFraction);
-                        return;
+                        NotBetween01Error(leftFraction + rightFraction, out offsetAndSpacing, out visualisedIndeces, out packingCoordinates);
+                        break; 
                     }
                     visualisedIndeces = MultiplyVisualisedIndeces(leftData, rightFraction); 
                     offsetAndSpacing = new OffsetAndSpacing(
@@ -791,11 +796,16 @@ namespace Programming.Operation_Board
         {
             debug_VisualisationData = _visualisationDataMap.Values.ToArray(); 
         }
-
-        public void NotBetween01(Fraction fraction)
+        
+        void NotBetween01Error(Fraction fraction, out OffsetAndSpacing offsetAndSpacing, out int[] visualisedIndeces, out Vector2Int[] packingCoordinates)
         {
-            UpdateBoard(numbersToPrimeFactors[fraction.Denominator].factors.Aggregate(Vector2Int.one, (product, factor) => product * factor));
-            Debug.LogError("Visualised Fraction: " + fraction + " is not between 0 and 1 -> not implemented");
+            visualisedIndeces = Array.Empty<int>(); 
+            offsetAndSpacing = new OffsetAndSpacing(
+                numbersToPrimeFactors[fraction.Denominator].factors.ToArray(),
+                boardSize);
+            packingCoordinates = Array.Empty<Vector2Int>(); 
+                
+            Debug.LogWarning("Visualised Fraction: " + fraction + " is not between 0 and 1 -> not implemented");
         }
         #endregion
     }
