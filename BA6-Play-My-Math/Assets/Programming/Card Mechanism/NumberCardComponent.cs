@@ -59,6 +59,8 @@ namespace Programming.Card_Mechanism
                 return;
             }
 
+            transform.Find("Number").gameObject.SetActive(false);
+
             draggedCardNumber.oldValue = draggedCardNumber.Value;
             draggedCardNumber.Value = new Fraction(draggedCardNumber.Value.Numerator, Value.Numerator);
         }
@@ -76,7 +78,8 @@ namespace Programming.Card_Mechanism
             {
                 return;
             }
-
+            
+            transform.Find("Number").gameObject.SetActive(true);
             draggedCardNumber.Value = draggedCardNumber.oldValue;
         }
 
