@@ -191,15 +191,21 @@ namespace Programming.Operation_Board
                 return;
             }
 
-            int[] visualisedIndeces = Enumerable.Range(0, fraction.Numerator).ToArray();
-            OffsetAndSpacing offsetAndSpacing =
-                new OffsetAndSpacing(numbersToPrimeFactors[fraction.Denominator].factors, boardSize);
-            Vector2Int[] packingCoordinates = CalculatePackingCoordinatesViaDivisors(fraction); 
+            int[] visualisedIndeces;
+            OffsetAndSpacing offsetAndSpacing;
+            Vector2Int[] packingCoordinates; 
             
             if (!fraction.IsBetween(0, 1)  || fraction.Denominator > numbersToPrimeFactors.Length)
             {
                 NotBetween01Error(fraction, out offsetAndSpacing, out visualisedIndeces, out packingCoordinates);
                 return; 
+            }
+            else
+            {
+                visualisedIndeces = Enumerable.Range(0, fraction.Numerator).ToArray(); 
+                offsetAndSpacing =
+                    new OffsetAndSpacing(numbersToPrimeFactors[fraction.Denominator].factors, boardSize);
+                packingCoordinates = CalculatePackingCoordinatesViaDivisors(fraction); 
             }
             
             FractionVisualisationData visualisationData =
@@ -800,9 +806,9 @@ namespace Programming.Operation_Board
         void NotBetween01Error(Fraction fraction, out OffsetAndSpacing offsetAndSpacing, out int[] visualisedIndeces, out Vector2Int[] packingCoordinates)
         {
             visualisedIndeces = Array.Empty<int>(); 
-            offsetAndSpacing = new OffsetAndSpacing(
-                numbersToPrimeFactors[fraction.Denominator].factors.ToArray(),
-                boardSize);
+            offsetAndSpacing = Mathf.Abs(fraction.Denominator) < numbersToPrimeFactors.Length ? 
+                new OffsetAndSpacing(numbersToPrimeFactors[fraction.Denominator].factors.ToArray(), boardSize) :
+                new OffsetAndSpacing(Array.Empty<Vector2Int>(), boardSize);
             packingCoordinates = Array.Empty<Vector2Int>(); 
                 
             Debug.LogWarning("Visualised Fraction: " + fraction + " is not between 0 and 1 or has a too big Denominator");

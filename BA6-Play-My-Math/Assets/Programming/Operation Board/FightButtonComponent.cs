@@ -45,19 +45,7 @@ public class FightButtonComponent : MonoBehaviour, IPointerClickHandler
 
     public void EnableFighting(Fraction value)
     {
-        foreach (var enemySlot in EnemyZoneComponent.Instance.enemySlots)    
-        {
-            if (!enemySlot.HasEnemy())
-            {
-                continue;
-            }
-
-            if (enemySlot.GetEnemy().Value != value)
-            {
-                gameObject.SetActive(false);
-            }
-        }
-        
+        gameObject.SetActive(false);
         foreach (var enemySlot in EnemyZoneComponent.Instance.enemySlots)    
         {
             if (!enemySlot.HasEnemy())
@@ -68,6 +56,7 @@ public class FightButtonComponent : MonoBehaviour, IPointerClickHandler
             if (enemySlot.GetEnemy().Value == value)
             {
                 gameObject.SetActive(true);
+                break; 
             }
         }
     }
