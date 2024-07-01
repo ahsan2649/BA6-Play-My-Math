@@ -94,6 +94,10 @@ namespace Programming.Operation_Board
 
         public void AttackEnemy()
         {
+            if (_leftOperand.CardInSlot == null)
+            {
+                return;
+            }
             var attackCardNumber = _leftOperand.CardInSlot.Value;
             foreach (var enemySlot in EnemyZoneComponent.Instance.enemySlots)
             {
