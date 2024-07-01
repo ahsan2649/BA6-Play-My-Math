@@ -5,11 +5,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
-namespace Programming.Operation_Board {
-    public class OperandSlotComponent : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler {
+namespace Programming.Operation_Board
+{
+    public class OperandSlotComponent : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+    {
         [HideInInspector] public HandSlotComponent _originSlot;
 
-        
+
         public NumberCardComponent CardInSlot
         {
             get => _cardInSlot;
@@ -20,8 +22,7 @@ namespace Programming.Operation_Board {
             }
         }
 
-        [Tooltip("left or right slot")]
-        public FractionVisualizer.VisualisationType visType;
+        [Tooltip("left or right slot")] public FractionVisualizer.VisualisationType visType;
 
         [SerializeField] [HideInInspector] private NumberCardComponent _cardInSlot;
 
@@ -57,7 +58,7 @@ namespace Programming.Operation_Board {
 
                 StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().MoveToNewParent());
                 StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().RotateToNewParent());
-                
+
                 return;
             }
 
@@ -72,10 +73,9 @@ namespace Programming.Operation_Board {
             StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().MoveToNewParent());
             StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().RotateToNewParent());
         }
-        
+
         public void OnPointerEnter(PointerEventData eventData)
         {
-            
         }
 
 
@@ -92,7 +92,7 @@ namespace Programming.Operation_Board {
             {
                 return;
             }
-            
+
             _originSlot.SetCard(draggedCardNumber.GetComponent<BaseCardComponent>());
             _originSlot = null;
             CardInSlot = null;

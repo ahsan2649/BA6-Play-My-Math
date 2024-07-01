@@ -10,28 +10,29 @@ using UnityEngine.UI;
 
 namespace Programming.Operation_Board
 {
-    public class OperatorWheelComponent : MonoBehaviour, IBeginDragHandler,IDragHandler, IEndDragHandler
+    public class OperatorWheelComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         RectTransform _rectTransform;
         Canvas _canvas;
         CanvasGroup _canvasGroup;
- 
-        public Operation currentOperation = Operation.Nop;
+
+        public Operation currentOperation = Operation.Add;
         [SerializeField] private TextMeshProUGUI OperationText;
         [SerializeField] GameObject Cylinder;
-    
+
         Vector2 _dragStart, _dragEnd;
+
         private void OnEnable()
         {
             _rectTransform = GetComponent<RectTransform>();
             _canvas = GetComponent<Canvas>();
             _canvasGroup = GetComponent<CanvasGroup>();
-            
+
             _canvas.worldCamera = Camera.main;
             
             UpdateOp();
         }
-    
+
 
         public void OnBeginDrag(PointerEventData eventData)
         {
@@ -68,7 +69,8 @@ namespace Programming.Operation_Board
 
         private void UpdateOp()
         {
-            OperationText.text = currentOperation switch {
+            OperationText.text = currentOperation switch
+            {
                 Operation.Nop => "Nop",
                 Operation.Add => "+",
                 Operation.Subtract => "-",
@@ -76,7 +78,7 @@ namespace Programming.Operation_Board
                 Operation.Divide => "\u00f7",
                 _ => throw new ArgumentOutOfRangeException()
             };
-            
+
             OperationBoardComponent.Instance._fractionVisualizer.VisualiseOperation(currentOperation);
         }
 
@@ -84,19 +86,25 @@ namespace Programming.Operation_Board
         {
             if (direction)
             {
-                currentOperation++;
-                if ((int)currentOperation >= Enum.GetValues(typeof(Operation)).Length)
+                currentOperation = currentOperation switch
                 {
-                    currentOperation = 0;
-                }
+                    Operation.Add => Operation.Subtract,
+                    Operation.Subtract => Operation.Multiply,
+                    Operation.Multiply => Operation.Divide,
+                    Operation.Divide => Operation.Add,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
                 return;
             }
-            
-            currentOperation--;
-            if ((int)currentOperation < 0)
+
+            currentOperation = currentOperation switch
             {
-                currentOperation = (Operation)(Enum.GetValues(typeof(Operation)).Length - 1);
-            }
+                Operation.Add => Operation.Divide,
+                Operation.Subtract => Operation.Add,
+                Operation.Multiply => Operation.Subtract,
+                Operation.Divide => Operation.Multiply,
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -112,6 +120,7 @@ namespace Programming.Operation_Board
                 yield return new WaitForSeconds(1f / 60f);
             }
         }
+
         public IEnumerator RotateUp()
         {
             for (int i = 0; i < 9; i++)
@@ -120,7 +129,5 @@ namespace Programming.Operation_Board
                 yield return new WaitForSeconds(1f / 60f);
             }
         }
-
-        
     }
 }
