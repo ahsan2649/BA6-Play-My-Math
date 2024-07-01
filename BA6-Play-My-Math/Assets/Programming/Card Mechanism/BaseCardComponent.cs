@@ -51,7 +51,7 @@ namespace Programming.Card_Mechanism {
             {
                 _canvasGroup.blocksRaycasts = false;
                 transform.position = Vector3.MoveTowards(transform.position, transform.parent.position, MoveDelta);
-                yield return new WaitForSeconds(MoveSpeed);
+                yield return new WaitForSeconds(1f/MoveSpeed);
             }
 
             _canvasGroup.blocksRaycasts = true;
@@ -64,7 +64,7 @@ namespace Programming.Card_Mechanism {
                 _canvasGroup.blocksRaycasts = false;
 
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, transform.parent.rotation, RotateDelta);
-                yield return new WaitForSeconds(RotateSpeed);
+                yield return new WaitForSeconds(1f/RotateSpeed);
             }
 
             _canvasGroup.blocksRaycasts = true;
@@ -76,7 +76,7 @@ namespace Programming.Card_Mechanism {
             {
                 _canvasGroup.blocksRaycasts = false;
                 transform.localScale *= 0.95f;
-                yield return new WaitForSeconds(ScaleSpeed);
+                yield return new WaitForSeconds(1f/ScaleSpeed);
             }
         }
 

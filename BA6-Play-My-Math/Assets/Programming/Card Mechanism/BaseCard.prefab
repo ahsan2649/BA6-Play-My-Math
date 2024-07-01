@@ -117,6 +117,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5362872f386f3b4993f98596c92fcf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoveDelta: 1
+  RotateDelta: 5
+  MoveSpeed: 500
+  RotateSpeed: 500
+  ScaleSpeed: 500
 --- !u!225 &2512089630970669898
 CanvasGroup:
   m_ObjectHideFlags: 0
