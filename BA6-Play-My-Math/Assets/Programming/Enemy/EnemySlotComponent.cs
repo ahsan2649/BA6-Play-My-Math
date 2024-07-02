@@ -1,4 +1,3 @@
-using Programming.Fraction_Engine;
 using Programming.Operation_Board;
 using UnityEngine;
 
@@ -15,7 +14,7 @@ namespace Programming.Enemy
             _enemyInZone = enemy;
             enemy.transform.SetParent(transform);
             enemy.enabled = true;
-            _visualizer.VisualiseFraction(_enemyInZone.Value, FractionVisualisationType.Left);
+            _visualizer.VisualiseFraction(_enemyInZone.Value, FractionVisualizer.VisualisationType.Left);
         }
 
         public EnemyComponent UnsetEnemy()
