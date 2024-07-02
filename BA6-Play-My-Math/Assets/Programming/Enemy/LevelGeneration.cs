@@ -151,9 +151,9 @@ namespace Programming.Enemy
             {
                 /// Default Weightmap
                 { Phase.AdditionAndSubtraction, 1f },
-                { Phase.ExpandAndSimplify, 1f },
+                { Phase.ExpandAndSimplify, 15f },
                 { Phase.Multiplication, 1f },
-                { Phase.Misc, 1f }, /// Currently Misc is not implemented
+                { Phase.Misc, 0f }, /// Currently Misc is not implemented
             };
 
             // Addition and Subtraction
@@ -194,7 +194,7 @@ namespace Programming.Enemy
             public static Dictionary<ExpandingAndSimplifying.ExpandingBaseFractionPhase, float> expandingFractionBaseProperbilityWeightmap = new Dictionary<ExpandingAndSimplifying.ExpandingBaseFractionPhase, float>
             {
                 /// Default Weightmap
-                { ExpandingAndSimplifying.ExpandingBaseFractionPhase.PickFromSimplyfiedCombinedFractions, 1f },
+                { ExpandingAndSimplifying.ExpandingBaseFractionPhase.PickFromSimplyfiedCombinedFractions, 20f },
                 { ExpandingAndSimplifying.ExpandingBaseFractionPhase.PickFromAdditionSubtraction, 1f },
             };
 
