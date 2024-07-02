@@ -21,14 +21,14 @@ namespace Programming.Operation_Board
             {
                 _cardInSlot = value;
                 OperationBoardComponent.Instance._fractionVisualizer.VisualiseFraction(CardInSlot?.Value, visType);
-                if (visType == FractionVisualizer.VisualisationType.Left)
+                if (visType == FractionVisualisationType.Left)
                 {
                     FightButtonComponent.Instance.EnableFighting(value != null ? value.Value : new Fraction(0, 1));
                 }
             }
         }
 
-        [Tooltip("left or right slot")] public FractionVisualizer.VisualisationType visType;
+        [Tooltip("left or right slot")] public FractionVisualisationType visType;
 
         [SerializeField] [HideInInspector] private NumberCardComponent _cardInSlot;
 
