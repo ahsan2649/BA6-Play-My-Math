@@ -20,15 +20,15 @@ namespace Programming.Operation_Board
             set
             {
                 _cardInSlot = value;
-                OperationBoardComponent.Instance._fractionVisualizer.VisualiseFraction(CardInSlot?.Value, visType);
-                if (visType == FractionVisualizer.VisualisationType.Left)
+                OperationBoardComponent.Instance.fractionVisualiser.VisualiseFraction(CardInSlot?.Value, visType);
+                if (visType == FractionVisualiser.VisualisationType.Left)
                 {
                     FightButtonComponent.Instance.EnableFighting(value != null ? value.Value : new Fraction(0, 1));
                 }
             }
         }
 
-        [Tooltip("left or right slot")] public FractionVisualizer.VisualisationType visType;
+        [Tooltip("left or right slot")] public FractionVisualiser.VisualisationType visType;
 
         [SerializeField] [HideInInspector] private NumberCardComponent _cardInSlot;
 

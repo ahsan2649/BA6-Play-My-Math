@@ -4,6 +4,7 @@ using Programming.Enemy;
 using Programming.Fraction_Engine;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 namespace Programming.Operation_Board
 {
@@ -19,11 +20,11 @@ namespace Programming.Operation_Board
 
         [SerializeField] OperatorWheelComponent _operationWheel;
 
-        [SerializeField] public FractionVisualizer _fractionVisualizer;
+        [FormerlySerializedAs("_fractionVisualizer")] [SerializeField] public FractionVisualiser fractionVisualiser;
 
         public static OperationBoardComponent Instance;
 
-        private void OnEnable()
+        private void Awake() //must run before any OnEnable or Start, so that Instance is set, when other Object search for in in their OnEnable or Start
         {
             if (Instance != null && Instance != this)
             {

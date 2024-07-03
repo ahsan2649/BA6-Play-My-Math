@@ -1,11 +1,12 @@
-using Programming.Operation_Board;
+using Programming.Fraction_Engine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Programming.Enemy
 {
     public class EnemySlotComponent : MonoBehaviour
     {
-        [SerializeField] private FractionVisualizer _visualizer; 
+        [FormerlySerializedAs("_visualizer")] [SerializeField] private FractionVisualiser visualiser; 
         
         private EnemyComponent _enemyInZone;
 
@@ -14,7 +15,7 @@ namespace Programming.Enemy
             _enemyInZone = enemy;
             enemy.transform.SetParent(transform);
             enemy.enabled = true;
-            _visualizer.VisualiseFraction(_enemyInZone.Value, FractionVisualizer.VisualisationType.Left);
+            visualiser.VisualiseFraction(_enemyInZone.Value, FractionVisualiser.VisualisationType.Left);
         }
 
         public EnemyComponent UnsetEnemy()

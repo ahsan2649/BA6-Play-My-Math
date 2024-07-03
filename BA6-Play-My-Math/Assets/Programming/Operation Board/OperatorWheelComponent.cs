@@ -22,17 +22,20 @@ namespace Programming.Operation_Board
 
         Vector2 _dragStart, _dragEnd;
 
-        private void OnEnable()
+        //@Ahsan: previously Awake and Start in onEnable, but that runs simultaneously(/before) OperationBoardComponent.Awake(), but UpdateOp needs OperationBoardComponent.Instance
+        private void Awake() 
         {
             _rectTransform = GetComponent<RectTransform>();
             _canvas = GetComponent<Canvas>();
             _canvasGroup = GetComponent<CanvasGroup>();
+        }
 
+        private void Start() 
+        {
             _canvas.worldCamera = Camera.main;
             
             UpdateOp();
         }
-
 
         public void OnBeginDrag(PointerEventData eventData)
         {
@@ -79,7 +82,7 @@ namespace Programming.Operation_Board
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            OperationBoardComponent.Instance._fractionVisualizer.VisualiseOperation(currentOperation);
+            OperationBoardComponent.Instance.fractionVisualiser.VisualiseOperation(currentOperation);
         }
 
         private void ShiftOp(bool direction)
