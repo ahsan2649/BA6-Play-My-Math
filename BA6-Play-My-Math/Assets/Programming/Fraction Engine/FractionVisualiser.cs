@@ -468,7 +468,7 @@ namespace Programming.Fraction_Engine
             
             GameObject figurePrefab; 
             Vector3 localScale;
-            if (visData.fraction.Numerator < figurePrefabs.Length)
+            if (visData.fraction.Denominator < figurePrefabs.Length)
             {
                 figurePrefab = figurePrefabs[visData.fraction.Denominator];
                 localScale = Vector3.one; 
@@ -551,13 +551,13 @@ namespace Programming.Fraction_Engine
             //TodoLater: Optimise this so that it doesn't generate a whole list, just to then take a range of the List
             for (int layers = 0; layers <= fraction.Wholes; layers++)
             {
-                for (int xDiv = 0; xDiv < horizontalDivisorProduct; xDiv++)
+                for (int xND = 0; xND < notHorizontalDivisorProduct; xND++)
                 {
-                    for (int yDiv = 0; yDiv < verticalDivisorProduct; yDiv++)
+                    for (int yND = 0; yND < notVerticalDivisorProduct; yND++)
                     {
-                        for (int xND = 0; xND < notHorizontalDivisorProduct; xND++)
+                        for (int xDiv = 0; xDiv < horizontalDivisorProduct; xDiv++)
                         {
-                            for (int yND = 0; yND < notVerticalDivisorProduct; yND++)
+                            for (int yDiv = 0; yDiv < verticalDivisorProduct; yDiv++)
                             {
                                 visualisedCoordinates.Add(new Vector3Int(
                                     layers,
@@ -572,6 +572,51 @@ namespace Programming.Fraction_Engine
             visualisedCoordinates = visualisedCoordinates.GetRange(startingIndex, figureCount); 
             
             return visualisedCoordinates; 
+        }
+        
+        private Vector2Int[] CalculateVisualisedCoordinatesRecursively(Fraction fraction)
+        {
+            Vector2Int[] packingCoordinates = new Vector2Int[fraction.Denominator];
+            CheckNumberDivisors(numbersToPrimeFactors[fraction.Denominator].factors,
+                fraction.Numerator, out List<Vector2Int> numeratorDivisors, out List<Vector2Int> notDivisors); 
+            Vector2Int[] divisorOrder = notDivisors.Concat(numeratorDivisors).ToArray();
+
+            if (debug_divisorOrder.Length > 0)
+            {
+                divisorOrder = debug_divisorOrder;
+            }
+
+            RecursiveCalculateFigurePositions(divisorOrder, 0, 0, Vector2Int.zero, fraction.Denominator,
+                ref packingCoordinates);
+
+            return packingCoordinates;
+
+            void RecursiveCalculateFigurePositions(Vector2Int[] divisorOrder, int recursionDepth,
+                int figureIndex, Vector2Int coordinates,
+                int dividedDenominator, ref Vector2Int[] packingOrder)
+            {
+                if (recursionDepth >= divisorOrder.Length)
+                {
+                    packingOrder[figureIndex] = coordinates;
+                }
+                else
+                {
+                    Vector2Int primeFactor = divisorOrder[recursionDepth];
+
+                    // Debug.Log("coord" + coordinates + ", rD" + recursionDepth + ", pF" + primeFactor + " index" + figureIndex);
+
+                    coordinates *= primeFactor;
+                    dividedDenominator /= Mathf.Max(primeFactor.x, primeFactor.y);
+
+                    for (int i = 0; i < Mathf.Max(primeFactor.x, primeFactor.y); i++)
+                    {
+                        RecursiveCalculateFigurePositions(divisorOrder, recursionDepth + 1,
+                            figureIndex + dividedDenominator * i,
+                            coordinates + (primeFactor.x > primeFactor.y ? Vector2Int.right : Vector2Int.up) * i,
+                            dividedDenominator, ref packingOrder);
+                    }
+                }
+            }
         }
         
         private List<Vector3Int> ModifyVisualisedCoordinates(FractionVisualisationData oldVisualisationData,
@@ -811,50 +856,5 @@ namespace Programming.Fraction_Engine
 }
 
 #region deprecated
-/*
-    private Vector2Int[] CalculateVisualisedCoordinatesRecursively(Fraction fraction)
-        {
-            Vector2Int[] packingCoordinates = new Vector2Int[fraction.Denominator];
-            CheckNumberDivisors(numbersToPrimeFactors[fraction.Denominator].factors,
-                fraction.Numerator, out List<Vector2Int> numeratorDivisors, out List<Vector2Int> notDivisors); 
-            Vector2Int[] divisorOrder = notDivisors.Concat(numeratorDivisors).ToArray();
-
-            if (debug_divisorOrder.Length > 0)
-            {
-                divisorOrder = debug_divisorOrder;
-            }
-
-            RecursiveCalculateFigurePositions(divisorOrder, 0, 0, Vector2Int.zero, fraction.Denominator,
-                ref packingCoordinates);
-
-            return packingCoordinates;
-
-            void RecursiveCalculateFigurePositions(Vector2Int[] divisorOrder, int recursionDepth,
-                int figureIndex, Vector2Int coordinates,
-                int dividedDenominator, ref Vector2Int[] packingOrder)
-            {
-                if (recursionDepth >= divisorOrder.Length)
-                {
-                    packingOrder[figureIndex] = coordinates;
-                }
-                else
-                {
-                    Vector2Int primeFactor = divisorOrder[recursionDepth];
-
-                    // Debug.Log("coord" + coordinates + ", rD" + recursionDepth + ", pF" + primeFactor + " index" + figureIndex);
-
-                    coordinates *= primeFactor;
-                    dividedDenominator /= Mathf.Max(primeFactor.x, primeFactor.y);
-
-                    for (int i = 0; i < Mathf.Max(primeFactor.x, primeFactor.y); i++)
-                    {
-                        RecursiveCalculateFigurePositions(divisorOrder, recursionDepth + 1,
-                            figureIndex + dividedDenominator * i,
-                            coordinates + (primeFactor.x > primeFactor.y ? Vector2Int.right : Vector2Int.up) * i,
-                            dividedDenominator, ref packingOrder);
-                    }
-                }
-            }
-        }
- */
+    
 #endregion
