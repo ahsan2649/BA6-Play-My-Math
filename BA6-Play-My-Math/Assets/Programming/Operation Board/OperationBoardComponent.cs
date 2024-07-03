@@ -88,7 +88,7 @@ namespace Programming.Operation_Board
                 Debug.Log(result);
                 SetFinalizedCard(result);
                 return;
-            }
+            }   
         }
 
         void SetFinalizedCard(Fraction value)
@@ -99,6 +99,8 @@ namespace Programming.Operation_Board
             Destroy(rightCard.gameObject);
 
             _leftOperand.CardInSlot.oldValue = _leftOperand.CardInSlot.Value = value;
+            
+            FightButtonComponent.Instance.EnableFighting(value);
             fractionVisualiser.VisualiseFraction(_leftOperand.CardInSlot.Value, FractionVisualiser.VisualisationType.Left);
             fractionVisualiser.VisualiseFraction(null, FractionVisualiser.VisualisationType.Right);
 
