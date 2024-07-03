@@ -162,19 +162,19 @@ MonoBehaviour:
   topLayerPrefab: {fileID: 919132149155446097, guid: b65b24a335852ad459bae1419ddb155f,
     type: 3}
   figurePrefabs:
-  - {fileID: 4393192481579217055, guid: 173d97938d82c8a49a1b111744c539e6, type: 3}
-  - {fileID: 4393192481579217055, guid: 765f8b24850c87540af1817c82a657af, type: 3}
+  - {fileID: 2379754583559722417, guid: ecf39b1bc3281d54098a926854809ca5, type: 3}
+  - {fileID: 5823650059442116361, guid: 765f8b24850c87540af1817c82a657af, type: 3}
   - {fileID: 3980538857858859056, guid: 8ebebef5003ae5b4a80d7459c028a511, type: 3}
   - {fileID: 3217537033028664720, guid: 65e411af52056b34087ed118f8e850c5, type: 3}
-  - {fileID: 5979716378556600482, guid: 693c8c24f4a878d4dba9c6cee31f2821, type: 3}
-  - {fileID: 5956630351333799299, guid: 5e8bb7d37f744ab469fe293bb0f9eb19, type: 3}
+  - {fileID: 3814583483450862875, guid: 714b19a75014fbb44864d7e022687a5e, type: 3}
+  - {fileID: 3445566333529442140, guid: e7767e34be2af714e8d7211ba35c1904, type: 3}
   - {fileID: 7465456582461414941, guid: 2efa63e906700184ba61060e95875e54, type: 3}
-  - {fileID: 66357585257483207, guid: 9b95ee3df8537074eab37aecb9d2318b, type: 3}
-  - {fileID: 282955726555913345, guid: 25ff586b370492e4aa9f08289d587a17, type: 3}
+  - {fileID: 5620110908895940353, guid: a7026184f6a61e8478cefef2eebd04f0, type: 3}
+  - {fileID: 2309643572159523575, guid: 5201e60abb3a36c4984495e4cce1d748, type: 3}
   - {fileID: 8628195609858351110, guid: 2df7bb73e87851748849d80cd7e037c9, type: 3}
-  - {fileID: 4662212744943623159, guid: 6f7000a2932513c4c9cd5e9e4385c2a3, type: 3}
-  - {fileID: 3316876556770022686, guid: 79e62c46f40bedd45a9a06da7f1e983b, type: 3}
-  - {fileID: 4590606385931306684, guid: 79e3a6db00cd8474eafa7cda39c818d4, type: 3}
+  - {fileID: 8163352106378567890, guid: 3a059781ded563e4b879809bc06f66ae, type: 3}
+  - {fileID: 6119681423015686686, guid: 11094454c828d7c45955c7f8ce68a342, type: 3}
+  - {fileID: 6419866143431565417, guid: 6f743af656c37b445a1fc9c691e4f993, type: 3}
   numbersToPrimeFactors:
   - factors: []
   - factors:
@@ -548,16 +548,6 @@ MonoBehaviour:
     denominator: 1
   debug_rightModifyType: 0
   debug_rightModifyFactor: 0
-  debug_VisualisationData:
-  - fraction:
-      numerator: 0
-      denominator: 0
-    VisStyle:
-      material: {fileID: 0}
-      figureParent: {fileID: 0}
-      figureName: 
-      isFlipped: 0
-    VisualisedCoordinates: []
 --- !u!1 &3022348803350358957
 GameObject:
   m_ObjectHideFlags: 0

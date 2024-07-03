@@ -99,6 +99,8 @@ namespace Programming.Operation_Board
             Destroy(rightCard.gameObject);
 
             _leftOperand.CardInSlot.oldValue = _leftOperand.CardInSlot.Value = value;
+            fractionVisualiser.VisualiseFraction(_leftOperand.CardInSlot.Value, FractionVisualiser.VisualisationType.Left);
+            fractionVisualiser.VisualiseFraction(null, FractionVisualiser.VisualisationType.Right);
 
             PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
             Debug.Log(value);
