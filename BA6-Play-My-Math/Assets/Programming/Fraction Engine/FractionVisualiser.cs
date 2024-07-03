@@ -574,7 +574,7 @@ namespace Programming.Fraction_Engine
             return visualisedCoordinates; 
         }
         
-        private Vector2Int[] CalculateVisualisedCoordinatesRecursively(Fraction fraction)
+        private List<Vector3Int> CalculateVisualisedCoordinatesRecursively(Fraction fraction)
         {
             Vector2Int[] packingCoordinates = new Vector2Int[fraction.Denominator];
             CheckNumberDivisors(numbersToPrimeFactors[fraction.Denominator].factors,
@@ -589,7 +589,13 @@ namespace Programming.Fraction_Engine
             RecursiveCalculateFigurePositions(divisorOrder, 0, 0, Vector2Int.zero, fraction.Denominator,
                 ref packingCoordinates);
 
-            return packingCoordinates;
+            List<Vector3Int> visualisedCoordinates = new List<Vector3Int>(); 
+            for (int i = 0; i < packingCoordinates.Length; i++)
+            {
+                visualisedCoordinates.Add(new Vector3Int(0, packingCoordinates[i].x, packingCoordinates[i].y)); 
+            }
+            
+            return visualisedCoordinates;
 
             void RecursiveCalculateFigurePositions(Vector2Int[] divisorOrder, int recursionDepth,
                 int figureIndex, Vector2Int coordinates,
