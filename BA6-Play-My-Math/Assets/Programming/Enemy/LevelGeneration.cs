@@ -117,7 +117,7 @@ namespace Programming.Enemy
                     // Codeblock Multiplication
                     case Phase.Multiplication:
                         /// !!!! Only generates goal values in numerator
-                        encounterFraction.Add(Multiplication.generateEncounterFraction(true));
+                        encounterFraction.Add(Multiplication.generateEncounterFraction(false));
                         break;
 
                     // Codeblock Misc
@@ -151,8 +151,8 @@ namespace Programming.Enemy
             {
                 /// Default Weightmap
                 { Phase.AdditionAndSubtraction, 1f },
-                { Phase.ExpandAndSimplify, 15f },
-                { Phase.Multiplication, 1f },
+                { Phase.ExpandAndSimplify, 1f },
+                { Phase.Multiplication, 15f },
                 { Phase.Misc, 0f }, /// Currently Misc is not implemented
             };
 
@@ -221,9 +221,9 @@ namespace Programming.Enemy
             public static Dictionary<ChallangeSet, float> challangeSetProperbilityWeightmap = new Dictionary<ChallangeSet, float>
             {
                 /// Default Weightmap
-                { ChallangeSet.Direkt, 1f },
+                { ChallangeSet.Direkt, 10f },
                 { ChallangeSet.Indirekt, 1f },
-                { ChallangeSet.IndirektSubtract, 1f },
+                { ChallangeSet.IndirektSubtract, 10f },
                 { ChallangeSet.IndirektSecondDegree, 1f },
             };
 
