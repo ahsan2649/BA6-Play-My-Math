@@ -11751,6 +11751,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Operation Board
       objectReference: {fileID: 0}
+    - target: {fileID: 9157035081681801949, guid: a7d05ba8a2814f04889a52d4125abae6,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6d07b58f52ff3cb408b7b5a3a326f5d6, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
