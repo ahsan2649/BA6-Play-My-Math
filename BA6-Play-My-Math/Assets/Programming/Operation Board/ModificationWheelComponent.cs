@@ -99,10 +99,10 @@ namespace Programming.Operation_Board {
             {
                 _currentModifyValue = _currentModifyValue switch
                 {
-                    ModifyValue.Two => ModifyValue.Three,
-                    ModifyValue.Three => ModifyValue.Five,
-                    ModifyValue.Five => ModifyValue.Seven,
-                    ModifyValue.Seven => ModifyValue.Two,
+                    ModifyValue.Two => ModifyValue.Seven,
+                    ModifyValue.Three => ModifyValue.Two,
+                    ModifyValue.Five => ModifyValue.Three,
+                    ModifyValue.Seven => ModifyValue.Five,
                     _ => throw new ArgumentOutOfRangeException()
                 };
 
@@ -112,10 +112,10 @@ namespace Programming.Operation_Board {
 
             _currentModifyValue = _currentModifyValue switch
             {
-                ModifyValue.Two => ModifyValue.Seven,
-                ModifyValue.Three => ModifyValue.Two,
-                ModifyValue.Five => ModifyValue.Three,
-                ModifyValue.Seven => ModifyValue.Five,
+                ModifyValue.Two => ModifyValue.Three,
+                ModifyValue.Three => ModifyValue.Five,
+                ModifyValue.Five => ModifyValue.Seven,
+                ModifyValue.Seven => ModifyValue.Two,
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
