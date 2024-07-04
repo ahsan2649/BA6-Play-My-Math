@@ -95,7 +95,7 @@ namespace Programming.Enemy
         {
             // Create list of Fractions, this represents the deck that will be returned
             List<Fraction> encounterFraction = new List<Fraction>();
-
+            
             // for number of cards
             for (int i = 0; i < numberOfCards; i++)
             {

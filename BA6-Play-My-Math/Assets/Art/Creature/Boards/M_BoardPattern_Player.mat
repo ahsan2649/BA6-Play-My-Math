@@ -66,8 +66,8 @@ Material:
     - _Outline_Intensity: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _X_Amount: 3
-    - _Y_Amount: 3
+    - _X_Amount: 1
+    - _Y_Amount: 1
     m_Colors:
     - _Outline_Color: {r: 0, g: 0.8039217, b: 1, a: 0}
   m_BuildTextureStacks: []
