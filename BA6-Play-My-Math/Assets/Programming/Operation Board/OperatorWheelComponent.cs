@@ -53,14 +53,14 @@ namespace Programming.Operation_Board
         public void CalculateSwipe()
         {
             Vector2 direction = (_dragEnd - _dragStart).normalized;
-            if (direction.y < -0.4f)
+            if (direction.x < -0.4f)
             {
                 Debug.Log("Swipe down");
                 StartCoroutine(RotateDown());
                 ShiftOp(true);
             }
 
-            if (direction.y > 0.4f)
+            if (direction.x > 0.4f)
             {
                 Debug.Log("Swipe Up");
                 StartCoroutine(RotateUp());
@@ -119,7 +119,7 @@ namespace Programming.Operation_Board
         {
             for (int i = 0; i < 9; i++)
             {
-                Cylinder.transform.Rotate(Vector3.right, -10f, Space.World);
+                Cylinder.transform.Rotate(Vector3.forward, 10f, Space.World);
                 yield return new WaitForSeconds(1f / 60f);
             }
         }
@@ -128,7 +128,7 @@ namespace Programming.Operation_Board
         {
             for (int i = 0; i < 9; i++)
             {
-                Cylinder.transform.Rotate(Vector3.right, 10f, Space.World);
+                Cylinder.transform.Rotate(Vector3.forward, -10f, Space.World);
                 yield return new WaitForSeconds(1f / 60f);
             }
         }
