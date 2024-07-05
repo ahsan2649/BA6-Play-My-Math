@@ -7,7 +7,7 @@ namespace Programming.Card_Mechanism
 {
     public class DeckComponent : MonoBehaviour
     {
-        private List<BaseCardComponent> _cardsInDeck = new();
+        public List<BaseCardComponent> _cardsInDeck = new();
         [SerializeField] private StartingDeckInfo startingDeck;
         [SerializeField] private GameObject numberCardPrefab;
         public static DeckComponent Instance { get; private set; }
@@ -23,6 +23,11 @@ namespace Programming.Card_Mechanism
                 Instance = this;
             }
 
+            if (startingDeck == null)
+            {
+                Debug.LogError("No Starting Deck!");
+                return;
+            }
             for (int i = 0; i < startingDeck.numbers.Count; i++)
             {
                 var card = Instantiate(numberCardPrefab,
