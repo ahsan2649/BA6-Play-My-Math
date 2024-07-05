@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ExpandSimplifyCard : MonoBehaviour, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
 
     public GameObject expandSimpObj;
@@ -32,7 +32,7 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerUpHandler, IPointerEnte
 
     public void OnPointerClick(PointerEventData eventData)
     {
-       if(focusOpen == false)
+       if(focusOpen == false && !GetComponent<NumberCardComponent>().Value.IsWhole())
         {
             //move cards to the center
             giveHint = false;
@@ -46,15 +46,10 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerUpHandler, IPointerEnte
         }
 
     }
-    public void OnPointerUp(PointerEventData eventData)
-    {
-       
-    }
- 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (giveHint)
+        if (giveHint && !GetComponent<NumberCardComponent>().Value.IsWhole())
         {
             hint.SetActive(true);
         }
@@ -91,9 +86,15 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerUpHandler, IPointerEnte
 
     public void ExSimpl (int pValue)
     {
+
         //doesnt work
-        if (bExpand) GetComponent<NumberCardComponent>().Value.ExpandBy(pValue);
-        else GetComponent<NumberCardComponent>().Value.SimplifyBy(pValue);
+        if (bExpand)
+        {
+            Debug.Log("expand or simplify"+ pValue);
+            GetComponent<NumberCardComponent>().Value = GetComponent<NumberCardComponent>().Value.ExpandBy(pValue);
+        
+        }
+        else GetComponent<NumberCardComponent>().Value = GetComponent<NumberCardComponent>().Value.SimplifyBy(pValue);
     }
 
   
