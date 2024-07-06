@@ -1,8 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using Programming.ExtensionMethods;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 //WARNING: big parts of this visualisation system break down at 30
 
@@ -16,6 +21,10 @@ using UnityEngine;
 /* Figure Hierarchy
  * Layers -> Figures (via transform.child)
  * visData.spawnedFigures[Layer].[Column].[Row]
+ */
+
+/* Coordinates & Dimensions: x->Layers, y->Columns, z->Rows
+ * BoardSize: x->Width, y->Height, z->Depth
  */
 
 namespace Programming.Fraction_Engine
@@ -50,38 +59,38 @@ namespace Programming.Fraction_Engine
 
         public struct OffsetAndSpacing
         {
-            public OffsetAndSpacing(Vector2Int columnsAndRows, Vector3 baseOffset, Vector3 figureSpacing)
+            public OffsetAndSpacing(Vector3Int dimensions, Vector3 baseOffset, Vector3 figureSpacing)
             {
-                ColumnsAndRows = columnsAndRows;
+                Dimensions = dimensions; 
                 BaseOffset = baseOffset;
                 FigureSpacing = figureSpacing;
             }
             
-            public OffsetAndSpacing(Vector2Int[] primeFactors, Vector3 boardSize)
+            public OffsetAndSpacing(Vector3Int dimensions, Vector3 boardSize)
             {
-                ColumnsAndRows = Vector2Int.one;
-                for (int i = 0; i < primeFactors.Length; i++)
-                {
-                    ColumnsAndRows *= primeFactors[i];
-                }
-
-                FigureSpacing = new Vector3(boardSize.x / ColumnsAndRows.x, 0, -boardSize.z / ColumnsAndRows.y);
-                BaseOffset = new Vector3(-boardSize.x / 2 + FigureSpacing.x / 2, 0, boardSize.z / 2 + FigureSpacing.z / 2);
+                Dimensions = dimensions; 
+                FigureSpacing = new Vector3(boardSize.x / dimensions.y, boardSize.y, -boardSize.z / dimensions.z);
+                BaseOffset = new Vector3(-boardSize.x / 2 + FigureSpacing.x / 2, 0.25f, boardSize.z / 2 + FigureSpacing.z / 2);
             }
 
-            public int Denominator => ColumnsAndRows.x * ColumnsAndRows.y; 
-            public Vector2Int ColumnsAndRows;
+            public static OffsetAndSpacing CreateOffsetAndSpacing(Vector3Int dimensions, Vector3 boardSize)
+            {
+                return new OffsetAndSpacing(dimensions, boardSize); 
+            }
+
+            public int Denominator => Dimensions.y * Dimensions.z; 
+            public Vector3Int Dimensions;
+            public int Layers => Dimensions.x; 
+            public int Columns => Dimensions.y; 
+            public int Rows => Dimensions.z; 
+            
             public Vector3 BaseOffset;
             public Vector3 FigureSpacing;
 
-            public Vector3 CalculatePosition(Vector2Int coordinates)
-            {
-                return BaseOffset + new Vector3(coordinates.x * FigureSpacing.x, 0, coordinates.y * FigureSpacing.z);
-            }
-            
             public Vector3 CalculatePosition(Vector3Int coordinates)
             {
-                return CalculatePosition(new Vector2Int(coordinates.y, coordinates.z)); 
+                //coordinates.x->layer, coordinates.y->column, coordiantes.z->row
+                return BaseOffset + new Vector3(coordinates.y * FigureSpacing.x, coordinates.x * FigureSpacing.y, coordinates.z * FigureSpacing.z);
             }
         }
         
@@ -92,10 +101,16 @@ namespace Programming.Fraction_Engine
             [SerializeField] public GameObject figureParent;
             [SerializeField] public string figureName;
             [SerializeField] public bool isFlipped;
+            [SerializeField] public Vector3 scale = Vector3.one * 0.9f;
+            [SerializeField] public float yOffset; 
+            
             public void ApplyToObject(GameObject gameObject)
             {
                 gameObject.GetComponent<MeshRenderer>().material = material;
                 gameObject.name = figureName;
+                gameObject.transform.localScale = scale;
+                gameObject.transform.localPosition += Vector3.up * yOffset; 
+                
                 if (isFlipped)
                 {
                     gameObject.transform.Rotate(Vector3.up, 180.0f);
@@ -103,49 +118,52 @@ namespace Programming.Fraction_Engine
             }
         }
 
-        [Serializable] //ZyKaLater This is only Serializable for debugging purposes
-        private struct FractionVisualisationData
+        private class FractionVisualisationData
         {
-            public FractionVisualisationData(Fraction fraction, 
+            public FractionVisualisationData(Fraction storedFraction, Fraction visualisedFraction,  
                 FractionVisualisationStyle visStyle, OffsetAndSpacing offsetAndSpacing, 
                 List<Vector3Int> visualisedCoordinates)
             {
-                this.fraction = fraction;
-                this.VisStyle = visStyle;
-                this.OffsetAndSpacing = offsetAndSpacing;
+                StoredFraction = storedFraction;
+                VisualisedFraction = visualisedFraction; 
+                VisStyle = visStyle;
+                OffsetAndSpacing = offsetAndSpacing;
                 VisualisedCoordinates = visualisedCoordinates;
-                VisualisedFigures = Array.Empty<GameObject[][]>(); 
+                VisualisedFigures = new Dictionary<Vector3Int, GameObject>();
             }
+
+            public FractionVisualisationData(Fraction fraction, 
+                FractionVisualisationStyle visStyle, OffsetAndSpacing offsetAndSpacing,
+                List<Vector3Int> visualisedCoordinates) : this(fraction, fraction, visStyle, offsetAndSpacing, visualisedCoordinates)
+            { }
             
-            public Fraction fraction;
-            public int Layers => (fraction.Numerator / fraction.Denominator) + 1;
-            public int Columns => OffsetAndSpacing.ColumnsAndRows.x;
-            public int Rows => OffsetAndSpacing.ColumnsAndRows.y; 
+            public Fraction StoredFraction;
+            public Fraction VisualisedFraction;
+            public Vector3Int Dimensions => OffsetAndSpacing.Dimensions; 
+            public int Layers => OffsetAndSpacing.Layers;
+            public int Columns => OffsetAndSpacing.Columns;
+            public int Rows => OffsetAndSpacing.Rows; 
             
             public FractionVisualisationStyle VisStyle;
             public OffsetAndSpacing OffsetAndSpacing;
             public List<Vector3Int> VisualisedCoordinates;
-            public GameObject[][][] VisualisedFigures;
+            public Dictionary<Vector3Int, GameObject> VisualisedFigures; //TODO: check whether one variable for VisualisedCoordinates & VisualisedFigures could be enough
             
             public GameObject FigureParent => VisStyle.figureParent; 
 
-            public void ClearFigures(bool safeDelete = false)
+            public void ClearFigures()
             {
-                if (!safeDelete && safeDelete) //ZyKa!
+                foreach (KeyValuePair<Vector3Int, GameObject> figure in VisualisedFigures)
                 {
-                    foreach (Vector3Int coordinate in VisualisedCoordinates)
-                    {
-                        Destroy(VisualisedFigures[coordinate.x][coordinate.y][coordinate.z]);
-                    }
+                    Destroy(figure.Value);
                 }
-                else
+                    
+                foreach (Transform figure in FigureParent.transform)
                 {
-                    foreach (Transform figure in FigureParent.transform)
-                    {
-                        Destroy(figure.gameObject);
-                    }
+                    Destroy(figure.gameObject);
                 }
-                VisualisedFigures = Array.Empty<GameObject[][]>(); 
+                
+                VisualisedFigures.Clear();
             }
         }
         
@@ -162,9 +180,6 @@ namespace Programming.Fraction_Engine
         [SerializeField] private FractionVisualisationStyle visStyle_Transparent;
 
         [SerializeField] private GameObject[] boardLayers;
-        [SerializeField] private GameObject subLayerPrefab;
-        [SerializeField] private GameObject topLayerPrefab; 
-        
         #endregion
         
         #region EditorVariables
@@ -176,17 +191,23 @@ namespace Programming.Fraction_Engine
         #region CodeVariables
         //CODE VARIABLES
         private Dictionary<VisualisationType, FractionVisualisationData> _visualisationDataMap =
-            new Dictionary<VisualisationType, FractionVisualisationData>(); 
+            new Dictionary<VisualisationType, FractionVisualisationData>();
+
+        private Dictionary<VisualisationType, Tuple<Fraction, FractionVisualisationData>> _visualisationDataMapNew =
+            new Dictionary<VisualisationType, Tuple<Fraction, FractionVisualisationData>>();
+        
         private Vector2Int[] _fractionADivisorOrder;
         private Operation _operation;
         #endregion
         #endregion
         
         #region MonoBehaviourFunctions
+
         private void Awake()
         {
-            transform.DestroyAllGrandChildren();
+            
         }
+
         #endregion
         
         #region AccessorFunctions
@@ -200,183 +221,101 @@ namespace Programming.Fraction_Engine
                 return;
             }
 
-            VisualiseFraction(_visualisationDataMap[VisualisationType.Right].fraction, VisualisationType.Right);
+            VisualiseFraction(_visualisationDataMap[VisualisationType.Right].StoredFraction, VisualisationType.Right);
         }
 
-        //OWN FUNCTIONS
-        public void VisualiseFraction(Fraction fraction, VisualisationType visType, int modifyFactor = 1, ModifyType modifyType = ModifyType.Expand)
+        public void VisualiseFraction(Fraction fraction, VisualisationType visType, int modifyFactor = 1,
+            ModifyType modifyType = ModifyType.None)
         {
-            switch (visType)
+            ResetVisType(visType);
+            _visualisationDataMap.Add(visType, VisualiseSingleFraction(visType, fraction));
+
+            foreach (KeyValuePair<VisualisationType, FractionVisualisationData> typeDataPair in _visualisationDataMap)
             {
-                case VisualisationType.Left:
-                    VisualiseLeftCard(fraction);
-                    if (_visualisationDataMap.ContainsKey(VisualisationType.LeftModify))
+                _visualisationDataMap[visType] = VisualiseSingleFraction(visType, _visualisationDataMap[visType].StoredFraction); 
+            }
+            
+            UpdateBoards();
+        }
+
+        private FractionVisualisationData VisualiseSingleFraction(VisualisationType visType, Fraction fraction)
+        {
+            _visualisationDataMap.TryGetValue(VisualisationType.Left, out FractionVisualisationData leftData);
+            _visualisationDataMap.TryGetValue(VisualisationType.Right, out FractionVisualisationData rightData);
+            
+            Fraction combinedFraction = CalculateCombinedFraction();
+            Fraction visualisedFraction = GetVisualisedFraction(); 
+            FractionVisualisationStyle visStyle = GetVisualisationType();
+            OffsetAndSpacing offsetAndSpacing = new OffsetAndSpacing(GetDimensionOfFractionVisualisation(combinedFraction), boardSize);
+            List<Vector3Int> visualisedCoordinates = GetVisualisedCoordinates(); 
+            
+            FractionVisualisationData visData = new FractionVisualisationData(
+                fraction, visualisedFraction, visStyle, offsetAndSpacing, visualisedCoordinates
+                ); 
+            SpawnFigures(ref visData);
+
+            return visData; 
+            
+            Fraction GetVisualisedFraction()
+            {
+                return visType switch
+                {
+                    VisualisationType.Left => fraction,
+                    VisualisationType.Right => _operation switch
                     {
-                        VisualiseModify(VisualisationType.LeftModify, ModifyType.None, 0);
-                    }
-                    if (_visualisationDataMap.ContainsKey(VisualisationType.Right))
-                    {
-                        goto case VisualisationType.Right; 
-                    }
-                    break;
-                case VisualisationType.Right:
-                    VisualiseRightCard(fraction);
-                    if (_visualisationDataMap.ContainsKey(VisualisationType.RightModify))
-                    {
-                        VisualiseModify(VisualisationType.RightModify, ModifyType.None , 0);
-                    }
-                    break;
-                case VisualisationType.LeftModify:
-                case VisualisationType.RightModify:
-                    VisualiseModify(visType, modifyType, modifyFactor);
-                    break;
-                case VisualisationType.None:
-                    throw new NotSupportedException();
+                        Operation.Nop or Operation.Add or Operation.Subtract => fraction, 
+                        Operation.Multiply or Operation.Divide => combinedFraction ?? fraction, 
+                        _ => throw new SwitchExpressionException()
+                    },
+                    VisualisationType.LeftModify or VisualisationType.RightModify or VisualisationType.None =>
+                        throw new NotImplementedException(),
+                    _ => throw new SwitchExpressionException()
+                }; 
+            }
+
+            List<Vector3Int> GetVisualisedCoordinates()
+            {
+                return visType switch
+                {
+                    VisualisationType.Left =>
+                        CalculateVisualisedCoordinatesViaDivisors(fraction, 0, fraction.Numerator),
+                    VisualisationType.Right => 
+                        _operation switch
+                        {
+                            Operation.Nop => CalculateVisualisedCoordinatesViaDivisors(fraction, 0, fraction.Numerator), 
+                            Operation.Add => CalculateVisualisedCoordinatesViaDivisors(fraction, leftData.StoredFraction.Numerator, fraction.Numerator), 
+                            Operation.Subtract => CalculateVisualisedCoordinatesViaDivisors(fraction, combinedFraction.Numerator, rightData.StoredFraction.Numerator), 
+                            Operation.Multiply or Operation.Divide => CalculateVisualisedCoordinatesViaDivisors(combinedFraction ?? fraction, 0, (combinedFraction ?? fraction).Numerator)
+                        }, 
+                    VisualisationType.LeftModify or VisualisationType.RightModify or VisualisationType.None => 
+                        throw new NotImplementedException(), 
+                    _ => throw new SwitchExpressionException()
+                }; 
+            }
+
+            FractionVisualisationStyle GetVisualisationType()
+            {
+                return visType switch
+                {
+                    VisualisationType.Left => visStyle_Main,
+                    VisualisationType.Right => visStyle_Transparent,
+                    VisualisationType.LeftModify => visStyle_Transparent,
+                    VisualisationType.RightModify => visStyle_Transparent,
+                    VisualisationType.None or _ => throw new SwitchExpressionException()
+                }; 
             }
         }
         #endregion
         
         #region VisualisationManagerFunctions
-        private void VisualiseLeftCard(Fraction fraction)
-        {
-            ResetVisType(VisualisationType.Left);
-            if (fraction is null || fraction == new Fraction(0, 1))
-            {
-                UpdateBoards(Vector2Int.one);
-                return;
-            }
-
-            OffsetAndSpacing offsetAndSpacing;
-            List<Vector3Int> visualisedCoordinates; 
-            
-            if (!fraction.IsBetween(0, 1)  || fraction.Denominator > numbersToPrimeFactors.Length)
-            {
-                NotBetween01Error(fraction, out offsetAndSpacing, out visualisedCoordinates);
-                return; 
-            }
-            offsetAndSpacing =
-                new OffsetAndSpacing(numbersToPrimeFactors[fraction.Denominator].factors, boardSize);
-            visualisedCoordinates = CalculateVisualisedCoordinatesViaDivisors(fraction, 0, fraction.Numerator); 
-            
-            FractionVisualisationData visualisationData =
-                new FractionVisualisationData(
-                    fraction,
-                    visStyle_Main,
-                    offsetAndSpacing,
-                    visualisedCoordinates
-                );
-
-            _visualisationDataMap.Add(VisualisationType.Left, visualisationData);
-
-            SpawnFigures(visualisationData);
-            UpdateBoards(visualisationData.OffsetAndSpacing.ColumnsAndRows);
-        }
-
-        private void VisualiseRightCard(Fraction rightFraction)
-        {
-            ResetVisType(VisualisationType.Right);
-            if (rightFraction is null || rightFraction == new Fraction(0, 1))
-            {
-                return; 
-            }
-
-            //Deleting for replacement / removing of cards
-            Operation operationCopy = _operation;
-
-            //checking for leftCard
-            FractionVisualisationData leftData;
-            Fraction leftFraction;
-            if (_visualisationDataMap.TryGetValue(VisualisationType.Left, out leftData))
-            {
-                leftFraction = leftData.fraction;
-            }
-            else
-            {
-                leftFraction = new Fraction(0, 1); //needs a value to avoid compilation error
-                operationCopy = Operation.Nop;
-            }
-
-            if ((_operation == Operation.Add || _operation == Operation.Subtract) && 
-                leftFraction.Denominator != rightFraction.Denominator)
-            {
-                operationCopy = Operation.Nop;
-            }
-
-            OffsetAndSpacing offsetAndSpacing;
-            List<Vector3Int> visualisedCoordinates;
-
-            switch (operationCopy)
-            {
-                case Operation.Nop:
-                    offsetAndSpacing = new OffsetAndSpacing(
-                        numbersToPrimeFactors[rightFraction.Denominator].factors,
-                        boardSize);
-                    visualisedCoordinates = CalculateVisualisedCoordinatesViaDivisors(rightFraction, 0, rightFraction.Numerator);
-                    break;
-                case Operation.Add:
-                    if (rightFraction.Numerator < 0)
-                    {
-                        rightFraction = new Fraction(-rightFraction.Numerator, rightFraction.Denominator);
-                        goto case Operation.Subtract; 
-                    }
-                    if (!(leftFraction + rightFraction).IsBetween(0, 1) || leftFraction.Denominator > numbersToPrimeFactors.Length)
-                    {
-                        NotBetween01Error(leftFraction + rightFraction, out offsetAndSpacing, out visualisedCoordinates);
-                        break; 
-                    }
-                    offsetAndSpacing = leftData.OffsetAndSpacing;
-                    visualisedCoordinates = CalculateVisualisedCoordinatesViaDivisors(rightFraction, leftFraction.Numerator, rightFraction.Numerator); //TODO Calculate visualised Coordinates
-                    break;
-                case Operation.Subtract:
-                    if (rightFraction.Numerator < 0)
-                    {
-                        rightFraction = new Fraction(-rightFraction.Numerator, rightFraction.Denominator);
-                        goto case Operation.Add; 
-                    }
-                    if (!(leftFraction - rightFraction).IsBetween(0, 1)  || leftFraction.Denominator > numbersToPrimeFactors.Length)
-                    {
-                        NotBetween01Error(leftFraction - rightFraction, out offsetAndSpacing, out visualisedCoordinates);
-                        break; 
-                    }
-                    visualisedCoordinates = CalculateVisualisedCoordinatesViaDivisors(leftFraction - rightFraction, leftFraction.Numerator - rightFraction.Numerator, rightFraction.Numerator); 
-                    offsetAndSpacing = leftData.OffsetAndSpacing;
-                    break;
-                case Operation.Multiply:
-                    if (!(leftFraction * rightFraction).IsBetween(0, 1)  || leftFraction.Denominator*rightFraction.Denominator > numbersToPrimeFactors.Length)
-                    {
-                        NotBetween01Error(leftFraction * rightFraction, out offsetAndSpacing, out visualisedCoordinates);
-                        break; 
-                    }
-                    offsetAndSpacing = new OffsetAndSpacing(
-                        numbersToPrimeFactors[leftFraction.Denominator * rightFraction.Denominator].factors.ToArray(),
-                        boardSize);
-                    visualisedCoordinates = MultiplyVisualisedCoordinates(leftData, rightFraction); 
-                    break;
-                case Operation.Divide:
-                    rightFraction = new Fraction(rightFraction.Denominator, rightFraction.Numerator);
-                    goto case Operation.Multiply; 
-                default:
-                    throw new NotImplementedException();
-            }
-
-            FractionVisualisationData visualisationData =
-                new FractionVisualisationData(
-                    rightFraction,
-                    visStyle_Transparent,
-                    offsetAndSpacing,
-                    visualisedCoordinates
-                );
-
-            _visualisationDataMap.Add(VisualisationType.Right, visualisationData);
-            SpawnFigures(visualisationData);
-        }
-
+        
         private void VisualiseModify(VisualisationType visType, ModifyType modifyType, int factor)
         {
             VisualisationType unmodifiedVisType = visType == VisualisationType.LeftModify
                 ? VisualisationType.Left
                 : VisualisationType.Right;
             ResetVisType(visType);
+            
             if (modifyType == ModifyType.None || factor == 0)
             {
                 return; 
@@ -394,89 +333,128 @@ namespace Programming.Fraction_Engine
                 return; 
             }
             
-            Fraction fraction = _visualisationDataMap[unmodifiedVisType].fraction; 
-            FractionVisualisationData visualisationData =
+            Fraction fraction = _visualisationDataMap[unmodifiedVisType].StoredFraction; 
+            
+            //TODO: Check whether a planned visualisation is valid
+            Fraction modifiedFraction;
+            FractionVisualisationStyle visStyle = visType == VisualisationType.LeftModify ? visStyle_Main : visStyle_Transparent;
+            OffsetAndSpacing offsetAndSpacing;
+            List<Vector3Int> visCoordinates;
+            switch (modifyType)
+            {
+                case ModifyType.Expand:
+                    modifiedFraction = fraction.ExpandBy(factor);
+                    
+                    break; 
+                case ModifyType.Simplify:
+                    modifiedFraction = fraction.SimplifyBy(factor); 
+                    
+                    break; 
+                default: 
+                case ModifyType.None:
+                    throw new NotSupportedException(); 
+                    break;
+            }
+            
+            
+            FractionVisualisationData visData =
                 new FractionVisualisationData(
-                    modifyType == ModifyType.Expand ? fraction.ExpandBy(factor) : fraction.SimplifyBy(factor),
-                    visType == VisualisationType.LeftModify ? visStyle_Main : visStyle_Transparent,
-                    new OffsetAndSpacing(numbersToPrimeFactors[modifyType == ModifyType.Expand ? fraction.Denominator * factor : fraction.Denominator / factor].factors, boardSize),
+                    modifiedFraction,
+                    visStyle,
+                    new OffsetAndSpacing(GetDimensionOfFractionVisualisation(modifiedFraction), boardSize),
                     ModifyVisualisedCoordinates(_visualisationDataMap[unmodifiedVisType], fraction, modifyType)
                 );
 
-            _visualisationDataMap.Add(visType, visualisationData);
+            _visualisationDataMap[visType] = visData; 
 
-            SpawnFigures(visualisationData);
-        }
-        
-        public void MoveFiguresAfterOperation()
-        {
-            throw new NotImplementedException();
+            SpawnFigures(ref visData);
         }
         #endregion
         
         #region InSceneVisualisation
-        private void UpdateBoards(Vector2Int columnsAndRows, int layers = 1)
+
+        private void UpdateBoards()
         {
-            for (int i = boardLayers.Length -1; i >= 0; i--)
+            if (!_visualisationDataMap.TryGetValue(VisualisationType.Left, out FractionVisualisationData leftData))
             {
-                Destroy(boardLayers[i]); 
-            }
-            boardLayers = new GameObject[layers]; 
-            for (int i = 0; i < layers-1; i++)
-            {
-                boardLayers[i] = Instantiate(subLayerPrefab, this.transform); 
+                ResetBoards();
+                return; 
             }
 
-            boardLayers[layers - 1] = Instantiate(topLayerPrefab, this.transform); 
-            
-            foreach (GameObject gO in boardLayers)
+            Vector3Int dimensions = Vector3Int.one;
+            dimensions = leftData.Dimensions; 
+            foreach (FractionVisualisationData visData in _visualisationDataMap.Values)
             {
-                Material boardMaterial = gO.GetComponent<MeshRenderer>().materials[0]; 
-                boardMaterial.SetFloat(XAmount, columnsAndRows.x);
-                boardMaterial.SetFloat(YAmount, columnsAndRows.y);
+                dimensions.x = Mathf.Max(visData.Layers, dimensions.x); 
+            }
+            
+            UpdateBoards(dimensions);
+        }
+
+        private void UpdateBoards(Vector3Int dimensions)
+        {
+            for (int i = 0; i < dimensions.x; i++)
+            {
+                boardLayers[i].SetActive(true);
+                //TODO: Set BoardLayer visuals
+            }
+            boardLayers[0].GetComponent<MeshRenderer>().materials[0].SetFloat(XAmount, dimensions.y);
+            boardLayers[0].GetComponent<MeshRenderer>().materials[0].SetFloat(YAmount, dimensions.z);
+
+            for (int i = dimensions.x; i < boardLayers.Length; i++)
+            {
+                boardLayers[i].SetActive(false);
             }
         }
 
-        private void ResetVisType(VisualisationType visType, bool searchSceneHierarchy = false)
+        private void ResetBoards()
+        {
+            UpdateBoards(Vector3Int.one);
+        }
+
+        private void VisualiseLayer(int layer)
+        {
+            foreach (FractionVisualisationData visData in _visualisationDataMap.Values)
+            {
+                foreach (KeyValuePair<Vector3Int, GameObject> figure in visData.VisualisedFigures) //TODO: visData.VisualisedFigures.Count is zero
+                {
+                    if (figure.Key.x == layer || figure.Key.x == boardLayers.Length-1)
+                    {
+                        figure.Value.SetActive(true);
+                    }
+                    else
+                    {
+                        figure.Value.SetActive(false);
+                    }
+                }
+            }
+        }
+
+        private void ResetVisType(VisualisationType visType)
         {
             if (_visualisationDataMap.ContainsKey(visType))
             {
                 _visualisationDataMap[visType].ClearFigures();
-                _visualisationDataMap.Remove(visType);
-            }
-
-            if (Application.isEditor || searchSceneHierarchy)
-            {
-                //TODO search through the hierarchy in check whether any child is left that shouldn't exist
-            }
+                _visualisationDataMap.Remove(visType); 
+            } 
         }
         
-        private void SpawnFigures(FractionVisualisationData visData)
+        private void SpawnFigures(ref FractionVisualisationData visData) //needs to be ref, because it should be the actual one from the Dictionary that get sset to a new value in the function
         {
-            visData.ClearFigures(true);
-            
-            //initialise VisualisedFigures Array (do I need this as an Array?)
-            visData.VisualisedFigures = new GameObject[visData.Layers][][];
-            for (int layer = 0; layer < visData.Layers; layer++) 
-            {
-                visData.VisualisedFigures[layer] = new GameObject[visData.OffsetAndSpacing.ColumnsAndRows.x][];
-                for (int column = 0; column < visData.OffsetAndSpacing.ColumnsAndRows.x; column++)
-                {
-                    visData.VisualisedFigures[layer][column] = new GameObject[visData.OffsetAndSpacing.ColumnsAndRows.y]; 
-                }
-            }
+            visData.ClearFigures();
+            visData.VisualisedFigures.Clear();
             
             GameObject figurePrefab; 
-            Vector3 localScale;
-            if (visData.fraction.Denominator < figurePrefabs.Length)
+            Vector3 adjustedScale;
+            if (visData.VisualisedFraction.Denominator < figurePrefabs.Length)
             {
-                figurePrefab = figurePrefabs[visData.fraction.Denominator];
-                localScale = Vector3.one; 
+                figurePrefab = figurePrefabs[visData.VisualisedFraction.Denominator];
+                adjustedScale = Vector3.one; 
             }
             else
             {
                 figurePrefab = figurePrefabs[0];
-                localScale = Vector3.one * (0.75f * boardSize.x/Mathf.Max(visData.Columns, visData.Rows)); 
+                adjustedScale = Vector3.one * (0.75f * boardSize.x/Mathf.Max(visData.Columns, visData.Rows)); 
             }
             
             foreach(Vector3Int coordinates in visData.VisualisedCoordinates)
@@ -485,9 +463,9 @@ namespace Programming.Fraction_Engine
                     visData.FigureParent.transform,
                     figurePrefab,
                     coordinates, visData);
-                if (localScale != Vector3.one) //TodoLater: Remove the condition
+                if (adjustedScale != Vector3.one) //TodoLater: Remove the condition
                 {
-                    newFigure.transform.localScale = localScale; 
+                    newFigure.transform.localScale = adjustedScale; 
                 }
             }
         }
@@ -497,14 +475,18 @@ namespace Programming.Fraction_Engine
         {
             GameObject newFigure = Instantiate(figurePrefab, parent.transform);
             newFigure.transform.localPosition = visData.OffsetAndSpacing.CalculatePosition(coordinates);
-            visData.VisStyle.ApplyToObject(newFigure);
-
-            if (visData.VisualisedFigures[coordinates.x][coordinates.y][coordinates.z] != null)
+            if (coordinates.x != boardLayers.Length-1)
             {
-                Destroy(visData.VisualisedFigures[coordinates.x][coordinates.y][coordinates.z]);
+                newFigure.SetActive(false);
+            }
+            visData.VisStyle.ApplyToObject(newFigure);
+            //ensure there is no other figure at the same position
+            if (visData.VisualisedFigures.TryGetValue(coordinates, out GameObject blockingFigure))
+            {
+                Destroy(blockingFigure);
                 Debug.LogWarning("Spawning new Figure on a coordinate which already contains a figure: " + coordinates); 
             }
-            visData.VisualisedFigures[coordinates.x][coordinates.y][coordinates.z] = newFigure;
+            visData.VisualisedFigures.Add(coordinates, newFigure);
             
             return newFigure; 
         }
@@ -512,6 +494,49 @@ namespace Programming.Fraction_Engine
         
         #region VisualisationCalculationFunctions
 
+        private Fraction CalculateCombinedFraction()
+        {
+            if (!(_visualisationDataMap.TryGetValue(VisualisationType.Left, out FractionVisualisationData leftData) &&
+                  _visualisationDataMap.TryGetValue(VisualisationType.Right, out FractionVisualisationData rightData)))
+            {
+                return null; 
+            }
+
+            switch (_operation)
+            {
+                case Operation.Add:
+                    if (leftData.StoredFraction.Denominator != rightData.StoredFraction.Denominator) { goto case Operation.Nop; }
+                    return leftData.StoredFraction + rightData.StoredFraction; 
+                    break; 
+                case Operation.Subtract:
+                    if (leftData.StoredFraction.Denominator != rightData.StoredFraction.Denominator) { goto case Operation.Nop; }
+                    return leftData.StoredFraction - rightData.StoredFraction; 
+                    break; 
+                case Operation.Multiply:
+                    return leftData.StoredFraction * rightData.StoredFraction; 
+                    break; 
+                case Operation.Divide:
+                    return leftData.StoredFraction / rightData.StoredFraction; 
+                    break; 
+                case Operation.Nop:
+                    return null; 
+                    break; 
+            }
+            
+            return null; 
+        }
+        
+        private Vector3Int GetDimensionOfFractionVisualisation(Fraction fraction, int startingIndex = 0)
+        {
+            Vector2Int ColumnsAndRows = numbersToPrimeFactors[fraction.Denominator].factors
+                .Aggregate(Vector2Int.one, (product, factor)=>product*factor);
+            return new Vector3Int(
+                Mathf.CeilToInt((float)(fraction.Numerator + startingIndex) / fraction.Denominator), 
+                ColumnsAndRows.x, 
+                ColumnsAndRows.y
+                ); 
+        }
+        
         private List<Vector3Int> CalculateVisualisedCoordinatesViaDivisors(Fraction fraction, int startingIndex, int figureCount)
         {
             List<Vector3Int> visualisedCoordinates = new List<Vector3Int>();
@@ -560,7 +585,7 @@ namespace Programming.Fraction_Engine
                             for (int yDiv = 0; yDiv < verticalDivisorProduct; yDiv++)
                             {
                                 visualisedCoordinates.Add(new Vector3Int(
-                                    layers,
+                                    layers, //layer
                                     xDiv * notHorizontalDivisorProduct + xND,
                                     yDiv * notVerticalDivisorProduct + yND)
                                 );
@@ -655,7 +680,7 @@ namespace Programming.Fraction_Engine
         {
             List<Vector3Int> newPackingCoordinates = new List<Vector3Int>();
             
-            Fraction oldFraction = oldVisData.fraction; 
+            Fraction oldFraction = oldVisData.StoredFraction; //ZyKa TODO: figure out which fraction you need here 
             Vector2Int[] FactorsDifference = 
                 CalcFactorDifferenceBetweenNumbers(oldFraction.Denominator, oldFraction.Denominator*multiplicationFraction.Denominator);
             Vector2Int expandVector2 = FactorsDifference.Aggregate(new Vector2Int(1, 1), (product, current) => product * current);
@@ -739,7 +764,7 @@ namespace Programming.Fraction_Engine
         public int Editor_PrimeFactorGenerationMax;
         
         [ContextMenu("Editor_GeneratePrimeFactorsForNumbers")]
-        public void Editor_GeneratePrimeFactorsForNumbers() //TODO: this doesn't work for all numbers e.g. the 3 in 12 is horizontal, but the 3 in 24 is vertical
+        public void Editor_GeneratePrimeFactorsForNumbers() //TodoLater stuff so that it also works for e.g. 3*5, 3*7, 5*7, ...
         {
             List<int> primeNumbers = new List<int>{2, 3};
 
@@ -838,7 +863,7 @@ namespace Programming.Fraction_Engine
         {
             foreach (FractionVisualisationData vd in _visualisationDataMap.Values)
             {
-                Debug.Log(vd.fraction);
+                Debug.Log(vd.VisualisedFraction);
             }
         }
 
@@ -852,8 +877,8 @@ namespace Programming.Fraction_Engine
         {
             visualisedCoordinates = new List<Vector3Int>(); 
             offsetAndSpacing = Mathf.Abs(fraction.Denominator) < numbersToPrimeFactors.Length ? 
-                new OffsetAndSpacing(numbersToPrimeFactors[fraction.Denominator].factors.ToArray(), boardSize) :
-                new OffsetAndSpacing(Array.Empty<Vector2Int>(), boardSize);
+                new OffsetAndSpacing(GetDimensionOfFractionVisualisation(fraction), boardSize) :
+                new OffsetAndSpacing(Vector3Int.one, boardSize);
                 
             Debug.LogWarning("Visualised Fraction: " + fraction + " is not between 0 and 1 or has a too big Denominator");
         }

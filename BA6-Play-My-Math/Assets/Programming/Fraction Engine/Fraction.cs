@@ -42,8 +42,14 @@ namespace Programming.Fraction_Engine
         }
         [SerializeField] private int denominator = 1;
 
-        public int Wholes => Numerator / Denominator; 
+        public int Wholes => Numerator / Denominator;
 
+        public Fraction(Fraction fraction)
+        {
+            this.Numerator = fraction.Numerator;
+            this.Denominator = fraction.Denominator; 
+        }
+        
         public Fraction(int numerator, int denominator)
         {
             if (denominator == 0)
