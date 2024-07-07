@@ -87,7 +87,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2061019707948146925}
-  - component: {fileID: 3240044475637886500}
   m_Layer: 5
   m_Name: EnemySide
   m_TagString: Untagged
@@ -113,27 +112,6 @@ Transform:
   - {fileID: 3579895793121226387}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3240044475637886500
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7105615578820904134}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8592843629081590914
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,7 +326,7 @@ PrefabInstance:
     - target: {fileID: 6163171216753404863, guid: 95743d80dd646e54ea9933e6fe6dc336,
         type: 3}
       propertyPath: m_Name
-      value: EnemyDisplayArea (1)
+      value: EnemyDisplayArea
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

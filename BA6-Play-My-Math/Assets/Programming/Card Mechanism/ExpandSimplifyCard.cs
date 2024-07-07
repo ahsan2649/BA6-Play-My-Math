@@ -38,7 +38,7 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
             giveHint = false;
             expandSimpObj.SetActive(true);
             parentSlot = transform.parent;
-            transform.parent = GameObject.FindGameObjectWithTag("Test").transform;
+            transform.SetParent(GameObject.FindGameObjectWithTag("Test").transform);
 
             transform.position = new Vector3(0, 6, -5);
             transform.localScale += new Vector3(.02f, .02f, .02f);

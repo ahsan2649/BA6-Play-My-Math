@@ -82,7 +82,7 @@ namespace Programming.Operation_Board
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            OperationBoardComponent.Instance.fractionVisualiser.VisualiseOperation(currentOperation);
+            OperationBoardComponent.Instance.fractionVisualiser.SetOperation(currentOperation);
         }
 
         private void ShiftOp(bool direction)

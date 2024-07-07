@@ -1311,7 +1311,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7609265862680180620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2379,6 +2379,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1651468834523817816}
     m_Modifications:
+    - target: {fileID: 2585213942308409259, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585213942308409259, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585213942308409259, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585213942308409259, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2746874429347647358, guid: 5eee8e44657e01746a49bfecdf24a8ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2429,6 +2449,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3682377560261182737, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682377560261182737, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682377560261182737, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682377560261182737, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4674396132264825899, guid: 5eee8e44657e01746a49bfecdf24a8ac,
         type: 3}
       propertyPath: m_Name
@@ -2437,6 +2477,46 @@ PrefabInstance:
     - target: {fileID: 5354003809586073555, guid: 5eee8e44657e01746a49bfecdf24a8ac,
         type: 3}
       propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6572948555372332535, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6572948555372332535, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6572948555372332535, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6572948555372332535, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8464825805967858687, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8464825805967858687, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8464825805967858687, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8464825805967858687, guid: 5eee8e44657e01746a49bfecdf24a8ac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

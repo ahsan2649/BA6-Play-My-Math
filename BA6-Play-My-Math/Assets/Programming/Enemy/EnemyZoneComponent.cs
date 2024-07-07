@@ -16,14 +16,13 @@ namespace Programming.Enemy {
             {
                 Instance = this;
             }
-            
-            
-            enemySlots = GetComponentsInChildren<EnemySlotComponent>();
         }
 
         // Start is called before the first frame update
         void Start()
         {
+            enemySlots = GetComponentsInChildren<EnemySlotComponent>();
+            
             for (int i = 0; i < enemySlots.Length; i++)
             {
                 ZonePush(EnemyLineupComponent.Instance.EnemyPop());

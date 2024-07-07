@@ -15,7 +15,7 @@ namespace Programming.Enemy
             _enemyInZone = enemy;
             enemy.transform.SetParent(transform);
             enemy.enabled = true;
-            visualiser.VisualiseFraction(_enemyInZone.Value, FractionVisualiser.VisualisationType.Left);
+            visualiser.SetFractionVisualisation(_enemyInZone.Value, FractionVisualiser.VisualisationType.Left);
         }
 
         public EnemyComponent UnsetEnemy()

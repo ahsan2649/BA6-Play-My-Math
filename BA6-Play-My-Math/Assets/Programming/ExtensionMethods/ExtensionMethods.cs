@@ -37,5 +37,13 @@ namespace Programming.ExtensionMethods
         {
             return monoBehaviour.transform.parent.GetComponentInChildren<T>(); 
         }
+
+        public static void SetGlobalScale(this Transform transform, Vector3 scale)
+        {
+            Transform parent = transform.parent; 
+            transform.SetParent(null);
+            transform.localScale = scale;
+            transform.SetParent(parent); 
+        }
     }
 }

@@ -101,8 +101,8 @@ namespace Programming.Operation_Board
             _leftOperand.CardInSlot.oldValue = _leftOperand.CardInSlot.Value = value;
             
             FightButtonComponent.Instance.EnableFighting(value);
-            fractionVisualiser.VisualiseFraction(_leftOperand.CardInSlot.Value, FractionVisualiser.VisualisationType.Left);
-            fractionVisualiser.VisualiseFraction(null, FractionVisualiser.VisualisationType.Right);
+            fractionVisualiser.SetFractionVisualisation(_leftOperand.CardInSlot.Value, FractionVisualiser.VisualisationType.Left);
+            fractionVisualiser.SetFractionVisualisation(null, FractionVisualiser.VisualisationType.Right);
 
             PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
             Debug.Log(value);

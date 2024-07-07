@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Programming.Fraction_Engine;
 using Programming.ScriptableObjects;
@@ -12,7 +13,7 @@ namespace Programming.Enemy
         [SerializeField] private GameObject enemyPrefab;
         public static EnemyLineupComponent Instance { get; private set; }
 
-        private void OnEnable()
+        private void Awake()
         {
             if (Instance != null && Instance != this)
             {
@@ -22,9 +23,10 @@ namespace Programming.Enemy
             {
                 Instance = this;
             }
+        }
 
-            // Need to populate enemies with Vin's generation algorithm
-
+        private void Start()
+        {
             foreach (Fraction value in
                      (enemyLineup == null || enemyLineup.enemyList.Count == 0)
                          ? LevelGeneration.generateEnemyCue(10)

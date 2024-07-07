@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Programming.Fraction_Engine;
 using Programming.ScriptableObjects;
 using UnityEngine;
 
@@ -37,7 +38,7 @@ namespace Programming.Card_Mechanism
                 // Disabling BaseCard, so they can't be dragged in Deck
                 card.GetComponent<BaseCardComponent>().enabled = false;
                 card.GetComponent<NumberCardComponent>().oldValue =
-                    card.GetComponent<NumberCardComponent>().Value = startingDeck.numbers[i];
+                    card.GetComponent<NumberCardComponent>().Value = new Fraction(startingDeck.numbers[i]);
                 _cardsInDeck.Add(card.GetComponent<BaseCardComponent>());
             }
         }
