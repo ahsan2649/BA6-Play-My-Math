@@ -10,7 +10,7 @@ public class RewardsSlider : MonoBehaviour {
     public RectTransform Counter;
     public TextMeshProUGUI Count;
 
-    [SerializeField] private List<int> thresholdValues = new();
+    [SerializeField] public List<int> thresholdValues = new();
     [SerializeField] private List<GameObject> thresholds = new();
     public int maxValue;
 
@@ -18,8 +18,7 @@ public class RewardsSlider : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(CountRewards(12));
-        StartCoroutine(SlideRewards(12));
+        
 
     }
 

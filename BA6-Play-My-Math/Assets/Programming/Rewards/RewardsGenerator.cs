@@ -1,6 +1,7 @@
 using Programming.Card_Mechanism;
 using Programming.Fraction_Engine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Programming.Rewards {
     public class RewardsGenerator : MonoBehaviour {
@@ -8,6 +9,11 @@ namespace Programming.Rewards {
         public static RewardsGenerator Instance { get; private set; }
 
         public GameObject cardPrefab;
+        public int target;
+        public int rewardCount = 0;
+
+        [SerializeField] private RewardsSlider rewardsSlider;
+
         // Start is called before the first frame update
         private void OnEnable()
         {
@@ -23,17 +29,36 @@ namespace Programming.Rewards {
 
         void Start()
         {
-            GenerateRewards();
+            StartCoroutine(rewardsSlider.CountRewards(target));
+            StartCoroutine(rewardsSlider.SlideRewards(target));
+            
+            foreach (int threshold in rewardsSlider.thresholdValues)
+            {
+                if (target >= threshold)
+                {
+                    rewardCount++;
+                }
+            }
+
+            if (rewardCount > 0)
+            {
+                GenerateRewards();
+            }
         }
 
         // Update is called once per frame
         void Update()
         {
-        
         }
 
         public void GenerateRewards()
         {
+            if (rewardCount <= 0)
+            {
+                return;
+            }
+
+            rewardCount--;
             foreach (Transform slot in slots)
             {
                 var card = GameObject.Instantiate(cardPrefab, slot);
