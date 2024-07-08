@@ -19,6 +19,13 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
     public GameObject btnSimplify;
     public Color btnActiveColor;
 
+    public GameObject btn2;
+    public GameObject btn3;
+    public GameObject btn5;
+    public GameObject btn7;
+    public Color btnIncorrectColor;
+
+
     bool bExpand;
 
 
@@ -32,13 +39,13 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerClick(PointerEventData eventData)
     {
-       if(focusOpen == false && !GetComponent<NumberCardComponent>().Value.IsWhole())
+        if (focusOpen == false && !GetComponent<NumberCardComponent>().Value.IsWhole())
         {
             //move cards to the center
             giveHint = false;
             expandSimpObj.SetActive(true);
             parentSlot = transform.parent;
-            transform.SetParent(GameObject.FindGameObjectWithTag("Test").transform);
+            transform.parent = GameObject.FindGameObjectWithTag("Test").transform;
 
             transform.position = new Vector3(0, 6, -5);
             transform.localScale += new Vector3(.02f, .02f, .02f);
@@ -53,7 +60,7 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         {
             hint.SetActive(true);
         }
- 
+
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -82,20 +89,39 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         bExpand = false;
         btnSimplify.GetComponent<Image>().color = btnActiveColor;
         btnExpand.GetComponent<Image>().color = Color.white;
+
+        //set other buttons
+
     }
 
-    public void ExSimpl (int pValue)
+    public void ExSimpl(int pValue)
     {
 
         //doesnt work
         if (bExpand)
         {
-            Debug.Log("expand or simplify"+ pValue);
+            Debug.Log("expand or simplify" + pValue);
             GetComponent<NumberCardComponent>().Value = GetComponent<NumberCardComponent>().Value.ExpandBy(pValue);
-        
+
         }
         else GetComponent<NumberCardComponent>().Value = GetComponent<NumberCardComponent>().Value.SimplifyBy(pValue);
     }
 
-  
+    public void refreshSimplifyButtons()
+    {
+
+        btn2.GetComponent<Image>().color = Color.white; btn3.GetComponent<Image>().color = Color.white; btn5.GetComponent<Image>().color = Color.white; btn7.GetComponent<Image>().color = Color.white;
+        if (!bExpand)
+        {
+            if (!GetComponent<NumberCardComponent>().Value.CanSimplifyBy(2)) btn2.GetComponent<Image>().color = btnIncorrectColor;
+            if (!GetComponent<NumberCardComponent>().Value.CanSimplifyBy(3)) btn3.GetComponent<Image>().color = btnIncorrectColor;
+            if (!GetComponent<NumberCardComponent>().Value.CanSimplifyBy(5)) btn5.GetComponent<Image>().color = btnIncorrectColor;
+            if (!GetComponent<NumberCardComponent>().Value.CanSimplifyBy(7)) btn7.GetComponent<Image>().color = btnIncorrectColor;
+
+        }
+
+
+    }
+
+
 }
