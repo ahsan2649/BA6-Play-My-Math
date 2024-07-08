@@ -1,62 +1,75 @@
-using System;
 using Programming.Enemy;
 using Programming.Fraction_Engine;
-using Programming.Operation_Board;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
-public class FightButtonComponent : MonoBehaviour, IPointerClickHandler
+namespace Programming.Operation_Board
 {
-    RectTransform _rectTransform;
-    Canvas _canvas;
-    CanvasGroup _canvasGroup;
-    public UnityEvent fightEvent;
-    public static FightButtonComponent Instance;
-
-    private void OnEnable()
+    public class FightButtonComponent : MonoBehaviour, IPointerClickHandler
     {
-        if (Instance != null && Instance != this)
+        [SerializeField] private OperationBoardComponent operationBoardComponent; 
+    
+        Canvas _canvas;
+        public UnityEvent fightEvent;
+        public static FightButtonComponent Instance;
+    
+        private void OnEnable()
         {
-            Destroy(this);
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+            }
+        
+            _canvas = GetComponent<Canvas>();
+            
+            _canvas.worldCamera = Camera.main;
         }
-        else
+
+        private void Start()
         {
-            Instance = this;
+            gameObject.SetActive(false);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            fightEvent.Invoke();  
+        }
+
+        public void OperationBoardEnableFighting()
+        {
+            EnableFighting(operationBoardComponent.CalculateCombinedValue() ??
+                           (operationBoardComponent.LeftOperand.CardInSlot != null ?
+                               operationBoardComponent.LeftOperand.CardInSlot.Value : 
+                            operationBoardComponent.RightOperand.CardInSlot != null ? 
+                                operationBoardComponent.RightOperand.CardInSlot.Value :
+                                null)); 
         }
         
-        _rectTransform = GetComponent<RectTransform>();
-        _canvas = GetComponent<Canvas>();
-        _canvasGroup = GetComponent<CanvasGroup>();
-            
-        _canvas.worldCamera = Camera.main;
-    }
-
-    private void Start()
-    {
-        gameObject.SetActive(false);
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        fightEvent.Invoke();  
-    }
-
-    public void EnableFighting(Fraction value)
-    {
-        gameObject.SetActive(false);
-        foreach (var enemySlot in EnemyZoneComponent.Instance.enemySlots)    
+        public void EnableFighting(Fraction value)
         {
-            if (!enemySlot.HasEnemy())
+            gameObject.SetActive(false);
+            if (value is null)
             {
-                continue;
+                return; 
             }
-
-            if (enemySlot.GetEnemy().Value.Denominator == value.Denominator && enemySlot.GetEnemy().Value.Numerator == value.Numerator)
+            
+            foreach (var enemySlot in EnemyZoneComponent.Instance.enemySlots)    
             {
-                gameObject.SetActive(true);
-                break; 
+                if (!enemySlot.HasEnemy())
+                {
+                    continue;
+                }
+
+                if (enemySlot.GetEnemy().Value.Denominator == value.Denominator && enemySlot.GetEnemy().Value.Numerator == value.Numerator)
+                {
+                    gameObject.SetActive(true);
+                    break; 
+                }
             }
         }
     }

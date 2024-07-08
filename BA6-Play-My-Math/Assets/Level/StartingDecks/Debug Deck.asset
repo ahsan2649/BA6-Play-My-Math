@@ -25,7 +25,7 @@ MonoBehaviour:
     denominator: 12
   - numerator: 2
     denominator: 12
-  - numerator: 4
-    denominator: 9
-  - numerator: 2
-    denominator: 9
+  - numerator: 12
+    denominator: 30
+  - numerator: 3
+    denominator: 30

@@ -33,9 +33,24 @@ namespace Programming.ExtensionMethods
             return transform.parent.GetComponentInChildren<MonoBehaviour>(); 
         }
         
-        public static T GetComponentInSiblings<T>(this MonoBehaviour monoBehaviour)
+        public static T GetComponentInSiblings<T>(this Transform monoBehaviour)
         {
             return monoBehaviour.transform.parent.GetComponentInChildren<T>(); 
+        }
+
+        public static T GetComponentInAncestors<T>(this Transform thisTransform)
+        { 
+            Transform checkTransform = thisTransform;
+            T result; 
+            while (checkTransform is not null)
+            {
+                if (checkTransform.TryGetComponent(out result))
+                { 
+                    return result; 
+                }
+                checkTransform = checkTransform.parent; 
+            }
+            return default; 
         }
 
         public static void SetGlobalScale(this Transform transform, Vector3 scale)

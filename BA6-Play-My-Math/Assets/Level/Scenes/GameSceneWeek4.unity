@@ -1757,6 +1757,12 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2350919991942026813, guid: 83f64aed1db736f42b3680a0f4cb9796,
+        type: 3}
+      propertyPath: enemyLineup
+      value: 
+      objectReference: {fileID: 11400000, guid: 3b0aa891ddd8cb94982d873ea2d31012,
+        type: 2}
     - target: {fileID: 2359555155637369483, guid: 83f64aed1db736f42b3680a0f4cb9796,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1896,7 +1902,7 @@ PrefabInstance:
         type: 3}
       propertyPath: startingDeck
       value: 
-      objectReference: {fileID: 11400000, guid: ae2cc9ae202f1924ea4b0655d914c0bc,
+      objectReference: {fileID: 11400000, guid: 30a79c07ed24fe64a9358c5cc5a78615,
         type: 2}
     - target: {fileID: 6370791825987891415, guid: 83f64aed1db736f42b3680a0f4cb9796,
         type: 3}

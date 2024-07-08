@@ -1,4 +1,5 @@
 using Programming.Fraction_Engine;
+using Programming.Visualisers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,37 +11,22 @@ namespace Programming.Card_Mechanism
     {
         public Fraction oldValue;
         [SerializeField] Fraction value;
-
+        [SerializeField] private FractionTextVisualiser fractionTextVisualiser; 
+        
         public Fraction Value
         {
             get => value;
             set
             {
                 this.value = value;
-                UpdateValue();
+                fractionTextVisualiser.SetFraction(Value);
             }
         }
 
         private void OnEnable()
         {
-            UpdateValue();
-        }
-
-        public void UpdateValue()
-        {
-            if (Value.Denominator == 1)
-            {
-                transform.Find("Number").gameObject.SetActive(true);
-                transform.Find("Fraction").gameObject.SetActive(false);
-                transform.Find("Number").GetComponent<TextMeshProUGUI>().text = Value.Numerator.ToString();
-                return;
-            }
-
-            transform.Find("Number").gameObject.SetActive(false);
-            transform.Find("Fraction").gameObject.SetActive(true);
-            transform.Find("Fraction").Find("Zähler").GetComponent<TextMeshProUGUI>().text = Value.Numerator.ToString();
-            transform.Find("Fraction").Find("Nenner").GetComponent<TextMeshProUGUI>().text =
-                Value.Denominator.ToString();
+            Value = Value; 
+            fractionTextVisualiser.gameObject.SetActive(true);
         }
 
         #region Pointer
@@ -59,8 +45,11 @@ namespace Programming.Card_Mechanism
                 return;
             }
 
-            transform.Find("Number").gameObject.SetActive(false);
-
+            if (value.IsWhole())
+            {
+                fractionTextVisualiser.gameObject.SetActive(false); 
+            }
+            
             draggedCardNumber.oldValue = draggedCardNumber.Value;
             draggedCardNumber.Value = new Fraction(draggedCardNumber.Value.Numerator, Value.Numerator);
         }
@@ -79,7 +68,8 @@ namespace Programming.Card_Mechanism
                 return;
             }
             
-            transform.Find("Number").gameObject.SetActive(true);
+            fractionTextVisualiser.gameObject.SetActive(true); 
+            
             draggedCardNumber.Value = draggedCardNumber.oldValue;
         }
 

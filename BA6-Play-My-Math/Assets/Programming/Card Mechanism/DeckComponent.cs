@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Programming.Fraction_Engine;
 using Programming.ScriptableObjects;
@@ -13,7 +14,7 @@ namespace Programming.Card_Mechanism
         [SerializeField] private GameObject numberCardPrefab;
         public static DeckComponent Instance { get; private set; }
 
-        private void OnEnable()
+        private void Awake()
         {
             if (Instance != null && Instance != this)
             {
@@ -23,7 +24,10 @@ namespace Programming.Card_Mechanism
             {
                 Instance = this;
             }
+        }
 
+        private void Start()
+        {
             if (startingDeck == null)
             {
                 Debug.LogError("No Starting Deck!");

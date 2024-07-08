@@ -2,41 +2,33 @@ using Programming.Card_Mechanism;
 using Programming.Fraction_Engine;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 namespace Programming.Operation_Board
 {
     public class OperandSlotComponent : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        RectTransform _rectTransform;
         Canvas _canvas;
-        CanvasGroup _canvasGroup;
         
         [HideInInspector] public HandSlotComponent _originSlot;
-
 
         public NumberCardComponent CardInSlot
         {
             get => _cardInSlot;
             set
             {
-                _cardInSlot = value;
-                OperationBoardComponent.Instance.fractionVisualiser.SetFractionVisualisation(CardInSlot?.Value, visType);
-                if (visType == FractionVisualiser.VisualisationType.Left)
-                {
-                    FightButtonComponent.Instance.EnableFighting(value != null ? value.Value : new Fraction(0, 1));
-                }
+                _cardInSlot = value; 
+                OperationBoardComponent.Instance.onOperationBoardChange.Invoke();
             }
         }
 
-        [Tooltip("left or right slot")] public FractionVisualiser.VisualisationType visType;
+        [FormerlySerializedAs("cardSlotType")] [Tooltip("left or right slot")] public OperandType operandType;
 
         [SerializeField] [HideInInspector] private NumberCardComponent _cardInSlot;
 
-        private void OnEnable()
+        private void Awake()
         {
-            _rectTransform = GetComponent<RectTransform>();
             _canvas = GetComponent<Canvas>();
-            _canvasGroup = GetComponent<CanvasGroup>();
             
             _canvas.worldCamera = Camera.main;
         }
@@ -91,9 +83,9 @@ namespace Programming.Operation_Board
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            
         }
-
-
+        
         public void OnPointerExit(PointerEventData eventData)
         {
             var draggedCard = eventData.pointerDrag;

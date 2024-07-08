@@ -80,9 +80,9 @@ namespace Programming.Operation_Board
                 Operation.Multiply => "\u00d7",
                 Operation.Divide => "\u00f7",
                 _ => throw new ArgumentOutOfRangeException()
-            };
-
-            OperationBoardComponent.Instance.fractionVisualiser.SetOperation(currentOperation);
+            }; 
+            
+            
         }
 
         private void ShiftOp(bool direction)

@@ -65,7 +65,7 @@ namespace Programming.Rewards {
                 var cardNumber = card.GetComponent<NumberCardComponent>();
                 card.GetComponent<BaseCardComponent>().enabled = false;
                 card.AddComponent<RewardCardComponent>();
-                cardNumber.Value = new Fraction(Random.Range(1, 9), Random.Range(1, 9));
+                cardNumber.Value = new Fraction(Random.Range(1, 9), 1);
             }
         }
     }

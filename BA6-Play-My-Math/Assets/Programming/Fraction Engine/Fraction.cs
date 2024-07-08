@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Programming.Fraction_Engine
@@ -8,6 +9,15 @@ namespace Programming.Fraction_Engine
         Simplify,
         Expand
     }
+    
+    public enum OperandType
+    {
+        None,
+        Left,
+        LeftModify,
+        Right,
+        RightModify
+    }  
     
     public enum Operation
     {
@@ -239,6 +249,28 @@ namespace Programming.Fraction_Engine
         static int LeastCommonMultiple(int a, int b) 
         { 
             return (a / GreatestCommonDivisor(a, b)) * b; 
+        }
+
+        public static Fraction CalculateOperation(Fraction leftFraction, Operation operation, Fraction rightFraction)
+        {
+            if (leftFraction is null || rightFraction is null)
+            {
+                return null; 
+            }
+
+            return operation switch
+            {
+                Operation.Add => leftFraction.Denominator == rightFraction.Denominator
+                    ? leftFraction + rightFraction
+                    : null,
+                Operation.Subtract => leftFraction.Denominator == rightFraction.Denominator
+                    ? leftFraction - rightFraction
+                    : null,
+                Operation.Multiply => leftFraction * rightFraction,
+                Operation.Divide => leftFraction / rightFraction,
+                Operation.Nop => null, 
+                _ => throw new SwitchExpressionException()
+            }; 
         }
         
         #endregion Helpers

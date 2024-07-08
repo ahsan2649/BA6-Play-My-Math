@@ -1,20 +1,23 @@
 using System;
+using Programming.Fraction_Engine;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 namespace Programming.Operation_Board {
     public class FinalizeButtonComponent : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        RectTransform _rectTransform;
-        Canvas _canvas;
-        CanvasGroup _canvasGroup;
+        public OperationBoardComponent operationBoardComponent; 
+        
+        Canvas _canvas; 
+        
         public UnityEvent FinalizeEvent;
-        private void OnEnable()
+        
+        private void Awake()
         {
-            _rectTransform = GetComponent<RectTransform>();
             _canvas = GetComponent<Canvas>();
-            _canvasGroup = GetComponent<CanvasGroup>();
             
             _canvas.worldCamera = Camera.main;
         }
@@ -30,7 +33,5 @@ namespace Programming.Operation_Board {
             Debug.Log("Button Up");
             FinalizeEvent.Invoke();
         }
-        
-        
     }
 }

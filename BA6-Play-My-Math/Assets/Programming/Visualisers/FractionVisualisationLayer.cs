@@ -8,18 +8,18 @@ namespace Programming.Fraction_Engine
     public class FractionVisualisationLayer : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] public int layerNumber;
-        [SerializeField] public FractionVisualiser parent;
+        [SerializeField] public FractionVisualiser.FractionVisualiser parent;
 
         private void Awake()
         {
             if (parent is null)
             {
-                Debug.Log("setting parent of FractionVisualisationLayer via Code, not recommended for Runtime"); 
+                Debug.LogWarning("setting parent of FractionVisualisationLayer via Code, not recommended for Runtime"); 
                 
                 Transform iterationObject = transform; 
                 while (parent is null && iterationObject is not null)
                 {
-                    parent = iterationObject.GetComponent<FractionVisualiser>();
+                    parent = iterationObject.GetComponent<FractionVisualiser.FractionVisualiser>();
                     iterationObject = iterationObject.parent; 
                 }
             }

@@ -126,6 +126,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7712221618598843289}
+    - targetCorrespondingSourceObject: {fileID: 1614801289587472015, guid: d6bc71f1d9ccbd24b94790faf1c3a627,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9075721522740046798}
   m_SourcePrefab: {fileID: 100100000, guid: d6bc71f1d9ccbd24b94790faf1c3a627, type: 3}
 --- !u!1 &6163171216753404863 stripped
 GameObject:
@@ -145,6 +149,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681c60cfa44986d4a9921956cf4e920b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onEnemyChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9075721522740046798}
+        m_TargetAssemblyTypeName: Programming.Visualisers.EnemySlotVisualiser, Programming.FractionVisualiser
+        m_MethodName: VisualiseEnemy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &9075721522740046798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6163171216753404863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8386a7b50bebae448a40666222ab484, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySlot: {fileID: 7712221618598843289}
   visualiser: {fileID: 8236928759403032691}
 --- !u!114 &8236928759403032691 stripped
 MonoBehaviour:
