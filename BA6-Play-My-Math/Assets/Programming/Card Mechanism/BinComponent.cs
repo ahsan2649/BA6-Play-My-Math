@@ -7,7 +7,7 @@ namespace Programming.Card_Mechanism {
     public class BinComponent : MonoBehaviour, IDropHandler, IPointerEnterHandler {
         private List<BaseCardComponent> _disCards = new List<BaseCardComponent>();
         public static BinComponent Instance { get; private set; }
-        private void OnEnable()
+        private void Awake()
         {
             if (Instance != null && Instance != this)
             {
@@ -30,7 +30,6 @@ namespace Programming.Card_Mechanism {
 
         public void OnDrop(PointerEventData eventData)
         {
-
             var droppedCard = eventData.pointerDrag.GetComponent<BaseCardComponent>();
             var droppedCardSlot = droppedCard.GetComponentInParent<HandSlotComponent>();
             
