@@ -5,9 +5,22 @@ using UnityEngine;
 namespace Programming.Rewards {
     public class RewardsGenerator : MonoBehaviour {
         public Transform[] slots;
+        public static RewardsGenerator Instance { get; private set; }
 
         public GameObject cardPrefab;
         // Start is called before the first frame update
+        private void OnEnable()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+            }
+        }
+
         void Start()
         {
             GenerateRewards();
@@ -19,7 +32,7 @@ namespace Programming.Rewards {
         
         }
 
-        void GenerateRewards()
+        public void GenerateRewards()
         {
             foreach (Transform slot in slots)
             {
@@ -28,7 +41,6 @@ namespace Programming.Rewards {
                 card.GetComponent<BaseCardComponent>().enabled = false;
                 card.AddComponent<RewardCardComponent>();
                 cardNumber.Value = new Fraction(Random.Range(1, 9), Random.Range(1, 9));
-            
             }
         }
     }
