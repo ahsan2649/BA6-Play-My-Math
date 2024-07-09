@@ -37,7 +37,11 @@ namespace Programming.Rewards {
 
         private void Start()
         {
-            _achievedValue = 7;
+        }
+
+        public void StartRewarding(int score)
+        {
+            _achievedValue = score;
             ArrangeThresholds();
             CountRewards();
             StartCoroutine(AnimateCounter());
@@ -92,6 +96,7 @@ namespace Programming.Rewards {
         {
             if (rewardCount <= 0)
             {
+                ResetBoard();
                 return;
             }
 
@@ -104,6 +109,13 @@ namespace Programming.Rewards {
                 card.AddComponent<RewardCardComponent>();
                 cardNumber.Value = new Fraction(Random.Range(1, 9), 1);
             }
+        }
+
+        private void ResetBoard()
+        {
+            Counter.anchoredPosition = new Vector2(0, Counter.anchoredPosition.x);
+            Count.text = 0.ToString();
+            gameObject.SetActive(false);
         }
     }
 }
