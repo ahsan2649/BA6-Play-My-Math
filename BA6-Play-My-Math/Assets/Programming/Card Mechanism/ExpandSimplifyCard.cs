@@ -49,6 +49,7 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
 
             transform.position = new Vector3(0, 6, -5);
             transform.localScale += new Vector3(.02f, .02f, .02f);
+            transform.rotation = Quaternion.Euler(90, 0, 0);
             focusOpen = true;
         }
 
@@ -70,10 +71,11 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void returnToHand()
     {
+        Debug.Log("return tohand");
         focusOpen = false;
         giveHint = true;
         transform.SetParent(parentSlot);
-        transform.localScale -= new Vector3(0.02f, 0.02f, 0.02f);
+        transform.localScale = new Vector3(0.016f, 0.016f, 0.016f);
         transform.localPosition = new Vector3(0, 0, 0);
         expandSimpObj.SetActive(false);
     }
