@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6792288779371471456}
   - component: {fileID: 6791190194804030822}
   m_Layer: 0
-  m_Name: UnderneathBlock
+  m_Name: 3D_Underdeck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 4488406985416926143}
   - component: {fileID: 6810939236825442355}
   m_Layer: 5
-  m_Name: DrawPileAsset
+  m_Name: 3D_Deck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

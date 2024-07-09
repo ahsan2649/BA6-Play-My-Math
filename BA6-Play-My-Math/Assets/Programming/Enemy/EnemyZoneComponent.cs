@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 namespace Programming.Enemy {
     public class EnemyZoneComponent : MonoBehaviour
     {
         public static EnemyZoneComponent Instance { get; private set; }
-        public EnemySlotComponent[] enemySlots;
+        [HideInInspector] public EnemySlotComponent[] enemySlots;
 
         private void OnEnable()
         {
@@ -16,6 +17,11 @@ namespace Programming.Enemy {
             {
                 Instance = this;
             }
+        }
+
+        private void Awake()
+        {
+            enemySlots = GetComponentsInChildren<EnemySlotComponent>();
         }
 
         // Start is called before the first frame update

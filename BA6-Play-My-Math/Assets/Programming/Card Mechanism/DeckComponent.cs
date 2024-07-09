@@ -24,16 +24,19 @@ namespace Programming.Card_Mechanism
             {
                 Instance = this;
             }
+
+            FillDeckWithCards(startingDeck.numbers);
         }
 
-        private void Start()
+        private void FillDeckWithCards(List<Fraction> fractionList)
         {
             if (startingDeck == null)
             {
                 Debug.LogError("No Starting Deck!");
                 return;
             }
-            for (int i = 0; i < startingDeck.numbers.Count; i++)
+                
+            for (int i = 0; i < fractionList.Count; i++)
             {
                 var card = Instantiate(numberCardPrefab,
                     new Vector3(transform.position.x, transform.position.y - i * 0.125f, transform.position.z),
@@ -46,7 +49,7 @@ namespace Programming.Card_Mechanism
                 _cardsInDeck.Add(card.GetComponent<BaseCardComponent>());
             }
         }
-
+        
         public BaseCardComponent DeckPop()
         {
             if (_cardsInDeck.Count == 0)

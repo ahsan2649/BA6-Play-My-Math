@@ -75,8 +75,8 @@ namespace Programming.Operation_Board
             Fraction result = CalculateCombinedValue(); 
             Debug.Log(result);
             SetFinalizedCard(result);
-            
-            onOperationBoardChange.Invoke();
+
+            onOperationBoardChange.Invoke(); 
         }
 
         public Fraction CalculateCombinedValue()

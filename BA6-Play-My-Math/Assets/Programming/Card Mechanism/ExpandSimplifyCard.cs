@@ -31,7 +31,7 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     void Start()
     {
-        expand();
+        Expand();
         bExpand = true;
         expandSimpObj.SetActive(false);
         hint.SetActive(false);
@@ -69,9 +69,9 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         hint.SetActive(false);
     }
 
-    public void returnToHand()
+    public void ReturnToPreviousSlot()
     {
-        Debug.Log("return tohand");
+        Debug.Log("return toPreviousSlot");
         focusOpen = false;
         giveHint = true;
         transform.SetParent(parentSlot);
@@ -80,13 +80,13 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         expandSimpObj.SetActive(false);
     }
 
-    public void expand()
+    public void Expand()
     {
         bExpand = true;
         btnExpand.GetComponent<Image>().color = btnActiveColor;
         btnSimplify.GetComponent<Image>().color = Color.white;
     }
-    public void simplify()
+    public void Simplify()
     {
         bExpand = false;
         btnSimplify.GetComponent<Image>().color = btnActiveColor;
@@ -98,8 +98,6 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void ExSimpl(int pValue)
     {
-
-        //doesnt work
         if (bExpand)
         {
             Debug.Log("expand or simplify" + pValue);
@@ -109,7 +107,7 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         else GetComponent<NumberCardComponent>().Value = GetComponent<NumberCardComponent>().Value.SimplifyBy(pValue);
     }
 
-    public void refreshSimplifyButtons()
+    public void RefreshSimplifyButtons()
     {
 
         btn2.GetComponent<Image>().color = Color.white; btn3.GetComponent<Image>().color = Color.white; btn5.GetComponent<Image>().color = Color.white; btn7.GetComponent<Image>().color = Color.white;

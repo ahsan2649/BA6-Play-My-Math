@@ -8,9 +8,9 @@ namespace Programming.Card_Mechanism
     public class PlayerHandComponent : MonoBehaviour
     {
         public static PlayerHandComponent Instance { get; private set; }
-        [SerializeField] private HandSlotComponent[] cardSlots;
+        private HandSlotComponent[] cardSlots;
 
-        private void OnEnable()
+        private void Awake()
         {
             if (Instance != null && Instance != this)
             {

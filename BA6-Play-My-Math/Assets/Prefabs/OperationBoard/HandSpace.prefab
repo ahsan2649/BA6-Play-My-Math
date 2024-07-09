@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8063759565599818086}
   - component: {fileID: 6602109678888399524}
   m_Layer: 0
-  m_Name: Player Hand
+  m_Name: PlayerHandComponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 5623846409886543452}
   - component: {fileID: 3619254874155785772}
   m_Layer: 0
-  m_Name: HandBlock
+  m_Name: 3D_Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -14,7 +14,7 @@ namespace Programming.Operation_Board
         public UnityEvent fightEvent;
         public static FightButtonComponent Instance;
     
-        private void OnEnable()
+        private void Awake()
         {
             if (Instance != null && Instance != this)
             {
@@ -32,7 +32,7 @@ namespace Programming.Operation_Board
 
         private void Start()
         {
-            gameObject.SetActive(false);
+            transform.parent.gameObject.SetActive(false);
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -52,7 +52,7 @@ namespace Programming.Operation_Board
         
         public void EnableFighting(Fraction value)
         {
-            gameObject.SetActive(false);
+            transform.parent.gameObject.SetActive(false);
             if (value is null)
             {
                 return; 
@@ -67,7 +67,7 @@ namespace Programming.Operation_Board
 
                 if (enemySlot.GetEnemy().Value.Denominator == value.Denominator && enemySlot.GetEnemy().Value.Numerator == value.Numerator)
                 {
-                    gameObject.SetActive(true);
+                    transform.parent.gameObject.SetActive(true);
                     break; 
                 }
             }

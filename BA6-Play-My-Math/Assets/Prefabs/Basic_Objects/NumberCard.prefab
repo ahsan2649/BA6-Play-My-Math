@@ -210,7 +210,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 8122761994042070050}
         m_TargetAssemblyTypeName: ExpandSimplifyCard, Programming.CardMechanism
-        m_MethodName: refreshSimplifyButtons
+        m_MethodName: RefreshSimplifyButtons
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -669,7 +669,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 8122761994042070050}
         m_TargetAssemblyTypeName: ExpandSimplifyCard, Programming.CardMechanism
-        m_MethodName: refreshSimplifyButtons
+        m_MethodName: RefreshSimplifyButtons
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -802,7 +802,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8122761994042070050}
         m_TargetAssemblyTypeName: ExpandSimplifyCard, Programming.CardMechanism
-        m_MethodName: expand
+        m_MethodName: Expand
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -814,7 +814,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 8122761994042070050}
         m_TargetAssemblyTypeName: ExpandSimplifyCard, Programming.CardMechanism
-        m_MethodName: refreshSimplifyButtons
+        m_MethodName: RefreshSimplifyButtons
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2832,7 +2832,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 8122761994042070050}
         m_TargetAssemblyTypeName: ExpandSimplifyCard, Programming.CardMechanism
-        m_MethodName: refreshSimplifyButtons
+        m_MethodName: RefreshSimplifyButtons
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3628,7 +3628,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8122761994042070050}
         m_TargetAssemblyTypeName: ExpandSimplifyCard, Programming.CardMechanism
-        m_MethodName: returnToHand
+        m_MethodName: ReturnToPreviousSlot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5378,7 +5378,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 8122761994042070050}
         m_TargetAssemblyTypeName: ExpandSimplifyCard, Programming.CardMechanism
-        m_MethodName: refreshSimplifyButtons
+        m_MethodName: RefreshSimplifyButtons
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6311,7 +6311,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8122761994042070050}
         m_TargetAssemblyTypeName: ExpandSimplifyCard, Programming.CardMechanism
-        m_MethodName: simplify
+        m_MethodName: Simplify
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6323,7 +6323,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 8122761994042070050}
         m_TargetAssemblyTypeName: ExpandSimplifyCard, Programming.CardMechanism
-        m_MethodName: refreshSimplifyButtons
+        m_MethodName: RefreshSimplifyButtons
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
