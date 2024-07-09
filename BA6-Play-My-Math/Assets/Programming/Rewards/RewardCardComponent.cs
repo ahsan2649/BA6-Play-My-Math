@@ -14,7 +14,7 @@ public class RewardCardComponent : MonoBehaviour, IPointerClickHandler {
         transform.SetPositionAndRotation(new Vector3(Deck.position.x, Deck.position.y, Deck.position.z),
             Quaternion.Euler(-90, 0, 0));
 
-        foreach (Transform slot in RewardsGenerator.Instance.slots)
+        foreach (Transform slot in RewardBoardComponent.Instance.slots)
         {
             if (slot.childCount > 0)
             {
@@ -22,6 +22,6 @@ public class RewardCardComponent : MonoBehaviour, IPointerClickHandler {
             }
         }
         
-        RewardsGenerator.Instance.GenerateRewards();
+        RewardBoardComponent.Instance.GenerateRewards();
     }
 }
