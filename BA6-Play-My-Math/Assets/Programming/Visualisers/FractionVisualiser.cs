@@ -121,7 +121,7 @@ namespace Programming.FractionVisualiser
             public FractionVisualisationStyle VisStyle;
             public OffsetAndSpacing OffsetAndSpacing;
             public List<Vector3Int> VisualisedCoordinates;
-            public Dictionary<Vector3Int, GameObject> VisualisedFigures; //TODO: check whether one variable for VisualisedCoordinates & VisualisedFigures could be enough
+            public Dictionary<Vector3Int, GameObject> VisualisedFigures; 
             
             public GameObject FigureParent => VisStyle.figureParent; 
 
@@ -216,7 +216,7 @@ namespace Programming.FractionVisualiser
         {
             foreach (Tuple<Fraction, FractionVisualisationData> tVisData in _visualisationDataMap.Values)
             {
-                foreach (KeyValuePair<Vector3Int, GameObject> figure in tVisData.Item2.VisualisedFigures) //TODO: visData.VisualisedFigures.Count is zero
+                foreach (KeyValuePair<Vector3Int, GameObject> figure in tVisData.Item2.VisualisedFigures) 
                 {
                     if (figure.Key.x == layer || figure.Key.x == boardLayers.Length-1)
                     {
@@ -264,7 +264,7 @@ namespace Programming.FractionVisualiser
             Fraction visualisedFraction = CalcVisualisedFraction(); 
             FractionVisualisationStyle visStyle = CalcCardSlotType();
             OffsetAndSpacing offsetAndSpacing = CalcOffsetAndSpacing();
-            List<Vector3Int> visualisedCoordinates = CalcVisualisedCoordinates();
+            List<Vector3Int> visualisedCoordinates = fraction.Denominator < numbersToPrimeFactors.Length ? CalcVisualisedCoordinates() : new List<Vector3Int>();
             FractionTextVisualiser fractionTextVisualiser = GetFractionTextVisualiser(); 
             
             FractionVisualisationData visData = new FractionVisualisationData(
