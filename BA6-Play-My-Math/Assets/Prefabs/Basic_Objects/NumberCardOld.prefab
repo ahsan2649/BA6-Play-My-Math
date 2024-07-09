@@ -2859,7 +2859,7 @@ GameObject:
   - component: {fileID: 464079064573312697}
   - component: {fileID: 8122761994042070050}
   m_Layer: 5
-  m_Name: NumberCard
+  m_Name: NumberCardOld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2973,6 +2973,9 @@ MonoBehaviour:
   MoveSpeed: 100
   RotateSpeed: 500
   ScaleSpeed: 500
+  onCardChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!225 &6437442290785262351
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2997,13 +3000,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea0ad4076c6fdd45a20f3df63d1eaa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoveDelta: 0.5
+  RotateDelta: 2
+  MoveSpeed: 100
+  RotateSpeed: 500
+  ScaleSpeed: 500
+  onCardChange:
+    m_PersistentCalls:
+      m_Calls: []
   oldValue:
     numerator: 0
     denominator: 0
   value:
     numerator: 2
     denominator: 3
-  fractionTextVisualiser: {fileID: 2571522780034210369}
 --- !u!114 &8122761994042070050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6588,15 +6598,3 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5165160243217902409}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2571522780034210369 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7206242879859765512, guid: 36f5c458def6e804c861c354335f29fb,
-    type: 3}
-  m_PrefabInstance: {fileID: 5165160243217902409}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76ecfe174fa389c45b94286771a7460e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

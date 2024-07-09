@@ -42,11 +42,11 @@ namespace Programming.Card_Mechanism
                     new Vector3(transform.position.x, transform.position.y - i * 0.125f, transform.position.z),
                     Quaternion.Euler(-90, 0, 0), transform);
 
-                // Disabling BaseCard, so they can't be dragged in Deck
-                card.GetComponent<BaseCardComponent>().enabled = false;
-                card.GetComponent<NumberCardComponent>().oldValue =
-                    card.GetComponent<NumberCardComponent>().Value = new Fraction(startingDeck.numbers[i]);
-                _cardsInDeck.Add(card.GetComponent<BaseCardComponent>());
+                // Disabling BaseCard, so they can't be dragged from Deck
+                card.GetComponentInChildren<BaseCardComponent>().enabled = false;
+                card.GetComponentInChildren<NumberCardComponent>().oldValue =
+                    card.GetComponentInChildren<NumberCardComponent>().Value = new Fraction(startingDeck.numbers[i]);
+                _cardsInDeck.Add(card.GetComponentInChildren<BaseCardComponent>());
             }
         }
         

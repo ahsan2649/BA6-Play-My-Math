@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 namespace Programming.Operation_Board
 {
-    public class OperandSlotComponent : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+    public class OperandSlotComponent : CardSlotComponent, IDropHandler, IPointerEnterHandler, IPointerExitHandler
     {
         Canvas _canvas;
         
@@ -17,8 +17,10 @@ namespace Programming.Operation_Board
             get => _cardInSlot;
             set
             {
-                _cardInSlot = value; 
-                OperationBoardComponent.Instance.onOperationBoardChange.Invoke();
+                if (_cardInSlot is not null) {_cardInSlot.onValueChange.RemoveListener(onCardChanged.Invoke);}
+                _cardInSlot = value;
+                onCardChanged.Invoke();
+                if (_cardInSlot is not null) { value.onValueChange.AddListener(onCardChanged.Invoke); }
             }
         }
 
@@ -46,7 +48,7 @@ namespace Programming.Operation_Board
                 return;
             }
 
-            var droppedCardNumberComponent = droppedCard.GetComponent<NumberCardComponent>();
+            NumberCardComponent droppedCardNumberComponent = droppedCard.GetComponent<NumberCardComponent>();
             if (droppedCardNumberComponent == null)
             {
                 return;

@@ -475,6 +475,41 @@ PrefabInstance:
       propertyPath: operandType
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
+        type: 3}
+      propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
+        type: 3}
+      propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
+        type: 3}
+      propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4115329226619463552}
+    - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
+        type: 3}
+      propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
+        type: 3}
+      propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateVisualsForOperationBoard
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
+        type: 3}
+      propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: OperationBoardVisualiser, Programming.FractionVisualiser
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
+        type: 3}
+      propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6276357409687460551, guid: d22c081a40764a34baa69f21c3d0d80a,
         type: 3}
       propertyPath: m_Name
@@ -666,6 +701,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
+        type: 3}
+      propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
+        type: 3}
+      propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
+        type: 3}
+      propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4115329226619463552}
+    - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
+        type: 3}
+      propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
+        type: 3}
+      propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateVisualsForOperationBoard
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
+        type: 3}
+      propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: OperationBoardVisualiser, Programming.FractionVisualiser
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
+        type: 3}
+      propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6276357409687460551, guid: d22c081a40764a34baa69f21c3d0d80a,
         type: 3}

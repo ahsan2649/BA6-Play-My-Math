@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 
 namespace Programming.Card_Mechanism {
@@ -11,6 +13,8 @@ namespace Programming.Card_Mechanism {
 
         [SerializeField] private float MoveDelta, RotateDelta, MoveSpeed, RotateSpeed, ScaleSpeed;
 
+        public UnityEvent onCardChange; 
+        
         private void OnEnable()
         {
             _rectTransform = GetComponent<RectTransform>();

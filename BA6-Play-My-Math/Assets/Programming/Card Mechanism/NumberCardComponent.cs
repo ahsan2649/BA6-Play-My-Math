@@ -2,7 +2,9 @@ using Programming.Fraction_Engine;
 using Programming.Visualisers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 
 namespace Programming.Card_Mechanism
@@ -11,7 +13,8 @@ namespace Programming.Card_Mechanism
     {
         public Fraction oldValue;
         [SerializeField] Fraction value;
-        [SerializeField] private FractionTextVisualiser fractionTextVisualiser; 
+
+        public UnityEvent onValueChange; 
         
         public Fraction Value
         {
@@ -19,14 +22,13 @@ namespace Programming.Card_Mechanism
             set
             {
                 this.value = value;
-                fractionTextVisualiser.SetFraction(Value);
+                onValueChange.Invoke(); 
             }
         }
 
         private void OnEnable()
         {
             Value = Value; 
-            fractionTextVisualiser.gameObject.SetActive(true);
         }
 
         #region Pointer
@@ -43,11 +45,6 @@ namespace Programming.Card_Mechanism
             if (!draggedCardNumber.Value.IsWhole() || !Value.IsWhole() || Value.IsOne())
             {
                 return;
-            }
-
-            if (value.IsWhole())
-            {
-                fractionTextVisualiser.gameObject.SetActive(false); 
             }
             
             draggedCardNumber.oldValue = draggedCardNumber.Value;
@@ -67,8 +64,6 @@ namespace Programming.Card_Mechanism
             {
                 return;
             }
-            
-            fractionTextVisualiser.gameObject.SetActive(true); 
             
             draggedCardNumber.Value = draggedCardNumber.oldValue;
         }

@@ -24,7 +24,6 @@ namespace Programming.Card_Mechanism
             cardSlots = GetComponentsInChildren<HandSlotComponent>();
         }
 
-        // Start is called before the first frame update
         void Start()
         {
             for (int i = 0; i < cardSlots.Length; i++)

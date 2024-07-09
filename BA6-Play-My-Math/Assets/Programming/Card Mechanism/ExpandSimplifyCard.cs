@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-
     public GameObject expandSimpObj;
     public GameObject hint;
     Transform parentSlot;
@@ -101,8 +100,9 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (bExpand)
         {
             Debug.Log("expand or simplify" + pValue);
-            GetComponent<NumberCardComponent>().Value = GetComponent<NumberCardComponent>().Value.ExpandBy(pValue);
-
+            NumberCardComponent numberCard = GetComponent<NumberCardComponent>(); 
+            numberCard.Value = GetComponent<NumberCardComponent>().Value.ExpandBy(pValue);
+            
         }
         else GetComponent<NumberCardComponent>().Value = GetComponent<NumberCardComponent>().Value.SimplifyBy(pValue);
     }
