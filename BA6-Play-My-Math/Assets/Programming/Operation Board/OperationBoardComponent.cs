@@ -57,6 +57,11 @@ namespace Programming.Operation_Board
         #endregion
         
         #region publicFunctions
+
+        public void OnOperationBoardChangeInvoke()
+        {
+            onOperationBoardChange.Invoke();
+        }
         
         public void FinalizeOperation()
         {

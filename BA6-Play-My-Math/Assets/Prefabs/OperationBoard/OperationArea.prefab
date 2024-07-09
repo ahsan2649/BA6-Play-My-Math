@@ -489,7 +489,7 @@ PrefabInstance:
         type: 3}
       propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4115329226619463552}
+      objectReference: {fileID: 8631559036658793747}
     - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
         type: 3}
       propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -498,12 +498,12 @@ PrefabInstance:
     - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
         type: 3}
       propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateVisualsForOperationBoard
+      value: OnOperationBoardChangeInvoke
       objectReference: {fileID: 0}
     - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
         type: 3}
       propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: OperationBoardVisualiser, Programming.FractionVisualiser
+      value: Programming.Operation_Board.OperationBoardComponent, Programming.Operation_Board
       objectReference: {fileID: 0}
     - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
         type: 3}
@@ -716,7 +716,7 @@ PrefabInstance:
         type: 3}
       propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 4115329226619463552}
+      objectReference: {fileID: 8631559036658793747}
     - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
         type: 3}
       propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -725,12 +725,12 @@ PrefabInstance:
     - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
         type: 3}
       propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateVisualsForOperationBoard
+      value: OnOperationBoardChangeInvoke
       objectReference: {fileID: 0}
     - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
         type: 3}
       propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: OperationBoardVisualiser, Programming.FractionVisualiser
+      value: Programming.Operation_Board.OperationBoardComponent, Programming.Operation_Board
       objectReference: {fileID: 0}
     - target: {fileID: 5696267530245720993, guid: d22c081a40764a34baa69f21c3d0d80a,
         type: 3}
