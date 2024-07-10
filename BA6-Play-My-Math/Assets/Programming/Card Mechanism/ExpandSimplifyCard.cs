@@ -50,6 +50,8 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
             transform.localScale += new Vector3(.02f, .02f, .02f);
             transform.rotation = Quaternion.Euler(90, 0, 0);
             focusOpen = true;
+            
+            GetComponent<CardMovementComponent>().enabled = false; 
         }
 
     }
@@ -77,6 +79,8 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         transform.localScale = new Vector3(0.016f, 0.016f, 0.016f);
         transform.localPosition = new Vector3(0, 0, 0);
         expandSimpObj.SetActive(false);
+        
+        GetComponent<CardMovementComponent>().enabled = true; 
     }
 
     public void Expand()
