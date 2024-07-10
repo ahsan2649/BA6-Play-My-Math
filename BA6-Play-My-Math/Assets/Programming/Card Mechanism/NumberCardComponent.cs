@@ -93,7 +93,7 @@ namespace Programming.Card_Mechanism
 
             // Step 3: Set dropped card to the slot this card is in
             var thisCardSlot = GetComponentInParent<HandSlotComponent>();
-            thisCardSlot.SetCard(droppedCard.GetComponent<BaseCardComponent>());
+            thisCardSlot.SetCard(droppedCard.GetComponent<CardMovementComponent>());
             
             // Draw another card and destroy this one
             PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());

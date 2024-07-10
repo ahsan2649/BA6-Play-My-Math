@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 namespace Programming.Operation_Board
 {
-    public class OperandSlotComponent : CardSlotComponent, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+    public class OperandSlotComponent : SlotComponent, IDropHandler, IPointerEnterHandler, IPointerExitHandler
     {
         Canvas _canvas;
         
@@ -60,22 +60,22 @@ namespace Programming.Operation_Board
                 CardInSlot = droppedCardNumberComponent;
                 droppedCard.transform.SetParent(transform);
 
-                StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().MoveToNewParent());
-                StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().RotateToNewParent());
+                StartCoroutine(droppedCard.GetComponent<CardMovementComponent>().MoveToNewParent());
+                StartCoroutine(droppedCard.GetComponent<CardMovementComponent>().RotateToNewParent());
 
                 return;
             }
 
             CardInSlot.transform.SetParent(_originSlot.transform);
-            StartCoroutine(CardInSlot.GetComponent<BaseCardComponent>().MoveToNewParent());
-            StartCoroutine(CardInSlot.GetComponent<BaseCardComponent>().RotateToNewParent());
+            StartCoroutine(CardInSlot.GetComponent<CardMovementComponent>().MoveToNewParent());
+            StartCoroutine(CardInSlot.GetComponent<CardMovementComponent>().RotateToNewParent());
 
             _originSlot = droppedCard.GetComponentInParent<HandSlotComponent>();
             CardInSlot = droppedCardNumberComponent;
             droppedCard.transform.SetParent(transform);
 
-            StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().MoveToNewParent());
-            StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().RotateToNewParent());
+            StartCoroutine(droppedCard.GetComponent<CardMovementComponent>().MoveToNewParent());
+            StartCoroutine(droppedCard.GetComponent<CardMovementComponent>().RotateToNewParent());
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -97,7 +97,7 @@ namespace Programming.Operation_Board
                 return;
             }
 
-            _originSlot.SetCard(draggedCardNumber.GetComponent<BaseCardComponent>());
+            _originSlot.SetCard(draggedCardNumber.GetComponent<CardMovementComponent>());
             _originSlot = null;
             CardInSlot = null;
         }

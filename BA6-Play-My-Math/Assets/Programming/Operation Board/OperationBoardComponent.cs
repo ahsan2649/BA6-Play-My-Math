@@ -172,8 +172,8 @@ namespace Programming.Operation_Board
             operandSlot.CardInSlot = droppedCardNumberComponent;
             droppedCard.transform.SetParent(operandSlot.transform);
 
-            StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().MoveToNewParent());
-            StartCoroutine(droppedCard.GetComponent<BaseCardComponent>().RotateToNewParent());
+            StartCoroutine(droppedCard.GetComponent<CardMovementComponent>().MoveToNewParent());
+            StartCoroutine(droppedCard.GetComponent<CardMovementComponent>().RotateToNewParent());
         }
         private void SetFinalizedCard(Fraction value)
         {

@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 
 namespace Programming.Card_Mechanism {
-    public class BaseCardComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+    public class CardMovementComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
         RectTransform _rectTransform;
         Canvas _canvas;
         CanvasGroup _canvasGroup;

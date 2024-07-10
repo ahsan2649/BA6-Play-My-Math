@@ -33,7 +33,7 @@ namespace Programming.Card_Mechanism
         }
 
 
-        public void HandPush(BaseCardComponent baseCard)
+        public void HandPush(CardMovementComponent cardMovement)
         {
             foreach (HandSlotComponent slot in cardSlots)
             {
@@ -42,18 +42,18 @@ namespace Programming.Card_Mechanism
                     continue;
                 }
 
-                if (baseCard != null)
+                if (cardMovement != null)
                 {
-                    slot.SetCard(baseCard);
-                    StartCoroutine(baseCard.MoveToNewParent());
-                    StartCoroutine(baseCard.RotateToNewParent());
+                    slot.SetCard(cardMovement);
+                    StartCoroutine(cardMovement.MoveToNewParent());
+                    StartCoroutine(cardMovement.RotateToNewParent());
                 }
 
                 break;
             }
         }
 
-        public BaseCardComponent HandPop(ref HandSlotComponent slot)
+        public CardMovementComponent HandPop(ref HandSlotComponent slot)
         {
             var returningCard = slot.UnsetCard();
             return returningCard;

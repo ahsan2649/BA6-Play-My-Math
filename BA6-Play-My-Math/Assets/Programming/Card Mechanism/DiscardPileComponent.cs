@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Programming.Card_Mechanism {
     public class DiscardPileComponent : MonoBehaviour, IDropHandler, IPointerEnterHandler {
-        private List<BaseCardComponent> _disCards = new List<BaseCardComponent>();
+        private List<CardMovementComponent> _disCards = new List<CardMovementComponent>();
         public static DiscardPileComponent Instance { get; private set; }
         private void Awake()
         {
@@ -19,18 +19,18 @@ namespace Programming.Card_Mechanism {
             }
         }
 
-        public void PutCardInBin(BaseCardComponent baseCard)
+        public void PutCardInBin(CardMovementComponent cardMovement)
         {
-            _disCards.Add(baseCard);
+            _disCards.Add(cardMovement);
             
-            baseCard.transform.SetParent(transform);
-            baseCard.transform.position = transform.position;
-            baseCard.transform.rotation = Quaternion.identity;
+            cardMovement.transform.SetParent(transform);
+            cardMovement.transform.position = transform.position;
+            cardMovement.transform.rotation = Quaternion.identity;
         }
 
         public void OnDrop(PointerEventData eventData)
         {
-            var droppedCard = eventData.pointerDrag.GetComponent<BaseCardComponent>();
+            var droppedCard = eventData.pointerDrag.GetComponent<CardMovementComponent>();
             var droppedCardSlot = droppedCard.GetComponentInParent<HandSlotComponent>();
             
             if (droppedCardSlot != null)

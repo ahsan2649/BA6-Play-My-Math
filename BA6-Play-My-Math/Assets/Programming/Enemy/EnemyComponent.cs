@@ -12,7 +12,6 @@ namespace Programming.Enemy
         [SerializeField] Fraction value;
 
         [SerializeField] TextMeshProUGUI zahler;
-
         [SerializeField] TextMeshProUGUI nenner;
         
         RectTransform _rectTransform;

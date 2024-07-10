@@ -9,7 +9,7 @@ namespace Programming.Card_Mechanism
 {
     public class DeckComponent : MonoBehaviour
     {
-        public List<BaseCardComponent> _cardsInDeck = new();
+        public List<CardMovementComponent> _cardsInDeck = new();
         [SerializeField] private StartingDeckInfo startingDeck;
         [SerializeField] private GameObject numberCardPrefab;
         public static DeckComponent Instance { get; private set; }
@@ -43,14 +43,14 @@ namespace Programming.Card_Mechanism
                     Quaternion.Euler(-90, 0, 0), transform);
 
                 // Disabling BaseCard, so they can't be dragged from Deck
-                card.GetComponentInChildren<BaseCardComponent>().enabled = false;
+                card.GetComponentInChildren<CardMovementComponent>().enabled = false;
                 card.GetComponentInChildren<NumberCardComponent>().oldValue =
                     card.GetComponentInChildren<NumberCardComponent>().Value = new Fraction(startingDeck.numbers[i]);
-                _cardsInDeck.Add(card.GetComponentInChildren<BaseCardComponent>());
+                _cardsInDeck.Add(card.GetComponentInChildren<CardMovementComponent>());
             }
         }
         
-        public BaseCardComponent DeckPop()
+        public CardMovementComponent DeckPop()
         {
             if (_cardsInDeck.Count == 0)
             {
