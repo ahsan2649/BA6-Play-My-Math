@@ -5,6 +5,7 @@ using Programming.ExtensionMethods;
 using Programming.Fraction_Engine;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -19,6 +20,8 @@ namespace Programming.Operation_Board
         public Operation currentOperation = Operation.Add;
         [SerializeField] private TextMeshProUGUI OperationText;
         [SerializeField] GameObject Cylinder;
+        
+        public UnityEvent OnChangeOperation; 
 
         Vector2 _dragStart, _dragEnd;
 
@@ -82,7 +85,7 @@ namespace Programming.Operation_Board
                 _ => throw new ArgumentOutOfRangeException()
             }; 
             
-            
+            OnChangeOperation.Invoke();
         }
 
         private void ShiftOp(bool direction)

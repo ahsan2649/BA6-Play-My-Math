@@ -264,7 +264,7 @@ namespace Programming.FractionVisualiser
             Fraction visualisedFraction = CalcVisualisedFraction(); 
             FractionVisualisationStyle visStyle = CalcCardSlotType();
             OffsetAndSpacing offsetAndSpacing = CalcOffsetAndSpacing();
-            List<Vector3Int> visualisedCoordinates = fraction.Denominator < numbersToPrimeFactors.Length ? CalcVisualisedCoordinates() : new List<Vector3Int>();
+            List<Vector3Int> visualisedCoordinates = (combinedFraction ?? fraction).Denominator < numbersToPrimeFactors.Length ? CalcVisualisedCoordinates() : new List<Vector3Int>();
             FractionTextVisualiser fractionTextVisualiser = GetFractionTextVisualiser(); 
             
             FractionVisualisationData visData = new FractionVisualisationData(
@@ -660,8 +660,6 @@ namespace Programming.FractionVisualiser
         #endregion
         
         #region EditorHelpers
-
-        [FormerlySerializedAs("editor_GenerateFactorsMaximum")] public int editor_FactorGenerationMax; 
         
         [ContextMenu("Editor_GeneratePrimeFactorsForNumbers")]
         public void
@@ -669,14 +667,13 @@ namespace Programming.FractionVisualiser
         {
             List<int> primeNumbers = new List<int> { 2, 3 };
 
-            numbersToPrimeFactors = new Vector2IntArray[editor_FactorGenerationMax];
             numbersToPrimeFactors[0] = new Vector2IntArray();
             numbersToPrimeFactors[1] = new Vector2IntArray(new Vector2Int[] { new(1, 1) });
             numbersToPrimeFactors[2] = new Vector2IntArray(new Vector2Int[] { new(1, 2) });
             numbersToPrimeFactors[3] = new Vector2IntArray(new Vector2Int[] { new(3, 1) });
             numbersToPrimeFactors[4] = new Vector2IntArray(new Vector2Int[] { new(1, 2), new(2, 1) });
 
-            for (int number = 5; number < editor_FactorGenerationMax; number++)
+            for (int number = 5; number < numbersToPrimeFactors.Length; number++)
             {
                 foreach (int prime in primeNumbers)
                 {

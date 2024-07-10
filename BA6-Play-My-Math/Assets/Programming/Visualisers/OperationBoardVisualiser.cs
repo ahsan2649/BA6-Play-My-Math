@@ -9,7 +9,7 @@ public class OperationBoardVisualiser : MonoBehaviour
     [SerializeField] private FractionVisualiser visualiser; 
     [SerializeField] private OperationBoardComponent operationBoardComponent;
 
-    public void UpdateVisualsForOperationBoard()
+    public void UpdateOperationBoardVisuals()
     {
         GetValuesFromOperationBoard();
         visualiser.FullUpdateVisualisations();

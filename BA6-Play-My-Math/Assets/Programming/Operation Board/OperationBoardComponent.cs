@@ -184,9 +184,6 @@ namespace Programming.Operation_Board
 
             _leftOperand.CardInSlot.oldValue = _leftOperand.CardInSlot.Value = value;
             
-            // FightButtonComponent.Instance.EnableFighting(value); ZyKa!
-            // fractionVisualiser.SetFractionVisualisation(_leftOperand.CardInSlot.Value, FractionVisualiser.VisualisationType.Left); ZyKa!
-            // fractionVisualiser.SetFractionVisualisation(null, FractionVisualiser.VisualisationType.Right); ZyKa!
             onOperationBoardChange.Invoke();
 
             PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());

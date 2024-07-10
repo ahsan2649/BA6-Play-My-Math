@@ -198,7 +198,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4115329226619463552}
         m_TargetAssemblyTypeName: OperationBoardVisualiser, Programming.FractionVisualiser
-        m_MethodName: UpdateVisualsForOperationBoard
+        m_MethodName: UpdateOperationBoardVisuals
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -809,6 +809,11 @@ PrefabInstance:
       propertyPath: operationBoardComponent
       value: 
       objectReference: {fileID: 5301631140666478307}
+    - target: {fileID: 261723812817062083, guid: c7b9f56cb7fdcb74da703d0446666b47,
+        type: 3}
+      propertyPath: FinalizeEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5301631140666478307}
     - target: {fileID: 5540741450539156339, guid: c7b9f56cb7fdcb74da703d0446666b47,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1034,6 +1039,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingLayer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: OnChangeOperation.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: OnChangeOperation.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: OnChangeOperation.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5301631140666478307}
+    - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: OnChangeOperation.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: OnChangeOperation.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnOperationBoardChangeInvoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: OnChangeOperation.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Programming.Operation_Board.OperationBoardComponent, Programming.Operation_Board
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: OnChangeOperation.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8432848787843203750, guid: 290a552d671f2dd40a4be2f43a843acc,
         type: 3}
