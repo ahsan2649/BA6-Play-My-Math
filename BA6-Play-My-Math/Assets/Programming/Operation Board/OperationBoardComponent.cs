@@ -10,7 +10,7 @@ using UnityEngine.Serialization;
 
 namespace Programming.Operation_Board
 {
-    public class OperationBoardComponent : MonoBehaviour, IDropHandler
+    public class OperationBoardComponent : MonoBehaviour, IDropHandler, IEndDragHandler
     {
         Canvas _canvas;
         
@@ -193,5 +193,10 @@ namespace Programming.Operation_Board
             Debug.Log(value);
         }
         #endregion
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            Debug.Log("EndDrag on OperationBoard");
+        }
     }
 }

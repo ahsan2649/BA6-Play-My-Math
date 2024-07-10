@@ -23,7 +23,7 @@ namespace Programming.Rewards {
         [SerializeField] private List<RectTransform> thresholds = new();
         public int maxValue;
 
-        private void OnEnable()
+        private void Awake()
         {
             if (Instance != null && Instance != this)
             {

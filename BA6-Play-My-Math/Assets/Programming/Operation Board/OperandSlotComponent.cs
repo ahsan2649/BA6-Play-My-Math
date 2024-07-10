@@ -35,11 +35,6 @@ namespace Programming.Operation_Board
             _canvas.worldCamera = Camera.main;
         }
         
-        void Start()
-        {
-            Debug.Log("OperandSlot working!");
-        }
-
         public void OnDrop(PointerEventData eventData)
         {
             var droppedCard = eventData.pointerDrag;

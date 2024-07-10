@@ -212,6 +212,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0e2baab44cd334bbe680f7e4a9dc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onCardChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _originSlot: {fileID: 0}
   operandType: 1
   _cardInSlot: {fileID: 0}

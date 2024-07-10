@@ -359,6 +359,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -8.83
       objectReference: {fileID: 0}
+    - target: {fileID: 6664481056745861337, guid: 83f64aed1db736f42b3680a0f4cb9796,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664481056745861337, guid: 83f64aed1db736f42b3680a0f4cb9796,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 6686001964567497957, guid: 83f64aed1db736f42b3680a0f4cb9796,
         type: 3}
       propertyPath: onCardChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode

@@ -19,7 +19,6 @@ namespace Programming.Visualisers
         public void OnPointerEnter(PointerEventData eventData)
         {
             NumberCardComponent draggedCard = eventData.pointerDrag != null ? eventData.pointerDrag.GetComponent<NumberCardComponent>() : null; 
-            Debug.Log(gameObject.name + "-draggedCard: " + draggedCard);
             
             if (draggedCard != null &&
                 numberCardComponent.Value.IsWhole())
