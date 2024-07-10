@@ -304,6 +304,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 3D_TableUnderDeck
       objectReference: {fileID: 0}
+    - target: {fileID: 1250861931063846533, guid: 83f64aed1db736f42b3680a0f4cb9796,
+        type: 3}
+      propertyPath: m_Name
+      value: Ground
+      objectReference: {fileID: 0}
     - target: {fileID: 1408158745763445820, guid: 83f64aed1db736f42b3680a0f4cb9796,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -333,6 +338,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2653427867027331749, guid: 83f64aed1db736f42b3680a0f4cb9796,
+        type: 3}
+      propertyPath: m_margin.w
+      value: 44.183666
+      objectReference: {fileID: 0}
+    - target: {fileID: 2653427867027331749, guid: 83f64aed1db736f42b3680a0f4cb9796,
+        type: 3}
+      propertyPath: m_margin.y
+      value: 44.734825
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128627848243441721, guid: 83f64aed1db736f42b3680a0f4cb9796,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3318518769024585962, guid: 83f64aed1db736f42b3680a0f4cb9796,
         type: 3}
@@ -358,6 +378,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -8.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714574614732378894, guid: 83f64aed1db736f42b3680a0f4cb9796,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6391749021356243923, guid: 83f64aed1db736f42b3680a0f4cb9796,
         type: 3}
@@ -413,6 +438,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034119406139999400, guid: 83f64aed1db736f42b3680a0f4cb9796,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034119406139999400, guid: 83f64aed1db736f42b3680a0f4cb9796,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034119406139999400, guid: 83f64aed1db736f42b3680a0f4cb9796,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.00000052567
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -1283,6 +1323,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010437543238122046, guid: 4a2bd5334ed25b549a25676f36618783,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.7735849
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010437543238122046, guid: 4a2bd5334ed25b549a25676f36618783,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.54369885
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010437543238122046, guid: 4a2bd5334ed25b549a25676f36618783,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.58613926
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
