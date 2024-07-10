@@ -97,7 +97,7 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
 
         //set other buttons
 
-        //TODO: call FractionTextVisualiser.DisplayDecimals
+        //TODO @Frieda: call FractionTextVisualiser.DisplayDecimals
     }
 
     public void ExSimpl(int pValue)
