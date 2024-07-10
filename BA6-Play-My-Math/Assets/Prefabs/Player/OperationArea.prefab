@@ -285,6 +285,11 @@ PrefabInstance:
       propertyPath: operationBoardComponent
       value: 
       objectReference: {fileID: 5301631140666478307}
+    - target: {fileID: 2610730937390423192, guid: a8a9d705440fb2142aba7bf455e16d98,
+        type: 3}
+      propertyPath: fightEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5301631140666478307}
     - target: {fileID: 3589623983977073097, guid: a8a9d705440fb2142aba7bf455e16d98,
         type: 3}
       propertyPath: m_Pivot.x
