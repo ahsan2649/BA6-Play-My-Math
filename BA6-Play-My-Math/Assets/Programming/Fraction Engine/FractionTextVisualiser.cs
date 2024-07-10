@@ -55,6 +55,11 @@ namespace Programming.Visualisers
             }
         }
 
+        public void DisplayDecimals(float numerator, float denominator)
+        {
+            //TODO: 
+        }
+        
         private void OnValidate()
         {
             if (numerator is null || denominator is null)
