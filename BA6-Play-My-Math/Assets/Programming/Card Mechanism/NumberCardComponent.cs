@@ -28,13 +28,14 @@ namespace Programming.Card_Mechanism
 
         private void Awake()
         {
-            Value = Value; 
+            oldValue = Value; 
         }
 
         #region Pointer
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            Debug.Log("Pointer Enter on NumberCard");
             var draggedCard = eventData.pointerDrag;
             if (draggedCard == null)
             {

@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using Programming.Fraction_Engine;
 using Programming.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Programming.Enemy
 {
     public class EnemyLineupComponent : MonoBehaviour
     {
-        private List<EnemyComponent> _enemiesInLineup = new();
+        public List<EnemyComponent> _enemiesInLineup = new();
         [SerializeField] EnemyLineupInfo enemyLineup;
         [SerializeField] private GameObject enemyPrefab;
         public static EnemyLineupComponent Instance { get; private set; }
-
+        
         private void Awake()
         {
             if (Instance != null && Instance != this)
