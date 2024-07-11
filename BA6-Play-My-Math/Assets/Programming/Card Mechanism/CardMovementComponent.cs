@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 
 namespace Programming.Card_Mechanism {
-    public class CardMovementComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+    public class CardMovementComponent : MonoBehaviour, IBeginDragHandler, IDragHandler {
         RectTransform _rectTransform;
         Canvas _canvas;
         CanvasGroup _canvasGroup;
@@ -38,13 +38,14 @@ namespace Programming.Card_Mechanism {
             _rectTransform.position = _canvas.transform.TransformPoint(pos);
         }
 
-        public void OnEndDrag(PointerEventData eventData)
+        public void TransformToNewParentCoroutines(Transform parent = default)
         {
+            transform.SetParent(parent ?? transform.parent);
             StartCoroutine(MoveToNewParent());
-            StartCoroutine(RotateToNewParent());
+            StartCoroutine(RotateToNewParent()); 
             _canvasGroup.blocksRaycasts = true;
         }
-
+        
         #endregion
 
         #region Animations
