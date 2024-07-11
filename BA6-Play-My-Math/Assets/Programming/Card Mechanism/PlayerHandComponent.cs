@@ -33,7 +33,7 @@ namespace Programming.Card_Mechanism
         }
 
 
-        public void HandPush(CardMovementComponent cardMovement)
+        public void HandPush(CardMovementComponent cardMovement, bool shouldMove = true)
         {
             foreach (HandSlotComponent slot in cardSlots)
             {
@@ -45,8 +45,10 @@ namespace Programming.Card_Mechanism
                 if (cardMovement != null)
                 {
                     slot.SetCard(cardMovement);
-                    StartCoroutine(cardMovement.MoveToNewParent());
-                    StartCoroutine(cardMovement.RotateToNewParent());
+                    if (shouldMove)
+                    {
+                        cardMovement.TransformToNewParentCoroutines();
+                    }
                 }
 
                 break;

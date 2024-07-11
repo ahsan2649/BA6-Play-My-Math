@@ -6,11 +6,13 @@ using UnityEngine.Serialization;
 
 
 namespace Programming.Card_Mechanism {
-    public class CardMovementComponent : MonoBehaviour, IBeginDragHandler, IDragHandler {
+    public class CardMovementComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
         RectTransform _rectTransform;
         Canvas _canvas;
         CanvasGroup _canvasGroup;
-
+        
+        public SlotComponent currentSlot;
+        
         [SerializeField] private float MoveDelta, RotateDelta, MoveSpeed, RotateSpeed, ScaleSpeed;
 
         public UnityEvent onCardChange; 
@@ -37,18 +39,21 @@ namespace Programming.Card_Mechanism {
                 eventData.position, _canvas.worldCamera, out var pos);
             _rectTransform.position = _canvas.transform.TransformPoint(pos);
         }
+        
+        
 
-        public void TransformToNewParentCoroutines(Transform parent = default)
-        {
-            transform.SetParent(parent ?? transform.parent);
-            StartCoroutine(MoveToNewParent());
-            StartCoroutine(RotateToNewParent()); 
-            _canvasGroup.blocksRaycasts = true;
-        }
+       
         
         #endregion
 
         #region Animations
+        
+        public void TransformToNewParentCoroutines()
+        {
+            StartCoroutine(MoveToNewParent());
+            StartCoroutine(RotateToNewParent()); 
+            _canvasGroup.blocksRaycasts = true;
+        }
 
         public IEnumerator MoveToNewParent()
         {
@@ -86,5 +91,11 @@ namespace Programming.Card_Mechanism {
         }
 
         #endregion
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            TransformToNewParentCoroutines();
+            _canvasGroup.blocksRaycasts = false;
+        }
     }
 }

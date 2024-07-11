@@ -1,3 +1,4 @@
+using Programming.Card_Mechanism;
 using Programming.Fraction_Engine;
 using Programming.FractionVisualiser;
 using Programming.Operation_Board;
@@ -18,7 +19,7 @@ public class OperationBoardVisualiser : MonoBehaviour
     private void GetValuesFromOperationBoard()
     {
         visualiser.SetOperation(operationBoardComponent.OperationWheel.currentOperation);
-        visualiser.SetSingleFractionValue(operationBoardComponent.LeftOperand.CardInSlot != null ? operationBoardComponent.LeftOperand.CardInSlot.Value : null, OperandType.Left);
-        visualiser.SetSingleFractionValue(operationBoardComponent.RightOperand.CardInSlot != null ? operationBoardComponent.RightOperand.CardInSlot.Value : null, OperandType.Right);  
+        visualiser.SetSingleFractionValue(operationBoardComponent.LeftOperand.GetCard() != null ? operationBoardComponent.LeftOperand.GetCard().GetComponent<NumberCardComponent>()?.Value : null, OperandType.Left);
+        visualiser.SetSingleFractionValue(operationBoardComponent.RightOperand.GetCard() != null ? operationBoardComponent.RightOperand.GetCard().GetComponent<NumberCardComponent>()?.Value : null, OperandType.Right);  
     }
 }

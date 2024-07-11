@@ -1,3 +1,4 @@
+using System.Transactions;
 using Programming.Card_Mechanism;
 using Programming.Fraction_Engine;
 using UnityEngine;
@@ -10,23 +11,16 @@ namespace Programming.Operation_Board
     {
         Canvas _canvas;
         
-        [HideInInspector] public HandSlotComponent _originSlot;
-
-        public NumberCardComponent CardInSlot
+        public override void SetCard(CardMovementComponent cardMovement)
         {
-            get => _cardInSlot;
-            set
-            {
-                if (_cardInSlot is not null) {_cardInSlot.onValueChange.RemoveListener(onCardChanged.Invoke);}
-                _cardInSlot = value;
-                onCardChanged.Invoke();
-                if (_cardInSlot is not null) { value.onValueChange.AddListener(onCardChanged.Invoke); }
-            }
+            base.SetCard(cardMovement);
+            if (_cardMovementInSlot is not null) {_cardMovementInSlot.GetComponent<NumberCardComponent>()?.onValueChange.RemoveListener(onCardChanged.Invoke);}
+            _cardMovementInSlot = cardMovement;
+            onCardChanged.Invoke();
+            if (_cardMovementInSlot is not null) { _cardMovementInSlot.GetComponent<NumberCardComponent>()?.onValueChange.AddListener(onCardChanged.Invoke); }
         }
 
         [FormerlySerializedAs("cardSlotType")] [Tooltip("left or right slot")] public OperandType operandType;
-
-        [SerializeField] [HideInInspector] private NumberCardComponent _cardInSlot;
 
         private void Awake()
         {
@@ -54,28 +48,10 @@ namespace Programming.Operation_Board
                 return;
             }
 
-            if (CardInSlot == null)
-            {
-                _originSlot = droppedCard.GetComponentInParent<HandSlotComponent>();
-                CardInSlot = droppedCardNumberComponent;
-                droppedCard.transform.SetParent(transform);
+            CardMovementComponent droppedCardMovementComponent = droppedCard.GetComponent<CardMovementComponent>();
+            
 
-                StartCoroutine(droppedCard.GetComponent<CardMovementComponent>().MoveToNewParent());
-                StartCoroutine(droppedCard.GetComponent<CardMovementComponent>().RotateToNewParent());
-
-                return;
-            }
-
-            CardInSlot.transform.SetParent(_originSlot.transform);
-            StartCoroutine(CardInSlot.GetComponent<CardMovementComponent>().MoveToNewParent());
-            StartCoroutine(CardInSlot.GetComponent<CardMovementComponent>().RotateToNewParent());
-
-            _originSlot = droppedCard.GetComponentInParent<HandSlotComponent>();
-            CardInSlot = droppedCardNumberComponent;
-            droppedCard.transform.SetParent(transform);
-
-            StartCoroutine(droppedCard.GetComponent<CardMovementComponent>().MoveToNewParent());
-            StartCoroutine(droppedCard.GetComponent<CardMovementComponent>().RotateToNewParent());
+            SwapCards(droppedCardMovementComponent.currentSlot, droppedCardMovementComponent);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -92,14 +68,19 @@ namespace Programming.Operation_Board
             }
 
             var draggedCardNumber = draggedCard.GetComponent<NumberCardComponent>();
-            if (draggedCardNumber != CardInSlot)
+            if (draggedCardNumber == null)
+            {
+                return;
+            }
+            
+            var cardMovementComponent = draggedCardNumber.GetComponent<CardMovementComponent>();
+            if (cardMovementComponent != GetCard())
             {
                 return;
             }
 
-            _originSlot.SetCard(draggedCardNumber.GetComponent<CardMovementComponent>());
-            _originSlot = null;
-            CardInSlot = null;
+            UnsetCard();
+            PlayerHandComponent.Instance.HandPush(cardMovementComponent, false);
         }
     }
 }

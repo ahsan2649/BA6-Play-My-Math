@@ -26,6 +26,8 @@ namespace Programming.Card_Mechanism
             }
         }
 
+
+
         private void Awake()
         {
             Value = Value; 
@@ -42,6 +44,11 @@ namespace Programming.Card_Mechanism
             }
 
             var draggedCardNumber = draggedCard.GetComponent<NumberCardComponent>();
+            if (draggedCardNumber == null)
+            {
+                return;
+            }
+            
             if (!draggedCardNumber.Value.IsWhole() || !Value.IsWhole() || Value.IsOne())
             {
                 return;
@@ -60,6 +67,11 @@ namespace Programming.Card_Mechanism
             }
 
             var draggedCardNumber = eventData.pointerDrag.GetComponent<NumberCardComponent>();
+            if (draggedCardNumber == null)
+            {
+                return;
+            }
+            
             if (!draggedCardNumber.oldValue.IsWhole() || !value.IsWhole() || value.IsOne())
             {
                 return;
@@ -77,12 +89,21 @@ namespace Programming.Card_Mechanism
             {
                 return;
             }
-
+            
             var droppedCardNumber = droppedCard.GetComponent<NumberCardComponent>();
+            
+            if (!droppedCardNumber.Value.IsWhole() && !Value.IsWhole())
+            {
+                GetComponent<CardMovementComponent>().currentSlot.SwapCards(droppedCard.GetComponent<CardMovementComponent>().currentSlot, droppedCard.GetComponent<CardMovementComponent>());
+                return; 
+            }
+            
             if (!droppedCardNumber.oldValue.IsWhole() || !value.IsWhole() || value.IsOne())
             {
                 return;
             }
+
+            
 
             // Step 1: Remove DroppedCard from its slot in the player hand
             var droppedCardSlot = droppedCard.GetComponentInParent<HandSlotComponent>();

@@ -1,3 +1,4 @@
+using Programming.Card_Mechanism;
 using Programming.Enemy;
 using Programming.Fraction_Engine;
 using UnityEngine;
@@ -8,7 +9,6 @@ namespace Programming.Operation_Board
 {
     public class FightButtonComponent : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField] private OperationBoardComponent operationBoardComponent; 
     
         Canvas _canvas;
         public UnityEvent fightEvent;
@@ -42,7 +42,7 @@ namespace Programming.Operation_Board
 
         public void OperationBoardEnableFighting()
         {
-            EnableFighting(operationBoardComponent.LeftOperand.CardInSlot?.Value, operationBoardComponent.RightOperand.CardInSlot?.Value); 
+            EnableFighting(OperationBoardComponent.Instance.LeftOperand.GetCard()?.GetComponent<NumberCardComponent>()?.Value, OperationBoardComponent.Instance.RightOperand.GetCard()?.GetComponent<NumberCardComponent>()?.Value); 
         }
         
         public void EnableFighting(Fraction leftValue, Fraction rightValue)

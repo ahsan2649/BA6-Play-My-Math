@@ -6,20 +6,37 @@ namespace Programming.Card_Mechanism
 {
     public abstract class SlotComponent : MonoBehaviour
     {
-        private CardMovementComponent _cardMovementInSlot;
+        protected CardMovementComponent _cardMovementInSlot;
         
         public UnityEvent onCardChanged; 
         
-        public void SetCard(CardMovementComponent cardMovement)
+        public void SwapCards(SlotComponent otherSlot, CardMovementComponent otherCard)
+        {
+            CardMovementComponent thisCard = null; 
+            if (_cardMovementInSlot != null)
+            {
+                thisCard = UnsetCard();
+            }
+            otherSlot.UnsetCard();
+            SetCard(otherCard);
+            if (thisCard is not null)
+            {
+                otherSlot.SetCard(thisCard);
+                thisCard.TransformToNewParentCoroutines();
+            }
+        }
+        
+        public virtual void SetCard(CardMovementComponent cardMovement)
         {
             _cardMovementInSlot = cardMovement;
             cardMovement.transform.SetParent(transform);
+            cardMovement.currentSlot = this;
             cardMovement.enabled = true;
             
             cardMovement.onCardChange.AddListener(OnCardChanged);
             onCardChanged.Invoke(); 
         }
-
+        
         public void OnCardChanged()
         {
             onCardChanged.Invoke();
@@ -30,6 +47,7 @@ namespace Programming.Card_Mechanism
             _cardMovementInSlot.onCardChange.RemoveListener(OnCardChanged);
             
             var returningCard = _cardMovementInSlot;
+            returningCard.currentSlot = null;
             _cardMovementInSlot = null;
 
             onCardChanged.Invoke(); //ZyKa!
