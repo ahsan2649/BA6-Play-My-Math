@@ -5,11 +5,13 @@ using Programming.Card_Mechanism;
 using Programming.Fraction_Engine;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 namespace Programming.Rewards {
     public class RewardBoardComponent : MonoBehaviour {
         public static RewardBoardComponent Instance;
+        public Transform start, end;
         public Transform[] slots;
         public GameObject cardPrefab;
         int _achievedValue;
@@ -19,6 +21,8 @@ namespace Programming.Rewards {
         public RectTransform Counter;
         public TextMeshProUGUI Count;
 
+        public UnityEvent OnBoardExit;
+        
         [SerializeField] public List<int> thresholdValues = new();
         [SerializeField] private List<RectTransform> thresholds = new();
         public int maxValue;
@@ -33,10 +37,6 @@ namespace Programming.Rewards {
             {
                 Instance = this;
             }
-        }
-
-        private void Start()
-        {
         }
 
         public void StartRewarding(int score)
@@ -107,8 +107,9 @@ namespace Programming.Rewards {
                 var card = GameObject.Instantiate(cardPrefab, slot);
                 var cardNumber = card.GetComponent<NumberCardComponent>();
                 card.GetComponent<CardMovementComponent>().enabled = false;
+                card.GetComponent<ExpandSimplifyCard>().enabled = false;
                 card.AddComponent<RewardCardComponent>();
-                cardNumber.Value = new Fraction(Random.Range(1, 9), 1);
+                cardNumber.Value = new Fraction(Random.Range(1, 9), Random.Range(1, 9));
             }
         }
 
@@ -116,7 +117,38 @@ namespace Programming.Rewards {
         {
             Counter.anchoredPosition = new Vector2(0, Counter.anchoredPosition.x);
             Count.text = 0.ToString();
-            gameObject.SetActive(false);
+            BoardExit();
+        }
+
+        public void BoardEnter()
+        {
+            StartCoroutine(BoardEnterCoroutine());
+        }
+        
+        public void BoardExit()
+        {
+            OnBoardExit.Invoke();
+            StartCoroutine(BoardExitCoroutine());
+        }
+
+        public IEnumerator BoardEnterCoroutine()
+        {
+            while (Vector3.Distance(transform.position, end.position) > 0.1f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, end.position, 50f * Time.deltaTime);
+                yield return new WaitForEndOfFrame();
+            }
+
+            StartCoroutine("StartRewarding", 7);
+        }
+        
+        public IEnumerator BoardExitCoroutine()
+        {
+            while (Vector3.Distance(transform.position, start.position) > 0.1f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, start.position, 50f * Time.deltaTime);
+                yield return new WaitForEndOfFrame();
+            }
         }
     }
 }

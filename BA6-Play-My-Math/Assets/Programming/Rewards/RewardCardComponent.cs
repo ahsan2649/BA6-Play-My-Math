@@ -1,6 +1,6 @@
 using Programming.Card_Mechanism;
-using UnityEngine;
 using Programming.Fraction_Engine;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Programming.Rewards

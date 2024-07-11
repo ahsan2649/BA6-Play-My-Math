@@ -124,7 +124,7 @@ namespace Programming.Operation_Board
 
                     CardMovementComponent leftCard = _leftOperand.UnsetCard();
                     Destroy(leftCard.gameObject);
-
+                    
                     PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
                 }
             }
