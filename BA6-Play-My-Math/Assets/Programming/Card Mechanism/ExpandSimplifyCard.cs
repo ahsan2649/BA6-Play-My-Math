@@ -31,7 +31,7 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
     bool bExpand;
 
 
-    void Awake()
+    void Start()
     {
         Expand();
         bExpand = true;

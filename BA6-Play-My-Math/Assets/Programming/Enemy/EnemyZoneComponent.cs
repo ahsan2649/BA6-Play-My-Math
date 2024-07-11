@@ -1,13 +1,12 @@
 using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Programming.Enemy {
     public class EnemyZoneComponent : MonoBehaviour
     {
         public static EnemyZoneComponent Instance { get; private set; }
         [HideInInspector] public EnemySlotComponent[] enemySlots;
-        public UnityEvent LineupComplete;
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -23,10 +22,10 @@ namespace Programming.Enemy {
 
 
         // Start is called before the first frame update
-
-
-        public void InitalizeEnemies()
+        void Start()
         {
+            enemySlots = GetComponentsInChildren<EnemySlotComponent>();
+            
             for (int i = 0; i < enemySlots.Length; i++)
             {
                 ZonePush(EnemyLineupComponent.Instance.EnemyPop());
@@ -35,12 +34,6 @@ namespace Programming.Enemy {
 
         public void ZonePush(EnemyComponent enemy)
         {
-            if (NoEnemiesLeft())
-            {
-                LineupComplete.Invoke();
-                return;
-            }
-            
             foreach (EnemySlotComponent slot in enemySlots)
             {
                 if (slot.HasEnemy())
@@ -56,23 +49,6 @@ namespace Programming.Enemy {
 
                 break;
             }
-        }
-
-        public bool NoEnemiesLeft()
-        {
-            if (EnemyLineupComponent.Instance._enemiesInLineup.Count > 0)
-            {
-                return false;
-            }
-            foreach (EnemySlotComponent slot in enemySlots)
-            {
-                if (slot.HasEnemy())
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
     }
 }

@@ -19,3 +19,17 @@ MonoBehaviour:
     denominator: 3
   - numerator: 1
     denominator: 3
+  - numerator: 5
+    denominator: 6
+  - numerator: 4
+    denominator: 6
+  - numerator: 3
+    denominator: 7
+  - numerator: 3
+    denominator: 9
+  - numerator: 6
+    denominator: 8
+  - numerator: 4
+    denominator: 8
+  - numerator: 2
+    denominator: 5
