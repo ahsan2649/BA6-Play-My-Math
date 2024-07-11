@@ -23,10 +23,6 @@ namespace Programming.Enemy
             {
                 Instance = this;
             }
-        }
-
-        private void Start()
-        {
             foreach (Fraction value in
                      (enemyLineup == null || enemyLineup.enemyList.Count == 0)
                          ? LevelGeneration.generateEnemyCue(10)
@@ -38,6 +34,10 @@ namespace Programming.Enemy
                 newEnemy.GetComponent<EnemyComponent>().UpdateDisplay();
                 _enemiesInLineup.Add(newEnemy.GetComponent<EnemyComponent>());
             }
+        }
+
+        private void Start()
+        {
         }
 
         [ContextMenu("Pop Enemy")]
