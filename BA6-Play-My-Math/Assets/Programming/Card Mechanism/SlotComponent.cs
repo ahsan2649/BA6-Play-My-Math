@@ -10,23 +10,32 @@ namespace Programming.Card_Mechanism
         
         public UnityEvent onCardChanged; 
         
-        public void SetCard(CardMovementComponent cardMovement)
+        public void SetCard(CardMovementComponent card)
         {
-            _cardMovementInSlot = cardMovement;
-            cardMovement.transform.SetParent(transform);
-            cardMovement.enabled = true;
+            if (_cardMovementInSlot is not null)
+            {
+                UnsetCard(); 
+            }
             
-            cardMovement.onCardChange.AddListener(OnCardChanged);
+            _cardMovementInSlot = card;
+            
+            if (card is not null)
+            {
+                card.transform.SetParent(transform);
+                card.enabled = true;
+                card.onCardChange.AddListener(OnCardChanged);
+            }
+            
             onCardChanged.Invoke(); 
         }
-
-        public void OnCardChanged()
-        {
-            onCardChanged.Invoke();
-        }
-
+        
         public CardMovementComponent UnsetCard()
         {
+            if (_cardMovementInSlot is null)
+            {
+                return null; 
+            }
+            
             _cardMovementInSlot.onCardChange.RemoveListener(OnCardChanged);
             
             var returningCard = _cardMovementInSlot;
@@ -36,6 +45,11 @@ namespace Programming.Card_Mechanism
             return returningCard;
         }
 
+        public void OnCardChanged()
+        {
+            onCardChanged.Invoke();
+        }
+        
         public CardMovementComponent GetCard()
         {
             return _cardMovementInSlot;

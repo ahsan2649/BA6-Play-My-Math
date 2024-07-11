@@ -49,6 +49,13 @@ namespace Programming.Card_Mechanism {
 
         #region Animations
 
+        public void StartCoroutinesTransformToNewParent(Transform newParent)
+        {
+            transform.SetParent(newParent);
+            StartCoroutine(MoveToNewParent());
+            StartCoroutine(RotateToNewParent());
+        }
+        
         public IEnumerator MoveToNewParent()
         {
             while (Vector3.Distance(transform.position, transform.parent.position) > 0.01f)
