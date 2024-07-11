@@ -103,12 +103,15 @@ namespace Programming.Operation_Board
         
         public void AttackEnemy()
         {
-            if (_leftOperand.CardInSlot == null)
+            if (_leftOperand.CardInSlot is null == _rightOperand.CardInSlot is null)
             {
                 return;
             }
 
-            var attackCardNumber = _leftOperand.CardInSlot.Value;
+            OperandSlotComponent attackSlot = _leftOperand.CardInSlot is not null ? _leftOperand : _rightOperand;
+            NumberCardComponent attackCardMov = attackSlot.CardInSlot; 
+            Fraction attackCardNumber = attackSlot.CardInSlot.Value;
+            
             foreach (var enemySlot in EnemyZoneComponent.Instance.enemySlots)
             {
                 if (!enemySlot.HasEnemy())
@@ -121,11 +124,9 @@ namespace Programming.Operation_Board
                     var destroyedEnemy = enemySlot.UnsetEnemy();
                     Destroy(destroyedEnemy.gameObject);
                     EnemyZoneComponent.Instance.ZonePush(EnemyLineupComponent.Instance.EnemyPop());
-
-                    var leftCard = _leftOperand._originSlot.UnsetCard();
-                    _leftOperand._originSlot = null;
-                    _leftOperand.CardInSlot = null;
-                    Destroy(leftCard.gameObject);
+                    
+                    attackSlot.SetCard(null);
+                    Destroy(attackCardMov.gameObject);
 
                     PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
                 }
@@ -151,30 +152,13 @@ namespace Programming.Operation_Board
                 return;
             }
 
-            if (_leftOperand.CardInSlot == null)
-            {
-                DropCardInSlot(_leftOperand, droppedCard, droppedCardNumberComponent);
-                return;
-            }
-            
-            if (_rightOperand.CardInSlot == null)
-            {
-                DropCardInSlot(_rightOperand, droppedCard, droppedCardNumberComponent);
-            }
+            OperandSlotComponent dropSlot =
+                _leftOperand.CardInSlot is null ? _leftOperand : _rightOperand; 
+            dropSlot.DropCard(droppedCard);
         }
         #endregion
         
         #region PrivateMethods
-        private void DropCardInSlot(OperandSlotComponent operandSlot, GameObject droppedCard,
-            NumberCardComponent droppedCardNumberComponent)
-        {
-            operandSlot._originSlot = droppedCard.GetComponentInParent<HandSlotComponent>();
-            operandSlot.CardInSlot = droppedCardNumberComponent;
-            droppedCard.transform.SetParent(operandSlot.transform);
-
-            StartCoroutine(droppedCard.GetComponent<CardMovementComponent>().MoveToNewParent());
-            StartCoroutine(droppedCard.GetComponent<CardMovementComponent>().RotateToNewParent());
-        }
         private void SetFinalizedCard(Fraction value)
         {
             var rightCard = _rightOperand._originSlot.UnsetCard();
