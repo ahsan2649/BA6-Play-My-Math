@@ -1,4 +1,5 @@
 using Programming.Card_Mechanism;
+using Programming.Visualisers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,8 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
     public GameObject btn5;
     public GameObject btn7;
     public Color btnIncorrectColor;
+
+    public GameObject fractionTextVisualizer;
 
 
     bool bExpand;
@@ -94,10 +97,6 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         bExpand = false;
         btnSimplify.GetComponent<Image>().color = btnActiveColor;
         btnExpand.GetComponent<Image>().color = Color.white;
-
-        //set other buttons
-
-        //TODO @Frieda: call FractionTextVisualiser.DisplayDecimals
     }
 
     public void ExSimpl(int pValue)
@@ -105,11 +104,18 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (bExpand)
         {
             Debug.Log("expand or simplify" + pValue);
-            NumberCardComponent numberCard = GetComponent<NumberCardComponent>(); 
+            NumberCardComponent numberCard = GetComponent<NumberCardComponent>();
             numberCard.Value = GetComponent<NumberCardComponent>().Value.ExpandBy(pValue);
-            
+
         }
-        else GetComponent<NumberCardComponent>().Value = GetComponent<NumberCardComponent>().Value.SimplifyBy(pValue);
+        else
+        {
+            if (!GetComponent<NumberCardComponent>().Value.CanSimplifyBy(pValue))
+            {
+                fractionTextVisualizer.GetComponent<FractionTextVisualiser>().DisplayDecimals(GetComponent<NumberCardComponent>().Value.Numerator, GetComponent<NumberCardComponent>().Value.Denominator);
+            }
+            GetComponent<NumberCardComponent>().Value = GetComponent<NumberCardComponent>().Value.SimplifyBy(pValue);
+        }
     }
 
     public void RefreshSimplifyButtons()
