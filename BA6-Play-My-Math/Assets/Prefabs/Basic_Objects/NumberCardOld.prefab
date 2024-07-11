@@ -2938,7 +2938,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &6900009169626035512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3000,20 +3000,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea0ad4076c6fdd45a20f3df63d1eaa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveDelta: 0.5
-  RotateDelta: 2
-  MoveSpeed: 100
-  RotateSpeed: 500
-  ScaleSpeed: 500
-  onCardChange:
-    m_PersistentCalls:
-      m_Calls: []
   oldValue:
     numerator: 0
     denominator: 0
   value:
     numerator: 2
     denominator: 3
+  onValueChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8122761994042070050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3036,6 +3031,7 @@ MonoBehaviour:
   btn5: {fileID: 7949057718762905389}
   btn7: {fileID: 421697091682321187}
   btnIncorrectColor: {r: 0.8584906, g: 0.07694017, b: 0.07694017, a: 1}
+  fractionTextVisualizer: {fileID: 0}
 --- !u!1 &4478529385723390585
 GameObject:
   m_ObjectHideFlags: 0
