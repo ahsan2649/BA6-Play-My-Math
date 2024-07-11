@@ -9,6 +9,7 @@ namespace Programming.Card_Mechanism
 {
     public class DeckComponent : MonoBehaviour
     {
+        public List<Fraction> initDeck;
         public List<CardMovementComponent> _cardsInDeck = new();
         [SerializeField] private StartingDeckInfo startingDeck;
         [SerializeField] private GameObject numberCardPrefab;
@@ -25,7 +26,20 @@ namespace Programming.Card_Mechanism
                 Instance = this;
             }
 
-            FillDeckWithCards(startingDeck.numbers);
+            initDeck = startingDeck.numbers;
+
+            FillDeckWithCards(initDeck);
+        }
+
+        public void RebuildDeck()
+        {
+            for (var index = _cardsInDeck.Count-1; index >= 0; index--)
+            {
+                var cardMovementComponent = _cardsInDeck[index];
+                _cardsInDeck.Remove(cardMovementComponent);
+                Destroy(cardMovementComponent.gameObject);
+            }
+            FillDeckWithCards(initDeck);
         }
 
         private void FillDeckWithCards(List<Fraction> fractionList)

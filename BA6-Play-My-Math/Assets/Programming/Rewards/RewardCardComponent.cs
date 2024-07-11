@@ -1,4 +1,5 @@
 using Programming.Card_Mechanism;
+using Programming.Fraction_Engine;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,12 +9,9 @@ namespace Programming.Rewards
         public void OnPointerClick(PointerEventData eventData)
         {
             Debug.Log("Click!");
-            Transform deck = DeckComponent.Instance.transform;
-            transform.SetParent(deck);
-
-            transform.SetPositionAndRotation(new Vector3(deck.position.x, deck.position.y, deck.position.z),
-                Quaternion.Euler(-90, 0, 0));
-
+            DeckComponent.Instance.initDeck.Add(new Fraction(GetComponent<NumberCardComponent>().Value));
+            RewardBoardComponent.Instance.GenerateRewards();
+            
             foreach (Transform slot in RewardBoardComponent.Instance.slots)
             {
                 if (slot.childCount > 0)
@@ -21,8 +19,6 @@ namespace Programming.Rewards
                     Destroy(slot.GetChild(0).gameObject);
                 }
             }
-        
-            RewardBoardComponent.Instance.GenerateRewards();
         }
     }
 }

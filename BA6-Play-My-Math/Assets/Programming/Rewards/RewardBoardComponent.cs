@@ -96,6 +96,7 @@ namespace Programming.Rewards {
         {
             if (rewardCount <= 0)
             {
+                DeckComponent.Instance.RebuildDeck();
                 ResetBoard();
                 return;
             }
