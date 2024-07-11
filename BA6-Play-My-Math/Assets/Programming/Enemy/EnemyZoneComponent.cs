@@ -23,10 +23,10 @@ namespace Programming.Enemy {
 
 
         // Start is called before the first frame update
-        void Start()
+
+
+        public void InitalizeEnemies()
         {
-            enemySlots = GetComponentsInChildren<EnemySlotComponent>();
-            
             for (int i = 0; i < enemySlots.Length; i++)
             {
                 ZonePush(EnemyLineupComponent.Instance.EnemyPop());

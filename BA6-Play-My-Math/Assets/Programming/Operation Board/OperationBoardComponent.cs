@@ -127,11 +127,6 @@ namespace Programming.Operation_Board
                     _leftOperand.CardInSlot = null;
                     Destroy(leftCard.gameObject);
 
-                    if (EnemyZoneComponent.Instance.NoEnemiesLeft())
-                    {
-                        return;
-                    }
-
                     PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
                 }
             }

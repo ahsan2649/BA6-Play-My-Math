@@ -5,6 +5,7 @@ using Programming.Card_Mechanism;
 using Programming.Fraction_Engine;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 namespace Programming.Rewards {
@@ -19,6 +20,8 @@ namespace Programming.Rewards {
         public RectTransform Slider;
         public RectTransform Counter;
         public TextMeshProUGUI Count;
+
+        public UnityEvent OnBoardExit;
         
         [SerializeField] public List<int> thresholdValues = new();
         [SerializeField] private List<RectTransform> thresholds = new();
@@ -123,6 +126,7 @@ namespace Programming.Rewards {
         
         public void BoardExit()
         {
+            OnBoardExit.Invoke();
             StartCoroutine(BoardExitCoroutine());
         }
 

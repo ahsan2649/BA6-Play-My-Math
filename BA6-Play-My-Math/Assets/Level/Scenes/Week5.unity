@@ -399,6 +399,71 @@ PrefabInstance:
       propertyPath: start
       value: 
       objectReference: {fileID: 993510642}
+    - target: {fileID: 5165963956655116857, guid: 7152c74f970a20a46a47b9706502b632,
+        type: 3}
+      propertyPath: OnBoardExit.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165963956655116857, guid: 7152c74f970a20a46a47b9706502b632,
+        type: 3}
+      propertyPath: OnBoardExit.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165963956655116857, guid: 7152c74f970a20a46a47b9706502b632,
+        type: 3}
+      propertyPath: OnBoardExit.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165963956655116857, guid: 7152c74f970a20a46a47b9706502b632,
+        type: 3}
+      propertyPath: OnBoardExit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8995370173651060027}
+    - target: {fileID: 5165963956655116857, guid: 7152c74f970a20a46a47b9706502b632,
+        type: 3}
+      propertyPath: OnBoardExit.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 8995370173651060027}
+    - target: {fileID: 5165963956655116857, guid: 7152c74f970a20a46a47b9706502b632,
+        type: 3}
+      propertyPath: OnBoardExit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165963956655116857, guid: 7152c74f970a20a46a47b9706502b632,
+        type: 3}
+      propertyPath: OnBoardExit.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165963956655116857, guid: 7152c74f970a20a46a47b9706502b632,
+        type: 3}
+      propertyPath: OnBoardExit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CreateEnemyLineup
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165963956655116857, guid: 7152c74f970a20a46a47b9706502b632,
+        type: 3}
+      propertyPath: OnBoardExit.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: CreateEnemyLineup
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165963956655116857, guid: 7152c74f970a20a46a47b9706502b632,
+        type: 3}
+      propertyPath: OnBoardExit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Programming.Enemy.EnemyLineupComponent, Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165963956655116857, guid: 7152c74f970a20a46a47b9706502b632,
+        type: 3}
+      propertyPath: OnBoardExit.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Programming.Enemy.EnemyLineupComponent, Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165963956655116857, guid: 7152c74f970a20a46a47b9706502b632,
+        type: 3}
+      propertyPath: OnBoardExit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165963956655116857, guid: 7152c74f970a20a46a47b9706502b632,
+        type: 3}
+      propertyPath: OnBoardExit.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8560935184188175474, guid: 7152c74f970a20a46a47b9706502b632,
         type: 3}
       propertyPath: m_Pivot.x
@@ -17766,6 +17831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 988cbb280d49a6549ba837377970d85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemiesInLineup: []
   enemyLineup: {fileID: 11400000, guid: 0a8efa36d2909104aa243bbdd3e6036f, type: 2}
   enemyPrefab: {fileID: 4265978069418469844, guid: aa9335456dc9d894391b7af1655f9b7c,
     type: 3}
