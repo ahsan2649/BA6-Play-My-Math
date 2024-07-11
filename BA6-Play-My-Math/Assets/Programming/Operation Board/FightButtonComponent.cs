@@ -42,21 +42,20 @@ namespace Programming.Operation_Board
 
         public void OperationBoardEnableFighting()
         {
-            EnableFighting(operationBoardComponent.CalculateCombinedValue() ??
-                           (operationBoardComponent.LeftOperand.CardInSlot != null ?
-                               operationBoardComponent.LeftOperand.CardInSlot.Value : 
-                            operationBoardComponent.RightOperand.CardInSlot != null ? 
-                                operationBoardComponent.RightOperand.CardInSlot.Value :
-                                null)); 
+            EnableFighting(operationBoardComponent.LeftOperand.CardInSlot?.Value, operationBoardComponent.RightOperand.CardInSlot?.Value); 
         }
         
-        public void EnableFighting(Fraction value)
+        public void EnableFighting(Fraction leftValue, Fraction rightValue)
         {
             transform.parent.gameObject.SetActive(false);
-            if (value is null)
+
+            if (leftValue is null && rightValue is null ||
+                leftValue is not null && rightValue is not null)
             {
                 return; 
             }
+            
+            Fraction toCheckValue = leftValue ?? rightValue; 
             
             foreach (var enemySlot in EnemyZoneComponent.Instance.enemySlots)    
             {
@@ -65,7 +64,7 @@ namespace Programming.Operation_Board
                     continue;
                 }
 
-                if (enemySlot.GetEnemy().Value.Denominator == value.Denominator && enemySlot.GetEnemy().Value.Numerator == value.Numerator)
+                if (enemySlot.GetEnemy().Value == toCheckValue)
                 {
                     transform.parent.gameObject.SetActive(true);
                     break; 
