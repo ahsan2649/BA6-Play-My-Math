@@ -23,7 +23,7 @@ namespace Programming.Enemy
             set => this.value = value;
         }
 
-        private void OnEnable()
+        private void Awake()
         {
             _rectTransform = GetComponent<RectTransform>();
             _canvas = GetComponent<Canvas>();

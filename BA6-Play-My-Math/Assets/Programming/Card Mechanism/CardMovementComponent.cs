@@ -15,7 +15,7 @@ namespace Programming.Card_Mechanism {
 
         public UnityEvent onCardChange; 
         
-        private void OnEnable()
+        private void Awake()
         {
             _rectTransform = GetComponent<RectTransform>();
             _canvas = GetComponent<Canvas>();

@@ -23,7 +23,7 @@ namespace Programming.Operation_Board {
         CanvasGroup _canvasGroup;
 
 
-        private void OnEnable()
+        private void Awake()
         {
             _rectTransform = GetComponent<RectTransform>();
             _canvas = GetComponent<Canvas>();

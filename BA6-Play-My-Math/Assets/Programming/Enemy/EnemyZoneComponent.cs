@@ -7,7 +7,7 @@ namespace Programming.Enemy {
         public static EnemyZoneComponent Instance { get; private set; }
         [HideInInspector] public EnemySlotComponent[] enemySlots;
 
-        private void OnEnable()
+        private void Awake()
         {
             if (Instance != null && Instance != this)
             {
@@ -17,12 +17,9 @@ namespace Programming.Enemy {
             {
                 Instance = this;
             }
-        }
-
-        private void Awake()
-        {
             enemySlots = GetComponentsInChildren<EnemySlotComponent>();
         }
+
 
         // Start is called before the first frame update
         void Start()

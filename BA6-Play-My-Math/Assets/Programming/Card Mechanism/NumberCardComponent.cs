@@ -26,7 +26,7 @@ namespace Programming.Card_Mechanism
             }
         }
 
-        private void OnEnable()
+        private void Awake()
         {
             Value = Value; 
         }
