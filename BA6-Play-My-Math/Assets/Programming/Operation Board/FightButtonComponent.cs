@@ -8,6 +8,8 @@ namespace Programming.Operation_Board
 {
     public class FightButtonComponent : MonoBehaviour, IPointerClickHandler
     {
+        [SerializeField] private OperationBoardComponent operationBoardComponent; 
+    
         Canvas _canvas;
         public UnityEvent fightEvent;
         public static FightButtonComponent Instance;
@@ -40,14 +42,15 @@ namespace Programming.Operation_Board
 
         public void OperationBoardEnableFighting()
         {
-            EnableFighting(OperationBoardComponent.Instance.LeftOperand.CardInSlot?.Value, OperationBoardComponent.Instance.RightOperand.CardInSlot?.Value); 
+            EnableFighting(operationBoardComponent.LeftOperand.CardInSlot?.Value, operationBoardComponent.RightOperand.CardInSlot?.Value); 
         }
         
         public void EnableFighting(Fraction leftValue, Fraction rightValue)
         {
             transform.parent.gameObject.SetActive(false);
 
-            if (leftValue is null == rightValue is null)
+            if (leftValue is null && rightValue is null ||
+                leftValue is not null && rightValue is not null)
             {
                 return; 
             }
