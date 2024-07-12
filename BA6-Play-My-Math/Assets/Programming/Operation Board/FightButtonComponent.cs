@@ -49,12 +49,10 @@ namespace Programming.Operation_Board
         {
             transform.parent.gameObject.SetActive(false);
 
-            if (leftValue is null && rightValue is null ||
-                leftValue is not null && rightValue is not null)
+            if (leftValue is null == rightValue is null)
             {
                 return; 
             }
-            
             Fraction toCheckValue = leftValue ?? rightValue; 
             
             foreach (var enemySlot in EnemyZoneComponent.Instance.enemySlots)    

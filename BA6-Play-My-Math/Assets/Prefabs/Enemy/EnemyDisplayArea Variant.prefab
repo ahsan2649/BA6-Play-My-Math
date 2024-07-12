@@ -25,6 +25,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4c6641b14b5d8c84193b79c9efd2dae9, type: 2}
     - target: {fileID: 3575969937306496323, guid: d6bc71f1d9ccbd24b94790faf1c3a627,
         type: 3}
+      propertyPath: blockFigureHeight
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3575969937306496323, guid: d6bc71f1d9ccbd24b94790faf1c3a627,
+        type: 3}
       propertyPath: visStyle_Main.material
       value: 
       objectReference: {fileID: 2100000, guid: ebc6ad2cb39fcb643967779479a29984, type: 2}

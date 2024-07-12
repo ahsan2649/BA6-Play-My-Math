@@ -103,12 +103,12 @@ namespace Programming.Operation_Board
         
         public void AttackEnemy()
         {
-            if (_leftOperand.GetCard() == null)
+            if (_leftOperand.GetCard() is null == _rightOperand.GetCard() is null)
             {
                 return;
             }
 
-            var attackCardNumber = _leftOperand.GetCard().GetComponent<NumberCardComponent>()?.Value;
+            var attackCardNumber = (_leftOperand.GetCard() ?? _rightOperand.GetCard()).GetComponent<NumberCardComponent>()?.Value;
             foreach (var enemySlot in EnemyZoneComponent.Instance.enemySlots)
             {
                 if (!enemySlot.HasEnemy())

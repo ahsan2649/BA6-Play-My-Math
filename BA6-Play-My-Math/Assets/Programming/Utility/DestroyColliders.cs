@@ -1,20 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class DestroyColliders : MonoBehaviour
+namespace Programming.Utility
 {
-    [ContextMenu("DeleteColliders")]
-    public void deleteColliders()
+    public class DestroyColliders : MonoBehaviour
     {
-        Undo.SetCurrentGroupName("DeleteColliders");
-        foreach (Collider collider in FindObjectsOfType<Collider>())
+        [ContextMenu("DeleteColliders")]
+        public void deleteColliders()
         {
-            Debug.Log("Destroy(" + collider.name + ")"); 
-            Undo.DestroyObjectImmediate(collider);
+            Undo.SetCurrentGroupName("DeleteColliders");
+            foreach (Collider collider in FindObjectsOfType<Collider>())
+            {
+                Debug.Log("Destroy(" + collider.name + ")"); 
+                Undo.DestroyObjectImmediate(collider);
+            }
         }
+    
+    
     }
-    
-    
 }

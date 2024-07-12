@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
+/*
 namespace Programming.Fraction_Engine
 {
     public class FractionVisualisationLayer : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
@@ -27,17 +28,18 @@ namespace Programming.Fraction_Engine
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            parent.VisualiseLayer(layerNumber);
+            parent.VisualiseLayerOld(layerNumber);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            parent.VisualiseLayer(layerNumber);
+            parent.VisualiseLayerOld(layerNumber);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            parent.VisualiseLayer(parent.topLayer);
+            parent.VisualiseLayerOld(parent.TopLayerFast);
         }
     }
 }
+*/
