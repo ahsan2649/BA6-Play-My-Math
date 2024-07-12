@@ -60,5 +60,14 @@ namespace Programming.Card_Mechanism
             var returningCard = slot.UnsetCard();
             return returningCard;
         }
+
+        public void ClearHand()
+        {
+            for (var index = 0; index < cardSlots.Length; index++)
+            {
+                var slot = cardSlots[index];
+                Destroy(HandPop(ref slot).gameObject);
+            }
+        }
     }
 }

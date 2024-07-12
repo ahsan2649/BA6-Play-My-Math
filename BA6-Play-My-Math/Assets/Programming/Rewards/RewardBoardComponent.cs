@@ -6,6 +6,7 @@ using Programming.Fraction_Engine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Programming.Rewards {
@@ -21,8 +22,15 @@ namespace Programming.Rewards {
         public RectTransform Counter;
         public TextMeshProUGUI Count;
 
-        public UnityEvent OnBoardExit;
-        
+        [Tooltip(
+            "DeckComponent.RebuildDeck()\n" +
+            "PlayerHandComponent.ClearHand()\n" +
+            "DiscardPileComponent.ClearPile()" +
+            "EnemyLineupComponent.CreateEnemyLineup" +
+            "EnemyZoneComponent.InitializeEnemies")]
+        [FormerlySerializedAs("OnBoardExit")]
+        public UnityEvent onBoardExit;
+
         [SerializeField] public List<int> thresholdValues = new();
         [SerializeField] private List<RectTransform> thresholds = new();
         public int maxValue;
@@ -66,7 +74,8 @@ namespace Programming.Rewards {
             for (int i = 0; i < count; i++)
             {
                 var thresh = thresholds[i];
-                thresh.anchoredPosition = new Vector2(((float)thresholdValues[i]/maxValue)*Slider.sizeDelta.x , thresh.anchoredPosition.y);
+                thresh.anchoredPosition = new Vector2(((float)thresholdValues[i] / maxValue) * Slider.sizeDelta.x,
+                    thresh.anchoredPosition.y);
                 thresh.GetComponent<TextMeshProUGUI>().text = thresholdValues[i].ToString();
             }
         }
@@ -96,7 +105,6 @@ namespace Programming.Rewards {
         {
             if (rewardCount <= 0)
             {
-                DeckComponent.Instance.RebuildDeck();
                 ResetBoard();
                 return;
             }
@@ -124,10 +132,10 @@ namespace Programming.Rewards {
         {
             StartCoroutine(BoardEnterCoroutine());
         }
-        
+
         public void BoardExit()
         {
-            OnBoardExit.Invoke();
+            onBoardExit.Invoke();
             StartCoroutine(BoardExitCoroutine());
         }
 
@@ -141,7 +149,7 @@ namespace Programming.Rewards {
 
             StartCoroutine("StartRewarding", 7);
         }
-        
+
         public IEnumerator BoardExitCoroutine()
         {
             while (Vector3.Distance(transform.position, start.position) > 0.1f)
