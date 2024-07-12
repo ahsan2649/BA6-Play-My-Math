@@ -12,7 +12,7 @@ namespace Programming.Visualisers
 
         public void OnNumberCardChanged()
         {
-            fractionTextVisualiser.SetFraction(numberCardComponent.Value);
+            fractionTextVisualiser.SetFraction(numberCardComponent.Value, numberCardComponent.IsFraction, numberCardComponent.IsFractionPreview);
             gameObject.name = "Card(" + numberCardComponent.Value + ")"; 
         }
 
@@ -21,7 +21,7 @@ namespace Programming.Visualisers
             NumberCardComponent draggedCard = eventData.pointerDrag != null ? eventData.pointerDrag.GetComponent<NumberCardComponent>() : null; 
             
             if (draggedCard != null &&
-                numberCardComponent.Value.IsWhole())
+                !numberCardComponent.IsFraction)
             {
                 fractionTextVisualiser.gameObject.SetActive(false);
             }

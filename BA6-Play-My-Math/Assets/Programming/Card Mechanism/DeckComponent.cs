@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Programming.Fraction_Engine;
 using Programming.ScriptableObjects;
 using UnityEngine;
+using Random = System.Random;
 
 
 namespace Programming.Card_Mechanism
@@ -26,9 +27,10 @@ namespace Programming.Card_Mechanism
                 Instance = this;
             }
 
-            initDeck = startingDeck.numbers;
+            initDeck = new List<Fraction>(startingDeck.numbers); 
 
             FillDeckWithCards(initDeck);
+            ShuffleDeck();
         }
 
         public void RebuildDeck()
@@ -40,26 +42,32 @@ namespace Programming.Card_Mechanism
                 Destroy(cardMovementComponent.gameObject);
             }
             FillDeckWithCards(initDeck);
+            ShuffleDeck();
         }
 
         private void FillDeckWithCards(List<Fraction> fractionList)
         {
-            if (startingDeck is null)
+            if (_cardsInDeck is null)
             {
                 return;
             }
-                
-            for (int i = 0; i < fractionList.Count; i++)
+
+            _cardsInDeck.Clear();
+
+            int listIndex = 0; 
+            foreach( Fraction fraction in fractionList)
             {
                 var card = Instantiate(numberCardPrefab,
-                    new Vector3(transform.position.x, transform.position.y - i * 0.125f, transform.position.z),
+                    new Vector3(transform.position.x, transform.position.y - listIndex * 0.125f, transform.position.z),
                     Quaternion.Euler(-90, 0, 0), transform);
-
+                
                 // Disabling BaseCard, so they can't be dragged from Deck
                 card.GetComponentInChildren<CardMovementComponent>().enabled = false;
                 card.GetComponentInChildren<NumberCardComponent>().oldValue =
-                    card.GetComponentInChildren<NumberCardComponent>().Value = new Fraction(startingDeck.numbers[i]);
+                    card.GetComponentInChildren<NumberCardComponent>().Value = new Fraction(fraction);
                 _cardsInDeck.Add(card.GetComponentInChildren<CardMovementComponent>());
+
+                listIndex++; 
             }
         }
         
@@ -73,6 +81,19 @@ namespace Programming.Card_Mechanism
             var pop = _cardsInDeck[0];
             _cardsInDeck.Remove(pop);
             return pop;
+        }
+
+        public void ShuffleDeck()
+        {
+            Random random = new Random(); 
+            int n = _cardsInDeck.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = random.Next(0, n);
+                (_cardsInDeck[k], _cardsInDeck[n]) = (_cardsInDeck[n], _cardsInDeck[k]); 
+
+            }
         }
     }
 }

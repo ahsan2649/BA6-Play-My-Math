@@ -41,27 +41,33 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (focusOpen == false && !GetComponent<NumberCardComponent>().Value.IsWhole())
+        if (!GetComponent<NumberCardComponent>().IsFraction)
         {
-            //move cards to the center
-            giveHint = false;
-            expandSimpObj.SetActive(true);
-            parentSlot = transform.parent;
-            transform.parent = GameObject.FindGameObjectWithTag("Test").transform;
-
-            transform.position = new Vector3(0, 6, -5);
-            transform.localScale += new Vector3(.02f, .02f, .02f);
-            transform.rotation = Quaternion.Euler(90, 0, 0);
-            focusOpen = true;
-            
-            GetComponent<CardMovementComponent>().enabled = false; 
+            return; 
         }
 
+        if (focusOpen)
+        {
+            return; 
+        }
+        
+        //move cards to the center
+        giveHint = false;
+        expandSimpObj.SetActive(true);
+        parentSlot = transform.parent;
+        transform.parent = GameObject.FindGameObjectWithTag("Test").transform;
+
+        transform.position = new Vector3(0, 6, -5);
+        transform.localScale += new Vector3(.02f, .02f, .02f);
+        transform.rotation = Quaternion.Euler(90, 0, 0);
+        focusOpen = true;
+        
+        GetComponent<CardMovementComponent>().enabled = false; 
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (giveHint && !GetComponent<NumberCardComponent>().Value.IsWhole())
+        if (giveHint && GetComponent<NumberCardComponent>().IsFraction)
         {
             hint.SetActive(true);
         }
@@ -101,38 +107,43 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void ExSimpl(int pValue)
     {
+        NumberCardComponent numberCard = GetComponent<NumberCardComponent>();
+        if (numberCard is null)
+        {
+            return; 
+        }
+        
+        
         if (bExpand)
         {
             Debug.Log("expand or simplify" + pValue);
-            NumberCardComponent numberCard = GetComponent<NumberCardComponent>();
-            numberCard.Value = GetComponent<NumberCardComponent>().Value.ExpandBy(pValue);
-
+            numberCard.oldValue = numberCard.Value = numberCard.Value.ExpandBy(pValue); 
         }
         else
         {
             if (!GetComponent<NumberCardComponent>().Value.CanSimplifyBy(pValue))
             {
-                fractionTextVisualizer.GetComponent<FractionTextVisualiser>().DisplayDecimals(GetComponent<NumberCardComponent>().Value.Numerator, GetComponent<NumberCardComponent>().Value.Denominator);
+                fractionTextVisualizer.GetComponent<FractionTextVisualiser>().DisplayDecimals(numberCard.Value.Numerator, numberCard.Value.Denominator);
             }
-            GetComponent<NumberCardComponent>().Value = GetComponent<NumberCardComponent>().Value.SimplifyBy(pValue);
+            numberCard.oldValue = numberCard.Value = numberCard.Value.SimplifyBy(pValue);
         }
     }
 
     public void RefreshSimplifyButtons()
     {
-
+        NumberCardComponent numberCardComponent = GetComponent<NumberCardComponent>();
+        if (numberCardComponent is null)
+        {
+            return; 
+        }
+        
         btn2.GetComponent<Image>().color = Color.white; btn3.GetComponent<Image>().color = Color.white; btn5.GetComponent<Image>().color = Color.white; btn7.GetComponent<Image>().color = Color.white;
         if (!bExpand)
         {
-            if (!GetComponent<NumberCardComponent>().Value.CanSimplifyBy(2)) btn2.GetComponent<Image>().color = btnIncorrectColor;
-            if (!GetComponent<NumberCardComponent>().Value.CanSimplifyBy(3)) btn3.GetComponent<Image>().color = btnIncorrectColor;
-            if (!GetComponent<NumberCardComponent>().Value.CanSimplifyBy(5)) btn5.GetComponent<Image>().color = btnIncorrectColor;
-            if (!GetComponent<NumberCardComponent>().Value.CanSimplifyBy(7)) btn7.GetComponent<Image>().color = btnIncorrectColor;
-
+            if (!numberCardComponent.Value.CanSimplifyBy(2)) btn2.GetComponent<Image>().color = btnIncorrectColor;
+            if (!numberCardComponent.Value.CanSimplifyBy(3)) btn3.GetComponent<Image>().color = btnIncorrectColor;
+            if (!numberCardComponent.Value.CanSimplifyBy(5)) btn5.GetComponent<Image>().color = btnIncorrectColor;
+            if (!numberCardComponent.Value.CanSimplifyBy(7)) btn7.GetComponent<Image>().color = btnIncorrectColor;
         }
-
-
     }
-
-
 }

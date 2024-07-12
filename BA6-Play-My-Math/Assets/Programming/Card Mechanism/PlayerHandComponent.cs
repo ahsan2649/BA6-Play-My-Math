@@ -26,12 +26,16 @@ namespace Programming.Card_Mechanism
 
         void Start()
         {
+            FillHand(); 
+        }
+
+        public void FillHand()
+        {
             for (int i = 0; i < cardSlots.Length; i++)
             {
                 HandPush(DeckComponent.Instance.DeckPop());
             }
         }
-
 
         public void HandPush(CardMovementComponent cardMovement, bool shouldMove = true)
         {
@@ -66,7 +70,8 @@ namespace Programming.Card_Mechanism
             for (var index = 0; index < cardSlots.Length; index++)
             {
                 var slot = cardSlots[index];
-                Destroy(HandPop(ref slot).gameObject);
+                CardMovementComponent card = HandPop(ref slot);
+                if (card is not null) { Destroy(card.gameObject); }
             }
         }
     }

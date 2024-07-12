@@ -145,7 +145,7 @@ namespace Programming.Operation_Board
                 return;
             }
 
-            if (droppedCardNumberComponent.Value.IsWhole())
+            if (!droppedCardNumberComponent.IsFraction)
             {
                 return;
             }
