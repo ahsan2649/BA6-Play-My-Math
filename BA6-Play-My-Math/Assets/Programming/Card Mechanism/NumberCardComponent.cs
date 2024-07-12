@@ -75,7 +75,7 @@ namespace Programming.Card_Mechanism
                 return;
             }
             
-            if (draggedCardNumber.IsFraction || IsFraction)
+            if (!(draggedCardNumber.IsFraction ^ IsFraction))
             {
                 return;
             }
