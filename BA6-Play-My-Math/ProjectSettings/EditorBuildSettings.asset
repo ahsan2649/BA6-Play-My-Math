@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Level/Scenes/Week 1-2/Blockout.unity
     guid: 50128d8919d6622499abe5a6efb09db5
+  - enabled: 1
+    path: Assets/Level/Scenes/Week5.unity
+    guid: 4074da79e9b0d3f479459a465202a8fe
   m_configObjects: {}
