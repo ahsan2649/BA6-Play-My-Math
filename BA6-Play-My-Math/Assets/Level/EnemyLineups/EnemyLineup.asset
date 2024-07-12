@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyLineup
   m_EditorClassIdentifier: 
   enemyList:
-  - numerator: 10
+  - numerator: 6
     denominator: 2
   - numerator: 6
     denominator: 2

@@ -472,6 +472,7 @@ MonoBehaviour:
   boardSize: {x: 10, y: 0.25, z: 10}
   blockFigureHeight: 2
   higherLayerFigureScaleFactor: 0.95
+  textVisualiserHeight: 4
   debug_divisorOrder: []
   debug_leftFraction:
     numerator: 0
@@ -1402,6 +1403,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7923951198405410247, guid: 36f5c458def6e804c861c354335f29fb,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7923951198405410247, guid: 36f5c458def6e804c861c354335f29fb,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7923951198405410247, guid: 36f5c458def6e804c861c354335f29fb,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8151125438298631032, guid: 36f5c458def6e804c861c354335f29fb,
         type: 3}

@@ -15,7 +15,7 @@ namespace Programming.Visualisers
         [SerializeField] private GameObject fractionGameObject; 
         [SerializeField] private TMP_Text numerator;
         [SerializeField] private TMP_Text denominator; 
-
+        
         public void SetFraction(Fraction fraction)
         {
             _fraction = fraction; 
