@@ -35,7 +35,8 @@ namespace Programming.Rewards {
         [SerializeField] private List<RectTransform> thresholds = new();
         public int maxValue;
 
-        private int timesRewardsWereGivenCounter_temp; 
+        public int roundCounterTemp;
+        [SerializeField] private TMP_Text roundCounterText; 
         
         private void Awake()
         {
@@ -56,6 +57,10 @@ namespace Programming.Rewards {
             CountRewards();
             StartCoroutine(AnimateCounter());
             StartCoroutine(AnimateSlider());
+            
+            roundCounterTemp++;
+            roundCounterText.text = "Round: " + roundCounterTemp.ToString(); 
+            
             GenerateRewards();
         }
 
@@ -119,10 +124,8 @@ namespace Programming.Rewards {
                 card.GetComponent<CardMovementComponent>().enabled = false;
                 card.GetComponent<ExpandSimplifyCard>().enabled = false;
                 card.AddComponent<RewardCardComponent>();
-                cardNumber.Value = new Fraction(Random.Range(1, Mathf.Min(timesRewardsWereGivenCounter_temp+4, 9)), 1);
+                cardNumber.Value = new Fraction(Random.Range(1, Mathf.Min(roundCounterTemp+4, 9)), 1);
             }
-
-            timesRewardsWereGivenCounter_temp++; 
         }
 
         private void ResetBoard()

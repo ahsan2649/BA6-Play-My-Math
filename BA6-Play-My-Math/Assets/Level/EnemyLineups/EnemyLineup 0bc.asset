@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55446abf394698a438eef2788dab9bf9, type: 3}
-  m_Name: EnemyLineup 0b
+  m_Name: EnemyLineup 0bc
   m_EditorClassIdentifier: 
   enemyList:
-  - numerator: 1
-    denominator: 3
-  - numerator: 1
+  - numerator: 2
     denominator: 2
   - numerator: 2
     denominator: 3
+  - numerator: 1
+    denominator: 2

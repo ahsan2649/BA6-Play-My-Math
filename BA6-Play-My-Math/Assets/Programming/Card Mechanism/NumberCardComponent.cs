@@ -15,8 +15,10 @@ namespace Programming.Card_Mechanism
         [SerializeField] Fraction value;
 
         public UnityEvent onValueChange;
-
-        public bool IsFraction = false; 
+        
+        public bool IsFractionPreview = false; 
+        public bool IsFraction = false;
+        public bool CanCombineIntoFraction => IsFractionPreview || Value.IsWhole(); //needs to check for IsFraction as well, because Fractions are not over one while in preview mode, but are not counted as fractions  
         
         public Fraction Value
         {
@@ -51,12 +53,12 @@ namespace Programming.Card_Mechanism
                 return;
             }
             
-            if (draggedCardNumber.IsFraction || IsFraction)
+            if (!draggedCardNumber.CanCombineIntoFraction || !CanCombineIntoFraction)
             {
                 return;
             }
 
-            draggedCardNumber.IsFraction = true; 
+            draggedCardNumber.IsFractionPreview = true;
             draggedCardNumber.oldValue = draggedCardNumber.Value;
             draggedCardNumber.Value = new Fraction(draggedCardNumber.Value.Numerator, Value.Numerator);
         }
@@ -75,12 +77,7 @@ namespace Programming.Card_Mechanism
                 return;
             }
             
-            if (!(draggedCardNumber.IsFraction ^ IsFraction))
-            {
-                return;
-            }
-
-            draggedCardNumber.IsFraction = false; 
+            draggedCardNumber.IsFractionPreview = false; 
             draggedCardNumber.Value = draggedCardNumber.oldValue;
         }
 
@@ -102,7 +99,7 @@ namespace Programming.Card_Mechanism
                 return; 
             }
             
-            if (!(droppedCardNumber.IsFraction ^ IsFraction))
+            if (!droppedCardNumber.CanCombineIntoFraction || !CanCombineIntoFraction)
             {
                 return;
             }
@@ -112,7 +109,7 @@ namespace Programming.Card_Mechanism
             PlayerHandComponent.Instance.HandPop(ref droppedCardSlot);
 
             // Step 2: Update Dropped Card with the fraction made by the Zählers
-            droppedCardNumber.IsFraction = true; 
+            droppedCardNumber.IsFraction = true;
             droppedCardNumber.oldValue = droppedCardNumber.Value = new Fraction(droppedCardNumber.Value.Numerator, value.Numerator);
             
             // Step 3: Set dropped card to the slot this card is in

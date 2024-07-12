@@ -12,7 +12,7 @@ namespace Programming.Visualisers
 
         public void OnNumberCardChanged()
         {
-            fractionTextVisualiser.SetFraction(numberCardComponent.Value, numberCardComponent.IsFraction);
+            fractionTextVisualiser.SetFraction(numberCardComponent.Value, numberCardComponent.IsFraction, numberCardComponent.IsFractionPreview);
             gameObject.name = "Card(" + numberCardComponent.Value + ")"; 
         }
 

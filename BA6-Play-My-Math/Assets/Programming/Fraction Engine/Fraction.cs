@@ -71,12 +71,10 @@ namespace Programming.Fraction_Engine
             this.denominator = denominator;
         }
 
-        /*
         public bool IsWhole()
         {
             return denominator == 1;
         }
-        */
 
         public bool IsOne()
         {

@@ -17265,8 +17265,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyLineups:
+  - {fileID: 11400000, guid: 391dc5ac9e5af3340ba857aad3e9c642, type: 2}
   - {fileID: 11400000, guid: d8d814f2611ad1d468887db5cb556038, type: 2}
   - {fileID: 11400000, guid: 6348fc56b08c85947bd8f1ed58e1676f, type: 2}
+  - {fileID: 11400000, guid: 2d6f0dd9e7f961645a7a3c93062ce534, type: 2}
   - {fileID: 11400000, guid: 28cc4249abd63ac4996b2ccb42b6b23c, type: 2}
   - {fileID: 11400000, guid: 0a8efa36d2909104aa243bbdd3e6036f, type: 2}
   - {fileID: 11400000, guid: dc5274601f07df645830da1fae882561, type: 2}
