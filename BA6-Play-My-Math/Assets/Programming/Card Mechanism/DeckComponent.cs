@@ -44,9 +44,8 @@ namespace Programming.Card_Mechanism
 
         private void FillDeckWithCards(List<Fraction> fractionList)
         {
-            if (startingDeck == null)
+            if (startingDeck is null)
             {
-                Debug.LogError("No Starting Deck!");
                 return;
             }
                 

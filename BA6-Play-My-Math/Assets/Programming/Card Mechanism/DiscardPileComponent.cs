@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Programming.Card_Mechanism {
-    public class DiscardPileComponent : MonoBehaviour, IDropHandler, IPointerEnterHandler {
+    public class DiscardPileComponent : MonoBehaviour, IDropHandler {
         private List<CardMovementComponent> _disCards = new List<CardMovementComponent>();
         public static DiscardPileComponent Instance { get; private set; }
         private void Awake()
@@ -45,9 +45,14 @@ namespace Programming.Card_Mechanism {
             PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
+        public void ClearPile()
         {
-            Debug.Log("Pointer enter bin!");
+            for (var index = _disCards.Count - 1; index >= 0; index--)
+            {
+                var card = _disCards[index];
+                _disCards.Remove(card);
+                Destroy(card.gameObject);
+            }
         }
     }
 }
