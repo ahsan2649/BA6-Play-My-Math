@@ -13,39 +13,23 @@ MonoBehaviour:
   m_Name: Starting Deck
   m_EditorClassIdentifier: 
   numbers:
-  - numerator: 3
+  - numerator: 1
     denominator: 1
-  - numerator: 4
+  - numerator: 1
     denominator: 1
-  - numerator: 4
-    denominator: 1
-  - numerator: 2
-    denominator: 1
-  - numerator: 6
-    denominator: 1
-  - numerator: 6
-    denominator: 1
-  - numerator: 8
-    denominator: 1
-  - numerator: 8
-    denominator: 1
-  - numerator: 8
-    denominator: 1
-  - numerator: 3
-    denominator: 1
-  - numerator: 9
-    denominator: 1
-  - numerator: 9
+  - numerator: 1
     denominator: 1
   - numerator: 2
     denominator: 1
-  - numerator: 4
+  - numerator: 2
     denominator: 1
-  - numerator: 6
+  - numerator: 2
+    denominator: 1
+  - numerator: 3
+    denominator: 1
+  - numerator: 3
     denominator: 1
   - numerator: 3
     denominator: 1
   - numerator: 4
-    denominator: 1
-  - numerator: 2
     denominator: 1

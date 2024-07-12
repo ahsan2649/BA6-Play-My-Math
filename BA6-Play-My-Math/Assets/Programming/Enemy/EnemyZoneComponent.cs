@@ -60,7 +60,7 @@ namespace Programming.Enemy {
 
         public bool NoEnemiesLeft()
         {
-            if (EnemyLineupComponent.Instance._enemiesInLineup.Count > 0)
+            if (EnemyLineupComponent.Instance.EnemiesLeft() > 0)
             {
                 return false;
             }

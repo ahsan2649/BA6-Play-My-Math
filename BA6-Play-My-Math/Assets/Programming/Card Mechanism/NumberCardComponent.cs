@@ -14,7 +14,9 @@ namespace Programming.Card_Mechanism
         public Fraction oldValue;
         [SerializeField] Fraction value;
 
-        public UnityEvent onValueChange; 
+        public UnityEvent onValueChange;
+
+        public bool IsFraction = false; 
         
         public Fraction Value
         {
@@ -49,11 +51,12 @@ namespace Programming.Card_Mechanism
                 return;
             }
             
-            if (!draggedCardNumber.Value.IsWhole() || !Value.IsWhole() || Value.IsOne())
+            if (draggedCardNumber.IsFraction || IsFraction)
             {
                 return;
             }
-            
+
+            draggedCardNumber.IsFraction = true; 
             draggedCardNumber.oldValue = draggedCardNumber.Value;
             draggedCardNumber.Value = new Fraction(draggedCardNumber.Value.Numerator, Value.Numerator);
         }
@@ -72,11 +75,12 @@ namespace Programming.Card_Mechanism
                 return;
             }
             
-            if (!draggedCardNumber.oldValue.IsWhole() || !value.IsWhole() || value.IsOne())
+            if (draggedCardNumber.IsFraction || IsFraction)
             {
                 return;
             }
-            
+
+            draggedCardNumber.IsFraction = false; 
             draggedCardNumber.Value = draggedCardNumber.oldValue;
         }
 
@@ -92,26 +96,25 @@ namespace Programming.Card_Mechanism
             
             var droppedCardNumber = droppedCard.GetComponent<NumberCardComponent>();
             
-            if (!droppedCardNumber.Value.IsWhole() && !Value.IsWhole())
+            if (droppedCardNumber.IsFraction && IsFraction)
             {
                 GetComponent<CardMovementComponent>().currentSlot.SwapCards(droppedCard.GetComponent<CardMovementComponent>().currentSlot, droppedCard.GetComponent<CardMovementComponent>());
                 return; 
             }
             
-            if (!droppedCardNumber.oldValue.IsWhole() || !value.IsWhole() || value.IsOne())
+            if (!(droppedCardNumber.IsFraction ^ IsFraction))
             {
                 return;
             }
-
             
-
             // Step 1: Remove DroppedCard from its slot in the player hand
             var droppedCardSlot = droppedCard.GetComponentInParent<HandSlotComponent>();
             PlayerHandComponent.Instance.HandPop(ref droppedCardSlot);
 
             // Step 2: Update Dropped Card with the fraction made by the Zählers
+            droppedCardNumber.IsFraction = true; 
             droppedCardNumber.oldValue = droppedCardNumber.Value = new Fraction(droppedCardNumber.Value.Numerator, value.Numerator);
-
+            
             // Step 3: Set dropped card to the slot this card is in
             var thisCardSlot = GetComponentInParent<HandSlotComponent>();
             thisCardSlot.SetCard(droppedCard.GetComponent<CardMovementComponent>());

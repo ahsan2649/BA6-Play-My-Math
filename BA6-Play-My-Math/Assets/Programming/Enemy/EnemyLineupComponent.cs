@@ -4,16 +4,21 @@ using Programming.Fraction_Engine;
 using Programming.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
+using Random = System.Random;
 
 namespace Programming.Enemy
 {
     public class EnemyLineupComponent : MonoBehaviour
     {
-        public List<EnemyComponent> _enemiesInLineup = new();
-        [SerializeField] EnemyLineupInfo enemyLineup;
-        [SerializeField] private GameObject enemyPrefab;
         public static EnemyLineupComponent Instance { get; private set; }
         
+        private List<EnemyComponent> _enemiesInCurrentLineup = new();
+        [SerializeField] List<EnemyLineupInfo> enemyLineups;
+        [SerializeField] private GameObject enemyPrefab;
+
+        private int enemyLineUpCounter_temp = 0; 
+            
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -31,16 +36,18 @@ namespace Programming.Enemy
         public void CreateEnemyLineup()
         {
             foreach (Fraction value in
-                     (enemyLineup == null || enemyLineup.enemyList.Count == 0)
-                         ? LevelGeneration.generateEnemyCue(10)
-                         : enemyLineup.enemyList)
+                     (enemyLineups == null || enemyLineUpCounter_temp >= enemyLineups.Count || enemyLineups[enemyLineUpCounter_temp].enemyList.Count == 0)
+                         ? LevelGeneration.generateEnemyCue(enemyLineUpCounter_temp/2)
+                         : enemyLineups[enemyLineUpCounter_temp].enemyList)
             {
                 var newEnemy =
                     GameObject.Instantiate(enemyPrefab, transform.position, Quaternion.identity, transform);
                 newEnemy.GetComponent<EnemyComponent>().Value = value;
                 newEnemy.GetComponent<EnemyComponent>().UpdateDisplay();
-                _enemiesInLineup.Add(newEnemy.GetComponent<EnemyComponent>());
+                _enemiesInCurrentLineup.Add(newEnemy.GetComponent<EnemyComponent>());
             }
+            
+            enemyLineUpCounter_temp += new Random().Next(1, 3); 
             
             EnemyZoneComponent.Instance.InitalizeEnemies();
         }
@@ -52,14 +59,19 @@ namespace Programming.Enemy
         [ContextMenu("Pop Enemy")]
         public EnemyComponent EnemyPop()
         {
-            if (_enemiesInLineup.Count == 0)
+            if (_enemiesInCurrentLineup.Count == 0)
             {
                 return null;
             }
 
-            var returningEnemy = _enemiesInLineup[0];
-            _enemiesInLineup.Remove(returningEnemy);
+            var returningEnemy = _enemiesInCurrentLineup[0];
+            _enemiesInCurrentLineup.Remove(returningEnemy);
             return returningEnemy;
+        }
+
+        public int EnemiesLeft()
+        {
+            return _enemiesInCurrentLineup.Count; 
         }
     }
 }

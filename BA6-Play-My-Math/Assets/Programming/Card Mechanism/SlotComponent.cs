@@ -44,6 +44,11 @@ namespace Programming.Card_Mechanism
 
         public CardMovementComponent UnsetCard()
         {
+            if (_cardMovementInSlot is null)
+            {
+                return null; 
+            }
+            
             _cardMovementInSlot.onCardChange.RemoveListener(OnCardChanged);
             
             var returningCard = _cardMovementInSlot;

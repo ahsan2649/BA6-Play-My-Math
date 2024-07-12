@@ -16,7 +16,7 @@ namespace Programming.Visualisers
         [SerializeField] private TMP_Text numerator;
         [SerializeField] private TMP_Text denominator; 
         
-        public void SetFraction(Fraction fraction)
+        public void SetFraction(Fraction fraction, bool isFraction = true)
         {
             _fraction = fraction; 
             if (fraction is null)
@@ -30,15 +30,15 @@ namespace Programming.Visualisers
                 wholeNumber.text = fraction.Numerator.ToString(); 
                 numerator.text = fraction.Numerator.ToString();
                 denominator.text = fraction.Denominator.ToString();
-                if (fraction.Denominator == 1)
-                {
-                    wholeNumberGameObject.SetActive(true);
-                    fractionGameObject.SetActive(false);    
-                }
-                else
+                if (isFraction)
                 {
                     wholeNumberGameObject.SetActive(false);
-                    fractionGameObject.SetActive(true);    
+                    fractionGameObject.SetActive(true);   
+                }
+                else
+                {  
+                    wholeNumberGameObject.SetActive(true);
+                    fractionGameObject.SetActive(false);   
                 }
             }
         }

@@ -71,10 +71,12 @@ namespace Programming.Fraction_Engine
             this.denominator = denominator;
         }
 
+        /*
         public bool IsWhole()
         {
             return denominator == 1;
         }
+        */
 
         public bool IsOne()
         {
@@ -124,6 +126,17 @@ namespace Programming.Fraction_Engine
                 a.LowestTerm().denominator == b.LowestTerm().denominator;
         }
 
+        public static bool operator ==(Fraction a, int b)
+        {
+            return a.Numerator / a.Denominator == b; 
+        }
+
+        
+        public static bool operator ==(Fraction a, float b)
+        {
+            return a.Numerator / a.Denominator == b; 
+        }
+        
         // Inequality
         public static bool operator !=(Fraction a, Fraction b)
         {
@@ -132,6 +145,16 @@ namespace Programming.Fraction_Engine
                 a.LowestTerm().denominator != b.LowestTerm().denominator;
         }
 
+        public static bool operator !=(Fraction a, int b)
+        {
+            return a.Numerator / a.Denominator != b; 
+        }
+
+        public static bool operator !=(Fraction a, float b)
+        {
+            return a.Numerator / a.Denominator != b; 
+        }
+        
         // LessThan
         public static bool operator <(Fraction a, Fraction b)
         {

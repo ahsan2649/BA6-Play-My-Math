@@ -3737,6 +3737,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
+      propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[5].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
+        type: 3}
       propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7851334359815337913}
@@ -3759,7 +3764,12 @@ PrefabInstance:
         type: 3}
       propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 8889429917094405128}
+      objectReference: {fileID: 3716811852255571341}
+    - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
+        type: 3}
+      propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[5].m_Target
+      value: 
+      objectReference: {fileID: 3716811852255571341}
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
       propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -3787,6 +3797,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
+      propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[5].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
+        type: 3}
       propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: RebuildDeck
       objectReference: {fileID: 0}
@@ -3808,7 +3823,12 @@ PrefabInstance:
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
       propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
-      value: InitalizeEnemies
+      value: FillHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
+        type: 3}
+      propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[5].m_MethodName
+      value: FillHand
       objectReference: {fileID: 0}
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
@@ -3833,7 +3853,12 @@ PrefabInstance:
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
       propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
-      value: Programming.Enemy.EnemyZoneComponent, Enemy
+      value: Programming.Card_Mechanism.PlayerHandComponent, Programming.CardMechanism
+      objectReference: {fileID: 0}
+    - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
+        type: 3}
+      propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[5].m_TargetAssemblyTypeName
+      value: Programming.Card_Mechanism.PlayerHandComponent, Programming.CardMechanism
       objectReference: {fileID: 0}
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
@@ -3858,6 +3883,11 @@ PrefabInstance:
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
       propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
+        type: 3}
+      propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[5].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4809779142722246370, guid: dbd56fa18b1a44c4b8774b246ad00074,
@@ -17234,8 +17264,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 988cbb280d49a6549ba837377970d85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemiesInLineup: []
-  enemyLineup: {fileID: 11400000, guid: 0a8efa36d2909104aa243bbdd3e6036f, type: 2}
+  enemyLineups:
+  - {fileID: 11400000, guid: d8d814f2611ad1d468887db5cb556038, type: 2}
+  - {fileID: 11400000, guid: 6348fc56b08c85947bd8f1ed58e1676f, type: 2}
+  - {fileID: 11400000, guid: 28cc4249abd63ac4996b2ccb42b6b23c, type: 2}
+  - {fileID: 11400000, guid: 0a8efa36d2909104aa243bbdd3e6036f, type: 2}
+  - {fileID: 11400000, guid: dc5274601f07df645830da1fae882561, type: 2}
+  - {fileID: 11400000, guid: 1c2aee01433540c488e5a80ef81111eb, type: 2}
+  - {fileID: 11400000, guid: 303ae3ca9200c2c469d173445587ff9a, type: 2}
+  - {fileID: 11400000, guid: b685f343eeeb2cc45b4febfa8c12f7d7, type: 2}
+  - {fileID: 11400000, guid: ea01aea506130dc4c97ac685a97185ae, type: 2}
+  - {fileID: 11400000, guid: 78cae38dc5020e4429eb08e8fd9bc6d2, type: 2}
+  - {fileID: 11400000, guid: c83ddeb46873d2f4c9bfa61caf6e47d9, type: 2}
+  - {fileID: 11400000, guid: 037e3d35961e03e45a199e9c6673ac9b, type: 2}
+  - {fileID: 11400000, guid: 9eb2aec7eef49604c95c3101868c755a, type: 2}
+  - {fileID: 11400000, guid: 8a100f0eb78f88a4fb916592accb1cc2, type: 2}
+  - {fileID: 11400000, guid: 36851717b5d3797449e5193560f4b14a, type: 2}
   enemyPrefab: {fileID: 4265978069418469844, guid: aa9335456dc9d894391b7af1655f9b7c,
     type: 3}
 --- !u!4 &9000776123919663174

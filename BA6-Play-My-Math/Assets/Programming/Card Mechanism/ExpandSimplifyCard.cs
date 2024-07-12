@@ -41,27 +41,33 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (focusOpen == false && !GetComponent<NumberCardComponent>().Value.IsWhole())
+        if (!GetComponent<NumberCardComponent>().IsFraction)
         {
-            //move cards to the center
-            giveHint = false;
-            expandSimpObj.SetActive(true);
-            parentSlot = transform.parent;
-            transform.parent = GameObject.FindGameObjectWithTag("Test").transform;
-
-            transform.position = new Vector3(0, 6, -5);
-            transform.localScale += new Vector3(.02f, .02f, .02f);
-            transform.rotation = Quaternion.Euler(90, 0, 0);
-            focusOpen = true;
-            
-            GetComponent<CardMovementComponent>().enabled = false; 
+            return; 
         }
 
+        if (focusOpen)
+        {
+            return; 
+        }
+        
+        //move cards to the center
+        giveHint = false;
+        expandSimpObj.SetActive(true);
+        parentSlot = transform.parent;
+        transform.parent = GameObject.FindGameObjectWithTag("Test").transform;
+
+        transform.position = new Vector3(0, 6, -5);
+        transform.localScale += new Vector3(.02f, .02f, .02f);
+        transform.rotation = Quaternion.Euler(90, 0, 0);
+        focusOpen = true;
+        
+        GetComponent<CardMovementComponent>().enabled = false; 
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (giveHint && !GetComponent<NumberCardComponent>().Value.IsWhole())
+        if (giveHint && GetComponent<NumberCardComponent>().IsFraction)
         {
             hint.SetActive(true);
         }
@@ -106,7 +112,6 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
             Debug.Log("expand or simplify" + pValue);
             NumberCardComponent numberCard = GetComponent<NumberCardComponent>();
             numberCard.Value = GetComponent<NumberCardComponent>().Value.ExpandBy(pValue);
-
         }
         else
         {

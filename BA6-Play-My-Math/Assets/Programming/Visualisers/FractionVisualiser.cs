@@ -321,12 +321,12 @@ namespace Programming.FractionVisualiser
             {
                 case BoardVisualisationMode.OnlyText:
                     fractionTextVisualiser.gameObject.SetActive(true);
-                    fractionTextVisualiser.SetFraction(visualisedFraction);
+                    fractionTextVisualiser.SetFraction(visualisedFraction, true);
                     fractionTextVisualiser.transform.position = textVisualiserWorldPosition;    
                     break; 
                 case BoardVisualisationMode.OneFigureVisualisation:
                     fractionTextVisualiser.gameObject.SetActive(true);
-                    fractionTextVisualiser.SetFraction(new Fraction(visualisedFraction.Numerator, 1));
+                    fractionTextVisualiser.SetFraction(visualisedFraction, false);
                     fractionTextVisualiser.transform.position = textVisualiserWorldPosition; 
                     SpawnFigures(ref visData); 
                     break; 

@@ -35,6 +35,8 @@ namespace Programming.Rewards {
         [SerializeField] private List<RectTransform> thresholds = new();
         public int maxValue;
 
+        private int timesRewardsWereGivenCounter_temp; 
+        
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -117,8 +119,10 @@ namespace Programming.Rewards {
                 card.GetComponent<CardMovementComponent>().enabled = false;
                 card.GetComponent<ExpandSimplifyCard>().enabled = false;
                 card.AddComponent<RewardCardComponent>();
-                cardNumber.Value = new Fraction(Random.Range(1, 9), Random.Range(1, 9));
+                cardNumber.Value = new Fraction(Random.Range(1, Mathf.Min(timesRewardsWereGivenCounter_temp+4, 9)), 1);
             }
+
+            timesRewardsWereGivenCounter_temp++; 
         }
 
         private void ResetBoard()

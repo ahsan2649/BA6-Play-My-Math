@@ -11,17 +11,17 @@ namespace Programming.Visualisers
 
         private void Awake()
         {
-            fractionTextVisualiser.SetFraction(null);
+            fractionTextVisualiser.SetFraction(null, true);
         }
 
         public void VisualiseFinaliseButton()
         {
-            fractionTextVisualiser.SetFraction(finalizeButton.operationBoardComponent.CalculateCombinedValue());
+            fractionTextVisualiser.SetFraction(finalizeButton.operationBoardComponent.CalculateCombinedValue(), true);
         }
 
-        public void VisualiseFinaliseButton(FractionTextVisualiser fractionTextVisualiser, OperationBoardComponent operationBoardComponent)
+        public void VisualiseFinaliseButton(FractionTextVisualiser textVis, OperationBoardComponent operationBoardComponent)
         {
-            fractionTextVisualiser.SetFraction(operationBoardComponent.CalculateCombinedValue());
+            textVis.SetFraction(operationBoardComponent.CalculateCombinedValue());
         }
     }
 }
