@@ -17,6 +17,7 @@ namespace Programming.Visualisers
         
         public void OnPointerClick(PointerEventData eventData)
         {
+            UpdateInfoForDeckSingleton(); 
             infoCanvas.SetActive(!infoCanvas.activeSelf);
         }
         
