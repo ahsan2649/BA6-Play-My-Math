@@ -16,7 +16,7 @@ namespace Programming.Visualisers
         [SerializeField] private TMP_Text numerator;
         [SerializeField] private TMP_Text denominator; 
         
-        public void SetFraction(Fraction fraction, bool isFraction = true, bool isFractionPreview = true)
+        public void SetFraction(Fraction fraction, bool showFullFraction = true)
         {
             _fraction = fraction; 
             if (fraction is null)
@@ -30,7 +30,7 @@ namespace Programming.Visualisers
                 wholeNumber.text = fraction.Numerator.ToString(); 
                 numerator.text = fraction.Numerator.ToString();
                 denominator.text = fraction.Denominator.ToString();
-                if (isFraction || isFractionPreview)
+                if (showFullFraction)
                 {
                     wholeNumberGameObject.SetActive(false);
                     fractionGameObject.SetActive(true);   
