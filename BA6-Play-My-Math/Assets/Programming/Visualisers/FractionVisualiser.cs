@@ -261,7 +261,8 @@ namespace Programming.FractionVisualiser
         public void FullUpdateVisualisations()
         {
             int biggestDenominator = 1;
-            Fraction biggestFraction = new Fraction(0, 1); 
+            Fraction biggestFraction = new Fraction(0, 1);
+            
             foreach (Tuple<Fraction, FractionVisualisationData> tVisData in _visualisationDataMap.Values)
             {
                 if (tVisData == null) { continue; }
@@ -269,13 +270,28 @@ namespace Programming.FractionVisualiser
                 biggestFraction = biggestFraction > tVisData.Item1 ? biggestFraction : tVisData.Item1; 
             }
 
+            Fraction combinedValue = OperationBoardComponent.Instance.CalculateCombinedValue(); 
+            if (combinedValue is not null)
+            {
+                biggestFraction = biggestFraction > combinedValue ? biggestFraction : combinedValue; 
+            }
+
+            bool bLeftAndRightOverOne = 
+                (_visualisationDataMap[OperandType.Left]?.Item1 is not null && _visualisationDataMap[OperandType.Right]?.Item1 is not null) &&
+                    (_visualisationDataMap[OperandType.Left].Item1 > 1 &&
+                     (_operation == Operation.Multiply &&
+                      _visualisationDataMap[OperandType.Right]?.Item1 > 1) || 
+                     (_operation == Operation.Divide &&
+                      _visualisationDataMap[OperandType.Right]?.Item1 < 1)); 
+            
             _boardVisualisationMode =
                 biggestDenominator > numbersToPrimeFactors.Length ? BoardVisualisationMode.OnlyText :
-                biggestFraction > 4 ? BoardVisualisationMode.OneFigureVisualisation :
+                (biggestFraction > 4 || bLeftAndRightOverOne) ? BoardVisualisationMode.OneFigureVisualisation :
                 BoardVisualisationMode.FullVisualisation;
 
 
             leftFractionTextVisualiser.gameObject.SetActive(_boardVisualisationMode != BoardVisualisationMode.FullVisualisation);
+            rightFractionTextVisualiser.gameObject.SetActive(_boardVisualisationMode != BoardVisualisationMode.FullVisualisation);
 
             foreach (OperandType opTypeToUpdate in _visualisationOrder)
             {
@@ -430,7 +446,7 @@ namespace Programming.FractionVisualiser
                 return opType switch
                 {
                     OperandType.Left or OperandType.LeftModify => leftFractionTextVisualiser,
-                    OperandType.Right or OperandType.RightModify => leftFractionTextVisualiser,
+                    OperandType.Right or OperandType.RightModify => rightFractionTextVisualiser,
                     _ => throw new SwitchExpressionException()
                 }; 
             }
