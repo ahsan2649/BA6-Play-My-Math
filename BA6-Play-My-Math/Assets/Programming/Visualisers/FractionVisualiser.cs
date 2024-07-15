@@ -163,7 +163,6 @@ namespace Programming.FractionVisualiser
         private Vector3 leftTextVisualiserOriginPosition; 
         [SerializeField] private FractionTextVisualiser rightFractionTextVisualiser;
         private Vector3 rightTextVisualiserOriginPosition; 
-        [SerializeField] private TMP_Text ExtraLayersText; //TODO: use this for fractions >3 (or >4)
         
         [SerializeField] private FractionVisualisationStyle visStyle_Main; 
         [SerializeField] private FractionVisualisationStyle visStyle_Transparent;
@@ -501,7 +500,6 @@ namespace Programming.FractionVisualiser
             for (int i = 0; i < dimensions.x; i++)
             {
                 boardLayers[i].SetActive(true);
-                //TODO: Set BoardLayer visuals
             }
             boardLayers[0].GetComponent<MeshRenderer>().materials[0].SetFloat(XAmount, dimensions.y);
             boardLayers[0].GetComponent<MeshRenderer>().materials[0].SetFloat(YAmount, dimensions.z);
@@ -559,7 +557,7 @@ namespace Programming.FractionVisualiser
                 if (bUseAdjustedScale)
                 {
                     newFigure.transform.localScale = Vector3.Scale(visData.OffsetAndSpacing.FigureSpacing, new Vector3(0.95f, 1.0f, 0.95f));
-                    newFigure.transform.position += visData.OffsetAndSpacing.FigureSpacing.y * Vector3.up * 0.5f; //TODOLater: remove once the actual block exists 
+                    newFigure.transform.position += visData.OffsetAndSpacing.FigureSpacing.y * Vector3.up * 0.5f; 
                 }
 
                 newFigure.transform.localScale *= Mathf.Pow(higherLayerFigureScaleFactor, coordinates.x);

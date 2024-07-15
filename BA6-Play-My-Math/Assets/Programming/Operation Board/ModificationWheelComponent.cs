@@ -90,7 +90,6 @@ namespace Programming.Operation_Board {
             }
 
             UpdateOp();
-            //TODO Visual Update
         }
 
         private void ShiftOp(bool direction)

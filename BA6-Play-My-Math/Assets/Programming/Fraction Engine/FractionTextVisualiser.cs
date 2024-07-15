@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using Programming.Fraction_Engine;
 using TMPro;
 using UnityEngine;
@@ -14,7 +15,9 @@ namespace Programming.Visualisers
 
         [SerializeField] private GameObject fractionGameObject; 
         [SerializeField] private TMP_Text numerator;
-        [SerializeField] private TMP_Text denominator; 
+        [SerializeField] private TMP_Text denominator;
+
+        [SerializeField] private TMP_Text decimals; 
         
         public void SetFraction(Fraction fraction, bool showFullFraction = true)
         {
@@ -57,7 +60,8 @@ namespace Programming.Visualisers
 
         public void DisplayDecimals(float numerator, float denominator)
         {
-            //TODO @Phyvie: 
+            // CultureInfo cultureInfo = new CultureInfo("en-EN", false); 
+            decimals.text = ((float) numerator / denominator).ToString(); 
         }
         
         private void OnValidate()
