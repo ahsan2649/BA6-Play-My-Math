@@ -2707,6 +2707,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  IsFractionPreview: 0
   IsFraction: 0
 --- !u!114 &1544295393093609449
 MonoBehaviour:

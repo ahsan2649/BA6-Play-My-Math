@@ -124,6 +124,7 @@ namespace Programming.Rewards {
                 card.GetComponent<CardMovementComponent>().enabled = false;
                 card.GetComponent<ExpandSimplifyCard>().enabled = false;
                 card.AddComponent<RewardCardComponent>();
+                //TODO: LevelGeneration.GenerateReward(); 
                 cardNumber.Value = new Fraction(Random.Range(1, Mathf.Min(roundCounterTemp+4, 9)), 1);
             }
         }

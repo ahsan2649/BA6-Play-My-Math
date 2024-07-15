@@ -9,6 +9,7 @@ namespace Programming.Enemy
 {
     public class LevelGeneration : MonoBehaviour
     {
+        #region PublicFunctions
         // This is the function accessed externally, handle with care
 
         /// <summary>
@@ -38,7 +39,18 @@ namespace Programming.Enemy
             return generateCardDeckUsingWeights(numberOfCards);
         }
 
-
+        public static Fraction GenerateReward()
+        {
+            //TODO @Vin: GenerateReward
+            return null; 
+        }
+        
+        // TODO @Vin: Make these dictionaries/lists/...
+        // GameMode -> Denominator (also in main menu)
+        // List<Difficulty> DifficultyPerEncounter
+        // Difficulty -> Type of Generation & Amount
+        
+        #endregion
 
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
