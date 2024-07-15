@@ -108,7 +108,9 @@ namespace Programming.Operation_Board
                 return;
             }
 
-            var attackCardNumber = (_leftOperand.GetCard() ?? _rightOperand.GetCard()).GetComponent<NumberCardComponent>()?.Value;
+            var activeOperandSlot = _leftOperand.GetCard() is not null ? _leftOperand : _rightOperand;
+            var activeCard = activeOperandSlot.GetCard(); 
+            var attackCardNumber = activeCard.GetComponent<NumberCardComponent>()?.Value;
             foreach (var enemySlot in EnemyZoneComponent.Instance.enemySlots)
             {
                 if (!enemySlot.HasEnemy())
@@ -122,8 +124,8 @@ namespace Programming.Operation_Board
                     Destroy(destroyedEnemy.gameObject);
                     EnemyZoneComponent.Instance.ZonePush(EnemyLineupComponent.Instance.EnemyPop());
 
-                    CardMovementComponent leftCard = _leftOperand.UnsetCard();
-                    Destroy(leftCard.gameObject);
+                    CardMovementComponent unsetCard = activeOperandSlot.UnsetCard();
+                    Destroy(unsetCard.gameObject);
                     
                     PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
                 }

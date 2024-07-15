@@ -14,9 +14,11 @@ namespace Programming.Enemy
         public static EnemyLineupComponent Instance { get; private set; }
         
         private List<EnemyComponent> _enemiesInCurrentLineup = new();
+        public List<EnemyComponent> EnemiesInCurrentLineup => _enemiesInCurrentLineup;
+
         [SerializeField] List<EnemyLineupInfo> enemyLineups;
         [SerializeField] private GameObject enemyPrefab;
-
+        
         private int enemyLineUpCounter_temp = 0; 
             
         private void Awake()
@@ -52,10 +54,6 @@ namespace Programming.Enemy
             EnemyZoneComponent.Instance.InitalizeEnemies();
         }
 
-        private void Start()
-        {
-        }
-
         [ContextMenu("Pop Enemy")]
         public EnemyComponent EnemyPop()
         {
@@ -68,7 +66,7 @@ namespace Programming.Enemy
             _enemiesInCurrentLineup.Remove(returningEnemy);
             return returningEnemy;
         }
-
+        
         public int EnemiesLeft()
         {
             return _enemiesInCurrentLineup.Count; 
