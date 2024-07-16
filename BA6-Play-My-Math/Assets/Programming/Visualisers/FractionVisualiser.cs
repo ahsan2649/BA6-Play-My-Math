@@ -276,7 +276,7 @@ namespace Programming.FractionVisualiser
             
             _boardVisualisationMode =
                 biggestDenominator > numbersToPrimeFactors.Length ? BoardVisualisationMode.OnlyText :
-                (biggestFraction >= 4 || bLeftAndRightOverOne) ? BoardVisualisationMode.OneFigureVisualisation :
+                (biggestFraction > 2 || bLeftAndRightOverOne) ? BoardVisualisationMode.OneFigureVisualisation :
                 BoardVisualisationMode.FullVisualisation;
 
 
