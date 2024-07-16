@@ -82,7 +82,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftFractionTextVisualiser: {fileID: 1833995237352612955}
   rightFractionTextVisualiser: {fileID: 8692505054223143933}
-  ExtraLayersText: {fileID: 0}
   visStyle_Main:
     material: {fileID: 0}
     figureParent: {fileID: 531125508044299289}
