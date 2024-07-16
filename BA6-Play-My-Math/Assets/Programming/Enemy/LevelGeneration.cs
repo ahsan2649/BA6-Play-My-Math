@@ -119,7 +119,7 @@ namespace Programming.Enemy
         {
             {6, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FD, GM.AD },
+                    new List<GM>() { GM.FD, GM.AsD },
                     new List<GM>() { GM.FD, GM.FD, GM.FiD },
                 }
             },
