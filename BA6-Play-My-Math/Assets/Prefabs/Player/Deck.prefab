@@ -607,7 +607,7 @@ MonoBehaviour:
         m_CallState: 2
   initDeck: []
   _cardsInDeck: []
-  startingDeck: {fileID: 11400000, guid: ca41782fe37a562438b66eac8f67c61b, type: 2}
+  startingDeck: {fileID: 11400000, guid: 694bbbc6849caef47b440b55b8c86803, type: 2}
   numberCardPrefab: {fileID: 4476395966626981575, guid: 46ec8f4777f7d78408077aa7b4db821d,
     type: 3}
 --- !u!114 &6917291738556911949
@@ -640,6 +640,9 @@ MonoBehaviour:
   - {fileID: 3606431666746715367}
   higherCardsCountText: {fileID: 3047759917224347615}
   specialCardCountText: {fileID: 4797304419322342234}
+  onDeactivateVisualisation:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &9013367294638378036
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,8 +19,10 @@ namespace Programming.Enemy
         [SerializeField] List<EnemyLineupInfo> enemyLineups;
         [SerializeField] private GameObject enemyPrefab;
         
-        private int enemyLineUpCounter_temp = 0; 
-            
+        private int enemyLineUpCounter_temp = 0;
+
+        [SerializeField] private bool bUseAutoEnemyGeneration = true; 
+        
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -38,8 +40,8 @@ namespace Programming.Enemy
         public void CreateEnemyLineup()
         {
             foreach (Fraction value in
-                     (enemyLineups == null || enemyLineUpCounter_temp >= enemyLineups.Count || enemyLineups[enemyLineUpCounter_temp].enemyList.Count == 0)
-                         ? LevelGeneration.generateEnemyCue(enemyLineUpCounter_temp/2)
+                     (enemyLineups == null || enemyLineUpCounter_temp >= enemyLineups.Count || enemyLineups[enemyLineUpCounter_temp].enemyList.Count == 0 || bUseAutoEnemyGeneration)
+                         ? LevelGeneration.generateEnemyCue()
                          : enemyLineups[enemyLineUpCounter_temp].enemyList)
             {
                 var newEnemy =
