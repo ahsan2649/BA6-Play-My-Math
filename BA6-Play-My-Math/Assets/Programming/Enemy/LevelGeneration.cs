@@ -256,6 +256,11 @@ namespace Programming.Enemy
                         case GM.AsD:
                             encounterFraction.Add(AdditionAndSubtraction.generateEncounterFraction(NumeratorPhase.SimpleDirects, DenominatorPhase.Single));
                             break;
+                        
+                        // Addition Indirects
+                        case GM.AiD:
+                            encounterFraction.Add(AdditionAndSubtraction.generateEncounterFraction(NumeratorPhase.PartlyIndirects, DenominatorPhase.Multiple));
+                            break;
 
                         // Fraction Directs
                         case GM.FD:
