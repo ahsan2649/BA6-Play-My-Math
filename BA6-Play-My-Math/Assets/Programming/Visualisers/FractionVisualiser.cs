@@ -553,11 +553,9 @@ namespace Programming.FractionVisualiser
                 if (bUseAdjustedScale)
                 {
                     newFigure.transform.localScale = Vector3.Scale(visData.OffsetAndSpacing.FigureSpacing, new Vector3(0.95f, 1.0f, 0.95f));
-                    newFigure.transform.position += visData.OffsetAndSpacing.FigureSpacing.y * Vector3.up * 0.5f; 
                 }
 
                 newFigure.transform.localScale *= Mathf.Pow(higherLayerFigureScaleFactor, coordinates.x);
-                newFigure.transform.localPosition += Vector3.forward * higherLayerFigureScaleFactor *0.5f * coordinates.x; 
             }
         }
 
