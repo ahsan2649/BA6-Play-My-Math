@@ -71,7 +71,7 @@ namespace Programming.Enemy
         public static Fraction GenerateReward(GameMode gameMode)
         {
             //TODO @Vin: GenerateReward
-            Fraction reward;
+            Fraction reward = new Fraction(1,1);
             
             switch (gameMode)
             {
@@ -80,7 +80,7 @@ namespace Programming.Enemy
                     break;
             }
 
-            return null; 
+            return reward; 
         }
 
         // TODO @Vin: Make these dictionaries/lists/...
