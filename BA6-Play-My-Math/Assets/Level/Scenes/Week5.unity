@@ -702,6 +702,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3878402963093372390}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &831288091 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2610730937390423192, guid: a8a9d705440fb2142aba7bf455e16d98,
+    type: 3}
+  m_PrefabInstance: {fileID: 1449484937}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 220474f2ca3fdbe4a895177f24101df9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &845253807 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8251858314291505554, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
@@ -1280,6 +1292,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2610730937390423192, guid: a8a9d705440fb2142aba7bf455e16d98,
+        type: 3}
+      propertyPath: fightEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7726665513616234535}
     - target: {fileID: 3589623983977073097, guid: a8a9d705440fb2142aba7bf455e16d98,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -15868,7 +15885,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 831288091}
         m_TargetAssemblyTypeName: Programming.Operation_Board.FightButtonComponent,
           Programming.Operation_Board
         m_MethodName: OperationBoardEnableFighting
@@ -16948,8 +16965,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -25
       objectReference: {fileID: 0}
+    - target: {fileID: 9013367294638378036, guid: 92e9415686576494a835b8fb1edf2ec2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 9013367294638378036, guid: 92e9415686576494a835b8fb1edf2ec2, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92e9415686576494a835b8fb1edf2ec2, type: 3}
