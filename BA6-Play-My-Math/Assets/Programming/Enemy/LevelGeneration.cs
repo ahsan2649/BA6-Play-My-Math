@@ -192,6 +192,17 @@ namespace Programming.Enemy
             new Fraction(8,9),
         };
 
+        private static List<Fraction> SimplyfiedCombinedFractionIndirect = new List<Fraction>
+        {
+            new Fraction(3,8),
+            new Fraction(1,3),
+            new Fraction(2,1),
+            new Fraction(1,9),
+            new Fraction(1,4),
+            new Fraction(2,9),
+            new Fraction(1,6),
+            new Fraction(1,8),
+        };
 
         // Trash
         // Fraction Assembly Set 4,6,8,9
@@ -249,6 +260,11 @@ namespace Programming.Enemy
                         // Fraction Directs
                         case GM.FD:
                             encounterFraction.Add(GetRandomValueFromList(SimplyfiedCombinedFractions));
+                            break;
+
+                        // Fraction Indirects
+                        case GM.FiD:
+                            encounterFraction.Add(GetRandomValueFromList(SimplyfiedCombinedFractionIndirect));
                             break;
 
                         // Multiplication Directs
@@ -381,8 +397,8 @@ namespace Programming.Enemy
             {
                 /// Default Weightmap
                 { SecondarValueGenerationTypes.X, 0f },         /// p (x) is not implemented so for now its 0
-                { SecondarValueGenerationTypes.One, 1f },
-                { SecondarValueGenerationTypes.Specific, 0f },  /// The specific value doesnt work perfectly, so for now its 0
+                { SecondarValueGenerationTypes.One, 0f },
+                { SecondarValueGenerationTypes.Specific, 1f },  /// The specific value doesnt work perfectly, so for now its 0
             };
         }
 
