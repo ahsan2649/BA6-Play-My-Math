@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Programming.Card_Mechanism;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
@@ -13,17 +14,20 @@ namespace Programming.Visualisers
         [SerializeField] private GameObject infoCanvas; 
         [SerializeField] private CardCountRowVisualiser[] countOfCards;
         [SerializeField] private CardCountRowVisualiser higherCardsCountText; 
-        [SerializeField] private CardCountRowVisualiser specialCardCountText; 
+        [SerializeField] private CardCountRowVisualiser specialCardCountText;
+
+        public UnityEvent onActivateVisualisation; 
         
         public void OnPointerClick(PointerEventData eventData)
         {
             UpdateInfoForDeckSingleton(); 
             infoCanvas.SetActive(!infoCanvas.activeSelf);
+            onActivateVisualisation.Invoke();
         }
         
         public void UpdateInfoForDeckSingleton()
         {
-            UpdateInfo(DeckComponent.Instance, infoCanvas.activeSelf);
+            UpdateInfo(DeckComponent.Instance, true);
         }
 
         public void UpdateInfoFromDeck(DeckComponent deck)
@@ -42,13 +46,13 @@ namespace Programming.Visualisers
         private void UpdateInfo(DeckComponent deck, bool countCards = true)
         {
             cardCountText.text = deck._cardsInDeck.Count.ToString();
-
+            
             if (countCards)
             {
                 int[] cardCounts = CountCards(deck._cardsInDeck, countOfCards.Length, out int higherCardsCount, out int specialCardCount);
                 WriteCountsToText(cardCounts, ref higherCardsCountText, ref specialCardCountText, in higherCardsCount, in specialCardCount); 
             }
-
+            
             int[] CountCards(List<CardMovementComponent> cardDeck, int maxNumber, out int higherCardsCount, out int extraCardCount)
             {
                 int[] cardCount = new int[maxNumber+1];

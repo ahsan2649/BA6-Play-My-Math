@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace Programming.Card_Mechanism
 {
@@ -9,6 +8,10 @@ namespace Programming.Card_Mechanism
         protected CardMovementComponent _cardMovementInSlot;
         
         public UnityEvent onCardChanged; 
+        public void OnCardChanged()
+        {
+            onCardChanged.Invoke(); 
+        }
         
         public void SwapCards(SlotComponent otherSlot, CardMovementComponent otherCard)
         {
@@ -37,11 +40,6 @@ namespace Programming.Card_Mechanism
             onCardChanged.Invoke(); 
         }
         
-        public void OnCardChanged()
-        {
-            onCardChanged.Invoke();
-        }
-
         public CardMovementComponent UnsetCard()
         {
             if (_cardMovementInSlot is null)
@@ -55,10 +53,10 @@ namespace Programming.Card_Mechanism
             returningCard.currentSlot = null;
             _cardMovementInSlot = null;
 
-            onCardChanged.Invoke(); //ZyKa!
+            onCardChanged.Invoke(); 
             return returningCard;
         }
-
+        
         public CardMovementComponent GetCard()
         {
             return _cardMovementInSlot;

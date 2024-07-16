@@ -48,7 +48,7 @@ namespace Programming.Card_Mechanism
             }
 
             var draggedCardNumber = draggedCard.GetComponent<NumberCardComponent>();
-            if (draggedCardNumber == null)
+            if (draggedCardNumber == null || draggedCardNumber == this) //ZyKa!
             {
                 return;
             }
@@ -72,7 +72,7 @@ namespace Programming.Card_Mechanism
             }
 
             var draggedCardNumber = eventData.pointerDrag.GetComponent<NumberCardComponent>();
-            if (draggedCardNumber == null)
+            if (draggedCardNumber == null || draggedCardNumber == this)
             {
                 return;
             }

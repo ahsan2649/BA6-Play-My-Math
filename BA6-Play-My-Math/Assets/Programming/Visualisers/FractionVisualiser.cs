@@ -6,19 +6,9 @@ using Programming.ExtensionMethods;
 using Programming.Fraction_Engine;
 using Programming.Operation_Board;
 using Programming.Visualisers;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Vector3 = UnityEngine.Vector3;
 
-//WARNING: big parts of this visualisation system break down at 30
-
-/* ObjectData Hierarchy: 
- * FractionVisualisationData
- *      -> FractionVisualisationStyle
- *      -> OffsetAndSpacing
- *      -> activeFigures 
- */
+//WARNING: The expand / shorten Visualisation breaks down at 30 (or any other number with three distinct prime factors)
 
 /* Coordinates & Dimensions: x->Layers, y->Columns, z->Rows
  * BoardSize: x->Width, y->Height, z->Depth
@@ -277,15 +267,16 @@ namespace Programming.FractionVisualiser
 
             bool bLeftAndRightOverOne = 
                 (_visualisationDataMap[OperandType.Left]?.Item1 is not null && _visualisationDataMap[OperandType.Right]?.Item1 is not null) &&
-                    (_visualisationDataMap[OperandType.Left].Item1 > 1 &&
-                     (_operation == Operation.Multiply &&
-                      _visualisationDataMap[OperandType.Right]?.Item1 > 1) || 
-                     (_operation == Operation.Divide &&
-                      _visualisationDataMap[OperandType.Right]?.Item1 < 1)); 
+                    _visualisationDataMap[OperandType.Left].Item1 > 1 &&
+                     (
+                         (_operation == Operation.Multiply && _visualisationDataMap[OperandType.Right]?.Item1 > 1) 
+                         || 
+                         (_operation == Operation.Divide && _visualisationDataMap[OperandType.Right]?.Item1 < 1)
+                    ); 
             
             _boardVisualisationMode =
                 biggestDenominator > numbersToPrimeFactors.Length ? BoardVisualisationMode.OnlyText :
-                (biggestFraction > 4 || bLeftAndRightOverOne) ? BoardVisualisationMode.OneFigureVisualisation :
+                (biggestFraction >= 4 || bLeftAndRightOverOne) ? BoardVisualisationMode.OneFigureVisualisation :
                 BoardVisualisationMode.FullVisualisation;
 
 
@@ -421,11 +412,16 @@ namespace Programming.FractionVisualiser
                                     Operation.Subtract => CalculateVisualisedCoordinatesViaDivisors(
                                         combinedFraction ?? fraction, (combinedFraction ?? fraction).Numerator,
                                         fraction.Numerator),
-                                    Operation.Multiply or Operation.Divide =>
+                                    Operation.Multiply =>
                                         leftData is null
                                             ? CalculateVisualisedCoordinatesViaDivisors(combinedFraction ?? fraction, 0,
                                                 (combinedFraction ?? fraction).Numerator)
                                             : MultiplyVisualisedCoordinates(leftData, fraction),
+                                    Operation.Divide => 
+                                        leftData is null
+                                            ? CalculateVisualisedCoordinatesViaDivisors(combinedFraction ?? fraction, 0,
+                                                (combinedFraction ?? fraction).Numerator)
+                                            : MultiplyVisualisedCoordinates(leftData, new Fraction(fraction.Denominator, fraction.Numerator)),
                                     _ => throw new SwitchExpressionException()
                                 },
                             OperandType.LeftModify or OperandType.RightModify or OperandType.None =>
