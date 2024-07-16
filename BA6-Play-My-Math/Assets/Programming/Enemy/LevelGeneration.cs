@@ -19,7 +19,7 @@ namespace Programming.Enemy
         /// <param name="numberOfCards"></param>
         /// <param name="debug_return_test_cue_instead">If true, the function will return a fixed test cue for debugging, instead of trying to generate one. Use it if my code fails to generate a monster deck. </param>
         /// <returns></returns>
-        public static List<Fraction> generateEnemyCue(int numberOfCards = 10, bool debug_return_test_cue_instead = false)
+        public static List<Fraction> generateEnemyCue(bool debug_return_test_cue_instead = false)
         {
             // Failsave Debug Option
             if (debug_return_test_cue_instead)
@@ -35,21 +35,141 @@ namespace Programming.Enemy
                 return testCue;
             }
 
+            List<Fraction> enemyCue = generateCardDeckUsingDifficulty(currentDifficulty);
+            
+            // Adds to difficulty so next generation is harder
+            currentDifficulty += difficultyAddedEachRound;
+
             // Generate Deck using my functions
-            return generateCardDeckUsingWeights(numberOfCards);
+            return enemyCue;
         }
 
-        public static Fraction GenerateReward()
+        static List<Fraction> rewardList23 = new List<Fraction>()
+        {
+            new Fraction(1,1),
+            new Fraction(2,1),
+            new Fraction(3,1),
+            new Fraction(6,1),
+            new Fraction(8,1),
+            new Fraction(9,1),
+            new Fraction(12,1),
+            new Fraction(16,1),
+            new Fraction(18,1),
+        };
+
+        static List<Fraction> rewardList235 = new List<Fraction>()
+        {
+            new Fraction(5,1),
+        };
+
+        static List<Fraction> rewardList2357 = new List<Fraction>()
+        {
+            new Fraction(7,1),
+        };
+
+        public enum GameMode { easy23, medium235, hard2357 }
+        public static Fraction GenerateReward(GameMode gameMode)
         {
             //TODO @Vin: GenerateReward
+            Fraction reward;
+            
+            switch (gameMode)
+            {
+                case (GameMode.easy23):
+                    reward = GetRandomValueFromList(rewardList23);
+                    break;
+            }
+
             return null; 
         }
-        
+
         // TODO @Vin: Make these dictionaries/lists/...
         // GameMode -> Denominator (also in main menu)
         // List<Difficulty> DifficultyPerEncounter
         // Difficulty -> Type of Generation & Amount
-        
+
+        private static int startDifficulty = 6;
+        public static int currentDifficulty = 6;
+
+        private static int difficultyAddedEachRound = 3;
+
+        /// <summary>
+        /// Please call this function whenever the game is started from the beginning. 
+        /// This will reset the difficulty and make sure that there is an increasing difficulty for each level
+        /// </summary>
+        public static void resetDifficulty()
+        {
+            currentDifficulty = startDifficulty;
+        }
+
+        internal enum GM
+        {
+            FD,     // B + p = 2
+            FiD,    // B + p = 4
+            AsD,    // B + p = 4
+            AD,     // B + p = 4
+            AiD,    // B + p = 6
+            MD,     // B + p = 4
+            MDs,    // B + p = 2
+            MiD,    // B + p = 6
+            MiDs,   // B + p = 4
+        }
+
+        private static Dictionary<int, List<List<GM>>> difficultyToGeneration = new Dictionary<int, List<List<GM>>>
+        {
+            {6, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.FD, GM.AD },
+                    new List<GM>() { GM.FD, GM.FD, GM.FiD },
+                }
+            },
+            {9, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.FiD, GM.AD },
+                    new List<GM>() { GM.FD, GM.AiD },
+                    new List<GM>() { GM.AD, GM.AD, GM.FD },
+                }
+            },
+            {12, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.MD, GM.AiD, GM.FD },
+                    new List<GM>() { GM.MD, GM.AD, GM.FiD },
+                    new List<GM>() { GM.MD, GM.MD, GM.FD },
+                }
+            },
+            {15, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.MiDs, GM.MD, GM.AiD },
+                }
+            },
+        };
+
+        private static int maxKeyOfGM = 15;
+
+        static List<GM> getGenerationFromDifficulty(int difficulty)
+        {
+            // Key is predefined
+            if (difficultyToGeneration.ContainsKey(difficulty))
+            {
+                return GetRandomValueFromList(difficultyToGeneration[difficulty]);
+            }
+            else if (difficulty > maxKeyOfGM)
+            {
+                int difference = difficulty - maxKeyOfGM;
+                int rounds = difference % 4;
+                // Make generation list of maximum
+                List<GM> gMList = GetRandomValueFromList(difficultyToGeneration[maxKeyOfGM]);
+                // Add filler enemy fractions based on how much difficulty
+                for (int i = 0; i < rounds; i++) 
+                {
+                    gMList.Add(GM.MD);
+                }
+                return gMList;
+            }
+            Debug.LogWarning("Difficulty was not in difficultyToGeneration, returned empty list instead");
+            return new List<GM>();
+        }
+
         #endregion
 
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -103,54 +223,68 @@ namespace Programming.Enemy
         /// </summary>
         /// <param name="numberOfCards"></param>
         /// <returns></returns>
-        public static List<Fraction> generateCardDeckUsingWeights(int numberOfCards)
+        public static List<Fraction> generateCardDeckUsingDifficulty(int difficulty)
         {
             // Create list of Fractions, this represents the deck that will be returned
             List<Fraction> encounterFraction = new List<Fraction>();
-            
+
+            List<GM> generationList = getGenerationFromDifficulty(difficulty);
+
             // for number of cards
-            for (int i = 0; i < numberOfCards; i++)
+            foreach (GM generation in generationList)
             {
-                // Choose one random mode based on weight
-                Phase phase = GetRandomItem(Weights.standardAssortmentProperbilityWeightmap);
-
-                switch (phase)
                 {
-                    // Codeblock Addition and Subtraction
-                    case Phase.AdditionAndSubtraction:
-                        encounterFraction.Add(AdditionAndSubtraction.generateEncounterFraction(NumeratorPhase.PartlyIndirectAccess, DenominatorPhase.Multiple));
-                        break;
+                    switch (generation)
+                    {
+                        // Addition Directs
+                        case GM.AD:
+                            encounterFraction.Add(AdditionAndSubtraction.generateEncounterFraction(NumeratorPhase.Directs, DenominatorPhase.Multiple));
+                            break;
 
-                    // Codeblock Expand and Simplify
-                    case Phase.ExpandAndSimplify:
-                        encounterFraction.Add(ExpandingAndSimplifying.generateEncounterFraction());
-                        break;
+                        // Addition Directs
+                        case GM.AsD:
+                            encounterFraction.Add(AdditionAndSubtraction.generateEncounterFraction(NumeratorPhase.SimpleDirects, DenominatorPhase.Single));
+                            break;
 
-                    // Codeblock Multiplication
-                    case Phase.Multiplication:
-                        /// !!!! Only generates goal values in numerator
-                        encounterFraction.Add(Multiplication.generateEncounterFraction(false));
-                        break;
+                        // Fraction Directs
+                        case GM.FD:
+                            encounterFraction.Add(GetRandomValueFromList(SimplyfiedCombinedFractions));
+                            break;
 
-                    // Codeblock Misc
-                    case Phase.Misc:
-                        break;
+                        // Multiplication Directs
+                        case GM.MD:
+                            /// !!!! Only generates goal values in numerator
+                            encounterFraction.Add(Multiplication.generateEncounterFraction(GM.MD, false));
+                            break;
 
-                    // Failsafe
-                    default:
-                        Debug.LogWarning("Failed to find Phase. This indicates you might be missing a newly added Phase in the Codeblock. Come here and add it. Returned 11/11 Fraction");
-                        encounterFraction.Add(new Fraction(11, 11));
-                        break;
+                        // Multiplication Indirects
+                        case GM.MiD:
+                            /// !!!! Only generates goal values in numerator
+                            encounterFraction.Add(Multiplication.generateEncounterFraction(GM.MiD, false));
+                            break;
+
+                        // Multiplication Indirects
+                        case GM.MiDs:
+                            /// !!!! Only generates goal values in numerator
+                            encounterFraction.Add(Multiplication.generateEncounterFraction(GM.MiDs, false));
+                            break;
+
+                        // Failsafe
+                        default:
+                            Debug.LogWarning("Failed to find Phase. This indicates you might be missing a newly added Phase in the Codeblock. Come here and add it. Returned 11/11 Fraction");
+                            encounterFraction.Add(new Fraction(11, 11));
+                            break;
+                    }
                 }
             }
 
             return encounterFraction;
         }
-    
-        /// <summary>
-        /// Holds all the informations on propabilities for the different fraction-generation-types. 
-        /// The float value inside the dictonaries is the weight; change it to affect the distribution (higher -> more likely)
-        /// </summary>
+
+        ///// <summary>
+        ///// Holds all the informations on propabilities for the different fraction-generation-types. 
+        ///// The float value inside the dictonaries is the weight; change it to affect the distribution (higher -> more likely)
+        ///// </summary>
         public static class Weights
         {
             // Standard Assortment
@@ -159,85 +293,85 @@ namespace Programming.Enemy
             /// Weightmap used to pick between these generation phases for the generated encounter fraction.
             /// Feel free to access and change the values.
             /// </summary>
-            public static Dictionary<Phase, float> standardAssortmentProperbilityWeightmap = new Dictionary<Phase, float>
-            {
-                /// Default Weightmap
-                { Phase.AdditionAndSubtraction, 1f },
-                { Phase.ExpandAndSimplify, 1f },
-                { Phase.Multiplication, 15f },
-                { Phase.Misc, 0f }, /// Currently Misc is not implemented
-            };
+            //public static Dictionary<Phase, float> standardAssortmentProperbilityWeightmap = new Dictionary<Phase, float>
+            //{
+            //    /// Default Weightmap
+            //    { Phase.AdditionAndSubtraction, 1f },
+            //    { Phase.ExpandAndSimplify, 1f },
+            //    { Phase.Multiplication, 15f },
+            //    { Phase.Misc, 0f }, /// Currently Misc is not implemented
+            //};
 
-            // Addition and Subtraction
+            //// Addition and Subtraction
 
-            /// <summary>
-            /// Weightmap used to pick between these generation styles when deciding on which numerator to pick for addition and subtraction.
-            /// Feel free to access and change the values.
-            /// </summary>
-            public static Dictionary<NumeratorPhase, float> numeratorPhaseProperbilityWeightmap = new Dictionary<NumeratorPhase, float>
-            {
-                /// Default Weightmap
-                { NumeratorPhase.JustPlacing, 1f },
-                { NumeratorPhase.MakeOnes, 1f },
-                { NumeratorPhase.Two, 1f },
-                { NumeratorPhase.ThreeAndFive, 1f },
-                { NumeratorPhase.Seven, 1f },
-                { NumeratorPhase.DirectAccess, 1f },
-                { NumeratorPhase.PartlyIndirectAccess, 1f },
-            };
+            /////// <summary>
+            /////// Weightmap used to pick between these generation styles when deciding on which numerator to pick for addition and subtraction.
+            /////// Feel free to access and change the values.
+            /////// </summary>
+            ////public static Dictionary<NumeratorPhase, float> numeratorPhaseProperbilityWeightmap = new Dictionary<NumeratorPhase, float>
+            ////{
+            ////    /// Default Weightmap
+            ////    { NumeratorPhase.JustPlacing, 1f },
+            ////    { NumeratorPhase.MakeOnes, 1f },
+            ////    { NumeratorPhase.Two, 1f },
+            ////    { NumeratorPhase.ThreeAndFive, 1f },
+            ////    { NumeratorPhase.Seven, 1f },
+            ////    { NumeratorPhase.DirectAccess, 1f },
+            ////    { NumeratorPhase.PartlyIndirectAccess, 1f },
+            ////};
 
-            /// <summary>
-            /// Weightmap used to pick between these generation styles when deciding on which denominator to pick for addition and subtraction.
-            /// Feel free to access and change the values.
-            /// </summary>
-            public static Dictionary<DenominatorPhase, float> denominatorPhaseProperbilityWeightmap = new Dictionary<DenominatorPhase, float>
-            {
-                /// Default Weightmap
-                { DenominatorPhase.Single, 1f },
-                { DenominatorPhase.Multiple, 1f },
-            };
+            ///// <summary>
+            ///// Weightmap used to pick between these generation styles when deciding on which denominator to pick for addition and subtraction.
+            ///// Feel free to access and change the values.
+            ///// </summary>
+            //public static Dictionary<DenominatorPhase, float> denominatorPhaseProperbilityWeightmap = new Dictionary<DenominatorPhase, float>
+            //{
+            //    /// Default Weightmap
+            //    { DenominatorPhase.Single, 1f },
+            //    { DenominatorPhase.Multiple, 1f },
+            //};
 
-            /// Expanding/Simplifying
+            ///// Expanding/Simplifying
 
-            /// <summary>
-            /// Weightmap used to pick between these generation styles when deciding on which base fraction to pick. This fraction will than get expanded by an amount. 
-            /// Feel free to access and change the values.
-            /// </summary>
-            public static Dictionary<ExpandingAndSimplifying.ExpandingBaseFractionPhase, float> expandingFractionBaseProperbilityWeightmap = new Dictionary<ExpandingAndSimplifying.ExpandingBaseFractionPhase, float>
-            {
-                /// Default Weightmap
-                { ExpandingAndSimplifying.ExpandingBaseFractionPhase.PickFromSimplyfiedCombinedFractions, 20f },
-                { ExpandingAndSimplifying.ExpandingBaseFractionPhase.PickFromAdditionSubtraction, 1f },
-            };
+            ///// <summary>
+            ///// Weightmap used to pick between these generation styles when deciding on which base fraction to pick. This fraction will than get expanded by an amount. 
+            ///// Feel free to access and change the values.
+            ///// </summary>
+            //public static Dictionary<ExpandingAndSimplifying.ExpandingBaseFractionPhase, float> expandingFractionBaseProperbilityWeightmap = new Dictionary<ExpandingAndSimplifying.ExpandingBaseFractionPhase, float>
+            //{
+            //    /// Default Weightmap
+            //    { ExpandingAndSimplifying.ExpandingBaseFractionPhase.PickFromSimplyfiedCombinedFractions, 20f },
+            //    { ExpandingAndSimplifying.ExpandingBaseFractionPhase.PickFromAdditionSubtraction, 1f },
+            //};
 
-            /// <summary>
-            /// Weightmap used to pick between these generation styles when deciding on which base to multiply with for the expansion of the fraction. 
-            /// Feel free to access and change the values.
-            /// </summary>
-            public static Dictionary<ExpandingAndSimplifying.ExpansionPhase, float> expandingPhaseProperbilityWeightmap = new Dictionary<ExpandingAndSimplifying.ExpansionPhase, float>
-            {
-                /// Default Weightmap
-                { ExpandingAndSimplifying.ExpansionPhase.SingleTwo, 1f },
-                { ExpandingAndSimplifying.ExpansionPhase.SingleThree, 1f },
-                { ExpandingAndSimplifying.ExpansionPhase.Multicomp, 1f },
-                { ExpandingAndSimplifying.ExpansionPhase.MulticompOther, 1f },
-                { ExpandingAndSimplifying.ExpansionPhase.NoneBase, 1f },
-            };
+            ///// <summary>
+            ///// Weightmap used to pick between these generation styles when deciding on which base to multiply with for the expansion of the fraction. 
+            ///// Feel free to access and change the values.
+            ///// </summary>
+            //public static Dictionary<ExpandingAndSimplifying.ExpansionPhase, float> expandingPhaseProperbilityWeightmap = new Dictionary<ExpandingAndSimplifying.ExpansionPhase, float>
+            //{
+            //    /// Default Weightmap
+            //    { ExpandingAndSimplifying.ExpansionPhase.SingleTwo, 1f },
+            //    { ExpandingAndSimplifying.ExpansionPhase.SingleThree, 1f },
+            //    { ExpandingAndSimplifying.ExpansionPhase.Multicomp, 1f },
+            //    { ExpandingAndSimplifying.ExpansionPhase.MulticompOther, 1f },
+            //    { ExpandingAndSimplifying.ExpansionPhase.NoneBase, 1f },
+            //};
 
-            /// Multiplication
+            ///// Multiplication
 
-            /// <summary>
-            /// Weightmap used to pick between these generation styles when deciding on which first value / goal to use for the numerator/denominator of the goal fraction. 
-            /// Feel free to access and change the values.
-            /// </summary>
-            public static Dictionary<ChallangeSet, float> challangeSetProperbilityWeightmap = new Dictionary<ChallangeSet, float>
-            {
-                /// Default Weightmap
-                { ChallangeSet.Direkt, 10f },
-                { ChallangeSet.Indirekt, 1f },
-                { ChallangeSet.IndirektSubtract, 10f },
-                { ChallangeSet.IndirektSecondDegree, 1f },
-            };
+            ///// <summary>
+            ///// Weightmap used to pick between these generation styles when deciding on which first value / goal to use for the numerator/denominator of the goal fraction. 
+            ///// Feel free to access and change the values.
+            ///// </summary>
+            //public static Dictionary<ChallangeSet, float> challangeSetProperbilityWeightmap = new Dictionary<ChallangeSet, float>
+            //{
+            //    /// Default Weightmap
+            //    { ChallangeSet.Direkt, 10f },
+            //    { ChallangeSet.Indirekt, 1f },
+            //    { ChallangeSet.IndirektSubtract, 10f },
+            //    { ChallangeSet.IndirektSecondDegree, 1f },
+            //};
 
             /// <summary>
             /// Weightmap used to pick between these generation styles when deciding on which second value to use for the numerator/denominator of the goal fraction. 
@@ -251,7 +385,7 @@ namespace Programming.Enemy
                 { SecondarValueGenerationTypes.Specific, 0f },  /// The specific value doesnt work perfectly, so for now its 0
             };
         }
-    
+
         /// <summary>
         /// Holds information and functions for the Addition type of fraction-generation. 
         /// The fractions generated using this type, will have a numerator mostly exclusively reachable through adding or subtracting fraction, made from the hand cards, together.
@@ -260,20 +394,18 @@ namespace Programming.Enemy
         /// </summary>
         public static class AdditionAndSubtraction
         {
-            public enum NumeratorPhase { JustPlacing, MakeOnes, Two, ThreeAndFive, Seven, DirectAccess, PartlyIndirectAccess };
+            public enum NumeratorPhase { Bases, Ones, SimpleDirects, Directs, PartlyIndirects };
             public enum DenominatorPhase { Single, Multiple };
 
             // Add Dict here (Only Phase included)
             // Addition and Subtraction
             private static Dictionary<NumeratorPhase, int[]> NumeratorPhaseNumberRef = new Dictionary<NumeratorPhase, int[]>
             {
-                { NumeratorPhase.JustPlacing,           new int[] {4,6,8 } },
-                { NumeratorPhase.MakeOnes,              new int[] {1 } },
-                { NumeratorPhase.Two,                   new int[] {2 } },
-                { NumeratorPhase.ThreeAndFive,          new int[] {3,5 } },
-                { NumeratorPhase.Seven,                 new int[] {7 } },
-                { NumeratorPhase.DirectAccess,          new int[] {10,12,14,16,17,18 } },
-                { NumeratorPhase.PartlyIndirectAccess,  new int[] {11,13,15,19,20 } },
+                { NumeratorPhase.Bases,             new int[] {4,6,8 } },
+                { NumeratorPhase.Ones,              new int[] {1 } },
+                { NumeratorPhase.SimpleDirects,     new int[] {2, 3, 5, 7 } },
+                { NumeratorPhase.Directs,           new int[] {10,12,14,16,17,18 } },
+                { NumeratorPhase.PartlyIndirects,   new int[] {11,13,15,19,20 } },
             };
 
             private static Dictionary<DenominatorPhase, int[]> DenominatorPhaseNumberRef = new Dictionary<DenominatorPhase, int[]>
@@ -365,55 +497,55 @@ namespace Programming.Enemy
             /// This function will also access the Addition and Subtraction weights, since the PickFromAdditionSubtraction-Phase first generates Expansion using Addition and Subtraction
             /// </summary>
             /// <returns>Random Fraction</returns
-            internal static Fraction generateEncounterFraction()
-                // Need AdditionAndSubtraction Phase Info since Expandion and Simplifying is just Addition/Subtraction Fractions expanded/simplified
-            {
-                ExpandingBaseFractionPhase expandingBaseFractionPhase = GetRandomItem(Weights.expandingFractionBaseProperbilityWeightmap);
+            //internal static Fraction generateEncounterFraction()
+            //    // Need AdditionAndSubtraction Phase Info since Expandion and Simplifying is just Addition/Subtraction Fractions expanded/simplified
+            //{
+            //    ExpandingBaseFractionPhase expandingBaseFractionPhase = GetRandomItem(Weights.expandingFractionBaseProperbilityWeightmap);
 
-                Fraction fraction;
+            //    Fraction fraction;
 
-                NumeratorPhase numeratorPhase = GetRandomItem<NumeratorPhase>(Weights.numeratorPhaseProperbilityWeightmap);
-                DenominatorPhase denominatorPhase = GetRandomItem<DenominatorPhase>(Weights.denominatorPhaseProperbilityWeightmap);
-                ExpansionPhase expansionPhase = GetRandomItem(Weights.expandingPhaseProperbilityWeightmap);
+            //    NumeratorPhase numeratorPhase = GetRandomItem<NumeratorPhase>(Weights.numeratorPhaseProperbilityWeightmap);
+            //    DenominatorPhase denominatorPhase = GetRandomItem<DenominatorPhase>(Weights.denominatorPhaseProperbilityWeightmap);
+            //    ExpansionPhase expansionPhase = GetRandomItem(Weights.expandingPhaseProperbilityWeightmap);
 
 
-                switch (expandingBaseFractionPhase)
-                {
-                    // Codeblock for Picking Base Fraction from List of Simplyfied Combined Fractions
-                    case ExpandingBaseFractionPhase.PickFromSimplyfiedCombinedFractions:
-                        fraction = GetRandomValueFromList(SimplyfiedCombinedFractions);
-                        break;
+            //    switch (expandingBaseFractionPhase)
+            //    {
+            //        // Codeblock for Picking Base Fraction from List of Simplyfied Combined Fractions
+            //        case ExpandingBaseFractionPhase.PickFromSimplyfiedCombinedFractions:
+            //            fraction = GetRandomValueFromList(SimplyfiedCombinedFractions);
+            //            break;
                 
-                    // Codeblock for Picking Base Fraction from Addition/Subtraction
-                    case ExpandingBaseFractionPhase.PickFromAdditionSubtraction:
-                        // Since both Single two and three don't include expansions of 4 and 6 in their challanges we have to check for them and instead include a custom number list
-                        switch (expansionPhase)
-                        {
-                            case ExpansionPhase.SingleTwo:
-                                fraction = AdditionAndSubtraction.generateEncounterFraction(numeratorPhase, denominatorPhase, customDenominators: new int[] { 6, 8, 9 });
-                                break;
-                            case ExpansionPhase.SingleThree:
-                                fraction = AdditionAndSubtraction.generateEncounterFraction(numeratorPhase, denominatorPhase, customDenominators: new int[] { 8, 9 });
-                                break;
-                            default:
-                                fraction = AdditionAndSubtraction.generateEncounterFraction(numeratorPhase, denominatorPhase);
-                                break;
-                        }
-                        // Expand Fraction with value
-                        // Standard random pick, from factors in ref dict
-                        int[] expansionFaktorArray = ExpansionPhaseFactorRef[expansionPhase];
-                        int randomIndex = UnityEngine.Random.Range(0, expansionFaktorArray.Length);
-                        Fraction expandedFraction = fraction.ExpandBy(expansionFaktorArray[randomIndex]);
-                        break;
+            //        // Codeblock for Picking Base Fraction from Addition/Subtraction
+            //        case ExpandingBaseFractionPhase.PickFromAdditionSubtraction:
+            //            // Since both Single two and three don't include expansions of 4 and 6 in their challanges we have to check for them and instead include a custom number list
+            //            switch (expansionPhase)
+            //            {
+            //                case ExpansionPhase.SingleTwo:
+            //                    fraction = AdditionAndSubtraction.generateEncounterFraction(numeratorPhase, denominatorPhase, customDenominators: new int[] { 6, 8, 9 });
+            //                    break;
+            //                case ExpansionPhase.SingleThree:
+            //                    fraction = AdditionAndSubtraction.generateEncounterFraction(numeratorPhase, denominatorPhase, customDenominators: new int[] { 8, 9 });
+            //                    break;
+            //                default:
+            //                    fraction = AdditionAndSubtraction.generateEncounterFraction(numeratorPhase, denominatorPhase);
+            //                    break;
+            //            }
+            //            // Expand Fraction with value
+            //            // Standard random pick, from factors in ref dict
+            //            int[] expansionFaktorArray = ExpansionPhaseFactorRef[expansionPhase];
+            //            int randomIndex = UnityEngine.Random.Range(0, expansionFaktorArray.Length);
+            //            Fraction expandedFraction = fraction.ExpandBy(expansionFaktorArray[randomIndex]);
+            //            break;
                 
-                    // Failsave
-                    default:
-                        Debug.Log("Could not find ExpandingBaseFractionPhase, returned 11/11 Fraction");
-                        return new Fraction(11, 11);
-                }
+            //        // Failsave
+            //        default:
+            //            Debug.Log("Could not find ExpandingBaseFractionPhase, returned 11/11 Fraction");
+            //            return new Fraction(11, 11);
+            //    }
 
-                return fraction;
-            }
+            //    return fraction;
+            //}
         }
 
         /// <summary>
@@ -498,40 +630,62 @@ namespace Programming.Enemy
             /// </summary>
             /// <param name="make_first_value_the_numerator">Decides how to return the fraction; with the carefully generated value in the numerator or in the denominator. Having this as false will make it harder to solve for the player, but will force them to use multiplication</param>
             /// <returns></returns>
-            internal static Fraction generateEncounterFraction(bool make_first_value_the_numerator)
+            internal static Fraction generateEncounterFraction(GM generationMode, bool make_first_value_the_numerator)
             {
                 Fraction fraction;
 
                 int firstValue;
                 int p;
 
-                // use a random generation set based on weightmap
-                // for the generation, programm picks from the list of possible numbers to choose from
-                ChallangeSet set = GetRandomItem<ChallangeSet>(Weights.challangeSetProperbilityWeightmap);
-                switch (set)
+                // Picks the correct generation based on the GM generationMode
+                switch (generationMode)
                 {
-                    case ChallangeSet.Direkt:
+                    case GM.MD:
                         firstValue = GetRandomValueFromList(Direkts);
                         p = P_DIREKTS;
                         break;
-                    case ChallangeSet.Indirekt:
+                    case GM.MiD:
                         firstValue = GetRandomValueFromList(Indirekts);
                         p = P_INDIREKTS;
                         break;
-                    case ChallangeSet.IndirektSecondDegree:
-                        firstValue = GetRandomValueFromList(IndirektsSecondDegree);
-                        p = P_INDIREKTS_SECOND_DEGREE;
-                        break;
-                    case ChallangeSet.IndirektSubtract:
+                    case GM.MiDs:
                         firstValue = GetRandomValueFromList(Indirekts);
                         p = P_SUBSTRACT_INDIREKTS;
                         break;
                     default:
-                        Debug.LogWarning("Couldn't find the Challange-Set in this context. You're likely missing the newly added Challange set in this code block. Returned 11 instead");
+                        Debug.LogWarning("Couldn't find the GM in this context. You're likely missing the newly added Challange set in this code block. Returned 11 instead");
                         firstValue = 11;
                         p = 1;
                         break;
                 }
+
+                //// use a random generation set based on weightmap
+                //// for the generation, programm picks from the list of possible numbers to choose from
+                //ChallangeSet set = GetRandomItem<ChallangeSet>(Weights.challangeSetProperbilityWeightmap);
+                //switch (set)
+                //{
+                //    case ChallangeSet.Direkt:
+                //        firstValue = GetRandomValueFromList(Direkts);
+                //        p = P_DIREKTS;
+                //        break;
+                //    case ChallangeSet.Indirekt:
+                //        firstValue = GetRandomValueFromList(Indirekts);
+                //        p = P_INDIREKTS;
+                //        break;
+                //    case ChallangeSet.IndirektSecondDegree:
+                //        firstValue = GetRandomValueFromList(IndirektsSecondDegree);
+                //        p = P_INDIREKTS_SECOND_DEGREE;
+                //        break;
+                //    case ChallangeSet.IndirektSubtract:
+                //        firstValue = GetRandomValueFromList(Indirekts);
+                //        p = P_SUBSTRACT_INDIREKTS;
+                //        break;
+                //    default:
+                //        Debug.LogWarning("Couldn't find the Challange-Set in this context. You're likely missing the newly added Challange set in this code block. Returned 11 instead");
+                //        firstValue = 11;
+                //        p = 1;
+                //        break;
+                //}
 
                 int secondValue = pickSecondaryValue(p);
 
@@ -675,7 +829,7 @@ namespace Programming.Enemy
         // This function is for debug testing, to see if the generation works
         private void Start()
         {
-            List<Fraction> list = generateCardDeckUsingWeights(10);
+            List<Fraction> list = generateCardDeckUsingDifficulty(12);
 
             //for (int i = 0; i < 10; i++)
             //{
