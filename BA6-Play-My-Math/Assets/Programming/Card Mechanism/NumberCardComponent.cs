@@ -110,6 +110,7 @@ namespace Programming.Card_Mechanism
 
             // Step 2: Update Dropped Card with the fraction made by the Zählers
             droppedCardNumber.IsFraction = true;
+            droppedCardNumber.IsFractionPreview = false; 
             droppedCardNumber.oldValue = droppedCardNumber.Value = new Fraction(droppedCardNumber.Value.Numerator, value.Numerator);
             
             // Step 3: Set dropped card to the slot this card is in
