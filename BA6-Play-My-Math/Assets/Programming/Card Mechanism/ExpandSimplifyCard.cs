@@ -121,10 +121,6 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         }
         else
         {
-            if (!GetComponent<NumberCardComponent>().Value.CanSimplifyBy(pValue))
-            {
-                fractionTextVisualizer.GetComponent<FractionTextVisualiser>().DisplayDecimals(numberCard.Value.Numerator, numberCard.Value.Denominator);
-            }
             numberCard.oldValue = numberCard.Value = numberCard.Value.SimplifyBy(pValue);
         }
     }

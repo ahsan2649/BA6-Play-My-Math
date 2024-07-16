@@ -6,19 +6,9 @@ using Programming.ExtensionMethods;
 using Programming.Fraction_Engine;
 using Programming.Operation_Board;
 using Programming.Visualisers;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Vector3 = UnityEngine.Vector3;
 
-//WARNING: big parts of this visualisation system break down at 30
-
-/* ObjectData Hierarchy: 
- * FractionVisualisationData
- *      -> FractionVisualisationStyle
- *      -> OffsetAndSpacing
- *      -> activeFigures 
- */
+//WARNING: The expand / shorten Visualisation breaks down at 30 (or any other number with three distinct prime factors)
 
 /* Coordinates & Dimensions: x->Layers, y->Columns, z->Rows
  * BoardSize: x->Width, y->Height, z->Depth
@@ -163,7 +153,6 @@ namespace Programming.FractionVisualiser
         private Vector3 leftTextVisualiserOriginPosition; 
         [SerializeField] private FractionTextVisualiser rightFractionTextVisualiser;
         private Vector3 rightTextVisualiserOriginPosition; 
-        [SerializeField] private TMP_Text ExtraLayersText; //TODO: use this for fractions >3 (or >4)
         
         [SerializeField] private FractionVisualisationStyle visStyle_Main; 
         [SerializeField] private FractionVisualisationStyle visStyle_Transparent;
@@ -261,7 +250,8 @@ namespace Programming.FractionVisualiser
         public void FullUpdateVisualisations()
         {
             int biggestDenominator = 1;
-            Fraction biggestFraction = new Fraction(0, 1); 
+            Fraction biggestFraction = new Fraction(0, 1);
+            
             foreach (Tuple<Fraction, FractionVisualisationData> tVisData in _visualisationDataMap.Values)
             {
                 if (tVisData == null) { continue; }
@@ -269,13 +259,29 @@ namespace Programming.FractionVisualiser
                 biggestFraction = biggestFraction > tVisData.Item1 ? biggestFraction : tVisData.Item1; 
             }
 
+            Fraction combinedValue = OperationBoardComponent.Instance.CalculateCombinedValue(); 
+            if (combinedValue is not null)
+            {
+                biggestFraction = biggestFraction > combinedValue ? biggestFraction : combinedValue; 
+            }
+
+            bool bLeftAndRightOverOne = 
+                (_visualisationDataMap[OperandType.Left]?.Item1 is not null && _visualisationDataMap[OperandType.Right]?.Item1 is not null) &&
+                    _visualisationDataMap[OperandType.Left].Item1 > 1 &&
+                     (
+                         (_operation == Operation.Multiply && _visualisationDataMap[OperandType.Right]?.Item1 > 1) 
+                         || 
+                         (_operation == Operation.Divide && _visualisationDataMap[OperandType.Right]?.Item1 < 1)
+                    ); 
+            
             _boardVisualisationMode =
                 biggestDenominator > numbersToPrimeFactors.Length ? BoardVisualisationMode.OnlyText :
-                biggestFraction > 4 ? BoardVisualisationMode.OneFigureVisualisation :
+                (biggestFraction >= 4 || bLeftAndRightOverOne) ? BoardVisualisationMode.OneFigureVisualisation :
                 BoardVisualisationMode.FullVisualisation;
 
 
             leftFractionTextVisualiser.gameObject.SetActive(_boardVisualisationMode != BoardVisualisationMode.FullVisualisation);
+            rightFractionTextVisualiser.gameObject.SetActive(_boardVisualisationMode != BoardVisualisationMode.FullVisualisation);
 
             foreach (OperandType opTypeToUpdate in _visualisationOrder)
             {
@@ -406,11 +412,16 @@ namespace Programming.FractionVisualiser
                                     Operation.Subtract => CalculateVisualisedCoordinatesViaDivisors(
                                         combinedFraction ?? fraction, (combinedFraction ?? fraction).Numerator,
                                         fraction.Numerator),
-                                    Operation.Multiply or Operation.Divide =>
+                                    Operation.Multiply =>
                                         leftData is null
                                             ? CalculateVisualisedCoordinatesViaDivisors(combinedFraction ?? fraction, 0,
                                                 (combinedFraction ?? fraction).Numerator)
                                             : MultiplyVisualisedCoordinates(leftData, fraction),
+                                    Operation.Divide => 
+                                        leftData is null
+                                            ? CalculateVisualisedCoordinatesViaDivisors(combinedFraction ?? fraction, 0,
+                                                (combinedFraction ?? fraction).Numerator)
+                                            : MultiplyVisualisedCoordinates(leftData, new Fraction(fraction.Denominator, fraction.Numerator)),
                                     _ => throw new SwitchExpressionException()
                                 },
                             OperandType.LeftModify or OperandType.RightModify or OperandType.None =>
@@ -430,7 +441,7 @@ namespace Programming.FractionVisualiser
                 return opType switch
                 {
                     OperandType.Left or OperandType.LeftModify => leftFractionTextVisualiser,
-                    OperandType.Right or OperandType.RightModify => leftFractionTextVisualiser,
+                    OperandType.Right or OperandType.RightModify => rightFractionTextVisualiser,
                     _ => throw new SwitchExpressionException()
                 }; 
             }
@@ -485,7 +496,6 @@ namespace Programming.FractionVisualiser
             for (int i = 0; i < dimensions.x; i++)
             {
                 boardLayers[i].SetActive(true);
-                //TODO: Set BoardLayer visuals
             }
             boardLayers[0].GetComponent<MeshRenderer>().materials[0].SetFloat(XAmount, dimensions.y);
             boardLayers[0].GetComponent<MeshRenderer>().materials[0].SetFloat(YAmount, dimensions.z);
@@ -543,7 +553,7 @@ namespace Programming.FractionVisualiser
                 if (bUseAdjustedScale)
                 {
                     newFigure.transform.localScale = Vector3.Scale(visData.OffsetAndSpacing.FigureSpacing, new Vector3(0.95f, 1.0f, 0.95f));
-                    newFigure.transform.position += visData.OffsetAndSpacing.FigureSpacing.y * Vector3.up * 0.5f; //TODOLater: remove once the actual block exists 
+                    newFigure.transform.position += visData.OffsetAndSpacing.FigureSpacing.y * Vector3.up * 0.5f; 
                 }
 
                 newFigure.transform.localScale *= Mathf.Pow(higherLayerFigureScaleFactor, coordinates.x);

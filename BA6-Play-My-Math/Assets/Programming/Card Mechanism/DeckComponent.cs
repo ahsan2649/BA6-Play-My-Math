@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Programming.Fraction_Engine;
 using Programming.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = System.Random;
 
 
@@ -10,11 +11,14 @@ namespace Programming.Card_Mechanism
 {
     public class DeckComponent : MonoBehaviour
     {
-        public List<Fraction> initDeck;
-        public List<CardMovementComponent> _cardsInDeck = new();
+        public static DeckComponent Instance { get; private set; }
+
+        public UnityEvent onDeckChanged; 
+        
+        [HideInInspector] public List<Fraction> initDeck;
+        [HideInInspector] public List<CardMovementComponent> _cardsInDeck = new();
         [SerializeField] private StartingDeckInfo startingDeck;
         [SerializeField] private GameObject numberCardPrefab;
-        public static DeckComponent Instance { get; private set; }
 
         private void Awake()
         {
@@ -43,6 +47,8 @@ namespace Programming.Card_Mechanism
             }
             FillDeckWithCards(initDeck);
             ShuffleDeck();
+            
+            onDeckChanged.Invoke();
         }
 
         private void FillDeckWithCards(List<Fraction> fractionList)
@@ -80,6 +86,8 @@ namespace Programming.Card_Mechanism
 
             var pop = _cardsInDeck[0];
             _cardsInDeck.Remove(pop);
+            
+            onDeckChanged.Invoke();
             return pop;
         }
 
@@ -92,7 +100,6 @@ namespace Programming.Card_Mechanism
                 n--;
                 int k = random.Next(0, n);
                 (_cardsInDeck[k], _cardsInDeck[n]) = (_cardsInDeck[n], _cardsInDeck[k]); 
-
             }
         }
     }
