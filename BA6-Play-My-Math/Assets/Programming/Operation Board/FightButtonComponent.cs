@@ -62,7 +62,7 @@ namespace Programming.Operation_Board
                     continue;
                 }
 
-                if (enemySlot.GetEnemy().Value == toCheckValue)
+                if (enemySlot.GetEnemy().Value.Numerator == toCheckValue.Numerator && enemySlot.GetEnemy().Value.Denominator == toCheckValue.Denominator)
                 {
                     transform.parent.gameObject.SetActive(true);
                     break; 
