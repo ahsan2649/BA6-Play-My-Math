@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Programming.Card_Mechanism;
+using Programming.Enemy;
 using Programming.Fraction_Engine;
 using TMPro;
 using UnityEngine;
@@ -124,8 +125,8 @@ namespace Programming.Rewards {
                 card.GetComponent<CardMovementComponent>().enabled = false;
                 card.GetComponent<ExpandSimplifyCard>().enabled = false;
                 card.AddComponent<RewardCardComponent>();
-                //TODO: LevelGeneration.GenerateReward(); 
-                cardNumber.Value = new Fraction(Random.Range(1, Mathf.Min(roundCounterTemp+4, 9)), 1);
+                cardNumber.Value = LevelGeneration.GenerateReward(LevelGeneration.GameMode.easy23); 
+                cardNumber.Value = new Fraction(Random.Range(1, Mathf.Min(roundCounterTemp + 4, 9)), 1); 
             }
         }
 

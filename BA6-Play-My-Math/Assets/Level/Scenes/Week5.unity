@@ -18742,6 +18742,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 36851717b5d3797449e5193560f4b14a, type: 2}
   enemyPrefab: {fileID: 4265978069418469844, guid: aa9335456dc9d894391b7af1655f9b7c,
     type: 3}
+  bUseAutoEnemyGeneration: 1
 --- !u!4 &9000776123919663174
 Transform:
   m_ObjectHideFlags: 0
