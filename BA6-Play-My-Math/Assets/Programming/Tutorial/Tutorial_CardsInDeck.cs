@@ -17,7 +17,7 @@ namespace Programming.Tutorial
 
         protected override List<UnityEvent> GetFinishEvents()
         {
-            return new List<UnityEvent>() { deckComponentVisualiser.onActivateVisualisation}; 
+            return new List<UnityEvent>() { deckComponentVisualiser.onDeactivateVisualisation}; 
         }
 
         protected override bool CheckFinishCondition()

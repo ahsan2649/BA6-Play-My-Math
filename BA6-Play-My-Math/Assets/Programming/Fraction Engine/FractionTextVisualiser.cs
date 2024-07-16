@@ -43,7 +43,9 @@ namespace Programming.Visualisers
                     wholeNumberGameObject.SetActive(true);
                     fractionGameObject.SetActive(false);   
                 }
+                DisplayDecimals(fraction.Numerator, fraction.Denominator); 
             }
+
         }
 
         public Fraction GetFraction()
@@ -58,9 +60,8 @@ namespace Programming.Visualisers
             }
         }
 
-        public void DisplayDecimals(float numerator, float denominator)
+        private void DisplayDecimals(float numerator, float denominator)
         {
-            // CultureInfo cultureInfo = new CultureInfo("en-EN", false); 
             decimals.text = ((float) numerator / denominator).ToString(); 
         }
         

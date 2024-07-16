@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace Programming.Visualisers
 {
-    public class DeckComponentVisualiser : MonoBehaviour, IPointerClickHandler
+    public class DeckComponentVisualiser : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         [SerializeField] private TMP_Text cardCountText;
         [SerializeField] private GameObject infoCanvas; 
@@ -16,13 +16,18 @@ namespace Programming.Visualisers
         [SerializeField] private CardCountRowVisualiser higherCardsCountText; 
         [SerializeField] private CardCountRowVisualiser specialCardCountText;
 
-        public UnityEvent onActivateVisualisation; 
-        
-        public void OnPointerClick(PointerEventData eventData)
+        public UnityEvent onDeactivateVisualisation;
+
+        public void OnPointerDown(PointerEventData eventData)
         {
             UpdateInfoForDeckSingleton(); 
-            infoCanvas.SetActive(!infoCanvas.activeSelf);
-            onActivateVisualisation.Invoke();
+            infoCanvas.SetActive(true);
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            infoCanvas.SetActive(false);
+            onDeactivateVisualisation.Invoke();
         }
         
         public void UpdateInfoForDeckSingleton()
