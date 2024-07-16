@@ -119,27 +119,37 @@ namespace Programming.Enemy
         {
             {6, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FD, GM.AsD },
-                    new List<GM>() { GM.FD, GM.FD, GM.FiD },
+                    new List<GM>() { GM.FD, GM.FD },
                 }
             },
             {9, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FiD, GM.AD },
-                    new List<GM>() { GM.FD, GM.AiD },
-                    new List<GM>() { GM.AD, GM.AD, GM.FD },
+                    new List<GM>() { GM.FD, GM.FiD },
                 }
             },
             {12, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.MD, GM.AiD, GM.FD },
-                    new List<GM>() { GM.MD, GM.AD, GM.FiD },
-                    new List<GM>() { GM.MD, GM.MD, GM.FD },
+                    new List<GM>() { GM.FiD, GM.FiD, GM.FD },
                 }
             },
             {15, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.MiDs, GM.MD, GM.AiD },
+                    new List<GM>() { GM.AsD, GM.AsD, GM.FD, GM.FD },
+                }
+            },
+            {17, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.AD, GM.AD, GM.FiD, GM.FiD },
+                }
+            },
+            {20, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.AiD, GM.AiD, GM.FiD, GM.FD, GM.FD },
+                }
+            },
+            {23, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.MD, GM.FiD, GM.MD, GM.FD, GM.FD, GM.MiD, GM.MiD },
                 }
             },
         };

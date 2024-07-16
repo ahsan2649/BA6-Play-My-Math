@@ -65,18 +65,28 @@ namespace Programming.Operation_Board
         
         public void FinalizeOperation()
         {
+            if (CalculateCombinedValue() <= 0)
+            {
+                return; 
+            }
+            
             if (_leftOperand.GetCard() == null || _rightOperand.GetCard() == null)
             {
                 Debug.LogError("Need two filled slots to calculate!");
                 return;
             }
-
+            
             if (_operationWheel.currentOperation == Operation.Nop)
             {
                 Debug.LogError("Operation can't be Nop!");
                 return;
             }
 
+            if (CalculateCombinedValue() is null)
+            {
+                return; 
+            }
+            
             Fraction result = CalculateCombinedValue(); 
             Debug.Log(result);
             SetFinalizedCard(result);
