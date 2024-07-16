@@ -470,7 +470,7 @@ MonoBehaviour:
     - {x: 1, y: 3}
   boardSize: {x: 10, y: 0.25, z: 10}
   blockFigureHeight: 2
-  higherLayerFigureScaleFactor: 0.95
+  higherLayerFigureScaleFactor: 0.9
   textVisualiserHeight: 4
   debug_divisorOrder: []
   debug_leftFraction:

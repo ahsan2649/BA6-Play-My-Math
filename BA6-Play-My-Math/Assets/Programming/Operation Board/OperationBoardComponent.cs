@@ -118,7 +118,7 @@ namespace Programming.Operation_Board
                     continue;
                 }
 
-                if (attackCardNumber == enemySlot.GetEnemy().Value)
+                if (attackCardNumber.Numerator == enemySlot.GetEnemy().Value.Numerator && attackCardNumber.Denominator == enemySlot.GetEnemy().Value.Denominator)
                 {
                     var destroyedEnemy = enemySlot.UnsetEnemy();
                     Destroy(destroyedEnemy.gameObject);

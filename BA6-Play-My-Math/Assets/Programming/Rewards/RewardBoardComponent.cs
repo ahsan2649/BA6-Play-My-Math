@@ -126,7 +126,7 @@ namespace Programming.Rewards {
                 card.GetComponent<ExpandSimplifyCard>().enabled = false;
                 card.AddComponent<RewardCardComponent>();
                 cardNumber.Value = LevelGeneration.GenerateReward(LevelGeneration.GameMode.easy23); 
-                cardNumber.Value = new Fraction(Random.Range(1, Mathf.Min(roundCounterTemp + 4, 9)), 1); 
+                // cardNumber.Value = new Fraction(Random.Range(1, Mathf.Min(roundCounterTemp + 4, 9)), 1); 
             }
         }
 
