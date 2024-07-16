@@ -131,7 +131,7 @@ namespace Programming.Rewards {
 
         private void ResetBoard()
         {
-            Counter.anchoredPosition = new Vector2(0, Counter.anchoredPosition.x);
+            Counter.anchoredPosition = new Vector2(0, Counter.anchoredPosition.y);
             Count.text = 0.ToString();
             BoardExit();
         }
