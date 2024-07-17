@@ -56,9 +56,9 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         parentSlot = transform.parent;
         transform.parent = GameObject.FindGameObjectWithTag("Test").transform;
 
-        transform.position = new Vector3(0, 6, -5);
+        transform.localPosition = new Vector3(0, 6, -5);
         transform.localScale += new Vector3(.02f, .02f, .02f);
-        transform.rotation = Quaternion.Euler(90, 0, 0);
+        transform.localRotation = Quaternion.Euler(90, 0, 0);
         focusOpen = true;
         
         GetComponent<CardMovementComponent>().enabled = false;
