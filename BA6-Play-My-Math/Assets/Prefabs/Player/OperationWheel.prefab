@@ -374,6 +374,11 @@ MonoBehaviour:
   currentOperation: 1
   OperationText: {fileID: 8903780181744150300}
   Cylinder: {fileID: 6439176886859344514}
+  animator: {fileID: 2065000242026754097}
+  OnChangeOperation:
+    m_PersistentCalls:
+      m_Calls: []
+  spinSpeed: 20
 --- !u!1001 &6272739546376662852
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -562,6 +567,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6688ad8f5f6bc6d468f618c419c454f2, type: 3}
+--- !u!95 &2065000242026754097 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5450874685246594933, guid: 6688ad8f5f6bc6d468f618c419c454f2,
+    type: 3}
+  m_PrefabInstance: {fileID: 6272739546376662852}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2442438694030020621 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8568228511142608713, guid: 6688ad8f5f6bc6d468f618c419c454f2,

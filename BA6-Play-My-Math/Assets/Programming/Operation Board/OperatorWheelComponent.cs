@@ -18,12 +18,15 @@ namespace Programming.Operation_Board {
         public Operation currentOperation = Operation.Add;
         [SerializeField] private TextMeshProUGUI OperationText;
         [SerializeField] GameObject Cylinder;
-
+        [SerializeField] private Animator animator; 
+        
         public UnityEvent OnChangeOperation;
 
         Vector2 _dragStart, _dragEnd;
 
         [SerializeField] private float spinSpeed = 20f;
+        private static readonly int SpinLeft = Animator.StringToHash("SpinLeft");
+        private static readonly int SpinRight = Animator.StringToHash("SpinRight");
 
         //@Ahsan: previously Awake and Start in onEnable, but that runs simultaneously(/before) OperationBoardComponent.Awake(), but UpdateOp needs OperationBoardComponent.Instance
         private void Awake()
@@ -59,14 +62,16 @@ namespace Programming.Operation_Board {
             if (direction.x < -0.4f)
             {
                 Debug.Log("Swipe down");
-                StartCoroutine(RotateLeft());
+                // StartCoroutine(RotateLeft()); //ZyKa!
+                animator.SetTrigger(SpinLeft);
                 ShiftOp(true);
             }
 
             if (direction.x > 0.4f)
             {
                 Debug.Log("Swipe Up");
-                StartCoroutine(RotateRight());
+                // StartCoroutine(RotateRight()); ZyKa!
+                animator.SetTrigger(SpinRight);
                 ShiftOp(false);
             }
 
