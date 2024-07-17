@@ -15815,7 +15815,7 @@ MonoBehaviour:
       - m_Target: {fileID: 175125144}
         m_TargetAssemblyTypeName: Programming.Visualisers.FinalizeButtonVisualiser,
           Programming.FractionVisualiser
-        m_MethodName: VisualiseFinaliseButton
+        m_MethodName: VisualiseFinaliseButtonFromSingletons
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

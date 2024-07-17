@@ -65,11 +65,6 @@ namespace Programming.Operation_Board
         
         public void FinalizeOperation()
         {
-            if (CalculateCombinedValue() <= 0)
-            {
-                return; 
-            }
-            
             if (_leftOperand.GetCard() == null || _rightOperand.GetCard() == null)
             {
                 Debug.LogError("Need two filled slots to calculate!");
@@ -83,6 +78,11 @@ namespace Programming.Operation_Board
             }
 
             if (CalculateCombinedValue() is null)
+            {
+                return; 
+            }
+            
+            if (CalculateCombinedValue() <= 0)
             {
                 return; 
             }
