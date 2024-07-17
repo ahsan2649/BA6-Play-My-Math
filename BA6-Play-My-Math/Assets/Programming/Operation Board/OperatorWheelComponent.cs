@@ -123,7 +123,7 @@ namespace Programming.Operation_Board {
             Debug.Log("Dragging!");
         }
 
-        public IEnumerator RotateLeft()
+        public IEnumerator RotateLeft() //deprecated
         {
             var fromAngle = Cylinder.transform.rotation;
             var toAngle = Quaternion.Euler(Cylinder.transform.eulerAngles + new Vector3(0, 0, -90));
@@ -137,7 +137,7 @@ namespace Programming.Operation_Board {
             }
         }
 
-        public IEnumerator RotateRight()
+        public IEnumerator RotateRight() //deprecated
         {
             var fromAngle = Cylinder.transform.rotation;
             var toAngle = Quaternion.Euler(Cylinder.transform.eulerAngles + new Vector3(0, 0, 90));

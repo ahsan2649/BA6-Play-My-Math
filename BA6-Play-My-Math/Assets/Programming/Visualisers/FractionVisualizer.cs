@@ -13,11 +13,9 @@ using UnityEngine;
  * BoardSize: x->Width, y->Height, z->Depth
  */
 
-//TODO: disable visuals for Fraction <= 0
-
 namespace Programming.Visualisers
 {
-    public class FractionVisualiser : MonoBehaviour
+    public class FractionVisualizer : MonoBehaviour
     {
         #region SubClasses
         private enum BoardVisualisationMode
@@ -112,13 +110,13 @@ namespace Programming.Visualisers
                 VisualisedFigures = new Dictionary<Vector3Int, GameObject>();
             }
             
-            public Fraction VisualisedFraction;
+            public readonly Fraction VisualisedFraction;
             public Vector3Int Dimensions => FigureOffsetAndSpacing.Dimensions; 
             public int Layers => FigureOffsetAndSpacing.Layers;
             public int Columns => FigureOffsetAndSpacing.Columns;
             public int Rows => FigureOffsetAndSpacing.Rows; 
             
-            public FractionVisualisationStyle VisStyle;
+            public readonly FractionVisualisationStyle VisStyle;
             public FigureOffsetAndSpacing FigureOffsetAndSpacing;
             public List<Vector3Int> VisualisedCoordinates;
             public Dictionary<Vector3Int, GameObject> VisualisedFigures; 
@@ -151,9 +149,9 @@ namespace Programming.Visualisers
         
         #region References
         [SerializeField] private FractionTextVisualiser leftFractionTextVisualiser;
-        private Vector3 leftTextVisualiserOriginPosition; 
+        private Vector3 _leftTextVisualiserOriginPosition; 
         [SerializeField] private FractionTextVisualiser rightFractionTextVisualiser;
-        private Vector3 rightTextVisualiserOriginPosition; 
+        private Vector3 _rightTextVisualiserOriginPosition; 
         
         [SerializeField] private FractionVisualisationStyle visStyle_Main; 
         [SerializeField] private FractionVisualisationStyle visStyle_Transparent;
@@ -202,8 +200,8 @@ namespace Programming.Visualisers
                 boardLayers[i] = boardLayersParent.transform.GetChild(i-1).gameObject; 
             }
 
-            leftTextVisualiserOriginPosition = leftFractionTextVisualiser.transform.position;
-            rightTextVisualiserOriginPosition = rightFractionTextVisualiser.transform.position; 
+            _leftTextVisualiserOriginPosition = leftFractionTextVisualiser.transform.position;
+            _rightTextVisualiserOriginPosition = rightFractionTextVisualiser.transform.position; 
         }
 
         #endregion
@@ -310,7 +308,8 @@ namespace Programming.Visualisers
             Tuple<Fraction, FractionVisualisationData> rightData = _visualisationDataMap[OperandType.Right]; 
             
             Operation operationCopy = 
-                ((_operation == Operation.Add || _operation == Operation.Subtract) && leftData?.Item1.Denominator != rightData?.Item1.Denominator) ? 
+                ((_operation == Operation.Add || _operation == Operation.Subtract) && leftData?.Item1.Denominator != rightData?.Item1.Denominator || 
+                 (_operation == Operation.Subtract && rightData?.Item1 > leftData?.Item1)) ? 
                     Operation.Nop : 
                     _operation; 
             Fraction combinedFraction =  Fraction.CalculateOperation(leftData?.Item1, operationCopy, rightData?.Item1);
@@ -450,6 +449,16 @@ namespace Programming.Visualisers
 
             Vector3 CalcTextVisualiserWorldPosition()
             {
+                if (visualisedCoordinates.Count == 0)
+                {
+                    return opType switch
+                    {
+                        OperandType.Left => _leftTextVisualiserOriginPosition,
+                        OperandType.Right => _rightTextVisualiserOriginPosition,
+                        _ => throw new SwitchExpressionException()
+                    }; 
+                }
+                
                 return _boardVisualisationMode switch
                 {
                     BoardVisualisationMode.FullVisualisation or BoardVisualisationMode.OneFigureVisualisation =>
@@ -459,8 +468,8 @@ namespace Programming.Visualisers
                     BoardVisualisationMode.OnlyText =>
                         opType switch
                         {
-                            OperandType.Left => leftTextVisualiserOriginPosition, 
-                            OperandType.Right => rightTextVisualiserOriginPosition, 
+                            OperandType.Left => _leftTextVisualiserOriginPosition, 
+                            OperandType.Right => _rightTextVisualiserOriginPosition, 
                             _ => throw new SwitchExpressionException()
                         },
                     _ => throw new SwitchExpressionException()
@@ -658,12 +667,12 @@ namespace Programming.Visualisers
                         {
                             while (hDivIndex < hDiv)
                             {
-                                visualisedCoordinates.Add(new Vector3Int(layerIndex, hNotIndex * hDiv + hDivIndex, vNotIndex * vDiv + vDivIndex)); 
-                                remainingFigureCount--;
-                                if (remainingFigureCount == 0)
+                                if (remainingFigureCount <= 0)
                                 {
                                     goto finishedList; 
                                 }
+                                visualisedCoordinates.Add(new Vector3Int(layerIndex, hNotIndex * hDiv + hDivIndex, vNotIndex * vDiv + vDivIndex)); 
+                                remainingFigureCount--;
                                 hDivIndex++; 
                             }
                             hDivIndex = 0; 

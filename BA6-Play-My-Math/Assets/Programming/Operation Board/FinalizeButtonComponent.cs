@@ -1,10 +1,6 @@
-using System;
-using Programming.Fraction_Engine;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 namespace Programming.Operation_Board {
     public class FinalizeButtonComponent : MonoBehaviour, IPointerClickHandler

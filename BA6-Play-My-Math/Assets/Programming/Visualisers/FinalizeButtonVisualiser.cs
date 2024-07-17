@@ -29,7 +29,7 @@ namespace Programming.Visualisers
         {
             Fraction combinedFraction = operationBoardComponent.CalculateCombinedValue(); 
             textVis.SetFraction(operationBoardComponent.CalculateCombinedValue());
-            animator.SetBool(IsFinalizeable, combinedFraction is not null && combinedFraction > 0);
+            animator.SetBool(IsFinalizeable, combinedFraction is not null && combinedFraction >= 0);
             animator.SetBool(IsNegative, combinedFraction is not null && combinedFraction < 0);
         }
     }

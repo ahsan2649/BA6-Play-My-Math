@@ -1,18 +1,19 @@
 using Programming.Enemy;
 using Programming.Fraction_Engine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Programming.Visualisers
 {
     public class EnemySlotVisualiser : MonoBehaviour
     {
         [SerializeField] private EnemySlotComponent enemySlot;
-        [SerializeField] private FractionVisualiser visualiser;
+        [FormerlySerializedAs("visualiser")] [SerializeField] private FractionVisualizer visualizer;
 
         public void VisualiseEnemy()
         {
-            visualiser.SetSingleFractionValue(enemySlot.GetEnemy()?.Value, OperandType.Left);
-            visualiser.FullUpdateVisualisations();
+            visualizer.SetSingleFractionValue(enemySlot.GetEnemy()?.Value, OperandType.Left);
+            visualizer.FullUpdateVisualisations();
         }
     }
 }

@@ -15802,7 +15802,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 555099750}
         m_TargetAssemblyTypeName: OperationBoardVisualiser, Programming.FractionVisualiser
-        m_MethodName: UpdateOperationBoardVisuals
+        m_MethodName: UpdateVisualsFromSingletons
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

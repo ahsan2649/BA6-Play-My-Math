@@ -19543,6 +19543,21 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8933169567783612131, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8933169567783612131, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8933169567783612131, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5102526280070608033, guid: 290a552d671f2dd40a4be2f43a843acc, type: 3}
@@ -19646,7 +19661,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 555099750}
         m_TargetAssemblyTypeName: OperationBoardVisualiser, Programming.FractionVisualiser
-        m_MethodName: UpdateOperationBoardVisuals
+        m_MethodName: UpdateVisualsFromSingletons
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
