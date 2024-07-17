@@ -94,7 +94,7 @@ namespace Programming.Card_Mechanism
 
         public void ShuffleDeck()
         {
-            _cardsInDeck.FisherYatesShuffleList(); 
+            _cardsInDeck.FisherYatesShuffle(); 
         }
     }
 }

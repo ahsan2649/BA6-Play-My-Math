@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor; 
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = System.Random;
@@ -83,7 +82,7 @@ namespace Programming.ExtensionMethods
             transform.SetParent(parent); 
         }
 
-        public static List<T> FisherYatesShuffleList<T>(this List<T> shuffleList)
+        public static List<T> FisherYatesShuffle<T>(this List<T> shuffleList)
         {
             Random random = new Random(); 
             int n = shuffleList.Count;
