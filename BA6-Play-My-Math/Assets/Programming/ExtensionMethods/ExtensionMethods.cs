@@ -93,6 +93,8 @@ namespace Programming.ExtensionMethods
                 int k = random.Next(0, n);
                 (shuffleList[k], shuffleList[n]) = (shuffleList[n], shuffleList[k]); 
             }
+
+            return shuffleList; 
         }
     }
 }
