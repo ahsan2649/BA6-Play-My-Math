@@ -255,7 +255,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6312651075337631359}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4488137131677743466}
+        m_TargetAssemblyTypeName: Programming.TeacherMode.FractionChanger, Programming.TeacherMode
+        m_MethodName: OpenInputArea
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 764047215252581482}
+          m_ObjectArgumentAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &1727986322604340603
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,7 +388,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5719318122786186108}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4488137131677743466}
+        m_TargetAssemblyTypeName: Programming.TeacherMode.FractionChanger, Programming.TeacherMode
+        m_MethodName: OpenInputArea
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8525433733958547640}
+          m_ObjectArgumentAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &2469417779901325179
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,9 +619,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f98563362ec2146bcf2adb673a6c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitBox: {fileID: 7742646266998153352}
-  changeCanvas: {fileID: 2469417779901325179}
+  numeratorDenominatorCanvas: {fileID: 8900305128212802231}
   enemySlotComponent: {fileID: 7712221618598843289}
+  numeratorText: {fileID: 764047215252581482}
+  denominatorText: {fileID: 8525433733958547640}
 --- !u!1 &5242362055214261518
 GameObject:
   m_ObjectHideFlags: 0
@@ -1182,19 +1207,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Programming.Visualisers.UpcomingEnemyVisualiser,
-          Programming.FractionVisualiser
-        m_MethodName: UpdateVisuals
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &9075721522740046798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1208,7 +1220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySlot: {fileID: 7712221618598843289}
-  visualiser: {fileID: 8236928759403032691}
+  visualizer: {fileID: 8236928759403032691}
 --- !u!114 &8236928759403032691 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3575969937306496323, guid: d6bc71f1d9ccbd24b94790faf1c3a627,
