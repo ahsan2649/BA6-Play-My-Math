@@ -1468,11 +1468,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSlot: {fileID: 0}
-  MoveDelta: 0.5
-  RotateDelta: 2
-  MoveSpeed: 100
-  RotateSpeed: 500
-  ScaleSpeed: 500
+  moveSpeed: 30
+  rotateSpeed: 250
 --- !u!225 &8190108925460201088
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1498,9 +1495,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oldValue:
+    difficulty: 0
     numerator: 0
     denominator: 0
   value:
+    difficulty: 0
     numerator: 2
     denominator: 3
   onValueChange:

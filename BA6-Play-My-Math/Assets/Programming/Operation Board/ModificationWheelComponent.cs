@@ -22,7 +22,8 @@ namespace Programming.Operation_Board {
         Canvas _canvas;
         CanvasGroup _canvasGroup;
 
-
+        
+        
         private void Awake()
         {
             _rectTransform = GetComponent<RectTransform>();
@@ -123,8 +124,8 @@ namespace Programming.Operation_Board {
         {
             for (int i = 0; i < 9; i++)
             {
-                Cylinder.transform.Rotate(Vector3.up, -10f, Space.World);
-                yield return new WaitForSeconds(1f / 60f);
+                Cylinder.transform.Rotate(Vector3.up, -10f * Time.deltaTime, Space.World);
+                yield return new WaitForEndOfFrame();
             }
         }
 
@@ -132,8 +133,8 @@ namespace Programming.Operation_Board {
         {
             for (int i = 0; i < 9; i++)
             {
-                Cylinder.transform.Rotate(Vector3.up, 10f, Space.World);
-                yield return new WaitForSeconds(1f / 60f);
+                Cylinder.transform.Rotate(Vector3.up, 10f * Time.deltaTime, Space.World);
+                yield return new WaitForEndOfFrame();
             }
         }
 

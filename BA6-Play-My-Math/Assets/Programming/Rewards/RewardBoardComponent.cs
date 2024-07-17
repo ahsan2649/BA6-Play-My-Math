@@ -93,9 +93,9 @@ namespace Programming.Rewards {
             _displayValue = 0;
             while (_displayValue < _achievedValue)
             {
-                _displayValue++;
+                _displayValue += 0.03f * Time.deltaTime;
                 Count.text = _displayValue.ToString();
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForEndOfFrame();
             }
         }
 
@@ -104,8 +104,8 @@ namespace Programming.Rewards {
             float targetPos = ((float)_achievedValue / maxValue) * Slider.sizeDelta.x;
             while (Counter.anchoredPosition.x < targetPos)
             {
-                Counter.anchoredPosition += new Vector2(0.05f, 0);
-                yield return new WaitForSeconds(0.005f);
+                Counter.anchoredPosition += new Vector2(0.05f * Time.deltaTime, 0);
+                yield return new WaitForEndOfFrame();
             }
         }
 
