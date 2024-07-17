@@ -1,4 +1,5 @@
 using System;
+using Programming.Card_Mechanism;
 using Programming.Fraction_Engine;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -24,6 +25,8 @@ namespace Programming.Enemy
         public void OnPointerClick(PointerEventData eventData) //triggers upon actually clicking on the Canvas
         {
             changeCanvas.SetActive(!changeCanvas.activeSelf);
+            //move cards to the center
+         
         }
 
         public void SetEnemyValue(Fraction fraction)
