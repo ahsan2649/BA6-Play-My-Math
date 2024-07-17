@@ -12,7 +12,8 @@ namespace Programming.Visualisers
         [SerializeField] private FractionTextVisualiser fractionTextVisualiser;
         [SerializeField] private Animator animator; 
         private static readonly int IsFinalizeable = Animator.StringToHash("isFinalizeable");
-        
+        private static readonly int IsNegative = Animator.StringToHash("isNegative");
+
 
         private void Awake()
         {
@@ -28,7 +29,8 @@ namespace Programming.Visualisers
         {
             Fraction combinedFraction = operationBoardComponent.CalculateCombinedValue(); 
             textVis.SetFraction(operationBoardComponent.CalculateCombinedValue());
-            animator.SetBool(IsFinalizeable, combinedFraction is not null);
+            animator.SetBool(IsFinalizeable, combinedFraction is not null && combinedFraction > 0);
+            animator.SetBool(IsNegative, combinedFraction is not null && combinedFraction < 0);
         }
     }
 }
