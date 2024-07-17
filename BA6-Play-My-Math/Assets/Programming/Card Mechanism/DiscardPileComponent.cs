@@ -27,8 +27,6 @@ namespace Programming.Card_Mechanism {
             _disCards.Add(cardMovement);
             
             cardMovement.transform.SetParent(transform);
-            cardMovement.transform.position = transform.position;
-            cardMovement.transform.rotation = Quaternion.identity;
             onDiscardPileChanged.Invoke(); 
         }
 
@@ -44,7 +42,7 @@ namespace Programming.Card_Mechanism {
             
             
             PutCardInBin(droppedCard);
-            StartCoroutine(droppedCard.DiscardAnimation());
+            droppedCard.TransformToNewParentCoroutines();
             
             PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
         }
