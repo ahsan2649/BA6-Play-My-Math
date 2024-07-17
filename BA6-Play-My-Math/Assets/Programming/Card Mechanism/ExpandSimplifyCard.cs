@@ -93,7 +93,7 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         transform.localScale = new Vector3(0.016f, 0.016f, 0.016f);
         transform.localPosition = new Vector3(0, 0, 0);
         expandSimpObj.SetActive(false);
-        
+        transform.localRotation = Quaternion.Euler(0, 0, 0);
         GetComponent<CardMovementComponent>().enabled = true; 
         
         transform.DoForAllDescendants(descendant => descendant.gameObject.layer = LayerMask.NameToLayer("UI"));
