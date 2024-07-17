@@ -7,7 +7,7 @@ namespace Programming.Tutorial
 {
     public class Tutorial_Throwaway : TutorialElement
     {
-        [SerializeField] private DeckComponent _deckComponent;
+        [SerializeField] private DiscardPileComponent discardPileComponent;
         [SerializeField] private TutorialElement previousTutorial; 
         
         protected override List<UnityEvent> GetActivationEvents()
@@ -17,7 +17,7 @@ namespace Programming.Tutorial
 
         protected override List<UnityEvent> GetFinishEvents()
         {
-            return new List<UnityEvent>(){ _deckComponent.onDeckChanged}; 
+            return new List<UnityEvent>(){ discardPileComponent.onDiscardPileChanged}; 
         }
 
         protected override bool CheckFinishCondition()
