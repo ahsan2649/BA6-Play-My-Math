@@ -2,6 +2,7 @@ using Programming.Card_Mechanism;
 using Programming.Visualisers;
 using System.Collections;
 using System.Collections.Generic;
+using Programming.ExtensionMethods;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -27,9 +28,7 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public GameObject fractionTextVisualizer;
 
-
     bool bExpand;
-
 
     void Start()
     {
@@ -62,7 +61,13 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         transform.rotation = Quaternion.Euler(90, 0, 0);
         focusOpen = true;
         
-        GetComponent<CardMovementComponent>().enabled = false; 
+        GetComponent<CardMovementComponent>().enabled = false;
+        transform.DoForAllDescendants(descendant => descendant.gameObject.layer = LayerMask.NameToLayer("3D_WorldSpace_UI"));
+        // gameObject.layer = LayerMask.NameToLayer("3D_WorldSpace_UI"); //ZyKa!
+        // foreach (Transform child in transform)
+        // {
+        //     child.gameObject.layer = LayerMask.NameToLayer("3D_WorldSpace_UI"); 
+        // }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -90,6 +95,13 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         expandSimpObj.SetActive(false);
         
         GetComponent<CardMovementComponent>().enabled = true; 
+        
+        transform.DoForAllDescendants(descendant => descendant.gameObject.layer = LayerMask.NameToLayer("UI"));
+        // gameObject.layer = LayerMask.NameToLayer("UI"); //ZyKa!
+        // foreach (Transform child in transform)
+        // {
+        //     child.gameObject.layer = LayerMask.NameToLayer("UI"); 
+        // }
     }
 
     public void Expand()
@@ -112,7 +124,6 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         {
             return; 
         }
-        
         
         if (bExpand)
         {

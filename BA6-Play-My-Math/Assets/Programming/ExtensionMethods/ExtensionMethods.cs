@@ -1,10 +1,30 @@
+using System;
 using UnityEditor; 
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Programming.ExtensionMethods
 {
     public static class ExtensionMethods
     {
+        public static void DoForAllDescendants(this Transform transform, Action<Transform> action, bool bActOnSelf = true)
+        {
+            if (bActOnSelf){action.Invoke(transform); }
+            foreach (Transform child in transform)
+            {
+                DoForAllDescendantsRecursion(child, action);
+            }
+
+            void DoForAllDescendantsRecursion(Transform descendantTransform, Action<Transform> action)
+            {
+                action.Invoke(descendantTransform);
+                foreach (Transform child in descendantTransform)
+                {
+                    DoForAllDescendantsRecursion(child, action);
+                }
+            }
+        }
+        
         public static void DestroyAllChildren(this Transform transform)
         {
             for (int i = transform.childCount -1; i >= 0; i--)
