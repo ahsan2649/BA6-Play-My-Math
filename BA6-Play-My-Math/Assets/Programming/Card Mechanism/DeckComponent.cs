@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Programming.ExtensionMethods;
 using Programming.Fraction_Engine;
 using Programming.ScriptableObjects;
 using UnityEngine;
@@ -93,14 +94,7 @@ namespace Programming.Card_Mechanism
 
         public void ShuffleDeck()
         {
-            Random random = new Random(); 
-            int n = _cardsInDeck.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = random.Next(0, n);
-                (_cardsInDeck[k], _cardsInDeck[n]) = (_cardsInDeck[n], _cardsInDeck[k]); 
-            }
+            _cardsInDeck.FisherYatesShuffle(); 
         }
     }
 }
