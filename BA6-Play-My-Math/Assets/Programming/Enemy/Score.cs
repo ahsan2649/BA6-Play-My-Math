@@ -34,13 +34,14 @@ public class Score : MonoBehaviour
     /// Adds a value to the score, based on the monster provided. Call addMonsterToScore(justDefeatedMonster)
     /// Returns the value that has been added to the score. Use getScore() get the updated total score.
     /// </summary>
-    public static int addMonsterToScore(EnemyComponent enemyComponent) 
+    public static int addFractionToScore(Fraction fraction) 
     {
         // This function requires a monster type where I can save which difficulty a fraction has. Currently that is not in the game.
         // So instead I will just add a static value buuuhuuu
-        int valueToAdd = 1;
+        int valueToAdd = fraction.difficulty;
         
         score += valueToAdd;
+        Debug.Log("Score: " + score.ToString());
 
         return valueToAdd;
     }

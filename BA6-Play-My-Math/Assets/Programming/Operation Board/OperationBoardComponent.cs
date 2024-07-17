@@ -137,7 +137,10 @@ namespace Programming.Operation_Board
 
                     CardMovementComponent unsetCard = activeOperandSlot.UnsetCard();
                     Destroy(unsetCard.gameObject);
-                    
+
+                    // Send the destroyed enemy to score
+                    Score.addFractionToScore(destroyedEnemy.Value);
+
                     PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
                     //break; -> we're allowing defeating two exact same enemies at the exact same time
                 }

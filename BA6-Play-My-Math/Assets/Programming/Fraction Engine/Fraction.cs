@@ -38,6 +38,9 @@ namespace Programming.Fraction_Engine
     [Serializable]
     public class Fraction
     {
+        // This is to keep track of the difficulty when fraction is generated in Level Generation. It's used in the Score
+        public int difficulty = 0;
+
         public int Numerator
         {
             get => numerator;

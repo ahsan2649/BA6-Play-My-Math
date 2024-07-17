@@ -35,10 +35,10 @@ namespace Programming.Enemy
                 return testCue;
             }
 
-            List<Fraction> enemyCue = generateCardDeckUsingDifficulty(currentDifficulty);
-            
-            // Adds to difficulty so next generation is harder
+            // Adds to difficulty so every next generation is harder
             currentDifficulty += difficultyAddedEachRound;
+
+            List<Fraction> enemyCue = generateCardDeckUsingDifficulty(currentDifficulty);
 
             // Generate Deck using my functions
             return enemyCue;
@@ -83,15 +83,31 @@ namespace Programming.Enemy
             return reward; 
         }
 
+        /// <summary>
+        /// This function calculates the reward tupel based on the current difficulty. 
+        /// Call this function BEFORE generating the next EnemyCue with generateEnemyCue.
+        /// The tupel is formated like this: Tupel( cardLeftForOneReward, cardsLeftForTwoRewards, CardsLeftForThreeRewards )
+        /// </summary>
+        /// <returns></returns>
+        public static List<int> generateRewardThresholdValues()
+        {
+            //List<int> rewardTupel = new List<int> { ((int)(currentDifficulty * 0.1f)), ((int)(currentDifficulty * 0.5f)), currentDifficulty };
+            List<int> rewardTupel = new List<int> { 2, 4, 6 };
+
+            return rewardTupel;
+        }
+
         // TODO @Vin: Make these dictionaries/lists/...
         // GameMode -> Denominator (also in main menu)
         // List<Difficulty> DifficultyPerEncounter
         // Difficulty -> Type of Generation & Amount
 
         private static int startDifficulty = 6;
-        public static int currentDifficulty = 6;
-
         private static int difficultyAddedEachRound = 3;
+
+        public static int currentDifficulty = startDifficulty - difficultyAddedEachRound;
+
+        
 
         /// <summary>
         /// Please call this function whenever the game is started from the beginning. 
@@ -99,11 +115,12 @@ namespace Programming.Enemy
         /// </summary>
         public static void resetDifficulty()
         {
-            currentDifficulty = startDifficulty;
+            currentDifficulty = startDifficulty - difficultyAddedEachRound;
         }
 
         internal enum GM
         {
+            FB,     // B + p = 2
             FD,     // B + p = 2
             FiD,    // B + p = 4
             AsD,    // B + p = 4
@@ -119,37 +136,42 @@ namespace Programming.Enemy
         {
             {6, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FD, GM.FD },
+                    new List<GM>() { GM.FB, GM.FB },
                 }
             },
             {9, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FD, GM.FiD },
+                    new List<GM>() { GM.FB, GM.FB, GM.FD },
                 }
             },
             {12, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FiD, GM.FiD, GM.FD },
+                    new List<GM>() { GM.FB, GM.FD, GM.FD, GM.FiD },
                 }
             },
             {15, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.AsD, GM.AsD, GM.FD, GM.FD },
+                    new List<GM>() { GM.FD, GM.FiD, GM.FiD, GM.FD },
                 }
             },
             {17, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.AD, GM.AD, GM.FiD, GM.FiD },
+                    new List<GM>() { GM.FD, GM.AsD, GM.AsD, GM.FD, GM.FD },
                 }
             },
             {20, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.AiD, GM.AiD, GM.FiD, GM.FD, GM.FD },
+                    new List<GM>() { GM.FB, GM.AD, GM.AD, GM.FiD, GM.FiD },
                 }
             },
             {23, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.MD, GM.FiD, GM.MD, GM.FD, GM.FD, GM.MiD, GM.MiD },
+                    new List<GM>() { GM.FD, GM.AiD, GM.AiD, GM.FiD, GM.FD, GM.FD },
+                }
+            },
+            {26, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.FB, GM.MD, GM.FiD, GM.MD, GM.FD, GM.FD, GM.MiD },
                 }
             },
         };
@@ -183,6 +205,22 @@ namespace Programming.Enemy
         #endregion
 
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        // BaseCombinedFraction Set
+        private static List<Fraction> BaseCombinedFractions = new List<Fraction>
+        {
+            new Fraction(4,4),
+            new Fraction(4,6),
+            new Fraction(4,8),
+            new Fraction(4,9),
+            new Fraction(6,6),
+            new Fraction(6,8),
+            new Fraction(6,9),
+            new Fraction(8,8),
+            new Fraction(8,9),
+            new Fraction(9,9),
+        };
+
 
         // SimplyfiedCombinedFractionsSet 1
         private static List<Fraction> SimplyfiedCombinedFractions = new List<Fraction>
@@ -247,7 +285,7 @@ namespace Programming.Enemy
         public static List<Fraction> generateCardDeckUsingDifficulty(int difficulty)
         {
             // Create list of Fractions, this represents the deck that will be returned
-            List<Fraction> encounterFraction = new List<Fraction>();
+            List<Fraction> encounterFractions = new List<Fraction>();
 
             List<GM> generationList = getGenerationFromDifficulty(difficulty);
 
@@ -255,61 +293,85 @@ namespace Programming.Enemy
             foreach (GM generation in generationList)
             {
                 {
+                    Fraction encounterFraction;
                     switch (generation)
                     {
                         // Addition Directs
                         case GM.AD:
-                            encounterFraction.Add(AdditionAndSubtraction.generateEncounterFraction(NumeratorPhase.Directs, DenominatorPhase.Multiple));
+                            encounterFraction = AdditionAndSubtraction.generateEncounterFraction(NumeratorPhase.Directs, DenominatorPhase.Multiple);
+                            encounterFraction.difficulty = 45;
+                            encounterFractions.Add(encounterFraction);
                             break;
 
                         // Addition Directs
                         case GM.AsD:
-                            encounterFraction.Add(AdditionAndSubtraction.generateEncounterFraction(NumeratorPhase.SimpleDirects, DenominatorPhase.Single));
+                            encounterFraction = AdditionAndSubtraction.generateEncounterFraction(NumeratorPhase.SimpleDirects, DenominatorPhase.Single);
+                            encounterFraction.difficulty = 35;
+                            encounterFractions.Add(encounterFraction);
                             break;
                         
                         // Addition Indirects
                         case GM.AiD:
-                            encounterFraction.Add(AdditionAndSubtraction.generateEncounterFraction(NumeratorPhase.PartlyIndirects, DenominatorPhase.Multiple));
+                            encounterFraction = AdditionAndSubtraction.generateEncounterFraction(NumeratorPhase.PartlyIndirects, DenominatorPhase.Multiple);
+                            encounterFraction.difficulty = 70;
+                            encounterFractions.Add(encounterFraction);
+                            break;
+
+                        // Fraction Bases
+                        case GM.FB:
+                            encounterFraction = GetRandomValueFromList(BaseCombinedFractions);
+                            encounterFraction.difficulty = 15;
+                            encounterFractions.Add(encounterFraction);
                             break;
 
                         // Fraction Directs
                         case GM.FD:
-                            encounterFraction.Add(GetRandomValueFromList(SimplyfiedCombinedFractions));
+                            encounterFraction = GetRandomValueFromList(SimplyfiedCombinedFractions);
+                            encounterFraction.difficulty = 20;
+                            encounterFractions.Add(encounterFraction);
                             break;
 
                         // Fraction Indirects
                         case GM.FiD:
-                            encounterFraction.Add(GetRandomValueFromList(SimplyfiedCombinedFractionIndirect));
+                            encounterFraction = GetRandomValueFromList(SimplyfiedCombinedFractionIndirect);
+                            encounterFraction.difficulty = 40;
+                            encounterFractions.Add(encounterFraction);
                             break;
 
                         // Multiplication Directs
                         case GM.MD:
                             /// !!!! Only generates goal values in numerator
-                            encounterFraction.Add(Multiplication.generateEncounterFraction(GM.MD, false));
+                            encounterFraction = Multiplication.generateEncounterFraction(GM.MD, false);
+                            encounterFraction.difficulty = 55;
+                            encounterFractions.Add(encounterFraction);
                             break;
 
                         // Multiplication Indirects
                         case GM.MiD:
                             /// !!!! Only generates goal values in numerator
-                            encounterFraction.Add(Multiplication.generateEncounterFraction(GM.MiD, false));
+                            encounterFraction = Multiplication.generateEncounterFraction(GM.MiD, false);
+                            encounterFraction.difficulty = 80;
+                            encounterFractions.Add(encounterFraction);
                             break;
 
                         // Multiplication Indirects
                         case GM.MiDs:
                             /// !!!! Only generates goal values in numerator
-                            encounterFraction.Add(Multiplication.generateEncounterFraction(GM.MiDs, false));
+                            encounterFraction = Multiplication.generateEncounterFraction(GM.MiDs, false);
+                            encounterFraction.difficulty = 40;
+                            encounterFractions.Add(encounterFraction);
                             break;
 
                         // Failsafe
                         default:
                             Debug.LogWarning("Failed to find Phase. This indicates you might be missing a newly added Phase in the Codeblock. Come here and add it. Returned 11/11 Fraction");
-                            encounterFraction.Add(new Fraction(11, 11));
+                            encounterFractions.Add(new Fraction(11, 11));
                             break;
                     }
                 }
             }
 
-            return encounterFraction;
+            return encounterFractions;
         }
 
         ///// <summary>
