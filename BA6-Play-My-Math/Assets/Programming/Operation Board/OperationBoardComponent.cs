@@ -128,7 +128,8 @@ namespace Programming.Operation_Board
                     continue;
                 }
 
-                if (attackCardNumber.Numerator == enemySlot.GetEnemy().Value.Numerator && attackCardNumber.Denominator == enemySlot.GetEnemy().Value.Denominator)
+                EnemyComponent enemy = enemySlot.GetEnemy(); 
+                if (attackCardNumber!.EqualsExact(enemy.Value))
                 {
                     var destroyedEnemy = enemySlot.UnsetEnemy();
                     Destroy(destroyedEnemy.gameObject);
@@ -138,6 +139,7 @@ namespace Programming.Operation_Board
                     Destroy(unsetCard.gameObject);
                     
                     PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
+                    //break; -> we're allowing defeating two exact same enemies at the exact same time
                 }
             }
         }

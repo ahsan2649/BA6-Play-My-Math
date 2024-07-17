@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace Programming.Card_Mechanism {
     public class DiscardPileComponent : MonoBehaviour, IDropHandler {
         private List<CardMovementComponent> _disCards = new List<CardMovementComponent>();
+
+        public UnityEvent onDiscardPileChanged;  
         public static DiscardPileComponent Instance { get; private set; }
         private void Awake()
         {
@@ -26,6 +29,7 @@ namespace Programming.Card_Mechanism {
             cardMovement.transform.SetParent(transform);
             cardMovement.transform.position = transform.position;
             cardMovement.transform.rotation = Quaternion.identity;
+            onDiscardPileChanged.Invoke(); 
         }
 
         public void OnDrop(PointerEventData eventData)

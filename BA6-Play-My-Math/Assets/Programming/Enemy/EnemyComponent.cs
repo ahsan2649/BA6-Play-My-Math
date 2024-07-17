@@ -3,6 +3,7 @@ using System.Collections;
 using Programming.Fraction_Engine;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace Programming.Enemy
@@ -13,6 +14,8 @@ namespace Programming.Enemy
 
         [SerializeField] TextMeshProUGUI zahler;
         [SerializeField] TextMeshProUGUI nenner;
+
+        [FormerlySerializedAs("onEnemyChange")] public UnityEvent onValueChange; 
         
         RectTransform _rectTransform;
         Canvas _canvas;
@@ -20,7 +23,11 @@ namespace Programming.Enemy
         public Fraction Value
         {
             get => value;
-            set => this.value = value;
+            set
+            {
+                this.value = value;
+                onValueChange.Invoke();
+            }
         }
 
         private void Awake()

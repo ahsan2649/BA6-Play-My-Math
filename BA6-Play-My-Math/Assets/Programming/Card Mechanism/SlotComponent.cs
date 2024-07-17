@@ -36,7 +36,6 @@ namespace Programming.Card_Mechanism
             cardMovement.currentSlot = this;
             cardMovement.enabled = true;
             
-            cardMovement.onCardChange.AddListener(OnCardChanged);
             onCardChanged.Invoke(); 
         }
         
@@ -46,8 +45,6 @@ namespace Programming.Card_Mechanism
             {
                 return null; 
             }
-            
-            _cardMovementInSlot.onCardChange.RemoveListener(OnCardChanged);
             
             var returningCard = _cardMovementInSlot;
             returningCard.currentSlot = null;

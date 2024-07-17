@@ -62,7 +62,9 @@ namespace Programming.Operation_Board
                     continue;
                 }
 
-                if (enemySlot.GetEnemy().Value.Numerator == toCheckValue.Numerator && enemySlot.GetEnemy().Value.Denominator == toCheckValue.Denominator)
+                EnemyComponent enemy = enemySlot.GetEnemy(); 
+                // if (enemy.Value.Numerator == toCheckValue.Numerator && enemy.Value.Denominator == toCheckValue.Denominator) //ZyKa!
+                if (enemy.Value.EqualsExact(toCheckValue))
                 {
                     transform.parent.gameObject.SetActive(true);
                     break; 

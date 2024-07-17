@@ -14,8 +14,6 @@ namespace Programming.Card_Mechanism {
         public SlotComponent currentSlot;
         
         [SerializeField] private float MoveDelta, RotateDelta, MoveSpeed, RotateSpeed, ScaleSpeed;
-
-        public UnityEvent onCardChange; 
         
         private void Awake()
         {

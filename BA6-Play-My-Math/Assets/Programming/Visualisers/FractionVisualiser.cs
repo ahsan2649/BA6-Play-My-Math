@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using Programming.ExtensionMethods;
 using Programming.Fraction_Engine;
 using Programming.Operation_Board;
-using Programming.Visualisers;
 using UnityEngine;
 
 //WARNING: The expand / shorten Visualisation breaks down at 30 (or any other number with three distinct prime factors)
@@ -14,13 +13,22 @@ using UnityEngine;
  * BoardSize: x->Width, y->Height, z->Depth
  */
 
-namespace Programming.FractionVisualiser
+//TODO: disable visuals for Fraction <= 0
+
+namespace Programming.Visualisers
 {
     public class FractionVisualiser : MonoBehaviour
     {
         #region SubClasses
+        private enum BoardVisualisationMode
+        {
+            FullVisualisation, 
+            OneFigureVisualisation, 
+            OnlyText
+        }
+        
         [Serializable]
-        public struct Vector2IntArray
+        public struct Vector2IntArray //needed to show stuff in the inspector
         {
             public Vector2IntArray(Vector2Int[] factors)
             {
@@ -35,16 +43,16 @@ namespace Programming.FractionVisualiser
             public Vector2Int[] factors;
         }
 
-        public struct OffsetAndSpacing
+        public struct FigureOffsetAndSpacing
         {
-            public OffsetAndSpacing(Vector3Int dimensions, Vector3 baseOffset, Vector3 figureSpacing)
+            public FigureOffsetAndSpacing(Vector3Int dimensions, Vector3 baseOffset, Vector3 figureSpacing)
             {
                 Dimensions = dimensions; 
                 BaseOffset = baseOffset;
                 FigureSpacing = figureSpacing;
             }
             
-            public OffsetAndSpacing(Vector3Int dimensions, Vector3 boardSize, float blockFigureHeight)
+            public FigureOffsetAndSpacing(Vector3Int dimensions, Vector3 boardSize, float blockFigureHeight)
             {
                 Dimensions = dimensions; 
                 FigureSpacing = new Vector3(boardSize.x / dimensions.y, blockFigureHeight, -boardSize.z / dimensions.z);
@@ -90,35 +98,28 @@ namespace Programming.FractionVisualiser
                 }
             }
         }
-
-        private enum BoardVisualisationMode
-        {
-            FullVisualisation, 
-            OneFigureVisualisation, 
-            OnlyText
-        }
-
+        
         private class FractionVisualisationData
         {
             public FractionVisualisationData(Fraction visualisedFraction,  
-                FractionVisualisationStyle visStyle, OffsetAndSpacing offsetAndSpacing, 
+                FractionVisualisationStyle visStyle, FigureOffsetAndSpacing figureOffsetAndSpacing, 
                 List<Vector3Int> visualisedCoordinates)
             {
                 VisualisedFraction = visualisedFraction; 
                 VisStyle = visStyle;
-                OffsetAndSpacing = offsetAndSpacing;
+                FigureOffsetAndSpacing = figureOffsetAndSpacing;
                 VisualisedCoordinates = visualisedCoordinates;
                 VisualisedFigures = new Dictionary<Vector3Int, GameObject>();
             }
             
             public Fraction VisualisedFraction;
-            public Vector3Int Dimensions => OffsetAndSpacing.Dimensions; 
-            public int Layers => OffsetAndSpacing.Layers;
-            public int Columns => OffsetAndSpacing.Columns;
-            public int Rows => OffsetAndSpacing.Rows; 
+            public Vector3Int Dimensions => FigureOffsetAndSpacing.Dimensions; 
+            public int Layers => FigureOffsetAndSpacing.Layers;
+            public int Columns => FigureOffsetAndSpacing.Columns;
+            public int Rows => FigureOffsetAndSpacing.Rows; 
             
             public FractionVisualisationStyle VisStyle;
-            public OffsetAndSpacing OffsetAndSpacing;
+            public FigureOffsetAndSpacing FigureOffsetAndSpacing;
             public List<Vector3Int> VisualisedCoordinates;
             public Dictionary<Vector3Int, GameObject> VisualisedFigures; 
             
@@ -262,7 +263,8 @@ namespace Programming.FractionVisualiser
             Fraction combinedValue = OperationBoardComponent.Instance.CalculateCombinedValue(); 
             if (combinedValue is not null)
             {
-                biggestFraction = biggestFraction > combinedValue ? biggestFraction : combinedValue; 
+                biggestFraction = biggestFraction > combinedValue ? biggestFraction : combinedValue;
+                biggestDenominator = biggestDenominator > combinedValue.Denominator ? biggestDenominator : combinedValue.Denominator; 
             }
 
             bool bLeftAndRightOverOne = 
@@ -280,8 +282,8 @@ namespace Programming.FractionVisualiser
                 BoardVisualisationMode.FullVisualisation;
 
 
-            leftFractionTextVisualiser.gameObject.SetActive(_boardVisualisationMode != BoardVisualisationMode.FullVisualisation);
-            rightFractionTextVisualiser.gameObject.SetActive(_boardVisualisationMode != BoardVisualisationMode.FullVisualisation);
+            leftFractionTextVisualiser.gameObject.SetActive(false); //_boardVisualisationMode != BoardVisualisationMode.FullVisualisation
+            rightFractionTextVisualiser.gameObject.SetActive(false);
 
             foreach (OperandType opTypeToUpdate in _visualisationOrder)
             {
@@ -314,13 +316,13 @@ namespace Programming.FractionVisualiser
             Fraction combinedFraction =  Fraction.CalculateOperation(leftData?.Item1, operationCopy, rightData?.Item1);
             Fraction visualisedFraction = CalcVisualisedFraction(); 
             FractionVisualisationStyle visStyle = CalcVisStyle();
-            OffsetAndSpacing offsetAndSpacing = CalcOffsetAndSpacing();
+            FigureOffsetAndSpacing figureOffsetAndSpacing = CalcOffsetAndSpacing();
             List<Vector3Int> visualisedCoordinates = CalcVisualisedCoordinates(); 
             FractionTextVisualiser fractionTextVisualiser = GetFractionTextVisualiser();
             Vector3 textVisualiserWorldPosition = CalcTextVisualiserWorldPosition(); 
             
             FractionVisualisationData visData = new FractionVisualisationData(
-                visualisedFraction, visStyle, offsetAndSpacing, visualisedCoordinates
+                visualisedFraction, visStyle, figureOffsetAndSpacing, visualisedCoordinates
                 );
 
             switch (_boardVisualisationMode)
@@ -373,13 +375,13 @@ namespace Programming.FractionVisualiser
                 }; 
             }
             
-            OffsetAndSpacing CalcOffsetAndSpacing()
+            FigureOffsetAndSpacing CalcOffsetAndSpacing()
             {
                 return opType switch
                 {
-                    OperandType.Left or OperandType.LeftModify => new OffsetAndSpacing(
+                    OperandType.Left or OperandType.LeftModify => new FigureOffsetAndSpacing(
                         GetDimensionOfFractionVisualisation(fraction), boardSize, blockFigureHeight),
-                    OperandType.Right or OperandType.RightModify => new OffsetAndSpacing(
+                    OperandType.Right or OperandType.RightModify => new FigureOffsetAndSpacing(
                         GetDimensionOfFractionVisualisation(combinedFraction ?? fraction), boardSize, blockFigureHeight),
                     _ => throw new SwitchExpressionException()
                 }; 
@@ -452,7 +454,7 @@ namespace Programming.FractionVisualiser
                 {
                     BoardVisualisationMode.FullVisualisation or BoardVisualisationMode.OneFigureVisualisation =>
                         visStyle.figureParent.transform.TransformPoint
-                        (offsetAndSpacing.CalculatePosition(visualisedCoordinates.First()) +
+                        (figureOffsetAndSpacing.CalculatePosition(visualisedCoordinates.First()) +
                          Vector3.up * textVisualiserHeight),
                     BoardVisualisationMode.OnlyText =>
                         opType switch
@@ -552,7 +554,7 @@ namespace Programming.FractionVisualiser
 
                 if (bUseAdjustedScale)
                 {
-                    newFigure.transform.localScale = Vector3.Scale(visData.OffsetAndSpacing.FigureSpacing, new Vector3(0.95f, 1.0f, 0.95f));
+                    newFigure.transform.localScale = Vector3.Scale(visData.FigureOffsetAndSpacing.FigureSpacing, new Vector3(0.95f, 1.0f, 0.95f));
                 }
 
                 newFigure.transform.localScale *= Mathf.Pow(higherLayerFigureScaleFactor, coordinates.x);
@@ -563,7 +565,7 @@ namespace Programming.FractionVisualiser
             Vector3Int coordinates, FractionVisualisationData visData)
         {
             GameObject newFigure = Instantiate(figurePrefab, parent.transform);
-            newFigure.transform.localPosition = visData.OffsetAndSpacing.CalculatePosition(coordinates);
+            newFigure.transform.localPosition = visData.FigureOffsetAndSpacing.CalculatePosition(coordinates);
             visData.VisStyle.ApplyToObject(newFigure);
             
             if (visData.VisualisedFigures.TryGetValue(coordinates, out GameObject blockingFigure))
@@ -875,12 +877,12 @@ namespace Programming.FractionVisualiser
             SetSingleFractionValue(debug_leftFraction, OperandType.Left);
         }
         
-        void NotBetween01Error(Fraction fraction, out OffsetAndSpacing offsetAndSpacing, out List<Vector3Int> visualisedCoordinates)
+        void NotBetween01Error(Fraction fraction, out FigureOffsetAndSpacing figureOffsetAndSpacing, out List<Vector3Int> visualisedCoordinates)
         {
             visualisedCoordinates = new List<Vector3Int>(); 
-            offsetAndSpacing = Mathf.Abs(fraction.Denominator) < numbersToPrimeFactors.Length ? 
-                new OffsetAndSpacing(GetDimensionOfFractionVisualisation(fraction), boardSize, blockFigureHeight) :
-                new OffsetAndSpacing(Vector3Int.one, boardSize, blockFigureHeight);
+            figureOffsetAndSpacing = Mathf.Abs(fraction.Denominator) < numbersToPrimeFactors.Length ? 
+                new FigureOffsetAndSpacing(GetDimensionOfFractionVisualisation(fraction), boardSize, blockFigureHeight) :
+                new FigureOffsetAndSpacing(Vector3Int.one, boardSize, blockFigureHeight);
                 
             Debug.LogWarning("Visualised Fraction: " + fraction + " is not between 0 and 1 or has a too big Denominator");
         }

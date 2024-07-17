@@ -1381,7 +1381,7 @@ GameObject:
   m_Component:
   - component: {fileID: 388887312376113483}
   m_Layer: 5
-  m_Name: PopUpExpandSimpl1
+  m_Name: PopUpExpandSimplDeprecated
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2659,9 +2659,6 @@ MonoBehaviour:
   MoveSpeed: 100
   RotateSpeed: 500
   ScaleSpeed: 500
-  onCardChange:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!225 &8190108925460201088
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -3101,7 +3098,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1663313761559034292}
   m_Layer: 5
-  m_Name: ExpandSimplify
+  m_Name: ExpandSimplifyDeprecated
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

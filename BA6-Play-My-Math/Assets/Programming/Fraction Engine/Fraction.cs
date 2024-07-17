@@ -93,7 +93,6 @@ namespace Programming.Fraction_Engine
             return $"{numerator} / {denominator}";
         }
         
-        
         protected bool Equals(Fraction other)
         {
             return this == other;
@@ -107,9 +106,14 @@ namespace Programming.Fraction_Engine
             return Equals((Fraction)obj);
         }
 
+        public bool EqualsExact(Fraction other)
+        {
+            return Numerator == other.Numerator && Denominator == other.Denominator; 
+        }
+        
         public override int GetHashCode()
         {
-            return HashCode.Combine(numerator, denominator);
+            return HashCode.Combine(Numerator, Denominator);
         }
 
         #endregion

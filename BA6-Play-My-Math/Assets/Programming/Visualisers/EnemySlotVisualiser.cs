@@ -7,7 +7,7 @@ namespace Programming.Visualisers
     public class EnemySlotVisualiser : MonoBehaviour
     {
         [SerializeField] private EnemySlotComponent enemySlot;
-        [SerializeField] private FractionVisualiser.FractionVisualiser visualiser;
+        [SerializeField] private FractionVisualiser visualiser;
 
         public void VisualiseEnemy()
         {

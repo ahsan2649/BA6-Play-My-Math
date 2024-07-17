@@ -13,11 +13,10 @@ namespace Programming.Operation_Board
         
         public override void SetCard(CardMovementComponent cardMovement)
         {
-            base.SetCard(cardMovement);
             if (_cardMovementInSlot is not null) {_cardMovementInSlot.GetComponent<NumberCardComponent>()?.onValueChange.RemoveListener(onCardChanged.Invoke);}
-            _cardMovementInSlot = cardMovement;
-            onCardChanged.Invoke();
+            base.SetCard(cardMovement);
             if (_cardMovementInSlot is not null) { _cardMovementInSlot.GetComponent<NumberCardComponent>()?.onValueChange.AddListener(onCardChanged.Invoke); }
+            // onCardChanged.Invoke(); already called in base
         }
 
         [FormerlySerializedAs("cardSlotType")] [Tooltip("left or right slot")] public OperandType operandType;
@@ -49,7 +48,6 @@ namespace Programming.Operation_Board
             }
 
             CardMovementComponent droppedCardMovementComponent = droppedCard.GetComponent<CardMovementComponent>();
-            
 
             SwapCards(droppedCardMovementComponent.currentSlot, droppedCardMovementComponent);
         }
