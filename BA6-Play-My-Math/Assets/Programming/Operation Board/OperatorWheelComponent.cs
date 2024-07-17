@@ -9,10 +9,8 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Programming.Operation_Board
-{
-    public class OperatorWheelComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
-    {
+namespace Programming.Operation_Board {
+    public class OperatorWheelComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
         RectTransform _rectTransform;
         Canvas _canvas;
         CanvasGroup _canvasGroup;
@@ -20,23 +18,25 @@ namespace Programming.Operation_Board
         public Operation currentOperation = Operation.Add;
         [SerializeField] private TextMeshProUGUI OperationText;
         [SerializeField] GameObject Cylinder;
-        
-        public UnityEvent OnChangeOperation; 
+
+        public UnityEvent OnChangeOperation;
 
         Vector2 _dragStart, _dragEnd;
 
+        [SerializeField] private float spinSpeed = 20f;
+
         //@Ahsan: previously Awake and Start in onEnable, but that runs simultaneously(/before) OperationBoardComponent.Awake(), but UpdateOp needs OperationBoardComponent.Instance
-        private void Awake() 
+        private void Awake()
         {
             _rectTransform = GetComponent<RectTransform>();
             _canvas = GetComponent<Canvas>();
             _canvasGroup = GetComponent<CanvasGroup>();
         }
 
-        private void Start() 
+        private void Start()
         {
             _canvas.worldCamera = Camera.main;
-            
+
             UpdateOp();
         }
 
@@ -59,14 +59,14 @@ namespace Programming.Operation_Board
             if (direction.x < -0.4f)
             {
                 Debug.Log("Swipe down");
-                StartCoroutine(RotateDown());
+                StartCoroutine(RotateLeft());
                 ShiftOp(true);
             }
 
             if (direction.x > 0.4f)
             {
                 Debug.Log("Swipe Up");
-                StartCoroutine(RotateUp());
+                StartCoroutine(RotateRight());
                 ShiftOp(false);
             }
 
@@ -83,8 +83,8 @@ namespace Programming.Operation_Board
                 Operation.Multiply => "\u00d7",
                 Operation.Divide => "\u00f7",
                 _ => throw new ArgumentOutOfRangeException()
-            }; 
-            
+            };
+
             OnChangeOperation.Invoke();
         }
 
@@ -118,21 +118,31 @@ namespace Programming.Operation_Board
             Debug.Log("Dragging!");
         }
 
-        public IEnumerator RotateDown()
+        public IEnumerator RotateLeft()
         {
-            for (int i = 0; i < 9; i++)
+            var fromAngle = Cylinder.transform.rotation;
+            var toAngle = Quaternion.Euler(Cylinder.transform.eulerAngles + new Vector3(0, 0, -90));
+
+            while (Cylinder.transform.rotation != toAngle)
             {
-                Cylinder.transform.Rotate(Vector3.forward, 10f, Space.World);
-                yield return new WaitForSeconds(1f / 60f);
+                Cylinder.transform.rotation =
+                    Quaternion.RotateTowards(Cylinder.transform.rotation, toAngle, spinSpeed * Time.deltaTime);
+
+                yield return new WaitForEndOfFrame();
             }
         }
 
-        public IEnumerator RotateUp()
+        public IEnumerator RotateRight()
         {
-            for (int i = 0; i < 9; i++)
+            var fromAngle = Cylinder.transform.rotation;
+            var toAngle = Quaternion.Euler(Cylinder.transform.eulerAngles + new Vector3(0, 0, 90));
+
+            while (Cylinder.transform.rotation != toAngle)
             {
-                Cylinder.transform.Rotate(Vector3.forward, -10f, Space.World);
-                yield return new WaitForSeconds(1f / 60f);
+                Cylinder.transform.rotation =
+                    Quaternion.RotateTowards(Cylinder.transform.rotation, toAngle, spinSpeed * Time.deltaTime);
+
+                yield return new WaitForEndOfFrame();
             }
         }
     }

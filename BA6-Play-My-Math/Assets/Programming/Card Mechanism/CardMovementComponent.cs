@@ -13,8 +13,9 @@ namespace Programming.Card_Mechanism {
         
         public SlotComponent currentSlot;
         
-        [SerializeField] private float MoveDelta, RotateDelta, MoveSpeed, RotateSpeed, ScaleSpeed;
-        
+        [SerializeField] private float moveSpeed = 30f;
+        [SerializeField] private float rotateSpeed = 250f;
+
         private void Awake()
         {
             _rectTransform = GetComponent<RectTransform>();
@@ -58,8 +59,8 @@ namespace Programming.Card_Mechanism {
             while (Vector3.Distance(transform.position, transform.parent.position) > 0.01f)
             {
                 _canvasGroup.blocksRaycasts = false;
-                transform.position = Vector3.MoveTowards(transform.position, transform.parent.position, MoveDelta);
-                yield return new WaitForSeconds(1f/MoveSpeed);
+                transform.position = Vector3.MoveTowards(transform.position, transform.parent.position, moveSpeed * Time.deltaTime);
+                yield return new WaitForEndOfFrame();
             }
 
             _canvasGroup.blocksRaycasts = true;
@@ -71,22 +72,13 @@ namespace Programming.Card_Mechanism {
             {
                 _canvasGroup.blocksRaycasts = false;
 
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, transform.parent.rotation, RotateDelta);
-                yield return new WaitForSeconds(1f/RotateSpeed);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, transform.parent.rotation, rotateSpeed * Time.deltaTime);
+                yield return new WaitForEndOfFrame();
             }
 
             _canvasGroup.blocksRaycasts = true;
         }
-
-        public IEnumerator DiscardAnimation()
-        {
-            while (transform.localScale.magnitude > 0.1f)
-            {
-                _canvasGroup.blocksRaycasts = false;
-                transform.localScale *= 0.95f;
-                yield return new WaitForSeconds(1f/ScaleSpeed);
-            }
-        }
+        
 
         #endregion
 
