@@ -27,6 +27,7 @@ namespace Programming.Card_Mechanism
             {
                 this.value = value;
                 onValueChange.Invoke(); 
+           
             }
         }
 
