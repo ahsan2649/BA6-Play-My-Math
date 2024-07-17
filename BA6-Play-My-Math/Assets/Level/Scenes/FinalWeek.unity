@@ -2274,66 +2274,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1685738686769990711, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
+    - target: {fileID: 7376175246240845922, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
         type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -11.300049
+      propertyPath: m_LocalPosition.z
+      value: -59
       objectReference: {fileID: 0}
-    - target: {fileID: 3886865421706403547, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 40.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 3886865421706403547, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
-        type: 3}
-      propertyPath: m_fontSizeBase
-      value: 40.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 4917877647481314205, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
-        type: 3}
-      propertyPath: operatorWheel
-      value: 
-      objectReference: {fileID: 1043615370}
-    - target: {fileID: 5187200351358189794, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
-        type: 3}
-      propertyPath: slotComponents.Array.data[0]
-      value: 
-      objectReference: {fileID: 149202484}
-    - target: {fileID: 5187200351358189794, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
-        type: 3}
-      propertyPath: slotComponents.Array.data[1]
-      value: 
-      objectReference: {fileID: 2137641648}
-    - target: {fileID: 5187200351358189794, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
-        type: 3}
-      propertyPath: slotComponents.Array.data[2]
-      value: 
-      objectReference: {fileID: 185707426}
-    - target: {fileID: 5187200351358189794, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
-        type: 3}
-      propertyPath: slotComponents.Array.data[3]
-      value: 
-      objectReference: {fileID: 742498523}
-    - target: {fileID: 6049467249643133237, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
-        type: 3}
-      propertyPath: deckComponentVisualiser
-      value: 
-      objectReference: {fileID: 7851334359815337915}
-    - target: {fileID: 6605474794601179429, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
-        type: 3}
-      propertyPath: slotComponents.Array.data[0]
-      value: 
-      objectReference: {fileID: 1766228133}
-    - target: {fileID: 6605474794601179429, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
-        type: 3}
-      propertyPath: slotComponents.Array.data[1]
-      value: 
-      objectReference: {fileID: 167184870}
-    - target: {fileID: 6742223581584805984, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
-        type: 3}
-      propertyPath: _deckComponent
-      value: 
-      objectReference: {fileID: 7851334359815337913}
     - target: {fileID: 7988725459090305665, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
         type: 3}
       propertyPath: m_Name
@@ -2343,21 +2288,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8209599221698994051, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
-        type: 3}
-      propertyPath: m_Colors.m_NormalColor.b
-      value: 0.023529414
-      objectReference: {fileID: 0}
-    - target: {fileID: 8209599221698994051, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
-        type: 3}
-      propertyPath: m_Colors.m_NormalColor.g
-      value: 0.54901963
-      objectReference: {fileID: 0}
-    - target: {fileID: 8209599221698994051, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
-        type: 3}
-      propertyPath: m_Colors.m_NormalColor.r
-      value: 0.9568628
       objectReference: {fileID: 0}
     - target: {fileID: 8251858314291505554, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
         type: 3}
@@ -18234,6 +18164,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PreviewAndFinaliseComponent
+      objectReference: {fileID: 0}
+    - target: {fileID: 1272695927955269974, guid: c7b9f56cb7fdcb74da703d0446666b47,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1329591804763648345, guid: c7b9f56cb7fdcb74da703d0446666b47,
         type: 3}
