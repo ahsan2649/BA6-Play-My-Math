@@ -137,7 +137,10 @@ namespace Programming.Operation_Board
                     // Send the destroyed enemy to score
                     Score.addFractionToScore(destroyedEnemy.Value);
 
-                    PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
+                    if (!EnemyZoneComponent.Instance.NoEnemiesLeft())
+                    {
+                        PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
+                    }
                     //break; -> we're allowing defeating two exact same enemies at the exact same time
                 }
             }
