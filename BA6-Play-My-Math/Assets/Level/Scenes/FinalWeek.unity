@@ -8781,7 +8781,7 @@ PrefabInstance:
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
       propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
@@ -8832,7 +8832,7 @@ PrefabInstance:
         type: 3}
       propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 3716811852255571341}
+      objectReference: {fileID: 8889429917094405128}
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
       propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[4].m_Target
@@ -8891,7 +8891,7 @@ PrefabInstance:
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
       propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
-      value: FillHand
+      value: InitalizeEnemies
       objectReference: {fileID: 0}
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
@@ -8921,7 +8921,7 @@ PrefabInstance:
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
       propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
-      value: Programming.Card_Mechanism.PlayerHandComponent, Programming.CardMechanism
+      value: Programming.Enemy.EnemyZoneComponent, Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}

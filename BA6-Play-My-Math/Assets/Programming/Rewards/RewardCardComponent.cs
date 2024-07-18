@@ -10,7 +10,8 @@ namespace Programming.Rewards
         {
             Debug.Log("Click!");
             DeckComponent.Instance.initDeck.Add(new Fraction(GetComponent<NumberCardComponent>().Value));
-            RewardBoardComponent.Instance.GenerateRewards();
+            transform.SetParent(DeckComponent.Instance.transform);
+            GetComponent<CardMovementComponent>().TransformToNewParentCoroutines();
             
             foreach (Transform slot in RewardBoardComponent.Instance.slots)
             {
@@ -19,6 +20,7 @@ namespace Programming.Rewards
                     Destroy(slot.GetChild(0).gameObject);
                 }
             }
+            RewardBoardComponent.Instance.GenerateRewards();
         }
     }
 }
