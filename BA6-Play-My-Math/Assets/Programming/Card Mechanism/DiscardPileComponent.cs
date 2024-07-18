@@ -58,6 +58,7 @@ namespace Programming.Card_Mechanism
 
         private IEnumerator ReturnToDeck()
         {
+            var waitMult = _disCards.Count; 
             for (var index = _disCards.Count - 1; index >= 0; index--)
             {
                 var card = _disCards[index];
@@ -67,7 +68,9 @@ namespace Programming.Card_Mechanism
                 card.TransformToNewParentCoroutines();
                 yield return new WaitForSeconds(.2f);
             }
-            DeckComponent.Instance.RebuildDeck();
+
+            yield return new WaitForSeconds(.2f * waitMult);
+            DeckComponent.Instance.WinRebuildDeck();
         }
     }
 }

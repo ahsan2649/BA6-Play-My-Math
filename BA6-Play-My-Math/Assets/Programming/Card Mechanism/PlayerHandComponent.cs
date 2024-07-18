@@ -70,8 +70,10 @@ namespace Programming.Card_Mechanism
 
         private IEnumerator ReturnToDeck()
         {
-            foreach (var t in cardSlots)
+            var index = 0;
+            for (; index < cardSlots.Length; index++)
             {
+                var t = cardSlots[index];
                 var slot = t;
                 CardMovementComponent card = HandPop(ref slot);
                 if (card is not null)
@@ -82,7 +84,8 @@ namespace Programming.Card_Mechanism
                     yield return new WaitForSeconds(.2f);
                 }
             }
-            DeckComponent.Instance.RebuildDeck();
+            yield return new WaitForSeconds(.2f * index);
+            DeckComponent.Instance.WinRebuildDeck();
         }
     }
 }

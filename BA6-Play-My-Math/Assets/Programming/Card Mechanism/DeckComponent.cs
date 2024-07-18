@@ -22,6 +22,7 @@ namespace Programming.Card_Mechanism
          public List<CardMovementComponent> _cardsInDeck = new();
         [SerializeField] private StartingDeckInfo startingDeck;
         [SerializeField] private GameObject numberCardPrefab;
+        private bool ready;
 
         private void Awake()
         {
@@ -101,6 +102,18 @@ namespace Programming.Card_Mechanism
         public void ShuffleDeck()
         {
             _cardsInDeck.FisherYatesShuffle();
+        }
+
+        public void WinRebuildDeck()
+        {
+            if (!ready)
+            {
+                ready = true;
+                return;
+            }
+
+            ready = false;
+            RebuildDeck();
         }
     }
 }
