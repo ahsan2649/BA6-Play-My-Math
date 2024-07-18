@@ -139,6 +139,7 @@ namespace Programming.Rewards {
 
         public void BoardEnter()
         {
+            DeckComponent.Instance.RebuildDeck();
             StartCoroutine(BoardEnterCoroutine());
         }
 
