@@ -263,6 +263,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -12.04
       objectReference: {fileID: 0}
+    - target: {fileID: 2142394655121803587, guid: 38b8b9e23f67bc6418c4eb4681b8ea71,
+        type: 3}
+      propertyPath: operatorWheel
+      value: 
+      objectReference: {fileID: 1043615370}
     - target: {fileID: 2435833291138874303, guid: 38b8b9e23f67bc6418c4eb4681b8ea71,
         type: 3}
       propertyPath: m_Pivot.x
@@ -388,6 +393,36 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0.39607844
       objectReference: {fileID: 0}
+    - target: {fileID: 3016429140112078038, guid: 38b8b9e23f67bc6418c4eb4681b8ea71,
+        type: 3}
+      propertyPath: deckComponentVisualiser
+      value: 
+      objectReference: {fileID: 7851334359815337915}
+    - target: {fileID: 3266754130655765148, guid: 38b8b9e23f67bc6418c4eb4681b8ea71,
+        type: 3}
+      propertyPath: slotComponents.Array.data[0]
+      value: 
+      objectReference: {fileID: 742498523}
+    - target: {fileID: 3266754130655765148, guid: 38b8b9e23f67bc6418c4eb4681b8ea71,
+        type: 3}
+      propertyPath: slotComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 185707426}
+    - target: {fileID: 3266754130655765148, guid: 38b8b9e23f67bc6418c4eb4681b8ea71,
+        type: 3}
+      propertyPath: slotComponents.Array.data[2]
+      value: 
+      objectReference: {fileID: 2137641648}
+    - target: {fileID: 3266754130655765148, guid: 38b8b9e23f67bc6418c4eb4681b8ea71,
+        type: 3}
+      propertyPath: slotComponents.Array.data[3]
+      value: 
+      objectReference: {fileID: 149202484}
+    - target: {fileID: 3266754130655765148, guid: 38b8b9e23f67bc6418c4eb4681b8ea71,
+        type: 3}
+      propertyPath: slotComponents.Array.data[4]
+      value: 
+      objectReference: {fileID: 77674235}
     - target: {fileID: 3345853019111056714, guid: 38b8b9e23f67bc6418c4eb4681b8ea71,
         type: 3}
       propertyPath: m_Name
@@ -408,6 +443,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3452645402442907556, guid: 38b8b9e23f67bc6418c4eb4681b8ea71,
+        type: 3}
+      propertyPath: slotComponents.Array.data[0]
+      value: 
+      objectReference: {fileID: 1766228133}
+    - target: {fileID: 3452645402442907556, guid: 38b8b9e23f67bc6418c4eb4681b8ea71,
+        type: 3}
+      propertyPath: slotComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 167184870}
     - target: {fileID: 3822316687802481148, guid: 38b8b9e23f67bc6418c4eb4681b8ea71,
         type: 3}
       propertyPath: m_Layer
@@ -443,6 +488,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5410967438376659580, guid: 38b8b9e23f67bc6418c4eb4681b8ea71,
+        type: 3}
+      propertyPath: discardPileComponent
+      value: 
+      objectReference: {fileID: 5032543781924744161}
     - target: {fileID: 5913889357983468777, guid: 38b8b9e23f67bc6418c4eb4681b8ea71,
         type: 3}
       propertyPath: m_Color.a

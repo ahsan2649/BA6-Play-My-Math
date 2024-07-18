@@ -25,20 +25,19 @@ namespace Programming.Tutorial
             TutorialElements[activeElementIndex].onTutorialStepFinished.RemoveListener(ActivateNextElement);
             
             int i = activeElementIndex; 
-            while (i < TutorialElements.Length && TutorialElements[i].bFinished)
+            while (i < TutorialElements.Length)
             {
+                if (TutorialElements[i].OpenTutorial())
+                {
+                    activeElementIndex = i; 
+                    TutorialElements[activeElementIndex].onTutorialStepFinished.AddListener(ActivateNextElement);
+                    break; 
+                }
+                
                 i++; 
             }
-
-            if (i > TutorialElements.Length)
-            {
-                Debug.Log("Tutorial Finished");
-                return; 
-            }
             
-            activeElementIndex = i; 
-            TutorialElements[activeElementIndex].OpenTutorial();
-            TutorialElements[activeElementIndex].onTutorialStepFinished.AddListener(ActivateNextElement);
+            Debug.Log("Tutorial Finished");
         }
 
         public void RestartTutorial()
@@ -48,6 +47,14 @@ namespace Programming.Tutorial
                 TutorialElements[i].ResetEvents();
             }
             ActivateFirstElement();
+        }
+
+        public void FinishTutorial()
+        {
+            for (int i = 0; i < TutorialElements.Length; i++)
+            {
+                TutorialElements[i].CloseTutorial();
+            }
         }
     }
 }

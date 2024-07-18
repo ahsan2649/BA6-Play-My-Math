@@ -24,21 +24,26 @@ namespace Programming.Tutorial
 
         public void ResetEvents()
         {
-            GetActivationEvents().ForEach(e => e.AddListener(OpenTutorial));
+            GetActivationEvents().ForEach(e => e.AddListener(() => OpenTutorial()));
             GetFinishEvents().ForEach(e => e.AddListener(CloseTutorial));
             bFinished = false; 
         }
         
-        public void OpenTutorial()
+        public bool OpenTutorial()
         {
-            if (CheckActivationCondition())
+            if (CheckActivationCondition() && ! bFinished)
             {
                 tutorialVisual.SetActive(true);            
-                GetActivationEvents().ForEach(e => e.RemoveListener(OpenTutorial));
+                GetActivationEvents().ForEach(e => e.RemoveListener(() => OpenTutorial()));
+                return true; 
+            }
+            else
+            {
+                return false; 
             }
         }
         
-        private void CloseTutorial()
+        public void CloseTutorial()
         {
             if (CheckFinishCondition() && (tutorialVisual.activeSelf || bCanFinishBeforeActivate))
             {
