@@ -10,23 +10,26 @@ namespace Programming.Tutorial
     {
         [SerializeField] private GameObject tutorialVisual;
         [FormerlySerializedAs("onStepFinished")] public UnityEvent onTutorialStepFinished;
+        public bool bCanFinishBeforeActivate;
+        public bool bFinished; 
         
         public void Awake()
         {
-            ReactivateEvent();
+            ResetEvents();
             if (tutorialVisual is null)
             {
                 tutorialVisual = this.gameObject; 
             }
         }
 
-        public void ReactivateEvent()
+        public void ResetEvents()
         {
             GetActivationEvents().ForEach(e => e.AddListener(OpenTutorial));
             GetFinishEvents().ForEach(e => e.AddListener(CloseTutorial));
+            bFinished = false; 
         }
         
-        private void OpenTutorial()
+        public void OpenTutorial()
         {
             if (CheckActivationCondition())
             {
@@ -37,9 +40,10 @@ namespace Programming.Tutorial
         
         private void CloseTutorial()
         {
-            if (CheckFinishCondition() && tutorialVisual.activeSelf)
+            if (CheckFinishCondition() && (tutorialVisual.activeSelf || bCanFinishBeforeActivate))
             {
                 tutorialVisual.SetActive(false);
+                bFinished = true; 
                 onTutorialStepFinished.Invoke();
                 GetFinishEvents().ForEach(e => e.RemoveListener(CloseTutorial));
             }

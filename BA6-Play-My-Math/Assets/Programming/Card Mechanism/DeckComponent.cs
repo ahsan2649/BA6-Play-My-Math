@@ -5,6 +5,7 @@ using Programming.Fraction_Engine;
 using Programming.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using Random = System.Random;
 
 
@@ -21,6 +22,8 @@ namespace Programming.Card_Mechanism
         [SerializeField] private StartingDeckInfo startingDeck;
         [SerializeField] private GameObject numberCardPrefab;
 
+        [FormerlySerializedAs("DecksInCardRotation")] public Vector3 CardsInDeckRotation; 
+        
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -66,7 +69,7 @@ namespace Programming.Card_Mechanism
             {
                 var card = Instantiate(numberCardPrefab,
                     new Vector3(transform.position.x, transform.position.y - listIndex * 0.125f, transform.position.z),
-                    Quaternion.Euler(-90, 0, 0), transform);
+                    Quaternion.Euler(CardsInDeckRotation), transform);
                 
                 // Disabling BaseCard, so they can't be dragged from Deck
                 card.GetComponentInChildren<CardMovementComponent>().enabled = false;

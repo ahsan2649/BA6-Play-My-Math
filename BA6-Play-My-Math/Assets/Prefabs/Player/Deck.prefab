@@ -685,6 +685,7 @@ MonoBehaviour:
   startingDeck: {fileID: 11400000, guid: ca41782fe37a562438b66eac8f67c61b, type: 2}
   numberCardPrefab: {fileID: 4476395966626981575, guid: 46ec8f4777f7d78408077aa7b4db821d,
     type: 3}
+  CardsInDeckRotation: {x: -90, y: 180, z: 0}
 --- !u!114 &6917291738556911949
 MonoBehaviour:
   m_ObjectHideFlags: 0
