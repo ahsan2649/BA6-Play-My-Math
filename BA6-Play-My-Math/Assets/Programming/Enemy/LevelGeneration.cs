@@ -146,7 +146,7 @@ namespace Programming.Enemy
         {
             {6, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.MD, GM.FB },
+                    new List<GM>() { GM.FB, GM.FB },
                 }
             },
             {9, new List<List<GM>>()
