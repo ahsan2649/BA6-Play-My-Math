@@ -7,19 +7,19 @@ using UnityEngine.Serialization;
 
 public class OperationBoardVisualiser : MonoBehaviour
 {
-    [SerializeField] private FractionVisualiser visualiser; 
+    [FormerlySerializedAs("visualiser")] [SerializeField] private FractionVisualizer visualizer; 
     [SerializeField] private OperationBoardComponent operationBoardComponent;
 
-    public void UpdateOperationBoardVisuals()
+    public void UpdateVisualsFromSingletons()
     {
         GetValuesFromOperationBoard();
-        visualiser.FullUpdateVisualisations();
+        visualizer.FullUpdateVisualisations();
     }
     
     private void GetValuesFromOperationBoard()
     {
-        visualiser.SetOperation(operationBoardComponent.OperationWheel.currentOperation);
-        visualiser.SetSingleFractionValue(operationBoardComponent.LeftOperand.GetCard() != null ? operationBoardComponent.LeftOperand.GetCard().GetComponent<NumberCardComponent>()?.Value : null, OperandType.Left);
-        visualiser.SetSingleFractionValue(operationBoardComponent.RightOperand.GetCard() != null ? operationBoardComponent.RightOperand.GetCard().GetComponent<NumberCardComponent>()?.Value : null, OperandType.Right);  
+        visualizer.SetOperation(operationBoardComponent.OperationWheel.currentOperation);
+        visualizer.SetSingleFractionValue(operationBoardComponent.LeftOperand.GetCard() != null ? operationBoardComponent.LeftOperand.GetCard().GetComponent<NumberCardComponent>()?.Value : null, OperandType.Left);
+        visualizer.SetSingleFractionValue(operationBoardComponent.RightOperand.GetCard() != null ? operationBoardComponent.RightOperand.GetCard().GetComponent<NumberCardComponent>()?.Value : null, OperandType.Right);  
     }
 }

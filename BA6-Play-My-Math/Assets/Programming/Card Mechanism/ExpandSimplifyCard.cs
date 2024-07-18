@@ -54,7 +54,7 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         giveHint = false;
         expandSimpObj.SetActive(true);
         parentSlot = transform.parent;
-        transform.parent = GameObject.FindGameObjectWithTag("Test").transform;
+        transform.SetParent(GameObject.FindGameObjectWithTag("Test").transform);
 
         transform.localPosition = new Vector3(0, 6, -5);
         transform.localScale += new Vector3(.02f, .02f, .02f);
@@ -63,6 +63,8 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
         
         GetComponent<CardMovementComponent>().enabled = false;
         transform.DoForAllDescendants(descendant => descendant.gameObject.layer = LayerMask.NameToLayer("3D_WorldSpace_UI"));
+
+        hint.SetActive(false);
         // gameObject.layer = LayerMask.NameToLayer("3D_WorldSpace_UI"); //ZyKa!
         // foreach (Transform child in transform)
         // {

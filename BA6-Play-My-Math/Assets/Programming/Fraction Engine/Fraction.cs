@@ -295,7 +295,7 @@ namespace Programming.Fraction_Engine
                     ? leftFraction - rightFraction
                     : null,
                 Operation.Multiply => leftFraction * rightFraction,
-                Operation.Divide => leftFraction / rightFraction,
+                Operation.Divide => rightFraction.Numerator != 0 ? leftFraction / rightFraction : null,
                 Operation.Nop => null, 
                 _ => throw new SwitchExpressionException()
             }; 

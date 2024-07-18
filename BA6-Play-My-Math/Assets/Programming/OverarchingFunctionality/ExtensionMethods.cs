@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = System.Random;
@@ -8,6 +9,18 @@ namespace Programming.ExtensionMethods
 {
     public static class ExtensionMethods
     {
+        public static void MakeSingleton<T>(this T newMonoBehaviour, ref T Instance) where T : MonoBehaviour
+        {
+            if (Instance is null || Instance == newMonoBehaviour)
+            {
+                Instance = newMonoBehaviour; 
+            }
+            else
+            {
+                Object.Destroy(newMonoBehaviour.gameObject);
+            }
+        }
+        
         public static void DoForAllDescendants(this Transform transform, Action<Transform> action, bool bActOnSelf = true)
         {
             if (bActOnSelf){action.Invoke(transform); }

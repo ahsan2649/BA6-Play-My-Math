@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.Generic;
 using Programming.Card_Mechanism;
 using TMPro;
 using UnityEngine;
@@ -91,7 +92,7 @@ namespace Programming.Visualisers
             {
                 for (int i = 0; i < countOfCards.Length; i++)
                 {
-                    countOfCards[i].SetValue(cardCounts[i].ToString()); 
+                    countOfCards[i].SetValue("x "+cardCounts[i].ToString()); 
                 }
 
                 higherCardsCountText.SetValue(higherCardsCount.ToString()); 

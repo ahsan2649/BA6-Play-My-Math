@@ -4,8 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
-
 
 namespace Programming.Card_Mechanism
 {
@@ -53,7 +51,7 @@ namespace Programming.Card_Mechanism
                 return;
             }
             
-            if (!draggedCardNumber.CanCombineIntoFraction || !CanCombineIntoFraction)
+            if (!draggedCardNumber.CanCombineIntoFraction || !CanCombineIntoFraction || Value == 0)
             {
                 return;
             }
@@ -99,7 +97,7 @@ namespace Programming.Card_Mechanism
                 return; 
             }
             
-            if (!droppedCardNumber.CanCombineIntoFraction || !CanCombineIntoFraction)
+            if (!droppedCardNumber.CanCombineIntoFraction || !CanCombineIntoFraction || Value == 0)
             {
                 return;
             }

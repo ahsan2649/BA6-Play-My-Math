@@ -77,17 +77,13 @@ namespace Programming.Operation_Board
                 return;
             }
 
-            if (CalculateCombinedValue() is null)
+            Fraction combinedValue = CalculateCombinedValue(); 
+            if (combinedValue is null || combinedValue < 0)
             {
                 return; 
             }
             
-            if (CalculateCombinedValue() <= 0)
-            {
-                return; 
-            }
-            
-            Fraction result = CalculateCombinedValue(); 
+            Fraction result = combinedValue; 
             Debug.Log(result);
             SetFinalizedCard(result);
 
@@ -192,7 +188,8 @@ namespace Programming.Operation_Board
             CardMovementComponent rightCard = _rightOperand.UnsetCard();
             Destroy(rightCard.gameObject);
 
-            _leftOperand.GetCard().GetComponent<NumberCardComponent>().oldValue = _leftOperand.GetCard().GetComponent<NumberCardComponent>().Value = value;
+            NumberCardComponent leftNumberCard = _leftOperand.GetCard().GetComponent<NumberCardComponent>(); 
+            leftNumberCard.oldValue = leftNumberCard.Value = value;
             
             onOperationBoardChange.Invoke();
 
