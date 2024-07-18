@@ -82,6 +82,12 @@ namespace Programming.Enemy
                 case (GameMode.easy23):
                     reward = GetRandomValueFromList(rewardList23);
                     break;
+                case (GameMode.medium235):
+                    reward = GetRandomValueFromList(rewardList23);
+                    break;
+                case (GameMode.hard2357):
+                    reward = GetRandomValueFromList(rewardList23);
+                    break;
             }
 
             return reward; 
