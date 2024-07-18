@@ -131,62 +131,82 @@ namespace Programming.Enemy
         internal enum GM
         {
             FB,     // B + p = 2
-            FD,     // B + p = 2
-            FiD,    // B + p = 4
-            AsD,    // B + p = 4
-            AD,     // B + p = 4
-            AiD,    // B + p = 6
-            MD,     // B + p = 4
-            MDs,    // B + p = 2
-            MiD,    // B + p = 6
-            MiDs,   // B + p = 4
+            FS,    // B + p = 2
+            Ads,    // B + p = 4
+            Ms,     // B + p = 4
+            M,      // B + p = 4
+            M2,     // B + p = 4
+            M3,     // B + p = 4
         }
 
         private static Dictionary<int, List<List<GM>>> difficultyToGeneration = new Dictionary<int, List<List<GM>>>
         {
             {6, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FB, GM.FB },
+                    new List<GM>() { GM.FB, GM.FB }, //4
                 }
             },
             {9, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FB, GM.FB, GM.FD },
+                    new List<GM>() { GM.FS, GM.FB, GM.FB }, //6
                 }
             },
             {12, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FB, GM.FD, GM.FD, GM.FiD },
+                    new List<GM>() { GM.FS, GM.FS, GM.FB }, //6
                 }
             },
+            // Adding Ads
             {15, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FD, GM.FiD, GM.FiD, GM.FD },
+                    new List<GM>() { GM.Ads, GM.FS, GM.FS } //8
                 }
             },
-            {17, new List<List<GM>>()
+            {18, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FD, GM.AsD, GM.AsD, GM.FD, GM.FD },
+                    new List<GM>() { GM.Ads, GM.FB, GM.FS, GM.FB, GM.FS }, //10
                 }
             },
-            {20, new List<List<GM>>()
+            {21, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FB, GM.AD, GM.AD, GM.FiD, GM.FiD },
+                    new List<GM>() { GM.Ads, GM.Ads, GM.FB, GM.FS }, //12
                 }
             },
-            {23, new List<List<GM>>()
+            // Adding Ms
+            {24, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FD, GM.AiD, GM.AiD, GM.FiD, GM.FD, GM.FD },
+                    new List<GM>() { GM.Ms, GM.FB, GM.FB, GM.FS, GM.FS, GM.FS }, // 14
                 }
             },
-            {26, new List<List<GM>>()
+            {27, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FB, GM.MD, GM.FiD, GM.MD, GM.FD, GM.FD, GM.MiD },
+                    new List<GM>() { GM.Ads, GM.Ms, GM.FB, GM.FS, GM.FB, GM.FS }, // 14
+                }
+            },
+            // Adding M
+            {30, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.M, GM.Ms, GM.Ads, GM.FB, GM.FS, GM.FS }, // 18
+                }
+            },
+            {33, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.M, GM.FB, GM.M, GM.Ads, GM.M, GM.FS, GM.FS }, // 22
+                }
+            },
+            {36, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.M, GM.M2, GM.Ads, GM.M2, GM.FB, GM.M3, GM.FS, GM.M, GM.FB }, // 30
+                }
+            },
+            {39, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.M3, GM.Ads, GM.M2, GM.Ads, GM.M2, GM.FB, GM.M3, GM.FS, GM.M, GM.FB }, // 34
                 }
             },
         };
 
-        private static int maxKeyOfGM = 15;
+        private static int maxKeyOfGM = 39;
 
         static List<GM> getGenerationFromDifficulty(int difficulty)
         {
@@ -204,7 +224,7 @@ namespace Programming.Enemy
                 // Add filler enemy fractions based on how much difficulty
                 for (int i = 0; i < rounds; i++) 
                 {
-                    gMList.Add(GM.MD);
+                    gMList.Add(GM.M);
                 }
                 return gMList;
             }
@@ -217,7 +237,7 @@ namespace Programming.Enemy
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         // BaseCombinedFraction Set
-        private static List<Fraction> BaseCombinedFractions = new List<Fraction>
+        private static List<Fraction> BaseCombinedFractions23 = new List<Fraction>
         {
             new Fraction(4,4),
             new Fraction(4,6),
@@ -231,36 +251,152 @@ namespace Programming.Enemy
             new Fraction(9,9),
         };
 
+        private static List<Fraction> BaseCombinedFractions235 = new List<Fraction>
+        {
+            new Fraction(4,4),
+            new Fraction(4,6),
+            new Fraction(4,8),
+            new Fraction(4,9),
+            new Fraction(6,6),
+            new Fraction(6,8),
+            new Fraction(6,9),
+            new Fraction(8,8),
+            new Fraction(8,9),
+            new Fraction(9,9),
+            new Fraction(4,5),
+            new Fraction(5,5),
+            new Fraction(5,6),
+            new Fraction(5,8),
+            new Fraction(5,9),
+            new Fraction(9,10),
+        };
+
+        private static List<Fraction> BaseCombinedFractions2357 = new List<Fraction>
+        {
+            new Fraction(4,4),
+            new Fraction(4,6),
+            new Fraction(4,8),
+            new Fraction(4,9),
+            new Fraction(6,6),
+            new Fraction(6,8),
+            new Fraction(6,9),
+            new Fraction(8,8),
+            new Fraction(8,9),
+            new Fraction(9,9),
+            new Fraction(4,5),
+            new Fraction(5,5),
+            new Fraction(5,6),
+            new Fraction(5,8),
+            new Fraction(5,9),
+            new Fraction(9,10),
+            new Fraction(4,7),
+            new Fraction(6,7),
+            new Fraction(7,8),
+            new Fraction(7,9),
+        };
+
+        static Fraction getBaseFraction()
+        {
+            Fraction fraction = new Fraction(11,1);
+
+            switch (gameMode)
+            {
+                case GameMode.easy23:
+                    fraction = GetRandomValueFromList(BaseCombinedFractions23);
+                    break;
+                case GameMode.medium235:
+                    fraction = GetRandomValueFromList(BaseCombinedFractions235);
+                    break;
+                case GameMode.hard2357:
+                    fraction = GetRandomValueFromList(BaseCombinedFractions2357);
+                    break;
+            }
+            return fraction;
+        }
 
         // SimplyfiedCombinedFractionsSet 1
-        private static List<Fraction> SimplyfiedCombinedFractions = new List<Fraction>
+        private static List<Fraction> SimplyfiedCombinedFractions23 = new List<Fraction>
         {
-            new Fraction(3,2),
-            new Fraction(2,1),
-            new Fraction(4,9),
-            new Fraction(4,3),
-            new Fraction(3,2),
-            new Fraction(9,8),
-            //Inverts
-            new Fraction(2,3),
+            new Fraction(1,3),
             new Fraction(1,2),
-            new Fraction(9,4),
             new Fraction(3,4),
             new Fraction(2,3),
-            new Fraction(8,9),
+            // Inverts
+            new Fraction(2,1),
+            new Fraction(4,3),
+            new Fraction(3,2),
         };
 
-        private static List<Fraction> SimplyfiedCombinedFractionIndirect = new List<Fraction>
+        private static List<Fraction> SimplyfiedCombinedFractions235 = new List<Fraction>
         {
-            new Fraction(3,8),
             new Fraction(1,3),
+            new Fraction(1,2),
+            new Fraction(3,4),
+            new Fraction(2,3),
+            new Fraction(2,5),
+            new Fraction(3,5),
+            new Fraction(4,5),
+            // Inverts
             new Fraction(2,1),
-            new Fraction(1,9),
-            new Fraction(1,4),
-            new Fraction(2,9),
-            new Fraction(1,6),
-            new Fraction(1,8),
+            new Fraction(4,3),
+            new Fraction(3,2),
+            new Fraction(5,3),
+            new Fraction(5,4),
         };
+
+        private static List<Fraction> SimplyfiedCombinedFractions2357 = new List<Fraction>
+        {
+            new Fraction(1,3),
+            new Fraction(1,2),
+            new Fraction(3,4),
+            new Fraction(2,3),
+            new Fraction(2,5),
+            new Fraction(3,5),
+            new Fraction(4,5),
+            new Fraction(2,7),
+            new Fraction(3,7),
+            new Fraction(4,7),
+            new Fraction(5,7),
+            // Inverts
+            new Fraction(2,1),
+            new Fraction(4,3),
+            new Fraction(3,2),
+            new Fraction(5,3),
+            new Fraction(5,4),
+            new Fraction(7,4),
+            new Fraction(7,5),
+        };
+
+        static Fraction getSimplifiedCombinedFraction()
+        {
+            Fraction fraction = new Fraction(11, 1);
+
+            switch (gameMode)
+            {
+                case GameMode.easy23:
+                    fraction = GetRandomValueFromList(SimplyfiedCombinedFractions23);
+                    break;
+                case GameMode.medium235:
+                    fraction = GetRandomValueFromList(SimplyfiedCombinedFractions235);
+                    break;
+                case GameMode.hard2357:
+                    fraction = GetRandomValueFromList(SimplyfiedCombinedFractions2357);
+                    break;
+            }
+            return fraction;
+        }
+
+        //private static List<Fraction> SimplyfiedCombinedFractionIndirect = new List<Fraction>
+        //{
+        //    new Fraction(3,8),
+        //    new Fraction(1,3),
+        //    new Fraction(2,1),
+        //    new Fraction(1,9),
+        //    new Fraction(1,4),
+        //    new Fraction(2,9),
+        //    new Fraction(1,6),
+        //    new Fraction(1,8),
+        //};
 
         // Trash
         // Fraction Assembly Set 4,6,8,9
@@ -307,68 +443,55 @@ namespace Programming.Enemy
                     switch (generation)
                     {
                         // Addition Directs
-                        case GM.AD:
-                            encounterFraction = AdditionAndSubtraction.generateEncounterFraction(NumeratorPhase.Directs, DenominatorPhase.Multiple);
-                            encounterFraction.difficulty = 45;
-                            encounterFractions.Add(encounterFraction);
-                            break;
-
-                        // Addition Directs
-                        case GM.AsD:
-                            encounterFraction = AdditionAndSubtraction.generateEncounterFraction(NumeratorPhase.SimpleDirects, DenominatorPhase.Single);
-                            encounterFraction.difficulty = 35;
-                            encounterFractions.Add(encounterFraction);
-                            break;
-                        
-                        // Addition Indirects
-                        case GM.AiD:
-                            encounterFraction = AdditionAndSubtraction.generateEncounterFraction(NumeratorPhase.PartlyIndirects, DenominatorPhase.Multiple);
-                            encounterFraction.difficulty = 70;
+                        case GM.Ads:
+                            encounterFraction = AdditionAndSubtraction.generateEncounterFraction();
+                            encounterFraction.difficulty = 40;
                             encounterFractions.Add(encounterFraction);
                             break;
 
                         // Fraction Bases
                         case GM.FB:
-                            encounterFraction = GetRandomValueFromList(BaseCombinedFractions);
+                            encounterFraction = getBaseFraction();
                             encounterFraction.difficulty = 15;
                             encounterFractions.Add(encounterFraction);
                             break;
 
-                        // Fraction Directs
-                        case GM.FD:
-                            encounterFraction = GetRandomValueFromList(SimplyfiedCombinedFractions);
+                        // Fraction Simplified Combines
+                        case GM.FS:
+                            encounterFraction = getSimplifiedCombinedFraction();
                             encounterFraction.difficulty = 20;
                             encounterFractions.Add(encounterFraction);
                             break;
 
-                        // Fraction Indirects
-                        case GM.FiD:
-                            encounterFraction = GetRandomValueFromList(SimplyfiedCombinedFractionIndirect);
-                            encounterFraction.difficulty = 40;
-                            encounterFractions.Add(encounterFraction);
-                            break;
-
                         // Multiplication Directs
-                        case GM.MD:
+                        case GM.Ms:
                             /// !!!! Only generates goal values in numerator
-                            encounterFraction = Multiplication.generateEncounterFraction(ChallangeSet.Simple, false);
+                            encounterFraction = Multiplication.generateEncounterFraction(ChallangeSet.Simple);
                             encounterFraction.difficulty = 55;
                             encounterFractions.Add(encounterFraction);
                             break;
 
                         // Multiplication Indirects
-                        case GM.MiD:
+                        case GM.M:
                             /// !!!! Only generates goal values in numerator
-                            encounterFraction = Multiplication.generateEncounterFraction(ChallangeSet.Normal, false);
+                            encounterFraction = Multiplication.generateEncounterFraction(ChallangeSet.Normal);
                             encounterFraction.difficulty = 80;
                             encounterFractions.Add(encounterFraction);
                             break;
 
                         // Multiplication Indirects
-                        case GM.MiDs:
+                        case GM.M2:
                             /// !!!! Only generates goal values in numerator
-                            encounterFraction = Multiplication.generateEncounterFraction(ChallangeSet.TwoComposites, false);
-                            encounterFraction.difficulty = 40;
+                            encounterFraction = Multiplication.generateEncounterFraction(ChallangeSet.TwoComposites);
+                            encounterFraction.difficulty = 80;
+                            encounterFractions.Add(encounterFraction);
+                            break;
+
+                        // Multiplication Indirects
+                        case GM.M3:
+                            /// !!!! Only generates goal values in numerator
+                            encounterFraction = Multiplication.generateEncounterFraction(ChallangeSet.TwoComposites);
+                            encounterFraction.difficulty = 80;
                             encounterFractions.Add(encounterFraction);
                             break;
 
@@ -497,79 +620,199 @@ namespace Programming.Enemy
         /// </summary>
         public static class AdditionAndSubtraction
         {
-            public enum NumeratorPhase { Bases, Ones, SimpleDirects, Directs, PartlyIndirects };
-            public enum DenominatorPhase { Single, Multiple };
+            //public enum NumeratorPhase { Bases, Ones, SimpleDirects, Directs, PartlyIndirects };
+            //public enum DenominatorPhase { Single, Multiple };
+
+            static List<Fraction> additionFractionList23 = new List<Fraction>()
+            {
+                new Fraction(1,9),
+                new Fraction(2,9),
+                //new Fraction(3,9),
+                new Fraction(5,9),
+                new Fraction(7,9),
+                new Fraction(10,9),
+                new Fraction(12,9),
+                new Fraction(13,9),
+                new Fraction(14,9),
+                new Fraction(15,9),
+                new Fraction(16,9),
+                new Fraction(17,9),
+                new Fraction(18,9),
+                new Fraction(1,8),
+                new Fraction(2,8),
+                new Fraction(3,8),
+                new Fraction(5,8),
+                new Fraction(7,8),
+                new Fraction(10,8),
+                new Fraction(12,8),
+                new Fraction(13,8),
+                new Fraction(14,8),
+                new Fraction(15,8),
+                new Fraction(16,8),
+                new Fraction(5,4),
+                new Fraction(7,4),
+                new Fraction(1,6),
+                new Fraction(5,6),
+                new Fraction(7,6),
+                new Fraction(10,6),
+            };
+
+            static List<Fraction> additionFractionList235 = new List<Fraction>()
+            {
+                new Fraction(1,9),
+                new Fraction(2,9),
+                //new Fraction(3,9),
+                new Fraction(7,9),
+                //new Fraction(10,9),
+                new Fraction(11,9),
+                new Fraction(12,9),
+                new Fraction(13,9),
+                new Fraction(14,9),
+                new Fraction(15,9),
+                new Fraction(16,9),
+                new Fraction(17,9),
+                new Fraction(18,9),
+                new Fraction(1,8),
+                new Fraction(2,8),
+                new Fraction(3,8),
+                new Fraction(7,8),
+                //new Fraction(10,8),
+                new Fraction(11,8),
+                new Fraction(12,8),
+                new Fraction(13,8),
+                new Fraction(14,8),
+                new Fraction(15,8),
+                new Fraction(16,8),
+                new Fraction(7,4),
+                new Fraction(1,5),
+                new Fraction(7,5),
+                new Fraction(1,6),
+                new Fraction(7,6),
+                new Fraction(10,6),
+            };
+
+            static List<Fraction> additionFractionList2357 = new List<Fraction>()
+            {
+                new Fraction(1,9),
+                new Fraction(2,9),
+                //new Fraction(3,9),
+                //new Fraction(7,9),
+                //new Fraction(10,9),
+                new Fraction(11,9),
+                new Fraction(12,9),
+                new Fraction(13,9),
+                new Fraction(14,9),
+                new Fraction(15,9),
+                new Fraction(16,9),
+                new Fraction(17,9),
+                new Fraction(18,9),
+                new Fraction(1,8),
+                new Fraction(2,8),
+                new Fraction(3,8),
+                //new Fraction(7,8),
+                //new Fraction(10,8),
+                new Fraction(11,8),
+                new Fraction(12,8),
+                new Fraction(13,8),
+                new Fraction(14,8),
+                new Fraction(15,8),
+                new Fraction(16,8),
+                //new Fraction(7,4),
+                new Fraction(1,5),
+                //new Fraction(7,5),
+                new Fraction(1,7),
+                new Fraction(11,7),
+                new Fraction(12,7),
+                new Fraction(13,7),
+                new Fraction(1,6),
+                new Fraction(10,6),
+            };
 
             // Add Dict here (Only Phase included)
             // Addition and Subtraction
-            private static Dictionary<NumeratorPhase, int[]> NumeratorPhaseNumberRef = new Dictionary<NumeratorPhase, int[]>
-            {
-                { NumeratorPhase.Bases,             new int[] {4,6,8 } },
-                { NumeratorPhase.Ones,              new int[] {1 } },
-                { NumeratorPhase.SimpleDirects,     new int[] {2, 3, 5, 7 } },
-                { NumeratorPhase.Directs,           new int[] {10,12,14,16,17,18 } },
-                { NumeratorPhase.PartlyIndirects,   new int[] {11,13,15,19,20 } },
-            };
+            //private static Dictionary<NumeratorPhase, int[]> NumeratorPhaseNumberRef = new Dictionary<NumeratorPhase, int[]>
+            //{
+            //    { NumeratorPhase.Bases,             new int[] {4,6,8 } },
+            //    { NumeratorPhase.Ones,              new int[] {1 } },
+            //    { NumeratorPhase.SimpleDirects,     new int[] {2, 3, 5, 7 } },
+            //    { NumeratorPhase.Directs,           new int[] {10,12,14,16,17,18 } },
+            //    { NumeratorPhase.PartlyIndirects,   new int[] {11,13,15,19,20 } },
+            //};
 
-            private static Dictionary<DenominatorPhase, int[]> DenominatorPhaseNumberRef = new Dictionary<DenominatorPhase, int[]>
-            {
-                { DenominatorPhase.Single,              new int[] {9 } },
-                { DenominatorPhase.Multiple,            new int[] {4,8,9 } },
-            };
+            //private static Dictionary<DenominatorPhase, int[]> DenominatorPhaseNumberRef = new Dictionary<DenominatorPhase, int[]>
+            //{
+            //    { DenominatorPhase.Single,              new int[] {9 } },
+            //    { DenominatorPhase.Multiple,            new int[] {4,8,9 } },
+            //};
 
             /// <summary>
             /// Returns a fraction generated randomly from the exclusivly given phases.
             /// </summary>
             /// <param name="numeratorPhase"></param>
             /// <param name="denominatorPhase"></param>
-            static internal Fraction generateEncounterFraction(NumeratorPhase numeratorPhase, DenominatorPhase denominatorPhase, int[] customNumerators = null, int[] customDenominators = null)
+            static internal Fraction generateEncounterFraction()
             {
-                int numerator;
-                // Take one numerator from Dict
-                int[] numeratorList;
-                // If there are custom denomnumerators set pick those instead
-                if (customNumerators != null)
-                    numeratorList = customNumerators;
-                else
-                    numeratorList = NumeratorPhaseNumberRef[numeratorPhase];
+                //int numerator;
+                //// Take one numerator from Dict
+                //int[] numeratorList;
+                //// If there are custom denomnumerators set pick those instead
+                //if (customNumerators != null)
+                //    numeratorList = customNumerators;
+                //else
+                //    numeratorList = NumeratorPhaseNumberRef[numeratorPhase];
 
-                int randomIndex;
-                // Adds 9 (Denominator number) to the list of numerators in multiple denominators Phase
-                if (denominatorPhase == DenominatorPhase.Multiple && customNumerators != null)
+                //int randomIndex;
+                //// Adds 9 (Denominator number) to the list of numerators in multiple denominators Phase
+                //if (denominatorPhase == DenominatorPhase.Multiple && customNumerators != null)
+                //{
+                //    // Adds a chance for a 9 into the denominator calculation
+                //    randomIndex = UnityEngine.Random.Range(0, numeratorList.Length + 1);
+                //    if (randomIndex == numeratorList.Length + 1)
+                //    {
+                //        numerator = 9;
+                //    }
+                //    else
+                //    {
+                //        numerator = numeratorList[randomIndex];
+                //    }
+                //}
+                //else
+                //{
+                //    // Standard random pick
+                //    randomIndex = UnityEngine.Random.Range(0, numeratorList.Length);
+                //    numerator = numeratorList[randomIndex];
+                //}
+
+                //int denominator;
+                //// take one denominator from Dict
+                //int[] denominatorList;
+                //// If there are custom denominators set pick those instead
+                //if (customDenominators != null)
+                //    denominatorList = customDenominators;
+                //else
+                //    denominatorList = DenominatorPhaseNumberRef[denominatorPhase];
+
+                //// Standard random pick
+                //randomIndex = UnityEngine.Random.Range(0, denominatorList.Length);
+                //denominator = denominatorList[randomIndex];
+
+                //// create a fraction from both
+                //Fraction fraction = new Fraction(numerator, denominator);
+
+                Fraction fraction = new Fraction(11,1);
+
+                switch (gameMode)
                 {
-                    // Adds a chance for a 9 into the denominator calculation
-                    randomIndex = UnityEngine.Random.Range(0, numeratorList.Length + 1);
-                    if (randomIndex == numeratorList.Length + 1)
-                    {
-                        numerator = 9;
-                    }
-                    else
-                    {
-                        numerator = numeratorList[randomIndex];
-                    }
+                    case GameMode.easy23:
+                        fraction = GetRandomValueFromList(additionFractionList23);
+                        break;
+                    case GameMode.medium235:
+                        fraction = GetRandomValueFromList(additionFractionList235);
+                        break;
+                    case GameMode.hard2357:
+                        fraction = GetRandomValueFromList(additionFractionList2357);
+                        break;
                 }
-                else
-                {
-                    // Standard random pick
-                    randomIndex = UnityEngine.Random.Range(0, numeratorList.Length);
-                    numerator = numeratorList[randomIndex];
-                }
-
-                int denominator;
-                // take one denominator from Dict
-                int[] denominatorList;
-                // If there are custom denominators set pick those instead
-                if (customDenominators != null)
-                    denominatorList = customDenominators;
-                else
-                    denominatorList = DenominatorPhaseNumberRef[denominatorPhase];
-
-                // Standard random pick
-                randomIndex = UnityEngine.Random.Range(0, denominatorList.Length);
-                denominator = denominatorList[randomIndex];
-
-                // create a fraction from both
-                Fraction fraction = new Fraction(numerator, denominator);
 
                 return fraction;
             }
@@ -684,7 +927,7 @@ namespace Programming.Enemy
 
             static List<Fraction> simpleMultiplicationSet23 = new List<Fraction>()
             {
-                new Fraction(3,16),
+                new Fraction(8,27),
                 new Fraction(9,16),
             };
 
@@ -715,9 +958,8 @@ namespace Programming.Enemy
 
             static List<Fraction> simpleMultiplicationSet235 = new List<Fraction>()
             {
-                new Fraction(3,16),
-                new Fraction(5,16),
                 new Fraction(9,16),
+                new Fraction(5,16),
                 new Fraction(15,16),
                 new Fraction(2,25),
                 new Fraction(4,25),
@@ -753,7 +995,6 @@ namespace Programming.Enemy
             static List<Fraction> simpleMultiplicationSet2357 = new List<Fraction>()
             {
                 new Fraction(14,15),
-                new Fraction(3,16),
                 new Fraction(5,16),
                 new Fraction(7,16),
                 new Fraction(9,16),
@@ -959,7 +1200,7 @@ namespace Programming.Enemy
             /// </summary>
             /// <param name="make_first_value_the_numerator">Decides how to return the fraction; with the carefully generated value in the numerator or in the denominator. Having this as false will make it harder to solve for the player, but will force them to use multiplication</param>
             /// <returns></returns>
-            internal static Fraction generateEncounterFraction(ChallangeSet generationMode, bool make_first_value_the_numerator)
+            internal static Fraction generateEncounterFraction(ChallangeSet generationMode)
             {
                 Fraction fraction = new Fraction(11,1);
 
@@ -1174,49 +1415,49 @@ namespace Programming.Enemy
                 /// Returns 0, if value should be x (any value works). If you use this function, make sure to cover the 0
                 /// </summary>
                 /// <param name="p"></param>
-                int pickSecondaryValue(int p)
-                {
-                    SecondarValueGenerationTypes pickRandomValueByWeight(Dictionary<SecondarValueGenerationTypes, float> weightmap)
-                    {
-                        float totalWeight = 0f;
-                        foreach (KeyValuePair<SecondarValueGenerationTypes, float> pair in weightmap)
-                        {
-                            totalWeight += pair.Value;
-                        }
+                //int pickSecondaryValue(int p)
+                //{
+                //    SecondarValueGenerationTypes pickRandomValueByWeight(Dictionary<SecondarValueGenerationTypes, float> weightmap)
+                //    {
+                //        float totalWeight = 0f;
+                //        foreach (KeyValuePair<SecondarValueGenerationTypes, float> pair in weightmap)
+                //        {
+                //            totalWeight += pair.Value;
+                //        }
 
-                        float randomPoint = UnityEngine.Random.Range(0f, totalWeight);
+                //        float randomPoint = UnityEngine.Random.Range(0f, totalWeight);
 
-                        foreach (KeyValuePair<SecondarValueGenerationTypes, float> pair in weightmap)
-                        {
-                            if (randomPoint < pair.Value)
-                            {
-                                return pair.Key;
-                            }
-                            randomPoint -= pair.Value;
-                        }
+                //        foreach (KeyValuePair<SecondarValueGenerationTypes, float> pair in weightmap)
+                //        {
+                //            if (randomPoint < pair.Value)
+                //            {
+                //                return pair.Key;
+                //            }
+                //            randomPoint -= pair.Value;
+                //        }
 
-                        return default; // Should theoretically never be reached
-                    }
+                //        return default; // Should theoretically never be reached
+                //    }
 
-                    switch (pickRandomValueByWeight(Weights.secondaryValueProperbilityWeightmap))
-                    {
-                        case (SecondarValueGenerationTypes.X):
-                            return 0;
-                        case (SecondarValueGenerationTypes.One):
-                            return 1;
-                        case (SecondarValueGenerationTypes.Specific):
-                            // uses p to generate a secondary value that can be reached using p number of bases
-                            int x = 1;
-                            for (int i = 0; i < p; i++)
-                            {
-                                x *= GetRandomValueFromList(bases);
-                            }
-                            return x;
-                        default:
-                            Debug.LogWarning("Secondary value could not be found. An error in the weightmap or a new ValueGenerationType is likely. Defaulted to 11");
-                            return 11;
-                    }
-                }
+                //    switch (pickRandomValueByWeight(Weights.secondaryValueProperbilityWeightmap))
+                //    {
+                //        case (SecondarValueGenerationTypes.X):
+                //            return 0;
+                //        case (SecondarValueGenerationTypes.One):
+                //            return 1;
+                //        case (SecondarValueGenerationTypes.Specific):
+                //            // uses p to generate a secondary value that can be reached using p number of bases
+                //            int x = 1;
+                //            for (int i = 0; i < p; i++)
+                //            {
+                //                x *= GetRandomValueFromList(bases);
+                //            }
+                //            return x;
+                //        default:
+                //            Debug.LogWarning("Secondary value could not be found. An error in the weightmap or a new ValueGenerationType is likely. Defaulted to 11");
+                //            return 11;
+                //    }
+                //}
             }
         } // Public for enums, but also the bases list has to be changed based on which cards are accessible through the hand
 
