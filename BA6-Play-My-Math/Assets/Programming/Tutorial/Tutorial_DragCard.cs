@@ -10,11 +10,6 @@ namespace Programming.Tutorial
     {
         [SerializeField] private List<SlotComponent> slotComponents;
         
-        protected override List<UnityEvent> GetActivationEvents()
-        {
-            return slotComponents.Select(slot => slot.onCardChanged).ToList(); 
-        }
-
         protected override List<UnityEvent> GetFinishEvents()
         {
             return slotComponents.Select(slot => slot.onCardChanged).ToList(); 

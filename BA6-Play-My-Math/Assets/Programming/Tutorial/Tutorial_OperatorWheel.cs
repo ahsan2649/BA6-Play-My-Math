@@ -10,11 +10,6 @@ namespace Programming.Tutorial
         [SerializeField] private OperatorWheelComponent operatorWheel;
         [SerializeField] private TutorialElement previousTutorial; 
         
-        protected override List<UnityEvent> GetActivationEvents()
-        {
-            return new List<UnityEvent>(){previousTutorial.onTutorialStepFinished}; 
-        }
-
         protected override List<UnityEvent> GetFinishEvents()
         {
             return new List<UnityEvent>(){operatorWheel.OnChangeOperation}; 

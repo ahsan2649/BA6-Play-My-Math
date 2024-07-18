@@ -11,11 +11,6 @@ namespace Programming.Tutorial
         [SerializeField] private List<SlotComponent> slotComponents;
         [SerializeField] private TutorialElement previousTutorial; 
         
-        protected override List<UnityEvent> GetActivationEvents()
-        {
-            return new List<UnityEvent>(){previousTutorial.onTutorialStepFinished}; 
-        }
-
         protected override List<UnityEvent> GetFinishEvents()
         {
             return slotComponents.Select(slot => slot.onCardChanged).ToList(); 
