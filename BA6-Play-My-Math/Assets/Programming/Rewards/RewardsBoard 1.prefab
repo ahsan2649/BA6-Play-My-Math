@@ -462,6 +462,7 @@ MonoBehaviour:
   - {fileID: 1502313902637993262}
   - {fileID: 869594739786128687}
   maxValue: 15
+  roundCounterTemp: 0
   roundCounterText: {fileID: 1443613511426169594}
 --- !u!1 &2088156651382910992
 GameObject:
@@ -690,8 +691,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3215008193217430229}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 1}
+  m_LocalRotation: {x: 0.4999996, y: 0, z: -0, w: 0.8660256}
+  m_LocalPosition: {x: 0, y: -4.31, z: 4.6100006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
