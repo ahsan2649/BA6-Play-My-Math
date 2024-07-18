@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Programming.ExtensionMethods;
 using Programming.Fraction_Engine;
+using TMPro;
 using UnityEngine;
 using static Programming.Enemy.LevelGeneration.AdditionAndSubtraction;
 using static Programming.Enemy.LevelGeneration.Multiplication;
@@ -11,6 +13,8 @@ namespace Programming.Enemy
     {
         #region PublicFunctions
         // This is the function accessed externally, handle with care
+
+        public static GameMode gameMode = GameMode.easy23;
 
         /// <summary>
         /// Returns a list of Fractions that can be used as the "Monster Deck". 
@@ -136,7 +140,7 @@ namespace Programming.Enemy
         {
             {6, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FB, GM.FB },
+                    new List<GM>() { GM.MD, GM.FB },
                 }
             },
             {9, new List<List<GM>>()
@@ -341,7 +345,7 @@ namespace Programming.Enemy
                         // Multiplication Directs
                         case GM.MD:
                             /// !!!! Only generates goal values in numerator
-                            encounterFraction = Multiplication.generateEncounterFraction(GM.MD, false);
+                            encounterFraction = Multiplication.generateEncounterFraction(ChallangeSet.Simple, false);
                             encounterFraction.difficulty = 55;
                             encounterFractions.Add(encounterFraction);
                             break;
@@ -349,7 +353,7 @@ namespace Programming.Enemy
                         // Multiplication Indirects
                         case GM.MiD:
                             /// !!!! Only generates goal values in numerator
-                            encounterFraction = Multiplication.generateEncounterFraction(GM.MiD, false);
+                            encounterFraction = Multiplication.generateEncounterFraction(ChallangeSet.Normal, false);
                             encounterFraction.difficulty = 80;
                             encounterFractions.Add(encounterFraction);
                             break;
@@ -357,7 +361,7 @@ namespace Programming.Enemy
                         // Multiplication Indirects
                         case GM.MiDs:
                             /// !!!! Only generates goal values in numerator
-                            encounterFraction = Multiplication.generateEncounterFraction(GM.MiDs, false);
+                            encounterFraction = Multiplication.generateEncounterFraction(ChallangeSet.TwoComposites, false);
                             encounterFraction.difficulty = 40;
                             encounterFractions.Add(encounterFraction);
                             break;
@@ -654,6 +658,232 @@ namespace Programming.Enemy
             const int P_INDIREKTS_SECOND_DEGREE = 5;
             const int P_NON_DIREKTS = 4;
 
+            static List<Fraction> multiplicationSet23 = new List<Fraction>()
+            {
+                // F2 & N3
+                new Fraction(2,27),
+                new Fraction(4,27),
+                new Fraction(8,27),
+                new Fraction(2,81),
+                new Fraction(4,81),
+                new Fraction(8,81),
+                // F3 & N2
+                new Fraction(3,16),
+                new Fraction(9,16),
+                new Fraction(3,32),
+                new Fraction(9,32),
+                new Fraction(3,64),
+                new Fraction(9,64),
+            };
+
+            static List<Fraction> simpleMultiplicationSet23 = new List<Fraction>()
+            {
+                new Fraction(3,16),
+                new Fraction(9,16),
+            };
+
+            static List<Fraction> multiplicationSet235 = new List<Fraction>()
+            {
+                // F2 * F3 & N5
+                new Fraction(6,25),
+                new Fraction(12,25),
+                new Fraction(24,25),
+                new Fraction(18,25),
+                new Fraction(25,36),
+                new Fraction(25,72),
+                // F2 * F5 & N3
+                new Fraction(10,27),
+                new Fraction(20,27),
+                new Fraction(27,40),
+                new Fraction(10,81),
+                new Fraction(20,81),
+                new Fraction(40,81),
+                // F3 & F5 & N2
+                new Fraction(15,16),
+                new Fraction(16,45),
+                new Fraction(15,32),
+                new Fraction(32,45),
+                new Fraction(15,64),
+                new Fraction(45,64),
+            };
+
+            static List<Fraction> simpleMultiplicationSet235 = new List<Fraction>()
+            {
+                new Fraction(3,16),
+                new Fraction(5,16),
+                new Fraction(9,16),
+                new Fraction(15,16),
+                new Fraction(2,25),
+                new Fraction(4,25),
+                new Fraction(8,25),
+                new Fraction(16,25),
+            };
+
+            static List<Fraction> multiplicationSet2357 = new List<Fraction>()
+            {
+                // F2 * F3 & F5 * F7
+                new Fraction(6,35),
+                new Fraction(18,35),
+                new Fraction(12,35),
+                new Fraction(35,36),
+                new Fraction(24,35),
+                new Fraction(35,72),
+                // F2 * F5 & F3 * F7
+                new Fraction(10,21),
+                new Fraction(20,21),
+                new Fraction(21,40),
+                new Fraction(10,63),
+                new Fraction(20,63),
+                new Fraction(40,63),
+                // F2 * F7 & F3 & F5
+                new Fraction(14,15),
+                new Fraction(15,28),
+                new Fraction(15,48),
+                new Fraction(14,45),
+                new Fraction(28,45),
+                new Fraction(45,48),
+            };
+
+            static List<Fraction> simpleMultiplicationSet2357 = new List<Fraction>()
+            {
+                new Fraction(14,15),
+                new Fraction(3,16),
+                new Fraction(5,16),
+                new Fraction(7,16),
+                new Fraction(9,16),
+                new Fraction(15,16),
+                new Fraction(10,21),
+                new Fraction(20,21),
+                new Fraction(2,25),
+                new Fraction(4,25),
+                new Fraction(7,25),
+                new Fraction(8,25),
+                new Fraction(14,25),
+                new Fraction(16,25),
+            };
+
+            static List<Fraction> multiplication235TwoComposites = new List<Fraction>()
+            {
+                // Composites: 2,3
+                new Fraction(2,27),
+                new Fraction(4,27),
+                new Fraction(8,27),
+                new Fraction(2,81),
+                new Fraction(4,81),
+                new Fraction(8,81),
+                new Fraction(3,16),
+                new Fraction(9,16),
+                new Fraction(3,32),
+                new Fraction(9,32),
+                new Fraction(3,64),
+                new Fraction(9,64),
+                // Composites: 2,5
+                new Fraction(2,25),
+                new Fraction(4,25),
+                new Fraction(8,25),
+                new Fraction(5,16),
+                new Fraction(5,32),
+                new Fraction(5,64),
+                // Composites: 3,5
+                new Fraction(3,25),
+                new Fraction(9,25),
+                new Fraction(5,27),
+                new Fraction(5,81),
+            };
+
+            static List<Fraction> multiplication2357TwoComposites = new List<Fraction>()
+            {
+                // Composites: 2,3
+                new Fraction(2,27),
+                new Fraction(4,27),
+                new Fraction(8,27),
+                new Fraction(2,81),
+                new Fraction(4,81),
+                new Fraction(8,81),
+                new Fraction(3,16),
+                new Fraction(9,16),
+                new Fraction(3,32),
+                new Fraction(9,32),
+                new Fraction(3,64),
+                new Fraction(9,64),
+                // Composites: 2,5
+                new Fraction(2,25),
+                new Fraction(4,25),
+                new Fraction(8,25),
+                new Fraction(5,16),
+                new Fraction(5,32),
+                new Fraction(5,64),
+                // Composites: 3,5
+                new Fraction(3,25),
+                new Fraction(9,25),
+                new Fraction(5,27),
+                new Fraction(5,81),
+                // Composites: 2,7
+                new Fraction(2,49),
+                new Fraction(4,49),
+                new Fraction(8,49),
+                new Fraction(7,16),
+                new Fraction(7,32),
+                new Fraction(7,64),
+                // Composites: 3,7
+                new Fraction(3,49),
+                new Fraction(9,49),
+                new Fraction(7,27),
+                new Fraction(7,81),
+                // Composites: 5,7
+                new Fraction(5,49),
+                new Fraction(7,25),
+            };
+
+            static List<Fraction> multiplication2357ThreeComposites = new List<Fraction>()
+            {
+                // Composites: 2,3,7
+                    // N7
+                new Fraction(6,49),
+                new Fraction(12,49),
+                new Fraction(24,49),
+                new Fraction(18,49),
+                new Fraction(36,49),
+                new Fraction(49,72),
+                    // N3
+                new Fraction(14,27),
+                new Fraction(14,81),
+                new Fraction(27,28),
+                new Fraction(28,81),
+                new Fraction(27,56),
+                new Fraction(56,81),
+                    // N2
+                new Fraction(16,21),
+                new Fraction(16,63),
+                new Fraction(21,32),
+                new Fraction(32,63),
+                new Fraction(21,64),
+                new Fraction(63,64),
+                // Composites: 2,5,7
+                    // N7
+                new Fraction(10,49),
+                new Fraction(20,49),
+                new Fraction(40,49),
+                    // N5
+                new Fraction(14,25),
+                new Fraction(25,28),
+                new Fraction(25,56),
+                    // N2
+                new Fraction(16,35),
+                new Fraction(32,35),
+                new Fraction(35,64),
+                // Composites: 3,5,7
+                    // N3
+                new Fraction(27,35),
+                new Fraction(35,81),
+                    // N5
+                new Fraction(21,25),
+                new Fraction(25,63),
+                    // N7
+                new Fraction(15,49),
+                new Fraction(45,49),
+            };
+
             // +++++++++++++++++++++++++++++++++++++++++++
 
             // This list keeps track of the Base Cards used, changing these will only have an effect on secondary values... for now
@@ -710,7 +940,7 @@ namespace Programming.Enemy
 
             // +++++++++++++++++++++++++++++++++++++++++++
 
-            public enum ChallangeSet { Base, Direkt, DirektSubtract, Indirekt, IndirektSubtract, NonDirekt, IndirektSecondDegree }
+            public enum ChallangeSet { Normal, Simple, TwoComposites, ThreeComposites }
 
             public enum SecondarValueGenerationTypes { X, One, Specific }
 
@@ -723,32 +953,163 @@ namespace Programming.Enemy
             /// </summary>
             /// <param name="make_first_value_the_numerator">Decides how to return the fraction; with the carefully generated value in the numerator or in the denominator. Having this as false will make it harder to solve for the player, but will force them to use multiplication</param>
             /// <returns></returns>
-            internal static Fraction generateEncounterFraction(GM generationMode, bool make_first_value_the_numerator)
+            internal static Fraction generateEncounterFraction(ChallangeSet generationMode, bool make_first_value_the_numerator)
             {
-                Fraction fraction;
+                Fraction fraction = new Fraction(11,1);
 
-                int firstValue;
-                int p;
+                //int firstValue;
+                //int p;
 
-                // Picks the correct generation based on the GM generationMode
+                //// Picks the correct generation based on the GM generationMode
+                //switch (generationMode)
+                //{
+                //    case GM.MD:
+                //        firstValue = GetRandomValueFromList(Direkts);
+                //        p = P_DIREKTS;
+                //        break;
+                //    case GM.MiD:
+                //        firstValue = GetRandomValueFromList(Indirekts);
+                //        p = P_INDIREKTS;
+                //        break;
+                //    case GM.MiDs:
+                //        firstValue = GetRandomValueFromList(Indirekts);
+                //        p = P_SUBSTRACT_INDIREKTS;
+                //        break;
+                //    default:
+                //        Debug.LogWarning("Couldn't find the GM in this context. You're likely missing the newly added Challange set in this code block. Returned 11 instead");
+                //        firstValue = 11;
+                //        p = 1;
+                //        break;
+                //}
+
+                //Dictionary<int, List<int>> AVAILABLE_BASES = new Dictionary<int, List<int>>()
+                //{
+                //    { 2 , new List<int>() {2,4,8,16} },
+                //    { 3 , new List<int>() {3,9,27} },
+                //    { 5 , new List<int>() {5,25} },
+                //    { 7 , new List<int>() {7,49} },
+                //};
+
+                //List<List<int>> availableBases = new List<List<int>>();
+
+                //switch (gameMode)
+                //{
+                //    case GameMode.easy23:
+                //        availableBases.Add(AVAILABLE_BASES[2]);
+                //        availableBases.Add(AVAILABLE_BASES[3]);
+                //        break;
+                //    case GameMode.medium235:
+                //        availableBases.Add(AVAILABLE_BASES[2]);
+                //        availableBases.Add(AVAILABLE_BASES[3]);
+                //        availableBases.Add(AVAILABLE_BASES[5]);
+                //        break;
+                //    case GameMode.hard2357:
+                //        availableBases.Add(AVAILABLE_BASES[2]);
+                //        availableBases.Add(AVAILABLE_BASES[3]);
+                //        availableBases.Add(AVAILABLE_BASES[5]);
+                //        availableBases.Add(AVAILABLE_BASES[7]);
+                //        break;
+                //    default:
+                //        Debug.LogWarning("Looks like someone didn't set the gamemode in LevelGeneration");
+                //        availableBases.Add(AVAILABLE_BASES[2]);
+                //        availableBases.Add(AVAILABLE_BASES[3]);
+                //        break;
+                //}
+                //availableBases.FisherYatesShuffle();
+
+                //int z = 1;
+                //int n = 1;
+                //Debug.Log("12");
+                //// Generate Fraction ensuring that both sides are more than 1
+                //for (int i = 0; i < availableBases.Count; i++)
+                //{
+                //    if (i >= 2)
+                //    {
+                //        int randomOne = GetRandomValueFromList(new List<int> { 0, 1 });
+                //        if (randomOne == 0)
+                //        {
+                //            z *= GetRandomValueFromList(availableBases[i]);
+                //            Debug.Log("z3:" + z.ToString());
+                //        }
+                //        else
+                //        {
+                //            n *= GetRandomValueFromList(availableBases[i]);
+                //            Debug.Log("n3:" + z.ToString());
+                //        }
+                //    }
+                //    else if (i == 1)
+                //    {
+                //        z *= GetRandomValueFromList(availableBases[i]);
+                //        Debug.Log("z:" + z.ToString());
+                //    }
+                //    else if (i == 0)
+                //    {
+                //        n *= GetRandomValueFromList(availableBases[i]);
+                //        Debug.Log("n:" + z.ToString());
+                //    }
+                //}
+
                 switch (generationMode)
                 {
-                    case GM.MD:
-                        firstValue = GetRandomValueFromList(Direkts);
-                        p = P_DIREKTS;
+                    // Standard Multiplication
+                    case ChallangeSet.Normal:
+                        switch (gameMode)
+                        {
+                            case GameMode.easy23:
+                                fraction = GetRandomValueFromList(multiplicationSet23);
+                                break;
+                            case GameMode.medium235:
+                                fraction = GetRandomValueFromList(multiplicationSet235);
+                                break;
+                            case GameMode.hard2357:
+                                fraction = GetRandomValueFromList(multiplicationSet2357);
+                                break;
+                        }
                         break;
-                    case GM.MiD:
-                        firstValue = GetRandomValueFromList(Indirekts);
-                        p = P_INDIREKTS;
+                    // Simplified Multiplication
+                    case ChallangeSet.Simple:
+                        switch (gameMode)
+                        {
+                            case GameMode.easy23:
+                                fraction = GetRandomValueFromList(simpleMultiplicationSet23);
+                                break;
+                            case GameMode.medium235:
+                                fraction = GetRandomValueFromList(simpleMultiplicationSet235);
+                                break;
+                            case GameMode.hard2357:
+                                fraction = GetRandomValueFromList(simpleMultiplicationSet2357);
+                                break;
+                        }
                         break;
-                    case GM.MiDs:
-                        firstValue = GetRandomValueFromList(Indirekts);
-                        p = P_SUBSTRACT_INDIREKTS;
+                    // Two Composites Multiplication (Default for GameModes with already only Two Composites)
+                    case ChallangeSet.TwoComposites:
+                        switch (gameMode)
+                        {
+                            case GameMode.easy23:
+                                fraction = GetRandomValueFromList(multiplicationSet23);
+                                break;
+                            case GameMode.medium235:
+                                fraction = GetRandomValueFromList(multiplication235TwoComposites);
+                                break;
+                            case GameMode.hard2357:
+                                fraction = GetRandomValueFromList(multiplication2357TwoComposites);
+                                break;
+                        }
                         break;
-                    default:
-                        Debug.LogWarning("Couldn't find the GM in this context. You're likely missing the newly added Challange set in this code block. Returned 11 instead");
-                        firstValue = 11;
-                        p = 1;
+                    // Three Composites Multiplication (Default for GameModes with already only three Composites or less)
+                    case ChallangeSet.ThreeComposites:
+                        switch (gameMode)
+                        {
+                            case GameMode.easy23:
+                                fraction = GetRandomValueFromList(multiplicationSet23);
+                                break;
+                            case GameMode.medium235:
+                                fraction = GetRandomValueFromList(multiplicationSet235);
+                                break;
+                            case GameMode.hard2357:
+                                fraction = GetRandomValueFromList(multiplication2357ThreeComposites);
+                                break;
+                        }
                         break;
                 }
 
@@ -780,18 +1141,26 @@ namespace Programming.Enemy
                 //        break;
                 //}
 
-                int secondValue = pickSecondaryValue(p);
+                //int secondValue = pickSecondaryValue(p);
 
-                // creates the fraction either with the goal value being the numerator or denominator, based on bool given
-                if (make_first_value_the_numerator)
-                {
-                    fraction = new Fraction(firstValue, secondValue);
-                }
-                else
-                {
-                    fraction = new Fraction(secondValue, firstValue);
-                }
+                //// creates the fraction either with the goal value being the numerator or denominator, based on bool given
+                //if (make_first_value_the_numerator)
+                //{
+                //    fraction = new Fraction(firstValue, secondValue);
+                //}
+                //else
+                //{
+                //    fraction = new Fraction(secondValue, firstValue);
+                //}
 
+                //if (z > n)
+                //{
+                //    fraction = new Fraction(n, z);
+                //}
+                //else
+                //{
+                //    fraction = new Fraction(z, n);
+                //}
                 return fraction;
 
                 /// <summary>
