@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.CompilerServices;
 using Programming.Fraction_Engine;
 using TMPro;
@@ -23,7 +24,15 @@ namespace Programming.TeacherMode
                 if (NumberInputArea.Instance.gameObject.activeSelf) {CloseInputArea();}
             }
         }
+
+        protected void Start()
+        {
+            CheckEnable();
+        }
+
+        public abstract void CheckEnable(); 
         
+
         public void OpenInputArea(TMP_Text text) //opens the 0-9 digits input area
         {
             SetActiveTextField(text);

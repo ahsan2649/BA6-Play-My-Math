@@ -26,8 +26,6 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
     public GameObject btn7;
     public Color btnIncorrectColor;
 
-    public GameObject fractionTextVisualizer;
-
     bool bExpand;
 
     void Start()

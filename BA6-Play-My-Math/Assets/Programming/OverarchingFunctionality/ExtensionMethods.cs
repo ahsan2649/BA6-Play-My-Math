@@ -9,11 +9,12 @@ namespace Programming.ExtensionMethods
 {
     public static class ExtensionMethods
     {
-        public static void MakeSingleton<T>(this T newMonoBehaviour, ref T Instance) where T : MonoBehaviour
+        public static void MakeSingleton<T>(this T newMonoBehaviour, ref T Instance, bool bDontDestroyOnLoad = false) where T : MonoBehaviour
         {
             if (Instance is null || Instance == newMonoBehaviour)
             {
                 Instance = newMonoBehaviour; 
+                Object.DontDestroyOnLoad(Instance.gameObject);
             }
             else
             {

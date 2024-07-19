@@ -3,6 +3,7 @@ using Programming.Fraction_Engine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Programming.TeacherMode
 {
@@ -13,7 +14,11 @@ namespace Programming.TeacherMode
         private EnemyComponent enemyComponent;
 
         [SerializeField] private TMP_Text numeratorText; 
-        [SerializeField] private TMP_Text denominatorText; 
+        [SerializeField] private TMP_Text denominatorText;
+
+        [SerializeField] private Button numeratorButton; 
+        [SerializeField] private Button denominatorButton; 
+        
         
         public override void OnPointerClick(PointerEventData eventData)
         {
@@ -26,6 +31,20 @@ namespace Programming.TeacherMode
             denominatorText.text = enemyComponent.Value.Denominator.ToString(); 
             
             base.OnPointerClick(eventData);
+        }
+
+        public override void CheckEnable()
+        {
+            if (SceneManaging.Instance.bTeacherMode)
+            {
+                numeratorButton.enabled = true; 
+                denominatorButton.enabled = true; 
+            }
+            else
+            {
+                numeratorButton.enabled = false; 
+                denominatorButton.enabled = false; 
+            }
         }
 
         public override void FinaliseInput()

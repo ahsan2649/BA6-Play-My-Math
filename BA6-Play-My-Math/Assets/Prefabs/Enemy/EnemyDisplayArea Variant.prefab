@@ -623,6 +623,8 @@ MonoBehaviour:
   enemySlotComponent: {fileID: 7712221618598843289}
   numeratorText: {fileID: 764047215252581482}
   denominatorText: {fileID: 8525433733958547640}
+  numeratorButton: {fileID: 8424966748890812712}
+  denominatorButton: {fileID: 4340448606062695831}
 --- !u!1 &5242362055214261518
 GameObject:
   m_ObjectHideFlags: 0
