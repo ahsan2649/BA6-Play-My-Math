@@ -137,7 +137,7 @@ namespace Programming.Enemy
             FS,     // B + p = 2
             Ads,    // B + p = 4
             AdsB,   // B + p = 4
-            Ms,     // B + p = 4
+            Ms,     // B + p = 6
             M,      // B + p = 4
             M2,     // B + p = 4
             M3,     // B + p = 4
@@ -1134,8 +1134,10 @@ namespace Programming.Enemy
 
             static List<Fraction> simpleMultiplicationSet23 = new List<Fraction>()
             {
-                new Fraction(8,27),
-                new Fraction(9,16),
+                new Fraction(1,27),
+                new Fraction(1,16),
+                new Fraction(1,32),
+                new Fraction(1,36),
             };
 
             static List<Fraction> multiplicationSet235 = new List<Fraction>()
@@ -1165,13 +1167,20 @@ namespace Programming.Enemy
 
             static List<Fraction> simpleMultiplicationSet235 = new List<Fraction>()
             {
-                new Fraction(9,16),
-                new Fraction(5,16),
-                new Fraction(15,16),
-                new Fraction(2,25),
-                new Fraction(4,25),
-                new Fraction(8,25),
-                new Fraction(16,25),
+                //new Fraction(9,16),
+                //new Fraction(5,16),
+                //new Fraction(15,16),
+                //new Fraction(2,25),
+                //new Fraction(4,25),
+                //new Fraction(8,25),
+                //new Fraction(16,25),
+                new Fraction(1,27),
+                new Fraction(1,16),
+                new Fraction(1,32),
+                new Fraction(1,36),
+                new Fraction(1,25),
+                new Fraction(1,40),
+                new Fraction(1,20),
             };
 
             static List<Fraction> multiplicationSet2357 = new List<Fraction>()
@@ -1201,19 +1210,28 @@ namespace Programming.Enemy
 
             static List<Fraction> simpleMultiplicationSet2357 = new List<Fraction>()
             {
-                new Fraction(14,15),
-                new Fraction(5,16),
-                new Fraction(7,16),
-                new Fraction(9,16),
-                new Fraction(15,16),
-                new Fraction(10,21),
-                new Fraction(20,21),
-                new Fraction(2,25),
-                new Fraction(4,25),
-                new Fraction(7,25),
-                new Fraction(8,25),
-                new Fraction(14,25),
-                new Fraction(16,25),
+                //new Fraction(14,15),
+                //new Fraction(5,16),
+                //new Fraction(7,16),
+                //new Fraction(9,16),
+                //new Fraction(15,16),
+                //new Fraction(10,21),
+                //new Fraction(20,21),
+                //new Fraction(2,25),
+                //new Fraction(4,25),
+                //new Fraction(7,25),
+                //new Fraction(8,25),
+                //new Fraction(14,25),
+                //new Fraction(16,25),
+                new Fraction(1,27),
+                new Fraction(1,16),
+                new Fraction(1,32),
+                new Fraction(1,36),
+                new Fraction(1,25),
+                new Fraction(1,40),
+                new Fraction(1,20),
+                new Fraction(1,35),
+                new Fraction(1,21),
             };
 
             static List<Fraction> multiplication235TwoComposites = new List<Fraction>()
