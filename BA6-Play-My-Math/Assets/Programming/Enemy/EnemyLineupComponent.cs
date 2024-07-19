@@ -34,7 +34,6 @@ namespace Programming.Enemy
                 Instance = this;
             }
 
-            CreateEnemyLineup();
         }
 
         public void CreateEnemyLineup()
@@ -53,7 +52,6 @@ namespace Programming.Enemy
             
             enemyLineUpCounter_temp += new Random().Next(1, 3); 
             
-            EnemyZoneComponent.Instance.InitalizeEnemies();
         }
 
         [ContextMenu("Pop Enemy")]

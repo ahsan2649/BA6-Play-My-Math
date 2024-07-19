@@ -563,6 +563,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_WheelSide_1
       objectReference: {fileID: 0}
+    - target: {fileID: 5450874685246594933, guid: 6688ad8f5f6bc6d468f618c419c454f2,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 67a8e42082314864ca8bfffd66a3c4fb, type: 2}
     - target: {fileID: 5700395231107037856, guid: 6688ad8f5f6bc6d468f618c419c454f2,
         type: 3}
       propertyPath: m_SortingLayer

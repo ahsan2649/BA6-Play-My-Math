@@ -10,8 +10,10 @@ using UnityEngine.Events;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-namespace Programming.Rewards {
-    public class RewardBoardComponent : MonoBehaviour {
+namespace Programming.Rewards
+{
+    public class RewardBoardComponent : MonoBehaviour
+    {
         public static RewardBoardComponent Instance;
         public Transform start, end;
         public Transform[] slots;
@@ -37,8 +39,8 @@ namespace Programming.Rewards {
         public int maxValue;
 
         public int roundCounterTemp;
-        [SerializeField] private TMP_Text roundCounterText; 
-        
+        [SerializeField] private TMP_Text roundCounterText;
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -58,11 +60,10 @@ namespace Programming.Rewards {
             CountRewards();
             StartCoroutine(AnimateCounter());
             StartCoroutine(AnimateSlider());
-            
+
             roundCounterTemp++;
-            roundCounterText.text = "Round: " + roundCounterTemp.ToString(); 
-            
-            GenerateRewards();
+            roundCounterText.text = "Round: " + roundCounterTemp.ToString();
+
         }
 
         public void CountRewards()
@@ -97,6 +98,7 @@ namespace Programming.Rewards {
                 Count.text = ((int)_displayValue).ToString();
                 yield return new WaitForEndOfFrame();
             }
+            GenerateRewards();
         }
 
         public IEnumerator AnimateSlider()
@@ -125,7 +127,7 @@ namespace Programming.Rewards {
                 card.GetComponent<CardMovementComponent>().enabled = false;
                 card.GetComponent<ExpandSimplifyCard>().enabled = false;
                 card.AddComponent<RewardCardComponent>();
-                cardNumber.Value = LevelGeneration.GenerateReward(LevelGeneration.GameMode.easy23); 
+                cardNumber.Value = LevelGeneration.GenerateReward(LevelGeneration.GameMode.easy23);
                 // cardNumber.Value = new Fraction(Random.Range(1, Mathf.Min(roundCounterTemp + 4, 9)), 1); 
             }
         }
@@ -139,7 +141,6 @@ namespace Programming.Rewards {
 
         public void BoardEnter()
         {
-            DeckComponent.Instance.RebuildDeck();
             StartCoroutine(BoardEnterCoroutine());
         }
 
@@ -157,7 +158,7 @@ namespace Programming.Rewards {
                 yield return new WaitForEndOfFrame();
             }
 
-            StartCoroutine("StartRewarding", 7);
+            StartRewarding(7);
         }
 
         public IEnumerator BoardExitCoroutine()

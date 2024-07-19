@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -24,10 +26,6 @@ namespace Programming.Card_Mechanism
             cardSlots = GetComponentsInChildren<HandSlotComponent>();
         }
 
-        void Start()
-        {
-            FillHand(); 
-        }
 
         public void FillHand()
         {
@@ -67,12 +65,27 @@ namespace Programming.Card_Mechanism
 
         public void ClearHand()
         {
-            for (var index = 0; index < cardSlots.Length; index++)
+            StartCoroutine(ReturnToDeck());
+        }
+
+        private IEnumerator ReturnToDeck()
+        {
+            var index = 0;
+            for (; index < cardSlots.Length; index++)
             {
-                var slot = cardSlots[index];
+                var t = cardSlots[index];
+                var slot = t;
                 CardMovementComponent card = HandPop(ref slot);
-                if (card is not null) { Destroy(card.gameObject); }
+                if (card is not null)
+                {
+                    DeckComponent.Instance._cardsInDeck.Add(card);
+                    card.transform.SetParent(DeckComponent.Instance.transform);
+                    card.TransformToNewParentCoroutines();
+                    yield return new WaitForSeconds(.2f);
+                }
             }
+            yield return new WaitForSeconds(.2f * index);
+            DeckComponent.Instance.WinRebuildDeck();
         }
     }
 }
