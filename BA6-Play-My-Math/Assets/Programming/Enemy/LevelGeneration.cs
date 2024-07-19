@@ -130,9 +130,13 @@ namespace Programming.Enemy
 
         internal enum GM
         {
+            F1,     // B + p = 2
+            F1b,    // B + p = 2
+            F2,     // B + p = 2
             FB,     // B + p = 2
-            FS,    // B + p = 2
+            FS,     // B + p = 2
             Ads,    // B + p = 4
+            AdsB,   // B + p = 4
             Ms,     // B + p = 4
             M,      // B + p = 4
             M2,     // B + p = 4
@@ -141,72 +145,108 @@ namespace Programming.Enemy
 
         private static Dictionary<int, List<List<GM>>> difficultyToGeneration = new Dictionary<int, List<List<GM>>>
         {
+            // Intro: Making Fractions
             {6, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FB, GM.FB }, //4
+                    new List<GM>() { GM.FB, GM.FB }, 
                 }
             },
             {9, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FS, GM.FB, GM.FB }, //6
+                    new List<GM>() { GM.FB, GM.FB, GM.FB }, 
                 }
             },
+            // Intro: Simplifying (to 1)
             {12, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FS, GM.FS, GM.FB }, //6
+                    new List<GM>() { GM.F1, GM.F1b },
                 }
             },
-            // Adding Ads
             {15, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.Ads, GM.FS, GM.FS } //8
+                    new List<GM>() { GM.F1, GM.F2 },
                 }
             },
+            // Intro: Simplified Fractions
             {18, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.Ads, GM.FB, GM.FS, GM.FB, GM.FS }, //10
+                    new List<GM>() { GM.FS },
                 }
             },
             {21, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.Ads, GM.Ads, GM.FB, GM.FS }, //12
+                    new List<GM>() { GM.FS, GM.FS },
                 }
             },
-            // Adding Ms
             {24, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.Ms, GM.FB, GM.FB, GM.FS, GM.FS, GM.FS }, // 14
+                    new List<GM>() { GM.FB, GM.FS, GM.F1b },
                 }
             },
+            // Wall 1
             {27, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.Ads, GM.Ms, GM.FB, GM.FS, GM.FB, GM.FS }, // 14
+                    new List<GM>() { GM.FB, GM.FS, GM.FB, GM.FS, GM.FS, GM.FS, GM.FS }, // 14
                 }
             },
-            // Adding M
+            // Intro Ads
             {30, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.M, GM.Ms, GM.Ads, GM.FB, GM.FS, GM.FS }, // 18
+                    new List<GM>() { GM.AdsB },
                 }
             },
             {33, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.M, GM.FB, GM.M, GM.Ads, GM.M, GM.FS, GM.FS }, // 22
+                    new List<GM>() { GM.AdsB, GM.Ads },
                 }
             },
             {36, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.M, GM.M2, GM.Ads, GM.M2, GM.FB, GM.M3, GM.FS, GM.M, GM.FB }, // 30
+                    new List<GM>() { GM.FS, GM.Ads, GM.FB, GM.FB },
                 }
             },
+            // Wall 2
             {39, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.M3, GM.Ads, GM.M2, GM.Ads, GM.M2, GM.FB, GM.M3, GM.FS, GM.M, GM.FB }, // 34
+                    new List<GM>() { GM.Ads, GM.FB, GM.Ads, GM.FS, GM.Ads, GM.FS, GM.Ads }, // 24
+                }
+            },
+            // Intro: Multiplication
+            {42, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.Ms }, 
+                }
+            },
+            {45, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.M },
+                }
+            },
+            {48, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.FB, GM.F1b, GM.M },
+                }
+            },
+            {51, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.M, GM.Ms, GM.FB, GM.FS, GM.FS },
+                }
+            },
+            // Adding it all together, Final
+            {54, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.M, GM.Ms, GM.Ads, GM.FB, GM.FS, GM.FS },
+                }
+            },
+            {57, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.M3, GM.Ads, GM.M2, GM.Ads, GM.M2, GM.FB, GM.M3, GM.FS, GM.M, GM.FB, GM.M, GM.Ads, GM.FS, GM.FS }, // 48
+                    new List<GM>() { GM.Ads, GM.M, GM.M2, GM.Ads, GM.M3, GM.FB, GM.Ads, GM.FS, GM.M2, GM.FB, GM.Ads, GM.M, GM.FS, GM.FS }, // 48
                 }
             },
         };
 
-        private static int maxKeyOfGM = 39;
+        private static int maxKeyOfGM = 57;
 
         static List<GM> getGenerationFromDifficulty(int difficulty)
         {
@@ -386,6 +426,19 @@ namespace Programming.Enemy
             return fraction;
         }
 
+        static List<Fraction> fractionsThatAreOne = new List<Fraction>()
+        {
+            new Fraction(2,2),
+            new Fraction(3,3),
+            new Fraction(4,4),
+            new Fraction(5,5),
+            new Fraction(6,6),
+            new Fraction(7,7),
+            new Fraction(8,8),
+            new Fraction(9,9),
+            new Fraction(12,12),
+        }; 
+
         //private static List<Fraction> SimplyfiedCombinedFractionIndirect = new List<Fraction>
         //{
         //    new Fraction(3,8),
@@ -435,6 +488,8 @@ namespace Programming.Enemy
 
             List<GM> generationList = getGenerationFromDifficulty(difficulty);
 
+            Debug.Log("Current Stage Difficulty: " +  difficulty.ToString());
+
             // for number of cards
             foreach (GM generation in generationList)
             {
@@ -449,6 +504,13 @@ namespace Programming.Enemy
                             encounterFractions.Add(encounterFraction);
                             break;
 
+                        // Addition Directs only Big
+                        case GM.AdsB:
+                            encounterFraction = AdditionAndSubtraction.generateEncounterFraction(true);
+                            encounterFraction.difficulty = 40;
+                            encounterFractions.Add(encounterFraction);
+                            break;
+
                         // Fraction Bases
                         case GM.FB:
                             encounterFraction = getBaseFraction();
@@ -459,6 +521,27 @@ namespace Programming.Enemy
                         // Fraction Simplified Combines
                         case GM.FS:
                             encounterFraction = getSimplifiedCombinedFraction();
+                            encounterFraction.difficulty = 20;
+                            encounterFractions.Add(encounterFraction);
+                            break;
+
+                        // Fraction 1,1
+                        case GM.F1:
+                            encounterFraction = new Fraction(1,1);
+                            encounterFraction.difficulty = 20;
+                            encounterFractions.Add(encounterFraction);
+                            break;
+                        
+                        // Fractions that can be simplified to 1,1
+                        case GM.F1b:
+                            encounterFraction = GetRandomValueFromList(fractionsThatAreOne);
+                            encounterFraction.difficulty = 20;
+                            encounterFractions.Add(encounterFraction);
+                            break;
+
+                        // Fraction 2,1
+                        case GM.F2:
+                            encounterFraction = new Fraction(2, 1);
                             encounterFraction.difficulty = 20;
                             encounterFractions.Add(encounterFraction);
                             break;
@@ -728,6 +811,113 @@ namespace Programming.Enemy
                 new Fraction(10,6),
             };
 
+            // Addition Fractions that have a bigger numerator than denominator
+
+            static List<Fraction> additionFractionList23Big = new List<Fraction>()
+            {
+                //new Fraction(1,9),
+                //new Fraction(2,9),
+                //new Fraction(3,9),
+                //new Fraction(5,9),
+                //new Fraction(7,9),
+                new Fraction(10,9),
+                new Fraction(12,9),
+                new Fraction(13,9),
+                new Fraction(14,9),
+                new Fraction(15,9),
+                new Fraction(16,9),
+                new Fraction(17,9),
+                new Fraction(18,9),
+                //new Fraction(1,8),
+                //new Fraction(2,8),
+                //new Fraction(3,8),
+                //new Fraction(5,8),
+                //new Fraction(7,8),
+                new Fraction(10,8),
+                new Fraction(12,8),
+                new Fraction(13,8),
+                new Fraction(14,8),
+                new Fraction(15,8),
+                new Fraction(16,8),
+                new Fraction(5,4),
+                new Fraction(7,4),
+                //new Fraction(1,6),
+                //new Fraction(5,6),
+                new Fraction(7,6),
+                new Fraction(10,6),
+            };
+
+            static List<Fraction> additionFractionList235Big = new List<Fraction>()
+            {
+                ////new Fraction(1,9),
+                ////new Fraction(2,9),
+                //new Fraction(3,9),
+                //new Fraction(7,9),
+                //new Fraction(10,9),
+                new Fraction(11,9),
+                new Fraction(12,9),
+                new Fraction(13,9),
+                new Fraction(14,9),
+                new Fraction(15,9),
+                new Fraction(16,9),
+                new Fraction(17,9),
+                new Fraction(18,9),
+                //new Fraction(1,8),
+                //new Fraction(2,8),
+                //new Fraction(3,8),
+                //new Fraction(7,8),
+                //new Fraction(10,8),
+                new Fraction(11,8),
+                new Fraction(12,8),
+                new Fraction(13,8),
+                new Fraction(14,8),
+                new Fraction(15,8),
+                new Fraction(16,8),
+                new Fraction(7,4),
+                //new Fraction(1,5),
+                new Fraction(7,5),
+                //new Fraction(1,6),
+                new Fraction(7,6),
+                new Fraction(10,6),
+            };
+
+            static List<Fraction> additionFractionList2357Big = new List<Fraction>()
+            {
+                //new Fraction(1,9),
+                //new Fraction(2,9),
+                //new Fraction(3,9),
+                //new Fraction(7,9),
+                //new Fraction(10,9),
+                new Fraction(11,9),
+                new Fraction(12,9),
+                new Fraction(13,9),
+                new Fraction(14,9),
+                new Fraction(15,9),
+                new Fraction(16,9),
+                new Fraction(17,9),
+                new Fraction(18,9),
+                //new Fraction(1,8),
+                //new Fraction(2,8),
+                //new Fraction(3,8),
+                //new Fraction(7,8),
+                //new Fraction(10,8),
+                new Fraction(11,8),
+                new Fraction(12,8),
+                new Fraction(13,8),
+                new Fraction(14,8),
+                new Fraction(15,8),
+                new Fraction(16,8),
+                //new Fraction(7,4),
+                //new Fraction(1,5),
+                ////new Fraction(7,5),
+                //new Fraction(1,7),
+                new Fraction(11,7),
+                new Fraction(12,7),
+                new Fraction(13,7),
+                //new Fraction(1,6),
+                new Fraction(10,6),
+            };
+
             // Add Dict here (Only Phase included)
             // Addition and Subtraction
             //private static Dictionary<NumeratorPhase, int[]> NumeratorPhaseNumberRef = new Dictionary<NumeratorPhase, int[]>
@@ -750,7 +940,7 @@ namespace Programming.Enemy
             /// </summary>
             /// <param name="numeratorPhase"></param>
             /// <param name="denominatorPhase"></param>
-            static internal Fraction generateEncounterFraction()
+            static internal Fraction generateEncounterFraction(bool returnOnlyBig = false)
             {
                 //int numerator;
                 //// Take one numerator from Dict
@@ -801,19 +991,36 @@ namespace Programming.Enemy
 
                 Fraction fraction = new Fraction(11,1);
 
-                switch (gameMode)
+                if (returnOnlyBig)
                 {
-                    case GameMode.easy23:
-                        fraction = GetRandomValueFromList(additionFractionList23);
-                        break;
-                    case GameMode.medium235:
-                        fraction = GetRandomValueFromList(additionFractionList235);
-                        break;
-                    case GameMode.hard2357:
-                        fraction = GetRandomValueFromList(additionFractionList2357);
-                        break;
+                    switch (gameMode)
+                    {
+                        case GameMode.easy23:
+                            fraction = GetRandomValueFromList(additionFractionList23);
+                            break;
+                        case GameMode.medium235:
+                            fraction = GetRandomValueFromList(additionFractionList235);
+                            break;
+                        case GameMode.hard2357:
+                            fraction = GetRandomValueFromList(additionFractionList2357);
+                            break;
+                    }
                 }
-
+                else
+                {
+                    switch (gameMode)
+                    {
+                        case GameMode.easy23:
+                            fraction = GetRandomValueFromList(additionFractionList23Big);
+                            break;
+                        case GameMode.medium235:
+                            fraction = GetRandomValueFromList(additionFractionList235Big);
+                            break;
+                        case GameMode.hard2357:
+                            fraction = GetRandomValueFromList(additionFractionList2357Big);
+                            break;
+                    }
+                }
                 return fraction;
             }
         } // They are public so we can access their enums
