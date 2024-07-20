@@ -15,7 +15,8 @@ namespace Programming.Operation_Board {
         Canvas _canvas;
         CanvasGroup _canvasGroup;
 
-        public Operation currentOperation = Operation.Add;
+        public List<Operation> availableOperations = new();
+        public Operation currentOperation;
         [SerializeField] private TextMeshProUGUI OperationText;
         [SerializeField] GameObject Cylinder;
         [SerializeField] private Animator animator; 
@@ -34,6 +35,8 @@ namespace Programming.Operation_Board {
             _rectTransform = GetComponent<RectTransform>();
             _canvas = GetComponent<Canvas>();
             _canvasGroup = GetComponent<CanvasGroup>();
+
+            currentOperation = availableOperations[0];
         }
 
         private void Start()
@@ -95,27 +98,14 @@ namespace Programming.Operation_Board {
 
         private void ShiftOp(bool direction)
         {
+            var currentIndex = availableOperations.IndexOf(currentOperation);
             if (direction)
             {
-                currentOperation = currentOperation switch
-                {
-                    Operation.Add => Operation.Subtract,
-                    Operation.Subtract => Operation.Multiply,
-                    Operation.Multiply => Operation.Divide,
-                    Operation.Divide => Operation.Add,
-                    _ => throw new ArgumentOutOfRangeException()
-                };
+                currentOperation = availableOperations[(currentIndex + 1) % availableOperations.Count];
                 return;
             }
 
-            currentOperation = currentOperation switch
-            {
-                Operation.Add => Operation.Divide,
-                Operation.Subtract => Operation.Add,
-                Operation.Multiply => Operation.Subtract,
-                Operation.Divide => Operation.Multiply,
-                _ => throw new ArgumentOutOfRangeException()
-            };
+            currentOperation = availableOperations[Mathf.Abs((currentIndex - 1) % availableOperations.Count)];
         }
 
         public void OnDrag(PointerEventData eventData)
