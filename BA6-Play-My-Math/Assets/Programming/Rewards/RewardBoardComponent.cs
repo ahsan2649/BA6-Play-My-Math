@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Programming.Card_Mechanism;
 using Programming.Enemy;
 using Programming.Fraction_Engine;
@@ -12,19 +13,31 @@ using Random = UnityEngine.Random;
 
 namespace Programming.Rewards
 {
+    public enum RewardGenerationType
+    {
+        Tutorial, 
+        Roguelite, 
+    }
+    
     public class RewardBoardComponent : MonoBehaviour
     {
         public static RewardBoardComponent Instance;
-        public Transform start, end;
-        public Transform[] slots;
-        public GameObject cardPrefab;
+        
+        [Header("Values")]
         int _achievedValue;
         float _displayValue = 0;
-        public int rewardCount = 0;
+        [HideInInspector] public int rewardCount = 0;
+        public int maxValue;
+        [SerializeField] public List<int> thresholdValues = new();
+        [HideInInspector] public int roundCounterTemp;
+        public RewardGenerationType rewardGenerationType = RewardGenerationType.Roguelite; 
+        
+        [Header("References")]
+        public Transform start, end;
+        public Transform[] slots;
         public RectTransform Slider;
         public RectTransform Counter;
         public TextMeshProUGUI Count;
-
         [Tooltip(
             "DeckComponent.RebuildDeck()\n" +
             "PlayerHandComponent.ClearHand()\n" +
@@ -33,13 +46,9 @@ namespace Programming.Rewards
             "EnemyZoneComponent.InitializeEnemies")]
         [FormerlySerializedAs("OnBoardExit")]
         public UnityEvent onBoardExit;
-
-        [SerializeField] public List<int> thresholdValues = new();
-        [SerializeField] private List<RectTransform> thresholds = new();
-        public int maxValue;
-
-        public int roundCounterTemp;
+        public GameObject cardPrefab;
         [SerializeField] private TMP_Text roundCounterText;
+        [SerializeField] private List<RectTransform> thresholds = new();
 
         private void Awake()
         {
@@ -128,8 +137,17 @@ namespace Programming.Rewards
                 card.GetComponent<ExpandSimplifyCard>().enabled = false;
                 card.AddComponent<RewardCardComponent>();
                 cardNumber.Value = LevelGeneration.GenerateReward(LevelGeneration.GameMode.easy23);
-                // cardNumber.Value = new Fraction(Random.Range(1, Mathf.Min(roundCounterTemp + 4, 9)), 1); 
             }
+        }
+
+        public Fraction RewardAlgorithm()
+        {
+            return rewardGenerationType switch
+            {
+                RewardGenerationType.Tutorial => TutorialLevelAndRewards.Instance.GenerateReward(),  
+                RewardGenerationType.Roguelite => LevelGeneration.GenerateReward(LevelGeneration.GameMode.easy23), 
+                _ => throw new SwitchExpressionException()
+            }; 
         }
 
         private void ResetBoard()

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Programming.Fraction_Engine;
 using Programming.ScriptableObjects;
 using UnityEngine;
@@ -9,19 +10,29 @@ using Random = System.Random;
 
 namespace Programming.Enemy
 {
+    public enum EnemyGenerationType
+    {
+        Tutorial, 
+        Roguelite, 
+    }
+    
     public class EnemyLineupComponent : MonoBehaviour
     {
         public static EnemyLineupComponent Instance { get; private set; }
-        
-        private List<EnemyComponent> _enemiesInCurrentLineup = new();
-        public List<EnemyComponent> EnemiesInCurrentLineup => _enemiesInCurrentLineup;
-
-        [SerializeField] List<EnemyLineupInfo> enemyLineups;
+     
+        [Header("References")]
         [SerializeField] private GameObject enemyPrefab;
         
+        [Header("EditorVariables")]
+        [SerializeField] List<EnemyLineupInfo> enemyLineups;
+        [SerializeField] private bool bUseAutoEnemyGeneration = true;
+        [SerializeField] private EnemyGenerationType enemyGenerationType; 
+        
+        [Header("RuntimeVariables")]
+        
         private int enemyLineUpCounter_temp = 0;
-
-        [SerializeField] private bool bUseAutoEnemyGeneration = true; 
+        public List<EnemyComponent> EnemiesInCurrentLineup => _enemiesInCurrentLineup;
+        private List<EnemyComponent> _enemiesInCurrentLineup = new();
         
         private void Awake()
         {
@@ -38,10 +49,14 @@ namespace Programming.Enemy
 
         public void CreateEnemyLineup()
         {
-            foreach (Fraction value in
-                     (enemyLineups == null || enemyLineUpCounter_temp >= enemyLineups.Count || enemyLineups[enemyLineUpCounter_temp].enemyList.Count == 0 || bUseAutoEnemyGeneration)
-                         ? LevelGeneration.generateEnemyCue()
-                         : enemyLineups[enemyLineUpCounter_temp].enemyList)
+            List<Fraction> enemyFractionList = enemyGenerationType switch
+            {
+                EnemyGenerationType.Tutorial => TutorialLevelAndRewards.Instance.GenerateEnemyLineup(),
+                EnemyGenerationType.Roguelite => LevelGeneration.generateEnemyCue(),
+                _ => throw new SwitchExpressionException()
+            }; 
+            
+            foreach (Fraction value in enemyFractionList)
             {
                 var newEnemy =
                     GameObject.Instantiate(enemyPrefab, transform.position, Quaternion.identity, transform);
@@ -51,7 +66,6 @@ namespace Programming.Enemy
             }
             
             enemyLineUpCounter_temp += new Random().Next(1, 3); 
-            
         }
 
         [ContextMenu("Pop Enemy")]
