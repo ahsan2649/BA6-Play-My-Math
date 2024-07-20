@@ -23922,6 +23922,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 988cbb280d49a6549ba837377970d85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 4265978069418469844, guid: aa9335456dc9d894391b7af1655f9b7c,
+    type: 3}
   enemyLineups:
   - {fileID: 11400000, guid: 391dc5ac9e5af3340ba857aad3e9c642, type: 2}
   - {fileID: 11400000, guid: d8d814f2611ad1d468887db5cb556038, type: 2}
@@ -23940,9 +23942,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9eb2aec7eef49604c95c3101868c755a, type: 2}
   - {fileID: 11400000, guid: 8a100f0eb78f88a4fb916592accb1cc2, type: 2}
   - {fileID: 11400000, guid: 36851717b5d3797449e5193560f4b14a, type: 2}
-  enemyPrefab: {fileID: 4265978069418469844, guid: aa9335456dc9d894391b7af1655f9b7c,
-    type: 3}
   bUseAutoEnemyGeneration: 1
+  enemyGenerationType: 1
 --- !u!4 &9000776123919663174
 Transform:
   m_ObjectHideFlags: 0

@@ -24001,8 +24001,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9eb2aec7eef49604c95c3101868c755a, type: 2}
   - {fileID: 11400000, guid: 8a100f0eb78f88a4fb916592accb1cc2, type: 2}
   - {fileID: 11400000, guid: 36851717b5d3797449e5193560f4b14a, type: 2}
-  bUseAutoEnemyGeneration: 0
-  enemyGenerationType: 0
+  bUseAutoEnemyGeneration: 1
+  enemyGenerationType: 1
 --- !u!4 &9000776123919663174
 Transform:
   m_ObjectHideFlags: 0
