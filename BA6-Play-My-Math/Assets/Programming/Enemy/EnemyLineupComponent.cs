@@ -62,7 +62,7 @@ namespace Programming.Enemy
             foreach (Fraction value in enemyFractionList)
             {
                 var newEnemy =
-                    GameObject.Instantiate(enemyPrefab, transform.position, Quaternion.identity, transform);
+                    GameObject.Instantiate(enemyPrefab, SpawnPoint.position, enemyPrefab.transform.rotation, transform);
                 newEnemy.GetComponent<EnemyComponent>().Value = value;
                 newEnemy.GetComponent<EnemyComponent>().UpdateDisplay();
                 _enemiesInCurrentLineup.Add(newEnemy.GetComponent<EnemyComponent>());
