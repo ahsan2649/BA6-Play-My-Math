@@ -2541,18 +2541,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8889429917094405128}
-        m_TargetAssemblyTypeName: Programming.Enemy.EnemyZoneComponent, Enemy
-        m_MethodName: InitalizeEnemies
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   winEvent:
     m_PersistentCalls:
       m_Calls:
@@ -20851,6 +20839,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingLayer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: availableOperations.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: availableOperations.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: availableOperations.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: availableOperations.Array.data[2]
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
         type: 3}
