@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Programming.Fraction_Engine;
@@ -68,7 +69,7 @@ namespace Programming.Enemy
                 _enemiesInCurrentLineup.Add(newEnemy.GetComponent<EnemyComponent>());
             }
             
-            enemyLineUpCounter_temp += new Random().Next(1, 3); 
+            enemyLineUpCounter_temp += new Random().Next(1, 3);
         }
 
         [ContextMenu("Pop Enemy")]
@@ -87,6 +88,22 @@ namespace Programming.Enemy
         public int EnemiesLeft()
         {
             return _enemiesInCurrentLineup.Count; 
+        }
+
+        public IEnumerator CascadeEnemies()
+        {
+            for (var index = 0; index < LineupSpots.Count; index++)
+            {
+                if (index >= EnemiesInCurrentLineup.Count)
+                {
+                    break;
+                }
+                var spot = LineupSpots[index];
+                var enemy = EnemiesInCurrentLineup[index];
+
+                StartCoroutine(enemy.MoveToSpot(spot));
+                yield return new WaitForSeconds(.75f);
+            }
         }
     }
 }

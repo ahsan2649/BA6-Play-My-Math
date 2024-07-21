@@ -45,12 +45,12 @@ namespace Programming.Enemy
             nenner.text = Value.Denominator.ToString();
         }
 
-        public IEnumerator MoveToNewParent()
+        public IEnumerator MoveToSpot(Transform spot)
         {
-            while (Vector3.Distance(transform.position, transform.parent.position) > 0.01f)
+            while (Vector3.Distance(transform.position, spot.position) > 0.01f)
             {
-                transform.position = Vector3.MoveTowards(transform.position, transform.parent.position, 0.15f);
-                yield return null;
+                transform.position = Vector3.MoveTowards(transform.position, spot.position, 15f * Time.deltaTime);
+                yield return new WaitForEndOfFrame();
             }
         }
     }
