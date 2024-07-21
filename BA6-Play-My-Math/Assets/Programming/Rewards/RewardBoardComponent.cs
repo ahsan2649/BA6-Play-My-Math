@@ -176,7 +176,7 @@ namespace Programming.Rewards
                 yield return new WaitForEndOfFrame();
             }
 
-            StartRewarding(7);
+            StartRewarding(DeckComponent.Instance._cardsInDeck.Count);
         }
 
         public IEnumerator BoardExitCoroutine()

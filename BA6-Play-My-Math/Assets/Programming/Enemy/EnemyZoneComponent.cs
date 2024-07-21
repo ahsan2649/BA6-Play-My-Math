@@ -3,11 +3,11 @@ using UnityEngine;
 using UnityEngine.Events;
 
 namespace Programming.Enemy {
-    public class EnemyZoneComponent : MonoBehaviour
-    {
+    public class EnemyZoneComponent : MonoBehaviour {
         public static EnemyZoneComponent Instance { get; private set; }
         [HideInInspector] public EnemySlotComponent[] enemySlots;
         public UnityEvent LineupComplete;
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -18,6 +18,7 @@ namespace Programming.Enemy {
             {
                 Instance = this;
             }
+
             enemySlots = GetComponentsInChildren<EnemySlotComponent>();
         }
 
@@ -31,6 +32,8 @@ namespace Programming.Enemy {
             {
                 ZonePush(EnemyLineupComponent.Instance.EnemyPop());
             }
+            StartCoroutine(EnemyLineupComponent.Instance.CascadeEnemies(null));
+
         }
 
         public void ZonePush(EnemyComponent enemy)
@@ -40,7 +43,7 @@ namespace Programming.Enemy {
                 LineupComplete.Invoke();
                 return;
             }
-            
+
             foreach (EnemySlotComponent slot in enemySlots)
             {
                 if (slot.HasEnemy())
@@ -64,6 +67,7 @@ namespace Programming.Enemy {
             {
                 return false;
             }
+
             foreach (EnemySlotComponent slot in enemySlots)
             {
                 if (slot.HasEnemy())

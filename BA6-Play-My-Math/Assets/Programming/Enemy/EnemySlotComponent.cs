@@ -17,6 +17,7 @@ namespace Programming.Enemy
             enemy.transform.SetParent(transform);
             enemy.enabled = true;
             enemy.onValueChange.AddListener(onEnemyChanged.Invoke);
+            StartCoroutine(enemy.MoveToSpot(transform));
             onEnemyChanged.Invoke();
         }
         

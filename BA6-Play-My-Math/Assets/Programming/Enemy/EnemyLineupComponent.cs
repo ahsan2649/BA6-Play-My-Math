@@ -37,7 +37,8 @@ namespace Programming.Enemy
 
         public List<Transform> LineupSpots;
         public Transform SpawnPoint;
-        
+
+        public UnityEvent InitializeEvent;
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -90,7 +91,7 @@ namespace Programming.Enemy
             return _enemiesInCurrentLineup.Count; 
         }
 
-        public IEnumerator CascadeEnemies()
+        public IEnumerator CascadeEnemies(UnityEvent next)
         {
             for (var index = 0; index < LineupSpots.Count; index++)
             {
@@ -102,8 +103,20 @@ namespace Programming.Enemy
                 var enemy = EnemiesInCurrentLineup[index];
 
                 StartCoroutine(enemy.MoveToSpot(spot));
-                yield return new WaitForSeconds(.75f);
+                yield return new WaitForSeconds(.5f);
             }
+            
+            yield return new WaitForSeconds(1f);
+
+            if (next is not null)
+            {
+                next.Invoke();
+            }
+        }
+
+        public void StartLineup()
+        {
+            StartCoroutine(CascadeEnemies(InitializeEvent));
         }
     }
 }
