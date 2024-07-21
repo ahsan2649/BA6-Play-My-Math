@@ -33,6 +33,9 @@ namespace Programming.Enemy
         private int enemyLineUpCounter_temp = 0;
         public List<EnemyComponent> EnemiesInCurrentLineup => _enemiesInCurrentLineup;
         private List<EnemyComponent> _enemiesInCurrentLineup = new();
+
+        public List<Transform> LineupSpots;
+        public Transform SpawnPoint;
         
         private void Awake()
         {
