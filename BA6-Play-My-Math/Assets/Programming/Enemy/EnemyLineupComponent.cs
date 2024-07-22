@@ -54,6 +54,7 @@ namespace Programming.Enemy
 
         public void CreateEnemyLineup()
         {
+            LevelGeneration.switchGameMode(LevelGeneration.GameMode.easy23); // PLease delete this
             List<Fraction> enemyFractionList = enemyGenerationType switch
             {
                 EnemyGenerationType.Tutorial => TutorialLevelAndRewards.Instance.GenerateEnemyLineup(),
