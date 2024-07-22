@@ -4039,7 +4039,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &196144663777949207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6336,7 +6336,7 @@ RectTransform:
   m_Father: {fileID: 1829270956238973351}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -0.222, y: 26.01}
   m_SizeDelta: {x: 830.271, y: 3361.47}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7044,7 +7044,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8822175885557684227
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7107,7 +7107,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27.59997, y: -7}
+  m_AnchoredPosition: {x: 27.59997, y: -70}
   m_SizeDelta: {x: 960.91, y: 804.71}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &837575026937037323
@@ -7435,7 +7435,7 @@ RectTransform:
   m_Father: {fileID: 3478672759014398898}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0.79999924, y: 3.5}
   m_SizeDelta: {x: 1002.14, y: 848.93}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8291,7 +8291,7 @@ PrefabInstance:
     - target: {fileID: 2638498968629059214, guid: 36f5c458def6e804c861c354335f29fb,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2769879803980202695, guid: 36f5c458def6e804c861c354335f29fb,
         type: 3}
@@ -8307,6 +8307,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WholeNumber
+      objectReference: {fileID: 0}
+    - target: {fileID: 3439618127209831467, guid: 36f5c458def6e804c861c354335f29fb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5019277862887273849, guid: 36f5c458def6e804c861c354335f29fb,
         type: 3}
