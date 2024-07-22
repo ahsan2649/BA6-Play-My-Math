@@ -120,7 +120,9 @@ namespace Programming.Enemy
         //}
 
         #endregion
-        
+
+        #region StartingDeck
+
         /// <summary>
         /// Returns a starting deck based on the selected GameMode
         /// </summary>
@@ -235,12 +237,13 @@ namespace Programming.Enemy
             return newStartingDeckInfo;
         }
 
+        #endregion
 
-
+        
         private static Dictionary<int, List<List<GM>>> difficultyToGeneration = mainDifficultyToGeneration;
 
         // Generation Modes
-        internal enum GM
+        private enum GM
         {
             F1,     // B + p = 2
             F1b,    // B + p = 2
@@ -489,7 +492,7 @@ namespace Programming.Enemy
 
         #region Addition
 
-        internal static List<Fraction> additionFractionList23 = new List<Fraction>()
+        private static List<Fraction> additionFractionList23 = new List<Fraction>()
             {
                 new Fraction(1,9),
                 new Fraction(2,9),
@@ -523,7 +526,7 @@ namespace Programming.Enemy
                 new Fraction(10,6),
             };
 
-        internal static List<Fraction> additionFractionList235 = new List<Fraction>()
+        private static List<Fraction> additionFractionList235 = new List<Fraction>()
             {
                 new Fraction(1,9),
                 new Fraction(2,9),
@@ -557,7 +560,7 @@ namespace Programming.Enemy
                 new Fraction(10,6),
             };
 
-        internal static List<Fraction> additionFractionList2357 = new List<Fraction>()
+        private static List<Fraction> additionFractionList2357 = new List<Fraction>()
             {
                 new Fraction(1,9),
                 new Fraction(2,9),
@@ -596,7 +599,7 @@ namespace Programming.Enemy
 
         // Addition Fractions that have a bigger numerator than denominator
 
-        internal static List<Fraction> additionFractionList23Big = new List<Fraction>()
+        private static List<Fraction> additionFractionList23Big = new List<Fraction>()
             {
                 //new Fraction(1,9),
                 //new Fraction(2,9),
@@ -630,7 +633,7 @@ namespace Programming.Enemy
                 new Fraction(10,6),
             };
 
-        internal static List<Fraction> additionFractionList235Big = new List<Fraction>()
+        private static List<Fraction> additionFractionList235Big = new List<Fraction>()
             {
                 ////new Fraction(1,9),
                 ////new Fraction(2,9),
@@ -664,7 +667,7 @@ namespace Programming.Enemy
                 new Fraction(10,6),
             };
 
-        internal static List<Fraction> additionFractionList2357Big = new List<Fraction>()
+        private static List<Fraction> additionFractionList2357Big = new List<Fraction>()
             {
                 //new Fraction(1,9),
                 //new Fraction(2,9),
@@ -704,7 +707,7 @@ namespace Programming.Enemy
 
         #region Multiplication
 
-        internal static List<Fraction> multiplicationSet23 = new List<Fraction>()
+        private static List<Fraction> multiplicationSet23 = new List<Fraction>()
             {
                 // F2 & N3
                 new Fraction(2,27),
@@ -722,7 +725,7 @@ namespace Programming.Enemy
                 new Fraction(9,64),
             };
 
-        internal static List<Fraction> simpleMultiplicationSet23 = new List<Fraction>()
+        private static List<Fraction> simpleMultiplicationSet23 = new List<Fraction>()
             {
                 new Fraction(1,27),
                 new Fraction(1,16),
@@ -730,7 +733,7 @@ namespace Programming.Enemy
                 new Fraction(1,36),
             };
 
-        internal static List<Fraction> multiplicationSet235 = new List<Fraction>()
+        private static List<Fraction> multiplicationSet235 = new List<Fraction>()
             {
                 // F2 * F3 & N5
                 new Fraction(6,25),
@@ -755,7 +758,7 @@ namespace Programming.Enemy
                 new Fraction(45,64),
             };
 
-        internal static List<Fraction> simpleMultiplicationSet235 = new List<Fraction>()
+        private static List<Fraction> simpleMultiplicationSet235 = new List<Fraction>()
             {
                 //new Fraction(9,16),
                 //new Fraction(5,16),
@@ -773,7 +776,7 @@ namespace Programming.Enemy
                 new Fraction(1,20),
             };
 
-        internal static List<Fraction> multiplicationSet2357 = new List<Fraction>()
+        private static List<Fraction> multiplicationSet2357 = new List<Fraction>()
             {
                 // F2 * F3 & F5 * F7
                 new Fraction(6,35),
@@ -798,7 +801,7 @@ namespace Programming.Enemy
                 new Fraction(45,48),
             };
 
-        internal static List<Fraction> simpleMultiplicationSet2357 = new List<Fraction>()
+        private static List<Fraction> simpleMultiplicationSet2357 = new List<Fraction>()
             {
                 //new Fraction(14,15),
                 //new Fraction(5,16),
@@ -824,7 +827,7 @@ namespace Programming.Enemy
                 new Fraction(1,21),
             };
 
-        internal static List<Fraction> multiplication235TwoComposites = new List<Fraction>()
+        private static List<Fraction> multiplication235TwoComposites = new List<Fraction>()
             {
                 // Composites: 2,3
                 new Fraction(2,27),
@@ -853,7 +856,7 @@ namespace Programming.Enemy
                 new Fraction(5,81),
             };
 
-        internal static List<Fraction> multiplication2357TwoComposites = new List<Fraction>()
+        private static List<Fraction> multiplication2357TwoComposites = new List<Fraction>()
             {
                 // Composites: 2,3
                 new Fraction(2,27),
@@ -897,7 +900,7 @@ namespace Programming.Enemy
                 new Fraction(7,25),
             };
 
-        internal static List<Fraction> multiplication2357ThreeComposites = new List<Fraction>()
+        private static List<Fraction> multiplication2357ThreeComposites = new List<Fraction>()
             {
                 // Composites: 2,3,7
                     // N7
@@ -1543,7 +1546,6 @@ namespace Programming.Enemy
         #endregion
 
         #endregion
-
 
 
         /// <summary>
