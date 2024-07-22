@@ -26,6 +26,8 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
     public GameObject btn7;
     public Color btnIncorrectColor;
 
+    public Slider exSimplSlider;
+
     bool bExpand;
 
     void Start()
@@ -106,15 +108,26 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void Expand()
     {
-        bExpand = true;
-        btnExpand.GetComponent<Image>().color = btnActiveColor;
-        btnSimplify.GetComponent<Image>().color = Color.white;
+  
+        //expand
+        if(exSimplSlider.value == 0)
+        {
+            exSimplSlider.value = 1;
+            bExpand = true;
+        }
+        else
+        {
+            exSimplSlider.value = 0;
+            bExpand = false;
+        }
+
     }
     public void Simplify()
     {
         bExpand = false;
         btnSimplify.GetComponent<Image>().color = btnActiveColor;
         btnExpand.GetComponent<Image>().color = Color.white;
+        exSimplSlider.value = 0;
     }
 
     public void ExSimpl(int pValue)
