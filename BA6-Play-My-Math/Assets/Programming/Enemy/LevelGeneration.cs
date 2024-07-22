@@ -3,6 +3,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using Programming.ExtensionMethods;
 using Programming.Fraction_Engine;
+using Programming.ScriptableObjects;
 using TMPro;
 using UnityEditor.AssetImporters;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace Programming.Enemy
     {
         // This is the function accessed externally, handle with care
 
-        public enum GameMode { none, easy23, medium235, hard2357, easyAdditionSmallNumbers }
+        public enum GameMode { none, easy23, medium235, hard2357, easyAdditionSmallNumbers, mediumAddition, multiplicationOnly }
 
         public static GameMode gameMode = GameMode.none;
 
@@ -119,6 +120,122 @@ namespace Programming.Enemy
         //}
 
         #endregion
+        
+        /// <summary>
+        /// Returns a starting deck based on the selected GameMode
+        /// </summary>
+        /// <returns></returns>
+        public StartingDeckInfo getStartingDeck()
+        {
+            StartingDeckInfo newStartingDeckInfo = new StartingDeckInfo();
+            switch (gameMode)
+            {
+                case (GameMode.easy23):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(4,1),
+                        new Fraction(4,1),
+                        new Fraction(6,1),
+                        new Fraction(6,1),
+                        new Fraction(8,1),
+                        new Fraction(8,1),
+                        new Fraction(9,1),
+                        new Fraction(9,1),
+                        new Fraction(3,1),
+                        new Fraction(12,1),
+                    };
+                    break;
+                case (GameMode.medium235):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(4,1),
+                        new Fraction(4,1),
+                        new Fraction(6,1),
+                        new Fraction(6,1),
+                        new Fraction(8,1),
+                        new Fraction(8,1),
+                        new Fraction(9,1),
+                        new Fraction(9,1),
+                        new Fraction(3,1),
+                        new Fraction(12,1),
+                        new Fraction(5,1),
+                        new Fraction(5,1),
+                        new Fraction(10,1),
+                        new Fraction(10,1),
+                    };
+                    break;
+                case (GameMode.hard2357):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(4,1),
+                        new Fraction(4,1),
+                        new Fraction(6,1),
+                        new Fraction(6,1),
+                        new Fraction(8,1),
+                        new Fraction(8,1),
+                        new Fraction(9,1),
+                        new Fraction(9,1),
+                        new Fraction(3,1),
+                        new Fraction(12,1),
+                        new Fraction(5,1),
+                        new Fraction(5,1),
+                        new Fraction(10,1),
+                        new Fraction(10,1),
+                        new Fraction(7,1),
+                        new Fraction(7,1),
+                        new Fraction(14,1),
+                        new Fraction(14,1),
+                    };
+                    break;
+                case (GameMode.easyAdditionSmallNumbers):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(1,1),
+                        new Fraction(1,1),
+                        new Fraction(2,1),
+                        new Fraction(2,1),
+                        new Fraction(4,1),
+                        new Fraction(4,1),
+                        new Fraction(8,1),
+                        new Fraction(8,1),
+                    };
+                    break;
+                case (GameMode.mediumAddition):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(1,1),
+                        new Fraction(2,1),
+                        new Fraction(3,1),
+                        new Fraction(4,1),
+                        new Fraction(4,1),
+                        new Fraction(6,1),
+                        new Fraction(6,1),
+                        new Fraction(8,1),
+                        new Fraction(8,1),
+                        new Fraction(9,1),
+                        new Fraction(9,1),
+                    };
+                    break;
+                case (GameMode.multiplicationOnly):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(4,1),
+                        new Fraction(4,1),
+                        new Fraction(6,1),
+                        new Fraction(6,1),
+                        new Fraction(8,1),
+                        new Fraction(8,1),
+                        new Fraction(9,1),
+                        new Fraction(9,1),
+                        new Fraction(12,1),
+                        new Fraction(18,1),
+                    };
+                    break;
+            }
+            return newStartingDeckInfo;
+        }
+
+
 
         private static Dictionary<int, List<List<GM>>> difficultyToGeneration = mainDifficultyToGeneration;
 
@@ -171,6 +288,7 @@ namespace Programming.Enemy
             // set generations according to gamemode
             switch (gameMode)
             {
+                // Special Modes
                 case GameMode.easyAdditionSmallNumbers:
                     // Fractions Sets
                     Sets[GM.FB] = FB_Set_AdditionOfSmallNumbers;
@@ -182,6 +300,28 @@ namespace Programming.Enemy
                     maxKeyOfGM = maxKeyAdditionOfSmallNumbers;
                     startDifficulty = startDifficultyAdditionOfSmallNumbers;
                     break;
+                case GameMode.mediumAddition:
+                    // Fractions Sets
+                    Sets[GM.FB] = FB_Set_AdditionMoreNumbers;
+                    Sets[GM.Ads] = Ads_Set_AdditionMoreNumbers;
+                    Sets[GM.AdsE] = AdsE_Set_AdditionMoreNumbers;
+                    // Generation
+                    difficultyToGeneration = difficultyToGenerationEasyAdditionMoreNumbers;
+                    maxKeyOfGM = maxKeyAdditionOfMoreNumbers;
+                    startDifficulty = startDifficultyAdditionOfMoreNumbers;
+                    break;
+                case GameMode.multiplicationOnly:
+                    // Fractions Sets
+                    Sets[GM.FS] = FS_Set_MultiplicationOnly;
+                    Sets[GM.M] = M_Set_MultiplicationOnly;
+                    Sets[GM.Ms] = Ms_Set_MultiplicationOnly;
+                    // Generation
+                    difficultyToGeneration = difficultyToGenerationEasyMultiplicationOnly;
+                    maxKeyOfGM = maxKeyMultiplicationOnly;
+                    startDifficulty = startDifficultyMultiplicationOnly;
+                    break;
+
+                // Main Modes
                 case GameMode.easy23:
                     // Fraction Sets
                     Sets[GM.FB] = BaseCombinedFractions23;
@@ -1008,6 +1148,242 @@ namespace Programming.Enemy
 
         #endregion
 
+        #region GameMode: AdditionOfMoreNumbers
+
+        // Hand-Cards = 1, 2, 3, 4, 6, 8, 9
+
+        private static List<Fraction> FB_Set_AdditionMoreNumbers = new List<Fraction>()
+        {
+            new Fraction(4,4),
+            new Fraction(4,6),
+            new Fraction(4,8),
+            new Fraction(4,9),
+            new Fraction(6,6),
+            new Fraction(6,8),
+            new Fraction(6,9),
+            new Fraction(8,8),
+            new Fraction(8,9),
+            new Fraction(9,9),
+        };
+
+        private static List<Fraction> Ads_Set_AdditionMoreNumbers = new List<Fraction>()
+        {
+            new Fraction(5,9),
+            new Fraction(7,9),
+            new Fraction(10,9),
+            new Fraction(12,9),
+            new Fraction(13,9),
+            new Fraction(14,9),
+            new Fraction(15,9),
+            new Fraction(16,9),
+            new Fraction(17,9),
+            new Fraction(18,9),
+            new Fraction(5,8),
+            new Fraction(7,8),
+            new Fraction(10,8),
+            new Fraction(12,8),
+            new Fraction(13,8),
+            new Fraction(14,8),
+            new Fraction(15,8),
+            new Fraction(16,8),
+            new Fraction(5,4),
+            new Fraction(7,4),
+            new Fraction(1,6),
+            new Fraction(5,6),
+            new Fraction(7,6),
+            new Fraction(10,6),
+        };
+
+        private static List<Fraction> AdsE_Set_AdditionMoreNumbers = new List<Fraction>()
+        {
+            // Multiplied by 2
+            new Fraction(10, 18),  // 5 * 2, 9 * 2
+            new Fraction(14, 18),  // 7 * 2, 9 * 2
+            new Fraction(20, 18),  // 10 * 2, 9 * 2
+            new Fraction(24, 18),  // 12 * 2, 9 * 2
+            new Fraction(26, 18),  // 13 * 2, 9 * 2
+            new Fraction(28, 18),  // 14 * 2, 9 * 2
+            new Fraction(30, 18),  // 15 * 2, 9 * 2
+            new Fraction(32, 18),  // 16 * 2, 9 * 2
+            new Fraction(34, 18),  // 17 * 2, 9 * 2
+            new Fraction(36, 18),  // 18 * 2, 9 * 2
+    
+            new Fraction(10, 16),  // 5 * 2, 8 * 2
+            new Fraction(14, 16),  // 7 * 2, 8 * 2
+            new Fraction(20, 16),  // 10 * 2, 8 * 2
+            new Fraction(24, 16),  // 12 * 2, 8 * 2
+            new Fraction(26, 16),  // 13 * 2, 8 * 2
+            new Fraction(28, 16),  // 14 * 2, 8 * 2
+            new Fraction(30, 16),  // 15 * 2, 8 * 2
+            new Fraction(32, 16),  // 16 * 2, 8 * 2
+    
+            new Fraction(10, 8),   // 5 * 2, 4 * 2
+            new Fraction(14, 8),   // 7 * 2, 4 * 2
+    
+            new Fraction(2, 12),   // 1 * 2, 6 * 2
+            new Fraction(10, 12),  // 5 * 2, 6 * 2
+            new Fraction(14, 12),  // 7 * 2, 6 * 2
+            new Fraction(20, 12),  // 10 * 2, 6 * 2
+    
+            // Multiplied by 3
+            new Fraction(15, 27),  // 5 * 3, 9 * 3
+            new Fraction(21, 27),  // 7 * 3, 9 * 3
+            new Fraction(30, 27),  // 10 * 3, 9 * 3
+            new Fraction(36, 27),  // 12 * 3, 9 * 3
+            new Fraction(39, 27),  // 13 * 3, 9 * 3
+            new Fraction(42, 27),  // 14 * 3, 9 * 3
+            new Fraction(45, 27),  // 15 * 3, 9 * 3
+            new Fraction(48, 27),  // 16 * 3, 9 * 3
+            new Fraction(51, 27),  // 17 * 3, 9 * 3
+            new Fraction(54, 27),  // 18 * 3, 9 * 3
+    
+            new Fraction(15, 24),  // 5 * 3, 8 * 3
+            new Fraction(21, 24),  // 7 * 3, 8 * 3
+            new Fraction(30, 24),  // 10 * 3, 8 * 3
+            new Fraction(36, 24),  // 12 * 3, 8 * 3
+            new Fraction(39, 24),  // 13 * 3, 8 * 3
+            new Fraction(42, 24),  // 14 * 3, 8 * 3
+            new Fraction(45, 24),  // 15 * 3, 8 * 3
+            new Fraction(48, 24),  // 16 * 3, 8 * 3
+    
+            new Fraction(15, 12),  // 5 * 3, 4 * 3
+            new Fraction(21, 12),  // 7 * 3, 4 * 3
+    
+            new Fraction(3, 18),   // 1 * 3, 6 * 3
+            new Fraction(15, 18),  // 5 * 3, 6 * 3
+            new Fraction(21, 18),  // 7 * 3, 6 * 3
+            new Fraction(30, 18)   // 10 * 3, 6 * 3
+        };
+
+        private static Dictionary<int, List<List<GM>>> difficultyToGenerationEasyAdditionMoreNumbers = new Dictionary<int, List<List<GM>>>
+        {
+            {6, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.FB },
+                }
+            },
+            {9, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.FB, GM.FB },
+                }
+            },
+            {12, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.Ads },
+                }
+            },
+            {15, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.Ads, GM.Ads },
+                }
+            },
+            {18, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.AdsE },
+                }
+            },
+            {21, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.AdsE, GM.AdsE },
+                }
+            },
+            {24, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.FB, GM.FB, GM.AdsE, GM.Ads, GM.AdsE, GM.FB }, // 18
+                    new List<GM>() { GM.Ads, GM.Ads, GM.FB, GM.AdsE, GM.Ads }, // 18
+                    new List<GM>() { GM.AdsE, GM.AdsE, GM.Ads, GM.FB, GM.Ads }, // 18
+                }
+            },
+        };
+
+        static int maxKeyAdditionOfMoreNumbers = 24;
+        static int startDifficultyAdditionOfMoreNumbers = 6;
+
+        // Added a new Difficulty?
+        //      Did you add all the new Generation Lists to the switchGameMode()?
+        //      Did you add new StartingDeck?
+        //      Did you add new Generation after Key?
+
+        #endregion
+
+        #region GameMode: MultiplicationOnly
+
+        // Hand-Cards = 4, 6, 8, 9, 12, 18
+
+        private static List<Fraction> FS_Set_MultiplicationOnly = new List<Fraction>()
+        {
+            new Fraction(1,3),
+            new Fraction(1,2),
+            new Fraction(3,4),
+            new Fraction(2,3),
+        };
+
+        private static List<Fraction> Ms_Set_MultiplicationOnly = new List<Fraction>()
+        {
+            new Fraction(1,27),
+            new Fraction(1,16),
+            new Fraction(1,32),
+            new Fraction(1,36),
+        };
+
+        private static List<Fraction> M_Set_MultiplicationOnly = new List<Fraction>()
+        {
+            // F2 & N3
+                new Fraction(2,27),
+                new Fraction(4,27),
+                new Fraction(8,27),
+                new Fraction(2,81),
+                new Fraction(4,81),
+                new Fraction(8,81),
+            // F3 & N2
+                new Fraction(3,16),
+                new Fraction(9,16),
+                new Fraction(3,32),
+                new Fraction(9,32),
+                new Fraction(3,64),
+                new Fraction(9,64),
+        };
+
+        private static Dictionary<int, List<List<GM>>> difficultyToGenerationEasyMultiplicationOnly = new Dictionary<int, List<List<GM>>>
+        {
+            {6, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.FS },
+                }
+            },
+            {9, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.FS, GM.FS },
+                }
+            },
+            {12, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.Ms },
+                }
+            },
+            {15, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.M },
+                }
+            },
+            {18, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.M , GM.M, GM.FS}, //10
+                    new List<GM>() { GM.M , GM.Ms }, //10
+                    new List<GM>() { GM.FS , GM.M, GM.M}, //10
+                }
+            },
+        };
+
+        static int maxKeyMultiplicationOnly = 18;
+        static int startDifficultyMultiplicationOnly = 6;
+
+        // Added a new Difficulty?
+        //      Did you add all the new Generation Lists to the switchGameMode()?
+        //      Did you add new StartingDeck?
+        //      Did you add new Generation after Key?
+
+        #endregion
 
         #region Functions: Difficulty Management
 
@@ -1103,7 +1479,55 @@ namespace Programming.Enemy
 
                 return newGeneration;
             }
-            
+            else if (gameMode == GameMode.easyAdditionSmallNumbers)
+            {
+                // Generation Modes with B + p = 2
+                List<GM> generation2 = new List<GM>() { GM.FB };
+
+                // Generation Modes with B + p = 4
+                List<GM> generation5 = new List<GM>() { GM.Ads, GM.AdsE };
+
+                int rounds = (int)(difficulty / 4);
+
+                List<GM> newGeneration = new List<GM>();
+
+                for (int i = 0; i < rounds; i++)
+                {
+                    newGeneration.Add(GetRandomValueFromList(generation5));
+                }
+
+                for (int i = 0; i < (int)((difficulty - rounds * 4) / 2); i++)
+                {
+                    newGeneration.Add(GetRandomValueFromList(generation2));
+                }
+
+                return newGeneration;
+            }
+            else if (gameMode == GameMode.multiplicationOnly)
+            {
+                // Generation Modes with B + p = 2
+                List<GM> generation2 = new List<GM>() { GM.FS };
+
+                // Generation Modes with B + p = 4
+                List<GM> generation5 = new List<GM>() { GM.M };
+
+                int rounds = (int)(difficulty / 4);
+
+                List<GM> newGeneration = new List<GM>();
+
+                for (int i = 0; i < rounds; i++)
+                {
+                    newGeneration.Add(GetRandomValueFromList(generation5));
+                }
+
+                for (int i = 0; i < (int)((difficulty - rounds * 4) / 2); i++)
+                {
+                    newGeneration.Add(GetRandomValueFromList(generation2));
+                }
+
+                return newGeneration;
+            }
+
             return new List<GM>();
         }
 
