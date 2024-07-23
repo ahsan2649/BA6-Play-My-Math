@@ -64,16 +64,12 @@ namespace Programming.Rewards
             }
         }
 
-        public void StartRewarding(int score)
+        public void StartRewarding()
         {
-            _achievedValue = score;
             ArrangeThresholds();
             CountRewards();
             StartCoroutine(AnimateCounter());
             StartCoroutine(AnimateSlider());
-
-            roundCounterTemp++;
-            roundCounterText.text = "Round: " + roundCounterTemp.ToString();
 
         }
 
@@ -161,9 +157,15 @@ namespace Programming.Rewards
             BoardExit();
         }
 
+        public void SetMaxValue()
+        {
+            maxValue = DeckComponent.Instance._cardsInDeck.Count;
+        }
+
         public void BoardEnter()
         {
             Debug.Log("Board Enter");
+            _achievedValue = DeckComponent.Instance._cardsInDeck.Count;
             StartCoroutine(BoardEnterCoroutine());
         }
 
@@ -175,14 +177,17 @@ namespace Programming.Rewards
 
         public IEnumerator BoardEnterCoroutine()
         {
+            
             while (Vector3.Distance(transform.position, end.position) > 0.1f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, end.position, 50f * Time.deltaTime);
                 yield return new WaitForEndOfFrame();
             }
 
-            StartRewarding(DeckComponent.Instance._cardsInDeck.Count);
+            StartRewarding();
         }
+        
+        
 
         public IEnumerator BoardExitCoroutine()
         {
