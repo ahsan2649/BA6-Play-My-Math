@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Programming.Card_Mechanism;
 using Programming.Enemy;
@@ -79,6 +80,7 @@ namespace Programming.Rewards
 
         public void CountRewards()
         {
+            _achievedValue += PlayerHandComponent.Instance.cardSlots.Aggregate(0, (handcardCount, cardSlot) => (handcardCount + (cardSlot.HasCard() ? 1 : 0)));
             foreach (int threshold in thresholdValues)
             {
                 if (_achievedValue > threshold)
@@ -90,6 +92,8 @@ namespace Programming.Rewards
 
         void ArrangeThresholds()
         {
+            thresholdValues = LevelGeneration.generateRewardThresholdValues();
+
             int count = Mathf.Min(thresholdValues.Count, thresholds.Count);
             for (int i = 0; i < count; i++)
             {
