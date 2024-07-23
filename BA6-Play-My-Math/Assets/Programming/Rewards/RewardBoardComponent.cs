@@ -78,11 +78,9 @@ namespace Programming.Rewards
 
         public void CountRewards()
         {
-            _achievedValue += PlayerHandComponent.Instance.cardSlots.Aggregate(0, (handcardCount, cardSlot) => (handcardCount + (cardSlot.HasCard() ? 1 : 0)));
-            _achievedValue += 4;
             foreach (int threshold in thresholdValues)
             {
-                if (_achievedValue > threshold)
+                if (_achievedValue >= threshold)
                 {
                     rewardCount++;
                 }
@@ -105,7 +103,6 @@ namespace Programming.Rewards
             }
         }
 
-        //TODO: merge the following two functions into one function, so that the slider goes at the same speed as the counter
         public IEnumerator AnimateCounter()
         {
             _displayValue = 0;
@@ -175,6 +172,8 @@ namespace Programming.Rewards
         {
             Debug.Log("Board Enter");
             _achievedValue = DeckComponent.Instance._cardsInDeck.Count;
+            _achievedValue += PlayerHandComponent.Instance.cardSlots.Aggregate(0, (handCardCount, cardSlot) => (handCardCount + (cardSlot.HasCard() ? 1 : 0)));
+            // _achievedValue += 4;
             StartCoroutine(BoardEnterCoroutine());
         }
 

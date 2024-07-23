@@ -1,37 +1,26 @@
-using System.Collections.Generic;
 using Programming.Card_Mechanism;
 using Programming.Visualisers;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Programming.TutorialVisual
 {
-    public class TutorialVisualCardsInDeck: TutorialVisualElement
+    public class TutorialVisualCardsInDeck: MonoBehaviour
     {
-        private int timesCardsInDeckChecked = 0; 
-        
-        public override void Start()
-        {
-            base.Start();
-        }
-        
-        protected override List<UnityEvent> GetCloseEvents()
+        public void Start()
         {
             DeckComponentVisualiser dCV = DeckComponent.Instance.gameObject.GetComponent<DeckComponentVisualiser>(); 
-            return new List<UnityEvent>() { dCV.onDeactivateVisualisation }; 
+            dCV.onDeactivateVisualisation.AddListener(Close);
         }
 
-        protected override bool CheckCloseCondition()
+        private void OnDestroy()
         {
-            timesCardsInDeckChecked++;
-            if (timesCardsInDeckChecked >= 2)
-            {
-                return true; 
-            }
-            else
-            {
-                return false; 
-            }
+            DeckComponentVisualiser dCV = DeckComponent.Instance.gameObject.GetComponent<DeckComponentVisualiser>(); 
+            dCV.onDeactivateVisualisation.RemoveListener(Close);
+        }
+
+        private void Close()
+        {
+            Destroy(this.gameObject);
         }
     }
 }
