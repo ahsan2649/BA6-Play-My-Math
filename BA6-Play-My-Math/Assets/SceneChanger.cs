@@ -16,5 +16,10 @@ public class SceneChanger : MonoBehaviour
         scenemanager.GetComponent<SceneManaging>().ChangeScene(sceneName);
     }
 
+    public void setGameMode(string gameModeName)
+    {
+        scenemanager.GetComponent<SceneManaging>().SetGameMode(gameModeName);
+    }
+
   
 }
