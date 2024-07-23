@@ -4482,9 +4482,44 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2610730937390423192, guid: a8a9d705440fb2142aba7bf455e16d98,
         type: 3}
+      propertyPath: lineupCompleteEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2610730937390423192, guid: a8a9d705440fb2142aba7bf455e16d98,
+        type: 3}
       propertyPath: fightEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7726665513616234535}
+    - target: {fileID: 2610730937390423192, guid: a8a9d705440fb2142aba7bf455e16d98,
+        type: 3}
+      propertyPath: lineupCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2610730937390423192, guid: a8a9d705440fb2142aba7bf455e16d98,
+        type: 3}
+      propertyPath: lineupCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 877706776}
+    - target: {fileID: 2610730937390423192, guid: a8a9d705440fb2142aba7bf455e16d98,
+        type: 3}
+      propertyPath: lineupCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2610730937390423192, guid: a8a9d705440fb2142aba7bf455e16d98,
+        type: 3}
+      propertyPath: lineupCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CallWin
+      objectReference: {fileID: 0}
+    - target: {fileID: 2610730937390423192, guid: a8a9d705440fb2142aba7bf455e16d98,
+        type: 3}
+      propertyPath: lineupCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Manager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2610730937390423192, guid: a8a9d705440fb2142aba7bf455e16d98,
+        type: 3}
+      propertyPath: lineupCompleteEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3589623983977073097, guid: a8a9d705440fb2142aba7bf455e16d98,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -19634,21 +19669,6 @@ MonoBehaviour:
   enemySlots:
   - {fileID: 0}
   - {fileID: 0}
-  LineupComplete:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 877706776}
-        m_TargetAssemblyTypeName: Manager, Assembly-CSharp
-        m_MethodName: CallWin
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &8960598718744787404
 GameObject:
   m_ObjectHideFlags: 0
