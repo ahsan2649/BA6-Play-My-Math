@@ -157,6 +157,11 @@ namespace Programming.Rewards
             BoardExit();
         }
 
+        public void SetMaxValue()
+        {
+            maxValue = DeckComponent.Instance._cardsInDeck.Count;
+        }
+
         public void BoardEnter()
         {
             Debug.Log("Board Enter");
@@ -181,6 +186,8 @@ namespace Programming.Rewards
 
             StartRewarding();
         }
+        
+        
 
         public IEnumerator BoardExitCoroutine()
         {
