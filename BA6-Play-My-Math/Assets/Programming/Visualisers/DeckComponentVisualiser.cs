@@ -97,7 +97,7 @@ namespace Programming.Visualisers
                 {
                     if (values.TryGetValue(visualiserPair.Key, out int count))
                     {
-                        visualiserPair.Value.SetValue(count.ToString());
+                        visualiserPair.Value.SetValue("x "+count.ToString());
                         values.Remove(visualiserPair.Key); 
                     }
                     else
