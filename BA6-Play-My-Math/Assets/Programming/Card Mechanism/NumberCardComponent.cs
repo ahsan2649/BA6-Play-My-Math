@@ -60,7 +60,7 @@ namespace Programming.Card_Mechanism
             draggedCardNumber.IsFractionPreview = true;
             draggedCardNumber.oldValue = draggedCardNumber.Value;
             draggedCardNumber.Value = new Fraction(draggedCardNumber.Value.Numerator, Value.Numerator);
-            draggedCardNumber.cardVisual.material = fractionCardMaterial;
+          
 
         }
 
@@ -118,7 +118,7 @@ namespace Programming.Card_Mechanism
             // Step 3: Set dropped card to the slot this card is in
             var thisCardSlot = GetComponentInParent<HandSlotComponent>();
             thisCardSlot.SetCard(droppedCard.GetComponent<CardMovementComponent>());
-            
+            droppedCardNumber.cardVisual.material = fractionCardMaterial;
             // Draw another card and destroy this one
             PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
             Destroy(gameObject);

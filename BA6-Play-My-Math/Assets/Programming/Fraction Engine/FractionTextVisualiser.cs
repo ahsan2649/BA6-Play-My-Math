@@ -74,7 +74,7 @@ namespace Programming.Visualisers
 
         private void DisplayDecimals(float numerator, float denominator)
         {
-            decimals.text = ((float) numerator / denominator).ToString(); 
+            decimals.text = (Mathf.Round((float) numerator / denominator*100)/100).ToString(); 
         }
     }
 }

@@ -1516,9 +1516,9 @@ namespace Programming.Enemy
         // Start with 10 Hand Cards, each Round +3
         // HandCards - ActualDifficulty = CardsLeftMax
         {
-            {6, new List<int>() {0, 4, 8} },    // 10 - 2 = 8      
-            {9, new List<int>() {0, 4, 9} },    // 13 - 4 = 9
-            {12, new List<int>() {0, 5, 10} },  // 16 - 6 = 10
+            {6, new List<int>() {0, 3, 6} },    // 10 - 2 = 8      
+            {9, new List<int>() {0, 3, 7} },    // 13 - 4 = 9
+            {12, new List<int>() {0, 4, 8} },  // 16 - 6 = 10
             {15, new List<int>() {0, 7, 14} },  // 19 - 4 = 15 
             {18, new List<int>() {0, 6, 12} },  // 22 - 10 = 12
         };
