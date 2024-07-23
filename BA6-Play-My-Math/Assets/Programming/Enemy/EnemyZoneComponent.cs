@@ -6,7 +6,6 @@ namespace Programming.Enemy {
     public class EnemyZoneComponent : MonoBehaviour {
         public static EnemyZoneComponent Instance { get; private set; }
         [HideInInspector] public EnemySlotComponent[] enemySlots;
-        public UnityEvent LineupComplete;
 
         private void Awake()
         {
@@ -38,11 +37,7 @@ namespace Programming.Enemy {
 
         public void ZonePush(EnemyComponent enemy)
         {
-            if (NoEnemiesLeft())
-            {
-                LineupComplete.Invoke();
-                return;
-            }
+            
 
             foreach (EnemySlotComponent slot in enemySlots)
             {
@@ -54,11 +49,12 @@ namespace Programming.Enemy {
                 if (enemy != null)
                 {
                     slot.SetEnemy(enemy);
-                    // StartCoroutine(enemy.MoveToNewParent());
                 }
-
+                
                 break;
             }
+            
+            
         }
 
         public bool NoEnemiesLeft()

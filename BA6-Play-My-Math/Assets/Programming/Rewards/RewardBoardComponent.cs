@@ -159,6 +159,7 @@ namespace Programming.Rewards
 
         public void BoardEnter()
         {
+            Debug.Log("Board Enter");
             StartCoroutine(BoardEnterCoroutine());
         }
 

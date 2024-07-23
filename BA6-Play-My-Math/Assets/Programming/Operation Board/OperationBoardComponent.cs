@@ -144,6 +144,8 @@ namespace Programming.Operation_Board
                     //break; -> we're allowing defeating two exact same enemies at the exact same time
                 }
             }
+
+            
         }
 
         public void OnDrop(PointerEventData eventData)

@@ -9,7 +9,7 @@ public class Manager : MonoBehaviour
 {
      [Tooltip("Initialize Deck and EnemyLineup")][SerializeField] UnityEvent awakeEvent;
      [Tooltip("Initialize PlayerHand and EnemyZone")][SerializeField] UnityEvent startEvent;
-     [Tooltip("Hand and Discards to deck, bring in board")] [SerializeField] private UnityEvent winEvent;
+     [Tooltip("Hand and Discards to deck, bring in board")] [SerializeField] UnityEvent winEvent;
      [Tooltip("")] [SerializeField] private UnityEvent loseEvent;
 
      private void Awake()
@@ -25,6 +25,7 @@ public class Manager : MonoBehaviour
 
     public void CallWin()
     {
+        Debug.Log("Win from Manager!");
         winEvent.Invoke();
     }
 
