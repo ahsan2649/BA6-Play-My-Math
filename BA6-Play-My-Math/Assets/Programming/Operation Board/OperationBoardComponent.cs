@@ -149,6 +149,8 @@ namespace Programming.Operation_Board
                     OnOperationBoardChangeInvoke();
                 }
             }
+
+            
         }
 
         public void OnDrop(PointerEventData eventData)

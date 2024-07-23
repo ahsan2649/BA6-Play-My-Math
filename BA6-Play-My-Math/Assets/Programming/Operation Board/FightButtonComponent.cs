@@ -12,6 +12,7 @@ namespace Programming.Operation_Board
     
         Canvas _canvas;
         public UnityEvent fightEvent;
+        public UnityEvent lineupCompleteEvent;
         public static FightButtonComponent Instance;
     
         private void Awake()
@@ -37,7 +38,13 @@ namespace Programming.Operation_Board
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            fightEvent.Invoke();  
+            fightEvent.Invoke();
+            
+            if (EnemyZoneComponent.Instance.NoEnemiesLeft())
+            {   
+                Debug.Log("Win from Attack Button!!");
+                lineupCompleteEvent.Invoke();
+            }
         }
 
         public void OperationBoardEnableFighting()
