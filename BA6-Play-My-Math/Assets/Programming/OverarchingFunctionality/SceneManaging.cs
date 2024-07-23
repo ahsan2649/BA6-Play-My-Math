@@ -1,3 +1,4 @@
+using System;
 using Programming.ExtensionMethods;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,6 +7,11 @@ namespace Programming.OverarchingFunctionality
 {
     public class SceneManaging : MonoBehaviour
     {
+        public enum GameMode { none, easy23, medium235, hard2357, easyAdditionSmallNumbers, mediumAddition, multiplicationOnly, teachingMode, tutorial }
+
+        public static GameMode gameMode { get; set; } = GameMode.none;
+
+
         public static SceneManaging Instance; 
         public bool bTeacherMode; 
         
@@ -14,9 +20,14 @@ namespace Programming.OverarchingFunctionality
             this.MakeSingleton(ref Instance, true);
         }
     
-        public void changeScene(string sceneName)
+        public void ChangeScene(string sceneName)
         {
             SceneManager.LoadScene(sceneName);
+        }
+
+        public void SetGameMode(string gameModeName)
+        {
+            gameMode = (GameMode) Enum.Parse(typeof(GameMode), gameModeName); 
         }
     }
 }

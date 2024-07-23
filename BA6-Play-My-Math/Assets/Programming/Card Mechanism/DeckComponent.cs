@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Programming.ExtensionMethods;
 using Programming.Fraction_Engine;
+using Programming.OverarchingFunctionality;
 using Programming.ScriptableObjects;
 using Programming.Visualisers;
 using UnityEngine;
@@ -39,7 +40,7 @@ namespace Programming.Card_Mechanism
 
         public void CreateDeck()
         {
-            initDeck = new List<Fraction>(startingDeck.numbers);
+            initDeck = GetStartingDeck().numbers;
 
             FillDeckWithCards(initDeck);
             ShuffleDeck();
@@ -142,5 +143,127 @@ namespace Programming.Card_Mechanism
             ready = false;
             RebuildDeckAndShuffle();
         }
+        
+        #region StartingDeck
+
+        /// <summary>
+        /// Returns a starting deck based on the selected GameMode
+        /// </summary>
+        /// <returns></returns>
+        public StartingDeckInfo GetStartingDeck()
+        {
+            StartingDeckInfo newStartingDeckInfo = new StartingDeckInfo();
+            switch (SceneManaging.gameMode)
+            {
+                case (SceneManaging.GameMode.easy23):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(4,1),
+                        new Fraction(4,1),
+                        new Fraction(6,1),
+                        new Fraction(6,1),
+                        new Fraction(8,1),
+                        new Fraction(8,1),
+                        new Fraction(9,1),
+                        new Fraction(9,1),
+                        new Fraction(3,1),
+                        new Fraction(12,1),
+                    };
+                    break;
+                case (SceneManaging.GameMode.medium235):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(4,1),
+                        new Fraction(4,1),
+                        new Fraction(6,1),
+                        new Fraction(6,1),
+                        new Fraction(8,1),
+                        new Fraction(8,1),
+                        new Fraction(9,1),
+                        new Fraction(9,1),
+                        new Fraction(3,1),
+                        new Fraction(12,1),
+                        new Fraction(5,1),
+                        new Fraction(5,1),
+                        new Fraction(10,1),
+                        new Fraction(10,1),
+                    };
+                    break;
+                case (SceneManaging.GameMode.hard2357):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(4,1),
+                        new Fraction(4,1),
+                        new Fraction(6,1),
+                        new Fraction(6,1),
+                        new Fraction(8,1),
+                        new Fraction(8,1),
+                        new Fraction(9,1),
+                        new Fraction(9,1),
+                        new Fraction(3,1),
+                        new Fraction(12,1),
+                        new Fraction(5,1),
+                        new Fraction(5,1),
+                        new Fraction(10,1),
+                        new Fraction(10,1),
+                        new Fraction(7,1),
+                        new Fraction(7,1),
+                        new Fraction(14,1),
+                        new Fraction(14,1),
+                    };
+                    break;
+                case (SceneManaging.GameMode.easyAdditionSmallNumbers):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(1,1),
+                        new Fraction(1,1),
+                        new Fraction(2,1),
+                        new Fraction(2,1),
+                        new Fraction(4,1),
+                        new Fraction(4,1),
+                        new Fraction(8,1),
+                        new Fraction(8,1),
+                    };
+                    break;
+                case (SceneManaging.GameMode.mediumAddition):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(1,1),
+                        new Fraction(2,1),
+                        new Fraction(3,1),
+                        new Fraction(4,1),
+                        new Fraction(4,1),
+                        new Fraction(6,1),
+                        new Fraction(6,1),
+                        new Fraction(8,1),
+                        new Fraction(8,1),
+                        new Fraction(9,1),
+                        new Fraction(9,1),
+                    };
+                    break;
+                case (SceneManaging.GameMode.multiplicationOnly):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(4,1),
+                        new Fraction(4,1),
+                        new Fraction(6,1),
+                        new Fraction(6,1),
+                        new Fraction(8,1),
+                        new Fraction(8,1),
+                        new Fraction(9,1),
+                        new Fraction(9,1),
+                        new Fraction(12,1),
+                        new Fraction(18,1),
+                    };
+                    break;
+                default:
+                    newStartingDeckInfo.numbers = new List<Fraction>();
+                    break; 
+            }
+            return newStartingDeckInfo;
+        }
+
+        #endregion
+
     }
 }

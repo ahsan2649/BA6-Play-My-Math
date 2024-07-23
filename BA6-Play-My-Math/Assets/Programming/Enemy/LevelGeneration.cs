@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Programming.Fraction_Engine;
+using Programming.OverarchingFunctionality;
 using Programming.ScriptableObjects;
 using UnityEngine;
 
@@ -7,12 +8,13 @@ namespace Programming.Enemy
 {
     public class LevelGeneration : MonoBehaviour
     {
+        private static SceneManaging.GameMode gameMode
+        {
+            get => SceneManaging.gameMode;
+            set => updateGameMode(value); 
+        }
+        
         // This is the function accessed externally, handle with care
-
-        public enum GameMode { none, easy23, medium235, hard2357, easyAdditionSmallNumbers, mediumAddition, multiplicationOnly }
-
-        public static GameMode gameMode = GameMode.easy23; //ZyKa! this should be none, but I set it to easy23 for now in order to test
-
         /// <summary>
         /// Returns a list of Fractions that can be used as the "Monster Deck". 
         /// Make sure you have set the gameMode with switchGameMode(gameMode) before calling this function.
@@ -23,7 +25,7 @@ namespace Programming.Enemy
         public static List<Fraction> generateEnemyCue(bool debug_return_test_cue_instead = false)
         {
             // If GameMode is not set
-            if (gameMode == GameMode.none)
+            if (gameMode == SceneManaging.GameMode.none)
             {
                 Debug.LogWarning("The GameMode has not been set in LevelGeneration. Please use the function switchGameMode(gameMode) to set the gameMode first.");
 
@@ -76,23 +78,23 @@ namespace Programming.Enemy
             new Fraction(16,1),
         };
 
-        public static Fraction GenerateReward(GameMode gameMode)
+        public static Fraction GenerateReward(SceneManaging.GameMode gameMode)
         {
             //TODO @Vin: GenerateReward
             Fraction reward = new Fraction(1,1);
             
             switch (gameMode)
             {
-                case (GameMode.easy23):
+                case (SceneManaging.GameMode.easy23):
                     reward = GetRandomValueFromList(rewardList23);
                     break;
-                case (GameMode.medium235):
+                case (SceneManaging.GameMode.medium235):
                     reward = GetRandomValueFromList(rewardList235);
                     break;
-                case (GameMode.hard2357):
+                case (SceneManaging.GameMode.hard2357):
                     reward = GetRandomValueFromList(rewardList2357);
                     break;
-                case (GameMode.easyAdditionSmallNumbers):
+                case (SceneManaging.GameMode.easyAdditionSmallNumbers):
                     reward = GetRandomValueFromList(rewardListAdditionOfSmallNumbers);
                     break;
             }
@@ -115,125 +117,6 @@ namespace Programming.Enemy
         //}
 
         #endregion
-
-        #region StartingDeck
-
-        /// <summary>
-        /// Returns a starting deck based on the selected GameMode
-        /// </summary>
-        /// <returns></returns>
-        public StartingDeckInfo getStartingDeck()
-        {
-            StartingDeckInfo newStartingDeckInfo = new StartingDeckInfo();
-            switch (gameMode)
-            {
-                case (GameMode.easy23):
-                    newStartingDeckInfo.numbers = new List<Fraction>()
-                    {
-                        new Fraction(4,1),
-                        new Fraction(4,1),
-                        new Fraction(6,1),
-                        new Fraction(6,1),
-                        new Fraction(8,1),
-                        new Fraction(8,1),
-                        new Fraction(9,1),
-                        new Fraction(9,1),
-                        new Fraction(3,1),
-                        new Fraction(12,1),
-                    };
-                    break;
-                case (GameMode.medium235):
-                    newStartingDeckInfo.numbers = new List<Fraction>()
-                    {
-                        new Fraction(4,1),
-                        new Fraction(4,1),
-                        new Fraction(6,1),
-                        new Fraction(6,1),
-                        new Fraction(8,1),
-                        new Fraction(8,1),
-                        new Fraction(9,1),
-                        new Fraction(9,1),
-                        new Fraction(3,1),
-                        new Fraction(12,1),
-                        new Fraction(5,1),
-                        new Fraction(5,1),
-                        new Fraction(10,1),
-                        new Fraction(10,1),
-                    };
-                    break;
-                case (GameMode.hard2357):
-                    newStartingDeckInfo.numbers = new List<Fraction>()
-                    {
-                        new Fraction(4,1),
-                        new Fraction(4,1),
-                        new Fraction(6,1),
-                        new Fraction(6,1),
-                        new Fraction(8,1),
-                        new Fraction(8,1),
-                        new Fraction(9,1),
-                        new Fraction(9,1),
-                        new Fraction(3,1),
-                        new Fraction(12,1),
-                        new Fraction(5,1),
-                        new Fraction(5,1),
-                        new Fraction(10,1),
-                        new Fraction(10,1),
-                        new Fraction(7,1),
-                        new Fraction(7,1),
-                        new Fraction(14,1),
-                        new Fraction(14,1),
-                    };
-                    break;
-                case (GameMode.easyAdditionSmallNumbers):
-                    newStartingDeckInfo.numbers = new List<Fraction>()
-                    {
-                        new Fraction(1,1),
-                        new Fraction(1,1),
-                        new Fraction(2,1),
-                        new Fraction(2,1),
-                        new Fraction(4,1),
-                        new Fraction(4,1),
-                        new Fraction(8,1),
-                        new Fraction(8,1),
-                    };
-                    break;
-                case (GameMode.mediumAddition):
-                    newStartingDeckInfo.numbers = new List<Fraction>()
-                    {
-                        new Fraction(1,1),
-                        new Fraction(2,1),
-                        new Fraction(3,1),
-                        new Fraction(4,1),
-                        new Fraction(4,1),
-                        new Fraction(6,1),
-                        new Fraction(6,1),
-                        new Fraction(8,1),
-                        new Fraction(8,1),
-                        new Fraction(9,1),
-                        new Fraction(9,1),
-                    };
-                    break;
-                case (GameMode.multiplicationOnly):
-                    newStartingDeckInfo.numbers = new List<Fraction>()
-                    {
-                        new Fraction(4,1),
-                        new Fraction(4,1),
-                        new Fraction(6,1),
-                        new Fraction(6,1),
-                        new Fraction(8,1),
-                        new Fraction(8,1),
-                        new Fraction(9,1),
-                        new Fraction(9,1),
-                        new Fraction(12,1),
-                        new Fraction(18,1),
-                    };
-                    break;
-            }
-            return newStartingDeckInfo;
-        }
-
-        #endregion
-
         
         private static Dictionary<int, List<List<GM>>> difficultyToGeneration = mainDifficultyToGeneration;
 
@@ -277,9 +160,8 @@ namespace Programming.Enemy
         /// Switch to one of the GameModes. This resets the Generation and the enemy cue will be generated from the start.
         /// </summary>
         /// <param name="gameMode"></param>
-        public static void switchGameMode(GameMode newGameMode)
+        public static void updateGameMode(SceneManaging.GameMode newGameMode)
         {
-            gameMode = newGameMode;
             Debug.Log("Gamemode switched to " + gameMode.ToString());  
             // reset generations
             Sets = new Dictionary<GM, List<Fraction>>();
@@ -287,7 +169,7 @@ namespace Programming.Enemy
             switch (gameMode)
             {
                 // Special Modes
-                case GameMode.easyAdditionSmallNumbers:
+                case SceneManaging.GameMode.easyAdditionSmallNumbers:
                     // Fractions Sets
                     Sets[GM.FB] = FB_Set_AdditionOfSmallNumbers;
                     Sets[GM.Ads] = Ads_Set_AdditionOfSmallNumbers;
@@ -298,7 +180,7 @@ namespace Programming.Enemy
                     maxKeyOfGM = maxKeyAdditionOfSmallNumbers;
                     startDifficulty = startDifficultyAdditionOfSmallNumbers;
                     break;
-                case GameMode.mediumAddition:
+                case SceneManaging.GameMode.mediumAddition:
                     // Fractions Sets
                     Sets[GM.FB] = FB_Set_AdditionMoreNumbers;
                     Sets[GM.Ads] = Ads_Set_AdditionMoreNumbers;
@@ -308,7 +190,7 @@ namespace Programming.Enemy
                     maxKeyOfGM = maxKeyAdditionOfMoreNumbers;
                     startDifficulty = startDifficultyAdditionOfMoreNumbers;
                     break;
-                case GameMode.multiplicationOnly:
+                case SceneManaging.GameMode.multiplicationOnly:
                     // Fractions Sets
                     Sets[GM.FS] = FS_Set_MultiplicationOnly;
                     Sets[GM.M] = M_Set_MultiplicationOnly;
@@ -320,7 +202,7 @@ namespace Programming.Enemy
                     break;
 
                 // Main Modes
-                case GameMode.easy23:
+                case SceneManaging.GameMode.easy23:
                     // Fraction Sets
                     Sets[GM.FB] = BaseCombinedFractions23;
                     Sets[GM.FS] = SimplyfiedCombinedFractions23;
@@ -335,7 +217,7 @@ namespace Programming.Enemy
                     maxKeyOfGM = maxKeyOfGMofMain;
                     startDifficulty = startDifficultyMain;
                     break;
-                case GameMode.medium235:
+                case SceneManaging.GameMode.medium235:
                     // Fraction Sets
                     Sets[GM.FB] = BaseCombinedFractions235;
                     Sets[GM.FS] = SimplyfiedCombinedFractions235;
@@ -350,7 +232,7 @@ namespace Programming.Enemy
                     maxKeyOfGM = maxKeyOfGMofMain;
                     startDifficulty = startDifficultyMain;
                     break;
-                case GameMode.hard2357:
+                case SceneManaging.GameMode.hard2357:
                     // Fraction Sets
                     Sets[GM.FB] = BaseCombinedFractions2357;
                     Sets[GM.FS] = SimplyfiedCombinedFractions2357;
@@ -1429,7 +1311,7 @@ namespace Programming.Enemy
         /// <returns></returns>
         static List<GM> generateGeneration(int difficulty)
         {
-            if (gameMode == GameMode.easy23 || gameMode == GameMode.medium235 || gameMode == GameMode.hard2357)
+            if (gameMode == SceneManaging.GameMode.easy23 || gameMode == SceneManaging.GameMode.medium235 || gameMode == SceneManaging.GameMode.hard2357)
             {
                 // Generation Modes with B + p = 2
                 List<GM> generation2 = new List<GM>() { GM.FB, GM.FS };
@@ -1453,7 +1335,7 @@ namespace Programming.Enemy
 
                 return newGeneration;
             }
-            else if (gameMode == GameMode.easyAdditionSmallNumbers)
+            else if (gameMode == SceneManaging.GameMode.easyAdditionSmallNumbers)
             {
                 // Generation Modes with B + p = 2
                 List<GM> generation2 = new List<GM>() { GM.FB };
@@ -1477,7 +1359,7 @@ namespace Programming.Enemy
 
                 return newGeneration;
             }
-            else if (gameMode == GameMode.easyAdditionSmallNumbers)
+            else if (gameMode == SceneManaging.GameMode.easyAdditionSmallNumbers)
             {
                 // Generation Modes with B + p = 2
                 List<GM> generation2 = new List<GM>() { GM.FB };
@@ -1501,7 +1383,7 @@ namespace Programming.Enemy
 
                 return newGeneration;
             }
-            else if (gameMode == GameMode.multiplicationOnly)
+            else if (gameMode == SceneManaging.GameMode.multiplicationOnly)
             {
                 // Generation Modes with B + p = 2
                 List<GM> generation2 = new List<GM>() { GM.FS };
