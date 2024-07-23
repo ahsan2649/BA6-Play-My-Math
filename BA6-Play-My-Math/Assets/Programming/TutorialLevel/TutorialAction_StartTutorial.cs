@@ -21,10 +21,6 @@ namespace Programming.TutorialLevel
         
         public override void InitialiseLevel(TutorialLevelInfo levelInfo)
         {
-        }
-        
-        public override void StartLevel(TutorialLevelInfo levelInfo)
-        {
             base.StartLevel(levelInfo);
             SetupInitDeck();
             PlayerHandComponent.Instance.FillHand();
@@ -32,6 +28,11 @@ namespace Programming.TutorialLevel
             TutorialVisualManager.Instance.SpawnOrGetTutorial<TutorialVisualDragCard>(); 
             TutorialVisualManager.Instance.SpawnOrGetTutorial<TutorialVisualPlayCard>(); 
             TutorialVisualManager.Instance.SpawnOrGetTutorial<TutorialVisualThrowaway>();
+        }
+        
+        public override void StartLevel(TutorialLevelInfo levelInfo)
+        {
+            
         }
 
         public override void UpdateLevel(TutorialLevelInfo levelInfo)

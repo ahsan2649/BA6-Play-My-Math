@@ -89,7 +89,11 @@ namespace Programming.Enemy
         {
             return levelsAndRewards[_currentLevelNumber].rewards.GenerateReward(); 
         }
-        
+
+        public List<int> GetRewardThresholds()
+        {
+            return levelsAndRewards[_currentLevelNumber].level.rewardThresholds; 
+        }
         
         #endregion
     }

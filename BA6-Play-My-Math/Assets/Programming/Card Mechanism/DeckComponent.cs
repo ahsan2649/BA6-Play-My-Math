@@ -1,15 +1,10 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Programming.ExtensionMethods;
 using Programming.Fraction_Engine;
 using Programming.OverarchingFunctionality;
 using Programming.ScriptableObjects;
-using Programming.Visualisers;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
-using Random = System.Random;
 
 
 namespace Programming.Card_Mechanism
@@ -19,7 +14,7 @@ namespace Programming.Card_Mechanism
         public static DeckComponent Instance { get; private set; }
 
         public UnityEvent onDeckChanged;
-
+        
         [HideInInspector] private List<Fraction> initDeck = new List<Fraction>();
          public List<CardMovementComponent> _cardsInDeck = new();
         [SerializeField] private StartingDeckInfo startingDeck;

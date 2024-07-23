@@ -8,21 +8,30 @@ namespace Programming.TutorialVisual
 {
     public class TutorialVisualCardsInDeck: TutorialVisualElement
     {
-        [SerializeField] private DeckComponentVisualiser deckComponentVisualiser;
-
-        public void Start()
+        private int timesCardsInDeckChecked = 0; 
+        
+        public override void Start()
         {
-            DeckComponent.Instance.GetComponent<DeckComponentVisualiser>()?.SetCardCountObjectActive(true);
+            base.Start();
         }
         
         protected override List<UnityEvent> GetCloseEvents()
         {
-            return new List<UnityEvent>() { deckComponentVisualiser.onDeactivateVisualisation}; 
+            DeckComponentVisualiser dCV = DeckComponent.Instance.gameObject.GetComponent<DeckComponentVisualiser>(); 
+            return new List<UnityEvent>() { dCV.onDeactivateVisualisation }; 
         }
 
         protected override bool CheckCloseCondition()
         {
-            return true; 
+            timesCardsInDeckChecked++;
+            if (timesCardsInDeckChecked >= 2)
+            {
+                return true; 
+            }
+            else
+            {
+                return false; 
+            }
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +10,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 namespace Programming.Rewards
 {
@@ -93,7 +91,9 @@ namespace Programming.Rewards
 
         void ArrangeThresholds()
         {
-            thresholdValues = LevelGeneration.generateRewardThresholdValues();
+            thresholdValues = SceneManaging.gameMode == SceneManaging.GameMode.tutorial ? 
+                TutorialLevelAndRewards.Instance.GetRewardThresholds() : 
+                LevelGeneration.generateRewardThresholdValues();
 
             int count = Mathf.Min(thresholdValues.Count, thresholds.Count);
             for (int i = 0; i < count; i++)

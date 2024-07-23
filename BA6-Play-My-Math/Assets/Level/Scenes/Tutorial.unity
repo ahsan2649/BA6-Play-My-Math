@@ -2397,19 +2397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   awakeEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Programming.Card_Mechanism.DeckComponent, Programming.CardMechanism
-        m_MethodName: CreateDeck
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   initialiseLevelEvent:
     m_PersistentCalls:
       m_Calls:
@@ -2425,22 +2413,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1326546679}
-        m_TargetAssemblyTypeName: Programming.Enemy.TutorialLevelAndRewards, Enemy
-        m_MethodName: InitialiseLevel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1068663803}
         m_TargetAssemblyTypeName: Programming.Card_Mechanism.DeckComponent, Programming.CardMechanism
-        m_MethodName: RebuildDeck
-        m_Mode: 6
+        m_MethodName: RebuildDeckAndShuffle
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2452,6 +2428,18 @@ MonoBehaviour:
       - m_Target: {fileID: 8134715764803052181}
         m_TargetAssemblyTypeName: Programming.Rewards.RewardBoardComponent, Programming.Rewards
         m_MethodName: SetMaxValue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1326546679}
+        m_TargetAssemblyTypeName: Programming.Enemy.TutorialLevelAndRewards, Enemy
+        m_MethodName: InitialiseLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2542,7 +2530,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1068663803}
         m_TargetAssemblyTypeName: Programming.Card_Mechanism.DeckComponent, Programming.CardMechanism
         m_MethodName: RebuildDeck
         m_Mode: 6
@@ -3253,6 +3241,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3201032620372166595}
     m_Modifications:
+    - target: {fileID: 858747545919841518, guid: 92e9415686576494a835b8fb1edf2ec2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1096881228480932211, guid: 92e9415686576494a835b8fb1edf2ec2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4012,7 +4005,7 @@ MonoBehaviour:
       - enemyCount: 1
         enemyPoolInfo: {fileID: 11400000, guid: b6eac3f3f41ec8a4b8d900de677e2644,
           type: 2}
-      rewardThresholds: 
+      rewardThresholds: 000000000a0000000f000000
       specialGenerate: {fileID: 11400000, guid: 0c0844e7b78707b4a9a96be3729756f0,
         type: 2}
     rewards: {fileID: 11400000, guid: 8b6bab38faaa1194dbbef9d573e2ea07, type: 2}
@@ -4025,7 +4018,7 @@ MonoBehaviour:
       - enemyCount: 2
         enemyPoolInfo: {fileID: 11400000, guid: 515f4edda9882d84093c2874d0375638,
           type: 2}
-      rewardThresholds: 
+      rewardThresholds: 000000000a0000000f000000
       specialGenerate: {fileID: 11400000, guid: 0c0844e7b78707b4a9a96be3729756f0,
         type: 2}
     rewards: {fileID: 11400000, guid: 8b6bab38faaa1194dbbef9d573e2ea07, type: 2}
@@ -4038,7 +4031,7 @@ MonoBehaviour:
       - enemyCount: 3
         enemyPoolInfo: {fileID: 11400000, guid: 515f4edda9882d84093c2874d0375638,
           type: 2}
-      rewardThresholds: 
+      rewardThresholds: 000000000a0000000f000000
       specialGenerate: {fileID: 11400000, guid: 1ab94f2ef621fed438c0451d84153312,
         type: 2}
     rewards: {fileID: 11400000, guid: 5f6d7cc896cdae8439ff98a982a20d32, type: 2}
@@ -4057,7 +4050,7 @@ MonoBehaviour:
       - enemyCount: 1
         enemyPoolInfo: {fileID: 11400000, guid: f4f72502feebc0743a55f3ccfcfde7db,
           type: 2}
-      rewardThresholds: 
+      rewardThresholds: 000000000a0000000f000000
       specialGenerate: {fileID: 0}
     rewards: {fileID: 11400000, guid: 8b6bab38faaa1194dbbef9d573e2ea07, type: 2}
     tutorialAction: {fileID: 11400000, guid: f83504461559a8a4cbf16cc356d4a193, type: 2}
@@ -4091,7 +4084,7 @@ MonoBehaviour:
       - enemyCount: 1
         enemyPoolInfo: {fileID: 11400000, guid: 1b4acd7b11be3a847bd9068277330ebf,
           type: 2}
-      rewardThresholds: 
+      rewardThresholds: 000000000a0000000f000000
       specialGenerate: {fileID: 11400000, guid: ece33e31e0b29754885052c4577e147e,
         type: 2}
     rewards: {fileID: 11400000, guid: 02db166d9ad78914c9b11c55fe9b3b06, type: 2}
@@ -4129,7 +4122,7 @@ MonoBehaviour:
       - enemyCount: 1
         enemyPoolInfo: {fileID: 11400000, guid: 5da88392b54d49147886abdf3bb1176a,
           type: 2}
-      rewardThresholds: 
+      rewardThresholds: 000000000a0000000f000000
       specialGenerate: {fileID: 11400000, guid: ece33e31e0b29754885052c4577e147e,
         type: 2}
     rewards: {fileID: 11400000, guid: 99fe7d8c4de0b304e836491fab4108ad, type: 2}
@@ -4154,7 +4147,7 @@ MonoBehaviour:
       - enemyCount: 1
         enemyPoolInfo: {fileID: 11400000, guid: d13dddabe54b3e347a913f9bb7f2d9bc,
           type: 2}
-      rewardThresholds: 
+      rewardThresholds: 000000000a0000000f000000
       specialGenerate: {fileID: 11400000, guid: 1ab94f2ef621fed438c0451d84153312,
         type: 2}
     rewards: {fileID: 11400000, guid: 99fe7d8c4de0b304e836491fab4108ad, type: 2}
@@ -4173,7 +4166,7 @@ MonoBehaviour:
       - enemyCount: 2
         enemyPoolInfo: {fileID: 11400000, guid: 4eb330f2c150e1c479e4063eb7d4cc68,
           type: 2}
-      rewardThresholds: 000000000000000000000000
+      rewardThresholds: 000000000a0000000f000000
       specialGenerate: {fileID: 11400000, guid: ece33e31e0b29754885052c4577e147e,
         type: 2}
     rewards: {fileID: 11400000, guid: 99fe7d8c4de0b304e836491fab4108ad, type: 2}
