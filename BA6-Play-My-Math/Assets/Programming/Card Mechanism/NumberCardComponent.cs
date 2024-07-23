@@ -15,7 +15,9 @@ namespace Programming.Card_Mechanism
         [SerializeField] private bool inDeck; 
         public bool IsFractionPreview = false; 
         public bool IsFraction = false;
-        public FractionTextVisualiser fractionTextVisualiser; 
+        public FractionTextVisualiser fractionTextVisualiser;
+        public MeshRenderer cardVisual;
+        public Material fractionCardMaterial;
         
         public bool CanCombineIntoFraction => IsFractionPreview || Value.IsWhole(); //needs to check for IsFraction as well, because Fractions are not over one while in preview mode, but are not counted as fractions  
         
@@ -58,6 +60,8 @@ namespace Programming.Card_Mechanism
             draggedCardNumber.IsFractionPreview = true;
             draggedCardNumber.oldValue = draggedCardNumber.Value;
             draggedCardNumber.Value = new Fraction(draggedCardNumber.Value.Numerator, Value.Numerator);
+            draggedCardNumber.cardVisual.material = fractionCardMaterial;
+
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -93,6 +97,7 @@ namespace Programming.Card_Mechanism
             if (droppedCardNumber.IsFraction && IsFraction)
             {
                 GetComponent<CardMovementComponent>().currentSlot.SwapCards(droppedCard.GetComponent<CardMovementComponent>().currentSlot, droppedCard.GetComponent<CardMovementComponent>());
+              
                 return; 
             }
             
