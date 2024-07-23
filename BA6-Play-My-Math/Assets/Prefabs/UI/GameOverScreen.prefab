@@ -85,7 +85,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5296811390416565250}
   - component: {fileID: 8776257330621511546}
-  - component: {fileID: 8081773962368394554}
   m_Layer: 0
   m_Name: 3D_Board
   m_TagString: Untagged
@@ -149,98 +148,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &8081773962368394554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 636458208688764976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b789359f777162f46b1140547d663d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rewardCount: 0
-  maxValue: 15
-  thresholdValues: 020000000400000009000000
-  roundCounterTemp: 0
-  rewardGenerationType: 1
-  rewardCounterSpeed: 5
-  start: {fileID: 1489671804672536247}
-  end: {fileID: 7881522923213458970}
-  slots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  Slider: {fileID: 0}
-  Counter: {fileID: 0}
-  Count: {fileID: 0}
-  onBoardStartExit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Programming.Card_Mechanism.DeckComponent, Programming.CardMechanism
-        m_MethodName: RebuildDeck
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Programming.Enemy.EnemyLineupComponent, Enemy
-        m_MethodName: CreateEnemyLineup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Programming.Card_Mechanism.PlayerHandComponent,
-          Programming.CardMechanism
-        m_MethodName: FillHand
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Programming.Enemy.EnemyLineupComponent, Enemy
-        m_MethodName: StartLineup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onBoardExited:
-    m_PersistentCalls:
-      m_Calls: []
-  onRewardsSpawned:
-    m_PersistentCalls:
-      m_Calls: []
-  cardPrefab: {fileID: 4476395966626981575, guid: 46ec8f4777f7d78408077aa7b4db821d,
-    type: 3}
-  roundCounterText: {fileID: 8086773703173323373}
-  thresholds:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &774735794652197505
 GameObject:
   m_ObjectHideFlags: 0
