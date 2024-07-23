@@ -6,16 +6,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 namespace Programming.Visualisers
 {
     public class DeckComponentVisualiser : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        [SerializeField] private GameObject cardCountObject; 
         [SerializeField] private TMP_Text cardCountText;
         [SerializeField] private GameObject infoCanvas;
-        [SerializeField] private GameObject verticalLayoutGroup;
-        [SerializeField] private float verticalLayoutGroupSizePerCard; 
+        [Tooltip("WIP")]
+        [SerializeField] private RectTransform stretcher; 
+        [FormerlySerializedAs("verticalLayoutGroup")] [SerializeField] private GameObject cardTypeRowParent;
+        [SerializeField] private float sizePerCardType;
+        [SerializeField] private float maxDeckVisualiserYSize; 
         private Dictionary<Fraction, CardCountRowVisualiser> _cardCountsVisualisers = new Dictionary<Fraction, CardCountRowVisualiser>();
         private Dictionary<Fraction, int> _cardCounts = new Dictionary<Fraction, int>(); 
         [SerializeField] private GameObject cardCountRowVisualiserPrefab; 
@@ -67,7 +70,7 @@ namespace Programming.Visualisers
             cardCountText.text = deck._cardsInDeck.Count.ToString();
             CountCards(deck._cardsInDeck, ref _cardCounts);
             WriteCountsToText(_cardCounts, ref _cardCountsVisualisers);
-            OrderBySize(ref _cardCountsVisualisers);
+            OrderBySizeAndPosition(ref _cardCountsVisualisers);
             
             void CountCards(List<CardMovementComponent> cardDeck, ref Dictionary<Fraction, int> countHere)
             {
@@ -89,7 +92,7 @@ namespace Programming.Visualisers
                 } 
             }
             
-            void WriteCountsToText(Dictionary<Fraction, int> values, ref Dictionary<Fraction, CardCountRowVisualiser> visualiserDictionary)
+            void WriteCountsToText(Dictionary<Fraction, int> values, ref Dictionary<Fraction, CardCountRowVisualiser> visualiserDictionary) 
             {
                 //Updating the existing visualisers
                 List<Fraction> deleteTheseVisualisers = new List<Fraction>(); 
@@ -97,7 +100,7 @@ namespace Programming.Visualisers
                 {
                     if (values.TryGetValue(visualiserPair.Key, out int count))
                     {
-                        visualiserPair.Value.SetValue("x "+count.ToString());
+                        visualiserPair.Value.SetValue(count.ToString() + " x");
                         values.Remove(visualiserPair.Key); 
                     }
                     else
@@ -115,18 +118,20 @@ namespace Programming.Visualisers
                 
                 foreach (KeyValuePair<Fraction, int> countPair in values)
                 {
-                    GameObject newVisualiserObject = Instantiate(cardCountRowVisualiserPrefab, verticalLayoutGroup.transform);
+                    GameObject newVisualiserObject = Instantiate(cardCountRowVisualiserPrefab, cardTypeRowParent.transform);
                     CardCountRowVisualiser newCardCountRowVisualiser = newVisualiserObject.GetComponent<CardCountRowVisualiser>(); 
                     newCardCountRowVisualiser.SetDescription(countPair.Key.Numerator.ToString());
                     newCardCountRowVisualiser.SetValue(countPair.Value.ToString());
                     visualiserDictionary.Add(countPair.Key, newCardCountRowVisualiser);
                 }
-                RectTransform verticalTransform = verticalLayoutGroup.GetComponent<RectTransform>();
-                verticalTransform.sizeDelta = new Vector2(verticalTransform.sizeDelta.x,
-                    verticalLayoutGroupSizePerCard * visualiserDictionary.Count); 
+                
+                //@Frieda: this is where the verticalLayout group of the DeckVisualiser adjusts itself
+                stretcher.sizeDelta = new Vector2(stretcher.sizeDelta.x,
+                    Mathf.Min(sizePerCardType * visualiserDictionary.Count, maxDeckVisualiserYSize)); //ZyKa!
+                
             }
 
-            void OrderBySize(ref Dictionary<Fraction, CardCountRowVisualiser> visualiserDictionary)
+            void OrderBySizeAndPosition(ref Dictionary<Fraction, CardCountRowVisualiser> visualiserDictionary)
             {
                 List<Fraction> fractions = visualiserDictionary.Keys.ToList();
                 fractions = fractions.OrderBy(fraction=>fraction.Numerator).ToList();
@@ -135,6 +140,9 @@ namespace Programming.Visualisers
                 foreach (Fraction fraction in fractions)
                 {
                     visualiserDictionary[fraction].transform.SetSiblingIndex(index);
+                    RectTransform rect = visualiserDictionary[fraction].GetComponent<RectTransform>();
+                    float middleChild = visualiserDictionary.Count/2.0f; 
+                    rect.localPosition = new Vector3(rect.localPosition.x, (index-middleChild+0.5f) * sizePerCardType, rect.localPosition.z); 
                     index++; 
                 }
             }
@@ -142,7 +150,7 @@ namespace Programming.Visualisers
         
         public void SetCardCountObjectActive(bool bActive)
         {
-            cardCountObject.SetActive(bActive);
+            infoCanvas.gameObject.SetActive(bActive);
         }
     }
 }
