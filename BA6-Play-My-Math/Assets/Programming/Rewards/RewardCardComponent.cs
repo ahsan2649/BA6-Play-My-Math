@@ -9,9 +9,10 @@ namespace Programming.Rewards
         public void OnPointerClick(PointerEventData eventData)
         {
             Debug.Log("Click!");
-            DeckComponent.Instance.AddCardToDeck(new Fraction(GetComponent<NumberCardComponent>().Value), false, true); //ZyKa! I'm confused whether this is supposed to set to PlayDeck or whether that happens automatically
+            DeckComponent.Instance.AddCardToDeck(new Fraction(GetComponent<NumberCardComponent>().Value), false, true); 
             transform.SetParent(DeckComponent.Instance.transform);
             GetComponent<CardMovementComponent>().TransformToNewParentCoroutines();
+            GetComponent<NumberCardComponent>().fractionTextVisualiser.SetInDeck(true);
             
             foreach (Transform slot in RewardBoardComponent.Instance.slots)
             {

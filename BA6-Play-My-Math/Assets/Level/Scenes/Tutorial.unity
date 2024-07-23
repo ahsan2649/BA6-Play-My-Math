@@ -2416,18 +2416,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8995370173651060027}
-        m_TargetAssemblyTypeName: Programming.Enemy.EnemyLineupComponent, Enemy
-        m_MethodName: CreateEnemyLineup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   initialiseLevelEvent:
     m_PersistentCalls:
       m_Calls:
@@ -3018,7 +3006,7 @@ PrefabInstance:
     - target: {fileID: 5858234640072319926, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: changeScene
+      value: ChangeScene
       objectReference: {fileID: 0}
     - target: {fileID: 5858234640072319926, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
         type: 3}
@@ -3183,7 +3171,7 @@ PrefabInstance:
     - target: {fileID: 8259884303501443612, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: changeScene
+      value: ChangeScene
       objectReference: {fileID: 0}
     - target: {fileID: 8259884303501443612, guid: 957ecfa5a68b57f4e941d86f3a7655b1,
         type: 3}
@@ -17454,6 +17442,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingLayer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: availableOperations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: availableOperations.Array.data[2]
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
         type: 3}

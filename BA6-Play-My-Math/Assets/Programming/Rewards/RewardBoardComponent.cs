@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Programming.Card_Mechanism;
 using Programming.Enemy;
 using Programming.Fraction_Engine;
+using Programming.OverarchingFunctionality;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -148,7 +149,7 @@ namespace Programming.Rewards
             return rewardGenerationType switch
             {
                 RewardGenerationType.Tutorial => TutorialLevelAndRewards.Instance.GenerateReward(),  
-                RewardGenerationType.Roguelite => LevelGeneration.GenerateReward(LevelGeneration.GameMode.easy23), 
+                RewardGenerationType.Roguelite => LevelGeneration.GenerateReward(SceneManaging.gameMode), 
                 _ => throw new SwitchExpressionException()
             }; 
         }
