@@ -634,6 +634,7 @@ GameObject:
   - component: {fileID: 210913098}
   - component: {fileID: 210913097}
   - component: {fileID: 210913096}
+  - component: {fileID: 210913099}
   m_Layer: 5
   m_Name: Hard
   m_TagString: Untagged
@@ -705,10 +706,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1465111335}
-        m_TargetAssemblyTypeName: Programming.OverarchingFunctionality.SceneManaging,
-          Programming.ExtensionMethods
-        m_MethodName: SetGameMode
+      - m_Target: {fileID: 210913099}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: setGameMode
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -718,9 +718,9 @@ MonoBehaviour:
           m_StringArgument: hard2357
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1465111335}
-        m_TargetAssemblyTypeName: SceneManaging, Programming.ExtensionMethods
-        m_MethodName: ChangeScene
+      - m_Target: {fileID: 210913099}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: changeScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -768,6 +768,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 210913094}
   m_CullTransparentMesh: 1
+--- !u!114 &210913099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210913094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8061807ab01dfed4980fa890c609aac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &239127156
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1284,6 +1296,7 @@ GameObject:
   - component: {fileID: 318662718}
   - component: {fileID: 318662717}
   - component: {fileID: 318662716}
+  - component: {fileID: 318662719}
   m_Layer: 5
   m_Name: Medium
   m_TagString: Untagged
@@ -1355,10 +1368,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1465111335}
-        m_TargetAssemblyTypeName: Programming.OverarchingFunctionality.SceneManaging,
-          Programming.ExtensionMethods
-        m_MethodName: SetGameMode
+      - m_Target: {fileID: 318662719}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: setGameMode
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1368,9 +1380,9 @@ MonoBehaviour:
           m_StringArgument: medium235
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1465111335}
-        m_TargetAssemblyTypeName: SceneManaging, Programming.ExtensionMethods
-        m_MethodName: ChangeScene
+      - m_Target: {fileID: 318662719}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: changeScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1418,6 +1430,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 318662714}
   m_CullTransparentMesh: 1
+--- !u!114 &318662719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318662714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8061807ab01dfed4980fa890c609aac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &352027779
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,6 +1454,7 @@ GameObject:
   - component: {fileID: 352027783}
   - component: {fileID: 352027782}
   - component: {fileID: 352027781}
+  - component: {fileID: 352027784}
   m_Layer: 5
   m_Name: Addition2
   m_TagString: Untagged
@@ -1501,10 +1526,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1465111335}
-        m_TargetAssemblyTypeName: Programming.OverarchingFunctionality.SceneManaging,
-          Programming.ExtensionMethods
-        m_MethodName: SetGameMode
+      - m_Target: {fileID: 352027784}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: setGameMode
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1514,9 +1538,9 @@ MonoBehaviour:
           m_StringArgument: mediumAddition
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1465111335}
-        m_TargetAssemblyTypeName: SceneManaging, Programming.ExtensionMethods
-        m_MethodName: ChangeScene
+      - m_Target: {fileID: 352027784}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: changeScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1564,6 +1588,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352027779}
   m_CullTransparentMesh: 1
+--- !u!114 &352027784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352027779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8061807ab01dfed4980fa890c609aac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &416821241
 GameObject:
   m_ObjectHideFlags: 0
@@ -3312,6 +3348,7 @@ GameObject:
   - component: {fileID: 846528415}
   - component: {fileID: 846528414}
   - component: {fileID: 846528413}
+  - component: {fileID: 846528416}
   m_Layer: 5
   m_Name: Tutorial
   m_TagString: Untagged
@@ -3383,9 +3420,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1465111335}
-        m_TargetAssemblyTypeName: SceneManaging, Programming.ExtensionMethods
-        m_MethodName: ChangeScene
+      - m_Target: {fileID: 846528416}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: changeScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3433,6 +3470,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 846528411}
   m_CullTransparentMesh: 1
+--- !u!114 &846528416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846528411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8061807ab01dfed4980fa890c609aac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &921203943
 GameObject:
   m_ObjectHideFlags: 0
@@ -3934,6 +3983,7 @@ GameObject:
   - component: {fileID: 1453434822}
   - component: {fileID: 1453434821}
   - component: {fileID: 1453434820}
+  - component: {fileID: 1453434823}
   m_Layer: 5
   m_Name: Addition1
   m_TagString: Untagged
@@ -4005,10 +4055,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1465111335}
-        m_TargetAssemblyTypeName: Programming.OverarchingFunctionality.SceneManaging,
-          Programming.ExtensionMethods
-        m_MethodName: SetGameMode
+      - m_Target: {fileID: 1453434823}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: setGameMode
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4018,9 +4067,9 @@ MonoBehaviour:
           m_StringArgument: easyAdditionSmallNumbers
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1465111335}
-        m_TargetAssemblyTypeName: SceneManaging, Programming.ExtensionMethods
-        m_MethodName: ChangeScene
+      - m_Target: {fileID: 1453434823}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: changeScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4068,6 +4117,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453434818}
   m_CullTransparentMesh: 1
+--- !u!114 &1453434823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453434818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8061807ab01dfed4980fa890c609aac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1465111334
 GameObject:
   m_ObjectHideFlags: 0
@@ -4125,6 +4186,7 @@ GameObject:
   - component: {fileID: 1517162666}
   - component: {fileID: 1517162665}
   - component: {fileID: 1517162664}
+  - component: {fileID: 1517162667}
   m_Layer: 5
   m_Name: Multiplication
   m_TagString: Untagged
@@ -4196,10 +4258,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1465111335}
-        m_TargetAssemblyTypeName: Programming.OverarchingFunctionality.SceneManaging,
-          Programming.ExtensionMethods
-        m_MethodName: SetGameMode
+      - m_Target: {fileID: 1517162667}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: setGameMode
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4209,9 +4270,9 @@ MonoBehaviour:
           m_StringArgument: multiplicationOnly
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1465111335}
-        m_TargetAssemblyTypeName: SceneManaging, Programming.ExtensionMethods
-        m_MethodName: ChangeScene
+      - m_Target: {fileID: 1517162667}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: changeScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4259,6 +4320,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1517162662}
   m_CullTransparentMesh: 1
+--- !u!114 &1517162667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517162662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8061807ab01dfed4980fa890c609aac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1567285936
 GameObject:
   m_ObjectHideFlags: 0
@@ -4406,6 +4479,7 @@ GameObject:
   - component: {fileID: 1722323756}
   - component: {fileID: 1722323755}
   - component: {fileID: 1722323754}
+  - component: {fileID: 1722323757}
   m_Layer: 5
   m_Name: Easy
   m_TagString: Untagged
@@ -4477,10 +4551,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1465111335}
-        m_TargetAssemblyTypeName: Programming.OverarchingFunctionality.SceneManaging,
-          Programming.ExtensionMethods
-        m_MethodName: SetGameMode
+      - m_Target: {fileID: 1722323757}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: setGameMode
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4490,9 +4563,9 @@ MonoBehaviour:
           m_StringArgument: easy23
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1465111335}
-        m_TargetAssemblyTypeName: SceneManaging, Programming.ExtensionMethods
-        m_MethodName: ChangeScene
+      - m_Target: {fileID: 1722323757}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: changeScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4540,6 +4613,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1722323752}
   m_CullTransparentMesh: 1
+--- !u!114 &1722323757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722323752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8061807ab01dfed4980fa890c609aac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1731154521
 PrefabInstance:
   m_ObjectHideFlags: 0
