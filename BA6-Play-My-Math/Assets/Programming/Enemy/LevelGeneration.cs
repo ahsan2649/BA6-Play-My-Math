@@ -284,6 +284,53 @@ namespace Programming.Enemy
                     maxKeyOfGM = maxKeyOfGMofMain;
                     startDifficulty = startDifficultyMain;
                     break;
+
+                //Daily Mode
+                case SceneManaging.GameMode.daily23:
+                    // Fraction Sets
+                    Sets[GM.FB] = BaseCombinedFractions23;
+                    Sets[GM.FS] = SimplyfiedCombinedFractions23;
+                    Sets[GM.Ads] = additionFractionList23;
+                    Sets[GM.AdsB] = additionFractionList23Big;
+                    Sets[GM.Ms] = simpleMultiplicationSet23;
+                    Sets[GM.M] = multiplicationSet23;
+                    Sets[GM.M2] = multiplicationSet23;
+                    Sets[GM.M3] = multiplicationSet23;
+                    // Generation
+                    difficultyToGeneration = dailyDifficultyToGeneration;
+                    maxKeyOfGM = maxKeyOfGMofDaily;
+                    startDifficulty = startDifficultyDaily;
+                    break;
+                case SceneManaging.GameMode.daily235:
+                    // Fraction Sets
+                    Sets[GM.FB] = BaseCombinedFractions235;
+                    Sets[GM.FS] = SimplyfiedCombinedFractions235;
+                    Sets[GM.Ads] = additionFractionList235;
+                    Sets[GM.AdsB] = additionFractionList235Big;
+                    Sets[GM.Ms] = simpleMultiplicationSet235;
+                    Sets[GM.M] = multiplicationSet235;
+                    Sets[GM.M2] = multiplication235TwoComposites;
+                    Sets[GM.M3] = multiplication235TwoComposites;
+                    // Generation
+                    difficultyToGeneration = dailyDifficultyToGeneration;
+                    maxKeyOfGM = maxKeyOfGMofDaily;
+                    startDifficulty = startDifficultyDaily;
+                    break;
+                case SceneManaging.GameMode.daily2357:
+                    // Fraction Sets
+                    Sets[GM.FB] = BaseCombinedFractions2357;
+                    Sets[GM.FS] = SimplyfiedCombinedFractions2357;
+                    Sets[GM.Ads] = additionFractionList2357;
+                    Sets[GM.AdsB] = additionFractionList2357Big;
+                    Sets[GM.Ms] = simpleMultiplicationSet2357;
+                    Sets[GM.M] = multiplicationSet2357;
+                    Sets[GM.M2] = multiplication2357TwoComposites;
+                    Sets[GM.M3] = multiplication2357ThreeComposites;
+                    // Generation
+                    difficultyToGeneration = dailyDifficultyToGeneration;
+                    maxKeyOfGM = maxKeyOfGMofDaily;
+                    startDifficulty = startDifficultyDaily;
+                    break;
             }
             resetDifficulty();
         }
@@ -637,6 +684,13 @@ namespace Programming.Enemy
                 new Fraction(9,32),
                 new Fraction(3,64),
                 new Fraction(9,64),
+                // N3 & N2
+                new Fraction(16,27),
+                new Fraction(27,32),
+                new Fraction(27,64),
+                new Fraction(16,81),
+                new Fraction(32,81),
+                new Fraction(64,81),
             };
 
         private static List<Fraction> simpleMultiplicationSet23 = new List<Fraction>()
@@ -1299,6 +1353,66 @@ namespace Programming.Enemy
         //      Did you add all the new Generation Lists to the switchGameMode()?
         //      Did you add new StartingDeck?
         //      Did you add new Generation after Key?
+
+        #endregion
+
+        #region GameMode: Daily
+
+        // Generation
+        private static Dictionary<int, List<List<GM>>> dailyDifficultyToGeneration = new Dictionary<int, List<List<GM>>>
+        {
+            {6, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.FB, GM.FB }, // 4
+                }
+            },
+            {9, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.FS, GM.FS }, // 4
+                }
+            },
+            {12, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.FB, GM.FS, GM.FB, GM.FS }, // 8
+                }
+            },
+            {15, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.AdsB }, // 4
+                }
+            },
+            {18, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.Ads, GM.AdsB }, // 8
+                }
+            },
+            {21, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.FS, GM.Ads, GM.FB, GM.FB, GM.FS }, // 12
+                }
+            },
+            {24, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.Ms }, // 6
+                }
+            },
+            {27, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.Ms, GM.M }, // 10
+                }
+            },
+            {30, new List<List<GM>>()
+                {
+                    new List<GM>() { GM.M, GM.Ms, GM.Ads, GM.FB, GM.FS, GM.FS }, // 20
+                    new List<GM>() { GM.Ads, GM.M2, GM.M3, GM.FB, GM.FS, GM.FS }, // 20
+                    new List<GM>() { GM.M3, GM.M, GM.FS, GM.Ads, GM.FS, GM.FS }, // 20
+                    new List<GM>() { GM.FS, GM.M2, GM.Ads, GM.Ads, GM.FS, GM.FS }, // 20
+                }
+            },
+        };
+
+        private static int maxKeyOfGMofDaily = 30;
+        private static int startDifficultyDaily = 6;
 
         #endregion
 
