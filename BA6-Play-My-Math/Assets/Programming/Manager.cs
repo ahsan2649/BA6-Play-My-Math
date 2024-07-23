@@ -26,6 +26,7 @@ public class Manager : MonoBehaviour
          CallInitialiseLevel();
          yield return null;
          CallStartLevel();
+         yield return null;
      }
 
     public void CallInitialiseLevel()

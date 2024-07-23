@@ -47,14 +47,14 @@ namespace Programming.Card_Mechanism {
 
         #region Animations
         
-        public void TransformToNewParentCoroutines()
+        public void TransformToNewParentCoroutines(bool isRewardCard = false)
         {
-            StartCoroutine(MoveToNewParent());
+            StartCoroutine(MoveToNewParent(isRewardCard));
             StartCoroutine(RotateToNewParent()); 
             _canvasGroup.blocksRaycasts = true;
         }
 
-        public IEnumerator MoveToNewParent()
+        public IEnumerator MoveToNewParent(bool isRewardCard = false)
         {
             while (Vector3.Distance(transform.position, transform.parent.position) > 0.01f)
             {
@@ -62,7 +62,12 @@ namespace Programming.Card_Mechanism {
                 transform.position = Vector3.MoveTowards(transform.position, transform.parent.position, moveSpeed * Time.deltaTime);
                 yield return new WaitForEndOfFrame();
             }
-
+            
+            if (isRewardCard)
+            {
+                Destroy(gameObject);
+            }
+            
             _canvasGroup.blocksRaycasts = true;
         }
 

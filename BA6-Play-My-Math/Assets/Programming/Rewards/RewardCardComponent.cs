@@ -11,7 +11,7 @@ namespace Programming.Rewards
             Debug.Log("Click!");
             DeckComponent.Instance.AddCardToDeck(new Fraction(GetComponent<NumberCardComponent>().Value), false, true); 
             transform.SetParent(DeckComponent.Instance.transform);
-            GetComponent<CardMovementComponent>().TransformToNewParentCoroutines();
+            GetComponent<CardMovementComponent>().TransformToNewParentCoroutines(true);
             GetComponent<NumberCardComponent>().fractionTextVisualiser.SetInDeck(true);
             
             foreach (Transform slot in RewardBoardComponent.Instance.slots)
