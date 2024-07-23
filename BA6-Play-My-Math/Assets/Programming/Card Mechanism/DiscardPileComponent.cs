@@ -10,7 +10,7 @@ namespace Programming.Card_Mechanism
 {
     public class DiscardPileComponent : MonoBehaviour, IDropHandler
     {
-        private List<CardMovementComponent> _disCards = new List<CardMovementComponent>();
+        public List<CardMovementComponent> DisCards { get; } = new List<CardMovementComponent>();
 
         public UnityEvent onDiscardPileChanged;
         public static DiscardPileComponent Instance { get; private set; }
@@ -29,7 +29,7 @@ namespace Programming.Card_Mechanism
 
         public void PutCardInBin(CardMovementComponent cardMovement)
         {
-            _disCards.Add(cardMovement);
+            DisCards.Add(cardMovement);
 
             cardMovement.transform.SetParent(transform);
             onDiscardPileChanged.Invoke();
@@ -60,11 +60,11 @@ namespace Programming.Card_Mechanism
 
         private IEnumerator ReturnToDeck()
         {
-            var waitMult = _disCards.Count; 
-            for (var index = _disCards.Count - 1; index >= 0; index--)
+            var waitMult = DisCards.Count; 
+            for (var index = DisCards.Count - 1; index >= 0; index--)
             {
-                var card = _disCards[index];
-                _disCards.Remove(card);
+                var card = DisCards[index];
+                DisCards.Remove(card);
                 DeckComponent.Instance._cardsInDeck.Add(card);
                 card.transform.SetParent(DeckComponent.Instance.transform);
                 card.TransformToNewParentCoroutines();

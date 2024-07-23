@@ -11,6 +11,7 @@ namespace Programming.Visualisers
 {
     public class DeckComponentVisualiser : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
     {
+        [SerializeField] private GameObject cardCountObject; 
         [SerializeField] private TMP_Text cardCountText;
         [SerializeField] private GameObject infoCanvas;
         [SerializeField] private GameObject verticalLayoutGroup;
@@ -33,7 +34,7 @@ namespace Programming.Visualisers
             onDeactivateVisualisation.Invoke();
         }
         
-        public void OnPointerEnter(PointerEventData eventData)
+        public void OnPointerEnter(PointerEventData eventData) 
         {
             UpdateInfoForDeckSingleton(); 
             infoCanvas.SetActive(true);
@@ -137,6 +138,11 @@ namespace Programming.Visualisers
                     index++; 
                 }
             }
+        }
+        
+        public void SetCardCountObjectActive(bool bActive)
+        {
+            cardCountObject.SetActive(bActive);
         }
     }
 }

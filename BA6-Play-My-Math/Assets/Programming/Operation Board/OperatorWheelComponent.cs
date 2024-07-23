@@ -10,16 +10,18 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Programming.Operation_Board {
-    public class OperatorWheelComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
-        RectTransform _rectTransform;
+    public class OperatorWheelComponent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    {
         Canvas _canvas;
-        CanvasGroup _canvasGroup;
 
         public List<Operation> availableOperations = new();
         public Operation currentOperation;
         [SerializeField] private TextMeshProUGUI OperationText;
         [SerializeField] GameObject Cylinder;
         [SerializeField] private Animator animator; 
+        
+        [SerializeField] private GameObject[] wheelObjects; 
+        [SerializeField] private GameObject[] plateObjects; 
         
         public UnityEvent OnChangeOperation;
 
@@ -32,10 +34,7 @@ namespace Programming.Operation_Board {
         //@Ahsan: previously Awake and Start in onEnable, but that runs simultaneously(/before) OperationBoardComponent.Awake(), but UpdateOp needs OperationBoardComponent.Instance
         private void Awake()
         {
-            _rectTransform = GetComponent<RectTransform>();
             _canvas = GetComponent<Canvas>();
-            _canvasGroup = GetComponent<CanvasGroup>();
-
             currentOperation = availableOperations[0];
         }
 
@@ -46,6 +45,24 @@ namespace Programming.Operation_Board {
             UpdateOp();
         }
 
+        public void SetWheelActive(bool bActive)
+        {
+            foreach (GameObject gO in wheelObjects)
+            {
+                gO.SetActive(bActive);
+            }
+
+            enabled = true; 
+        }
+
+        public void SetPlateActive(bool bActive)
+        {
+            foreach (GameObject plateObject in plateObjects)
+            {
+                plateObject.SetActive(bActive);
+            }
+        }
+        
         public void OnBeginDrag(PointerEventData eventData)
         {
             _dragStart = eventData.position;

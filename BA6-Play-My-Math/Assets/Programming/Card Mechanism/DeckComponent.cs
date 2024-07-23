@@ -19,10 +19,10 @@ namespace Programming.Card_Mechanism
 
         public UnityEvent onDeckChanged;
 
-        [HideInInspector] public List<Fraction> initDeck;
+        [HideInInspector] private List<Fraction> initDeck = new List<Fraction>();
          public List<CardMovementComponent> _cardsInDeck = new();
         [SerializeField] private StartingDeckInfo startingDeck;
-        [SerializeField] private GameObject numberCardPrefab;
+        public GameObject numberCardPrefab;
         private bool ready;
 
         private void Awake()
@@ -45,7 +45,12 @@ namespace Programming.Card_Mechanism
             ShuffleDeck();
         }
 
-        public void RebuildDeck()
+        public void RebuildDeckAndShuffle()
+        {
+            RebuildDeck(true);
+        }
+        
+        public void RebuildDeck(bool bShuffle = true)
         {
             for (var index = _cardsInDeck.Count - 1; index >= 0; index--)
             {
@@ -55,7 +60,10 @@ namespace Programming.Card_Mechanism
             }
 
             FillDeckWithCards(initDeck);
-            ShuffleDeck();
+            if (bShuffle)
+            {
+                ShuffleDeck();
+            }
 
             onDeckChanged.Invoke();
         }
@@ -69,22 +77,37 @@ namespace Programming.Card_Mechanism
 
             _cardsInDeck.Clear();
 
-            int listIndex = 0;
             foreach (Fraction fraction in fractionList)
             {
-                var card = Instantiate(numberCardPrefab,
-                    new Vector3(transform.position.x, transform.position.y - listIndex * 0.125f, transform.position.z),
-                    transform.rotation, transform);
-
-                // Disabling BaseCard, so they can't be dragged from Deck
-                card.GetComponentInChildren<CardMovementComponent>().enabled = false;
-                NumberCardComponent numberCard = card.GetComponentInChildren<NumberCardComponent>(); 
-                numberCard.oldValue = numberCard.Value = new Fraction(fraction);
-                numberCard.fractionTextVisualiser.SetInDeck(true);
-                _cardsInDeck.Add(card.GetComponentInChildren<CardMovementComponent>());
-                
-                listIndex++;
+                AddCardToPlayingDeck(fraction);
             }
+        }
+
+        public void AddCardToDeck(Fraction fraction, bool addToPlayDeck, bool addToInitDeck)
+        {
+            if (addToInitDeck)
+            {
+                initDeck.Add(new Fraction(fraction));
+            }
+
+            if (addToPlayDeck)
+            {
+                AddCardToPlayingDeck(fraction);
+            }
+        }
+        
+        private void AddCardToPlayingDeck(Fraction fraction)
+        {
+            var card = Instantiate(numberCardPrefab,
+                new Vector3(transform.position.x, transform.position.y - _cardsInDeck.Count * 0.125f, transform.position.z),
+                transform.rotation, transform);
+
+            // Disabling BaseCard, so they can't be dragged from Deck
+            card.GetComponentInChildren<CardMovementComponent>().enabled = false;
+            NumberCardComponent numberCard = card.GetComponentInChildren<NumberCardComponent>(); 
+            numberCard.oldValue = numberCard.Value = new Fraction(fraction);
+            numberCard.fractionTextVisualiser.SetInDeck(true);
+            _cardsInDeck.Add(card.GetComponentInChildren<CardMovementComponent>());
         }
 
         public CardMovementComponent DeckPop()
@@ -117,7 +140,7 @@ namespace Programming.Card_Mechanism
             }
 
             ready = false;
-            RebuildDeck();
+            RebuildDeckAndShuffle();
         }
     }
 }

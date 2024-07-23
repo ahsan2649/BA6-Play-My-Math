@@ -113,7 +113,7 @@ namespace Programming.Fraction_Engine
         {
             return Numerator == other.Numerator && Denominator == other.Denominator; 
         }
-        
+
         public override int GetHashCode()
         {
             return HashCode.Combine(Numerator, Denominator);

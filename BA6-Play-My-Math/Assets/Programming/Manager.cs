@@ -1,26 +1,41 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 public class Manager : MonoBehaviour
 {
-     [Tooltip("Initialize Deck and EnemyLineup")][SerializeField] UnityEvent awakeEvent;
-     [Tooltip("Initialize PlayerHand and EnemyZone")][SerializeField] UnityEvent startEvent;
-     [Tooltip("Hand and Discards to deck, bring in board")] [SerializeField] private UnityEvent winEvent;
-     [Tooltip("")] [SerializeField] private UnityEvent loseEvent;
+    [Tooltip("Deck.CreateDeck")] [SerializeField ]private UnityEvent awakeEvent; 
+    [Tooltip("EnemyLineUp.Create \n Tutorial.InitializeLevel")][SerializeField] UnityEvent initialiseLevelEvent;
+    [Tooltip("Hand.Fill \n EnemyLineup.StartLineup \n Tutorial.Start")][SerializeField] UnityEvent startLevelEvent;
+    [Tooltip("RewardBoard.Enter \n DiscardPile.Clear \n PlayerHand.Clear \n Deck.Rebuild \n TutorialLevel.Win")] [SerializeField] private UnityEvent winEvent;
+    [Tooltip("")] [SerializeField] private UnityEvent loseEvent;
 
-     private void Awake()
+    private void Awake()
     {
         awakeEvent.Invoke();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
+     {
+         StartCoroutine(StartGame()); 
+     }
+
+     private IEnumerator StartGame() //Ensures that all Singletons are set before starting anything
+     {
+         CallInitialiseLevel();
+         yield return null;
+         CallStartLevel();
+     }
+
+    public void CallInitialiseLevel()
     {
-        startEvent.Invoke();
+        initialiseLevelEvent.Invoke();
+    }
+
+    public void CallStartLevel()
+    {
+        startLevelEvent.Invoke();
     }
 
     public void CallWin()
@@ -28,4 +43,8 @@ public class Manager : MonoBehaviour
         winEvent.Invoke();
     }
 
+    public void CallLoose()
+    {
+        loseEvent.Invoke();
+}
 }

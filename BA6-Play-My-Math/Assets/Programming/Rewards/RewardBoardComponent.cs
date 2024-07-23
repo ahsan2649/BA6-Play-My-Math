@@ -30,22 +30,23 @@ namespace Programming.Rewards
         public int maxValue;
         [SerializeField] public List<int> thresholdValues = new();
         [HideInInspector] public int roundCounterTemp;
-        public RewardGenerationType rewardGenerationType = RewardGenerationType.Roguelite; 
+        public RewardGenerationType rewardGenerationType = RewardGenerationType.Roguelite;
+        [SerializeField] private float rewardCounterSpeed = 5f; 
         
-        [Header("References")]
-        public Transform start, end;
+        [Header("References")] 
+        public Transform start; 
+        public Transform end;
         public Transform[] slots;
         public RectTransform Slider;
         public RectTransform Counter;
         public TextMeshProUGUI Count;
-        [Tooltip(
-            "DeckComponent.RebuildDeck()\n" +
-            "PlayerHandComponent.ClearHand()\n" +
-            "DiscardPileComponent.ClearPile()" +
-            "EnemyLineupComponent.CreateEnemyLineup" +
-            "EnemyZoneComponent.InitializeEnemies")]
+        [FormerlySerializedAs("onBoardExit")]
+        [Tooltip("Call GameManager.InitialiseLevel, which will will handle the rest")]
         [FormerlySerializedAs("OnBoardExit")]
-        public UnityEvent onBoardExit;
+        public UnityEvent onBoardStartExit;
+        [Tooltip("Call GameManager.StartLevel, which will handle the rest")]
+        public UnityEvent onBoardExited; 
+        public UnityEvent onRewardsSpawned; //needed for Tutorial
         public GameObject cardPrefab;
         [SerializeField] private TMP_Text roundCounterText;
         [SerializeField] private List<RectTransform> thresholds = new();
@@ -98,12 +99,13 @@ namespace Programming.Rewards
             }
         }
 
+        //TODO: merge the following two functions into one function, so that the slider goes at the same speed as the counter
         public IEnumerator AnimateCounter()
         {
             _displayValue = 0;
             while (_displayValue < _achievedValue)
             {
-                _displayValue += 3f * Time.deltaTime;
+                _displayValue += rewardCounterSpeed * Time.deltaTime;
                 Count.text = ((int)_displayValue).ToString();
                 yield return new WaitForEndOfFrame();
             }
@@ -136,11 +138,12 @@ namespace Programming.Rewards
                 card.GetComponent<CardMovementComponent>().enabled = false;
                 card.GetComponent<ExpandSimplifyCard>().enabled = false;
                 card.AddComponent<RewardCardComponent>();
-                cardNumber.Value = LevelGeneration.GenerateReward(LevelGeneration.GameMode.easy23);
+                cardNumber.Value = GenerateReward(); 
+                onRewardsSpawned.Invoke();
             }
         }
 
-        public Fraction RewardAlgorithm()
+        public Fraction GenerateReward()
         {
             return rewardGenerationType switch
             {
@@ -164,7 +167,7 @@ namespace Programming.Rewards
 
         public void BoardExit()
         {
-            onBoardExit.Invoke();
+            onBoardStartExit.Invoke();
             StartCoroutine(BoardExitCoroutine());
         }
 
@@ -181,6 +184,13 @@ namespace Programming.Rewards
 
         public IEnumerator BoardExitCoroutine()
         {
+            float distance; 
+            while (Vector3.Distance(transform.position, start.position) > 7.5f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, start.position, 50f * Time.deltaTime);
+                yield return new WaitForEndOfFrame();
+            }
+            onBoardExited.Invoke();
             while (Vector3.Distance(transform.position, start.position) > 0.1f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, start.position, 50f * Time.deltaTime);

@@ -1,5 +1,5 @@
 using System.Collections;
-using Programming.Visualisers;
+using System.Linq;
 using UnityEngine;
 
 namespace Programming.Card_Mechanism
@@ -7,7 +7,7 @@ namespace Programming.Card_Mechanism
     public class PlayerHandComponent : MonoBehaviour
     {
         public static PlayerHandComponent Instance { get; private set; }
-        private HandSlotComponent[] cardSlots;
+        public HandSlotComponent[] cardSlots;
 
         private void Awake()
         {
@@ -20,7 +20,7 @@ namespace Programming.Card_Mechanism
                 Instance = this;
             }
 
-            cardSlots = GetComponentsInChildren<HandSlotComponent>();
+            cardSlots = GetComponentsInChildren<HandSlotComponent>().Reverse().ToArray();
         }
 
 

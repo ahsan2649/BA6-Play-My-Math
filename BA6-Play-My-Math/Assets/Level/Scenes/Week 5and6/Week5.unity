@@ -4546,7 +4546,7 @@ PrefabInstance:
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
       propertyPath: onBoardExit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RebuildDeck
+      value: RebuildDeckAndShuffle
       objectReference: {fileID: 0}
     - target: {fileID: 1636277361921787078, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}

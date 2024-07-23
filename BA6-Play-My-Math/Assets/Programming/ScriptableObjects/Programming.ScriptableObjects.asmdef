@@ -2,7 +2,8 @@
     "name": "Programming.ScriptableObjects",
     "rootNamespace": "",
     "references": [
-        "GUID:c8b7f80adf28d6747a379788a3d946c0"
+        "GUID:c8b7f80adf28d6747a379788a3d946c0",
+        "GUID:c43d4a961dead0c4a90182630fda708a"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

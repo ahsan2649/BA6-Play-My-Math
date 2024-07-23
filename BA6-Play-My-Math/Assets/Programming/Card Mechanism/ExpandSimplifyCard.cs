@@ -40,6 +40,11 @@ public class ExpandSimplifyCard : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        OpenExpandSimplifyMenu();
+    }
+
+    public void OpenExpandSimplifyMenu()
+    {
         if (!GetComponent<NumberCardComponent>().IsFraction)
         {
             return; 

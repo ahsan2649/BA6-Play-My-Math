@@ -32,5 +32,11 @@ namespace Programming.Operation_Board {
                 animator.SetTrigger(Spin);
             }
         }
+
+        public void SetActiveAndEnabled(bool bActive)
+        {
+            transform.parent.gameObject.SetActive(bActive);
+            enabled = bActive; 
+        }
     }
 }

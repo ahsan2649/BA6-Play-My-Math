@@ -4,61 +4,93 @@ using Programming.ExtensionMethods;
 using Programming.Fraction_Engine;
 using Programming.ScriptableObjects;
 using UnityEngine;
-using Random = System.Random;
 
 namespace Programming.Enemy
 {
     public class TutorialLevelAndRewards : MonoBehaviour
     {
+        [Serializable]
+        public class LevelRewardPair
+        {
+            public TutorialLevelInfo level;
+            public RewardCollectionInfo rewards;
+            public TutorialActionInfo tutorialAction; 
+        }
+        
         public static TutorialLevelAndRewards Instance;
 
-        #region Subclasses
-        [Serializable]
-        public class Level
-        {
-            public string name;
-            public List<int> requiredNumbers; //used to check whether players have a chance of beating the level
-            public List<Fraction> Rewards => rewards.rewardList; 
-            [SerializeField] private RewardCollection rewards;
-            public List<Fraction> Enemies => enemies.enemyList; 
-            [SerializeField] private EnemyLineupInfo enemies;
-            public List<int> rewardThresholds; 
-        }
+        #region Variable
+        
+        [Header("EditorVariables")]
+        [SerializeField] private LevelRewardPair[] levelsAndRewards;
+
+        public TutorialLevelInfo CurrentLevel => levelsAndRewards[_currentLevelNumber].level; 
+        public RewardCollectionInfo CurrentRewards => levelsAndRewards[_currentLevelNumber].rewards; 
+        public TutorialActionInfo CurrentTutorialAction => levelsAndRewards[_currentLevelNumber].tutorialAction;
+        
+        private int _currentLevelNumber = 0;
+        private Queue<Fraction> storedRewards = new Queue<Fraction>(); //using this to ensure the rewards are generated at the end of the level, before the level is switched to the next level
         #endregion
 
-        #region Variable
-        [Header("EditorVariables")]
-        [SerializeField] private Level[] levels;
-    
-        [Header("RuntimeVariables")]
-        private int _currentLevelNumber;
-        private Level _currentLevel; 
-        #endregion
-    
+        #region StartStopFunctions
         private void Awake()
         {
             this.MakeSingleton(ref Instance);
         }
-
-        public void GoToNextLevel()
+        
+        public void StartCurrentLevel()
         {
-            _currentLevel = levels[_currentLevelNumber++]; 
+            if (CurrentTutorialAction is not null)
+            {
+                CurrentTutorialAction.StartLevel(CurrentLevel);
+            }
+        }
+
+        public void Update()
+        {
+            if (CurrentTutorialAction is not null)
+            {
+                CurrentTutorialAction.UpdateLevel(CurrentLevel);
+            }
+        }
+
+        public void FinishLevel()
+        {
+            if (CurrentTutorialAction is not null)
+            {
+                CurrentTutorialAction.FinishLevel(CurrentLevel);
+            }
         }
         
+        public void FinishLevelAndGoNext()
+        {
+            FinishLevel();
+            _currentLevelNumber++; 
+        }
+        
+        public void InitialiseLevel()
+        {
+            if (CurrentTutorialAction is not null)
+            {
+                CurrentTutorialAction.InitialiseLevel(CurrentLevel);
+            }
+        }
+        
+        #endregion
+        
+        #region GenerationFunctions
         public List<Fraction> GenerateEnemyLineup()
         {
-            GoToNextLevel();
-            return _currentLevel.Enemies; 
+            return CurrentLevel.GenerateEnemyLineup(); 
         }
         
-        public Fraction GenerateEnemy()
-        {
-            return _currentLevel.Enemies.RandomElement(); 
-        }
     
         public Fraction GenerateReward()
         {
-            return _currentLevel.Rewards.RandomElement(); 
+            return levelsAndRewards[_currentLevelNumber].rewards.GenerateReward(); 
         }
+        
+        
+        #endregion
     }
 }

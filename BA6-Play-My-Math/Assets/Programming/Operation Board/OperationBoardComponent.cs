@@ -1,17 +1,16 @@
-using System;
-using System.Runtime.CompilerServices;
 using Programming.Card_Mechanism;
 using Programming.Enemy;
 using Programming.Fraction_Engine;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 namespace Programming.Operation_Board
 {
     public class OperationBoardComponent : MonoBehaviour, IDropHandler, IEndDragHandler
     {
+        public static OperationBoardComponent Instance;
+        
         Canvas _canvas;
         
         [SerializeField] OperandSlotComponent _leftOperand;
@@ -32,11 +31,16 @@ namespace Programming.Operation_Board
         {
             get => _operationWheel; 
         }
-        
-        
-        public static OperationBoardComponent Instance;
 
-        public UnityEvent onOperationBoardChange; 
+        [SerializeField] FinalizeButtonComponent finalizeButtonComponent;
+
+        public FinalizeButtonComponent FinalizeButton
+        {
+            get => finalizeButtonComponent; 
+        }
+        
+        
+        public UnityEvent onOperationBoardChange;
         
         #region MonoBehaviours
         private void Awake() //must run before any OnEnable or Start, so that Instance is set, when other Object search for in in their OnEnable or Start
@@ -132,7 +136,7 @@ namespace Programming.Operation_Board
                     EnemyZoneComponent.Instance.ZonePush(EnemyLineupComponent.Instance.EnemyPop());
 
                     CardMovementComponent unsetCard = activeOperandSlot.UnsetCard();
-                    Destroy(unsetCard.gameObject);
+                    if (unsetCard is not null) {Destroy(unsetCard.gameObject);} //check in case the player defeats two enemies at once
 
                     // Send the destroyed enemy to score
                     Score.addFractionToScore(destroyedEnemy.Value);
@@ -142,6 +146,7 @@ namespace Programming.Operation_Board
                         PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
                     }
                     //break; -> we're allowing defeating two exact same enemies at the exact same time
+                    OnOperationBoardChangeInvoke();
                 }
             }
         }
@@ -172,7 +177,7 @@ namespace Programming.Operation_Board
                 return;
             }
             
-            if (_rightOperand.GetCard() == null)
+            if (_rightOperand.GetCard() == null && _rightOperand.isActiveAndEnabled)
             {
                 DropCardInSlot(_rightOperand, droppedCard, droppedCardMovementComponent);
             }

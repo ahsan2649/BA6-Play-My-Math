@@ -7,8 +7,14 @@ namespace Programming.Card_Mechanism
     {
         protected CardMovementComponent _cardMovementInSlot;
         
-        public UnityEvent onCardChanged; 
-        public void OnCardChanged()
+        public UnityEvent onCardChanged;
+
+        public void CallOnCardChanged(NumberCardComponent numberCardComponent)
+        {
+            onCardChanged.Invoke();
+        }
+        
+        public void CallOnCardChanged()
         {
             onCardChanged.Invoke(); 
         }
@@ -57,6 +63,11 @@ namespace Programming.Card_Mechanism
         public CardMovementComponent GetCard()
         {
             return _cardMovementInSlot;
+        }
+
+        public NumberCardComponent GetNumberCard()
+        {
+            return _cardMovementInSlot?.GetComponent<NumberCardComponent>(); 
         }
 
         public bool HasCard() => _cardMovementInSlot != null;

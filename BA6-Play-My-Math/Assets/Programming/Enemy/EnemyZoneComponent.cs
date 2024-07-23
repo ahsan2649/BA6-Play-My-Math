@@ -26,7 +26,7 @@ namespace Programming.Enemy {
         // Start is called before the first frame update
 
 
-        public void InitalizeEnemies()
+        public void InitializeEnemies()
         {
             for (int i = 0; i < enemySlots.Length; i++)
             {

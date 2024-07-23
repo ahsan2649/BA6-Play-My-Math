@@ -11,10 +11,8 @@ namespace Programming.Card_Mechanism
     {
         public Fraction oldValue;
         [SerializeField] Fraction value;
+        public UnityEvent<NumberCardComponent> onValueChange;
         [SerializeField] private bool inDeck; 
-
-        public UnityEvent onValueChange;
-        
         public bool IsFractionPreview = false; 
         public bool IsFraction = false;
         public FractionTextVisualiser fractionTextVisualiser; 
@@ -27,7 +25,7 @@ namespace Programming.Card_Mechanism
             set
             {
                 this.value = value;
-                onValueChange.Invoke(); 
+                onValueChange.Invoke(this); 
             }
         }
 

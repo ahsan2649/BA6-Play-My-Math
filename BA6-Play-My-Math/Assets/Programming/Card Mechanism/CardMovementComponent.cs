@@ -87,5 +87,7 @@ namespace Programming.Card_Mechanism {
             TransformToNewParentCoroutines();
             _canvasGroup.blocksRaycasts = false;
         }
+        
+        public static bool CompareCardValues(CardMovementComponent cardA, CardMovementComponent cardB) => cardA.GetComponent<NumberCardComponent>().Value == cardB.GetComponent<NumberCardComponent>().Value;
     }
 }

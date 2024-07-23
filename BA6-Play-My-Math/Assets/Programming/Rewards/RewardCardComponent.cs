@@ -9,7 +9,7 @@ namespace Programming.Rewards
         public void OnPointerClick(PointerEventData eventData)
         {
             Debug.Log("Click!");
-            DeckComponent.Instance.initDeck.Add(new Fraction(GetComponent<NumberCardComponent>().Value));
+            DeckComponent.Instance.AddCardToDeck(new Fraction(GetComponent<NumberCardComponent>().Value), false, true); //ZyKa! I'm confused whether this is supposed to set to PlayDeck or whether that happens automatically
             transform.SetParent(DeckComponent.Instance.transform);
             GetComponent<CardMovementComponent>().TransformToNewParentCoroutines();
             

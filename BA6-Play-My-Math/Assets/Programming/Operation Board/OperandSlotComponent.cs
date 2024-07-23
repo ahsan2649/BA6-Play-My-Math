@@ -13,10 +13,23 @@ namespace Programming.Operation_Board
         
         public override void SetCard(CardMovementComponent cardMovement)
         {
-            if (_cardMovementInSlot is not null) {_cardMovementInSlot.GetComponent<NumberCardComponent>()?.onValueChange.RemoveListener(onCardChanged.Invoke);}
+            if (_cardMovementInSlot is not null)
+            {
+                NumberCardComponent oldNumberCard = _cardMovementInSlot.GetComponent<NumberCardComponent>();
+                if (oldNumberCard is not null)
+                {
+                    oldNumberCard.onValueChange.RemoveListener(CallOnCardChanged);
+                }
+            }
             base.SetCard(cardMovement);
-            if (_cardMovementInSlot is not null) { _cardMovementInSlot.GetComponent<NumberCardComponent>()?.onValueChange.AddListener(onCardChanged.Invoke); }
-            // onCardChanged.Invoke(); already called in base
+            if (_cardMovementInSlot is not null)
+            {
+                NumberCardComponent newNumberCard = _cardMovementInSlot.GetComponent<NumberCardComponent>();
+                if (newNumberCard is not null)
+                {
+                    newNumberCard.onValueChange.AddListener(CallOnCardChanged);
+                }
+            }
         }
 
         [FormerlySerializedAs("cardSlotType")] [Tooltip("left or right slot")] public OperandType operandType;
@@ -79,6 +92,12 @@ namespace Programming.Operation_Board
 
             UnsetCard();
             PlayerHandComponent.Instance.HandPush(cardMovementComponent, false);
+        }
+
+        public void SetActiveAndEnabled(bool bActive)
+        {
+            transform.parent.gameObject.SetActive(bActive);
+            enabled = bActive; 
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -26,7 +27,44 @@ namespace Programming.ExtensionMethods
             return shuffleList; 
         }
 
-        public static T RandomElement<T>(this IEnumerable<T> enumerable, IEnumerable<int> probabilities = null)
+        public static List<T> GetRandomElementsConsecutively<T>(this List<T> list, int count, List<int> probabilities = null)
+        {
+            List<T> result = new List<T>();
+
+            if (count > list.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(list), "Cannot pick more elements than list.Count"); 
+            }
+
+            if (count == list.Count)
+            {
+                return list.FisherYatesShuffle(); 
+            }
+            
+            if (probabilities is null)
+            {
+                throw new NullReferenceException("no probabilities assigned"); 
+            }
+
+            List<T> pickFromThis = new List<T>(list);
+            List<int> pickProbabilities = new List<int>(probabilities); 
+            while (count > pickFromThis.Count)
+            {
+                pickFromThis = pickFromThis.Concat(list).ToList();
+                pickProbabilities = pickProbabilities.Concat(probabilities).ToList(); 
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                result.Add(pickFromThis.GetRandomElement(out int removedIndex, pickProbabilities));
+                pickProbabilities.RemoveAt(removedIndex);
+                pickFromThis.RemoveAt(removedIndex); 
+            }
+
+            return result; 
+        }
+        
+        public static T GetRandomElement<T>(this IEnumerable<T> enumerable, IEnumerable<int> probabilities = null)
         {
             if (probabilities is null)
             {
@@ -35,9 +73,9 @@ namespace Programming.ExtensionMethods
             
             int fullProbability = probabilities.Sum(); 
             Random random = new Random();
-            int r = random.Next(0, fullProbability);
+            double r = random.NextDouble() * fullProbability;
             
-            int sum = 0;
+            double sum = 0;
             int index = 0; 
             foreach (int probability in probabilities)
             {
@@ -51,6 +89,98 @@ namespace Programming.ExtensionMethods
 
             throw new IndexOutOfRangeException("randomListLength and ProbabilityLength do not match"); 
         }
+
+        public static T GetRandomElement<T>(this IEnumerable<T> enumerable, out int returnedIndex, IEnumerable<int> probabilities = null)
+        {
+            if (probabilities is null)
+            {
+                int randomIndex = new Random().Next(0, enumerable.Count());
+                returnedIndex = randomIndex; 
+                return enumerable.ElementAt(randomIndex); 
+            }
+
+            if (enumerable.Count() != probabilities.Count())
+            {
+                throw new ArgumentException("enumerable and probabilities are not the same length"); 
+            }
+            
+            
+            int fullProbability = probabilities.Sum(); 
+            Random random = new Random();
+            double r = random.NextDouble() * fullProbability;
+            
+            double sum = 0; //ZyKa this is a danger for bugs
+            int index = 0; 
+            foreach (int probability in probabilities)
+            {
+                sum += probability;
+                if (sum >= r)
+                {
+                    returnedIndex = index; 
+                    return enumerable.ElementAt(index); 
+                }
+                index++; 
+            }
+
+            throw new IndexOutOfRangeException("randomListLength and ProbabilityLength do not match"); 
+        }
+        
+        public static List<T> EnsureListMixing<T>(this List<T> toMix, Func<T, T, bool> comparison, int maxSameInRow)
+        {
+            T[] toMixArray = toMix.ToArray();
+            MixOneWay(ref toMixArray, true); 
+            MixOneWay(ref toMixArray, false); 
+            return toMixArray.ToList(); 
+            
+            void MixOneWay(ref T[] array, bool forwards)
+            {
+                Queue<KeyValuePair<int, T>> toSwitch = new Queue<KeyValuePair<int, T>>();
+                Queue<Tuple<int, int>> toSwitchTuples = new Queue<Tuple<int, int>>(); 
+                int sameElementsInARow = 0;
+                T lastT = default; 
+            
+                for (int i = forwards ? 0 : array.Length-1; 
+                     forwards ? i < array.Length : i >= 0; 
+                     i = forwards ? i+1 : i-1)
+                {
+                    if (comparison(array[i], lastT))
+                    {
+                        sameElementsInARow++;
+                        if (sameElementsInARow % (maxSameInRow + 1) == 0)
+                        {
+                            toSwitch.Enqueue(new KeyValuePair<int, T>(i, array[i])); 
+                        }
+                    }
+                    else
+                    {
+                        if (toSwitch.Count > 0 && !comparison(toSwitch.Peek().Value, toMix[i]))
+                        {
+                            toSwitchTuples.Enqueue(new Tuple<int, int>(i, toSwitch.Peek().Key));
+                            toSwitch.Dequeue(); 
+                        }
+                    }
+                }
+
+                foreach (Tuple<int, int> switchTuple in toSwitchTuples)
+                {
+                    (toMix[switchTuple.Item1], toMix[switchTuple.Item2]) =
+                        (toMix[switchTuple.Item2], toMix[switchTuple.Item1]); 
+                }
+            }; 
+        }
+
+        /*
+        public static List<T> RemoveNulls<T>(this List<T> list)
+        {
+            foreach (T t in list)
+            {
+                if (t is null)
+                {
+                    list.Remove(t); 
+                }
+            }
+        }
+        */
         #endregion
         
         #region DoForHierarchy
@@ -125,7 +255,7 @@ namespace Programming.ExtensionMethods
             if (Instance is null || Instance == newMonoBehaviour)
             {
                 Instance = newMonoBehaviour; 
-                Object.DontDestroyOnLoad(Instance.gameObject);
+                Object.DontDestroyOnLoad(Instance.transform.root);
             }
             else
             {

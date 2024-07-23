@@ -5,16 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Level/Scenes/Week 1-2/Blockout.unity
-    guid: 50128d8919d6622499abe5a6efb09db5
-  - enabled: 0
-    path: Assets/Level/Scenes/Week 5and6/Week5.unity
-    guid: 4074da79e9b0d3f479459a465202a8fe
   - enabled: 1
     path: Assets/Level/Scenes/MainMenu.unity
     guid: b40454d83df2fab4286fbc5a9ed83bc7
   - enabled: 1
     path: Assets/Level/Scenes/MainGame.unity
-    guid: 92bf5ec7fd420fe49869910c5030159b
+    guid: b56a347a2720c41479ca1280e8a3c8af
+  - enabled: 1
+    path: Assets/Level/Scenes/Tutorial.unity
+    guid: 2410d9d8093e2aa47918c33755b716ad
   m_configObjects: {}
