@@ -152,14 +152,113 @@ namespace Programming.Enemy
 
             switch (gameMode)
             {
+                // Main
                 case SceneManaging.GameMode.easy23:
-                    rewardList = rewardThreshholdsMain[currentDifficulty + difficultyAddedEachRound]; break;
+                    if (rewardThreshholdsMain.ContainsKey(currentDifficulty + difficultyAddedEachRound))
+                    {
+                        rewardList = rewardThreshholdsMain[currentDifficulty + difficultyAddedEachRound];
+                    }
+                    // Failsafe and when difficulty ecceeeds dictonary
+                    else
+                    {
+                        rewardList = rewardThreshholdsMain[maxKeyOfGMofMain];
+                    }
+                    break;
                 case SceneManaging.GameMode.medium235:
-                    rewardList = rewardThreshholdsMain[currentDifficulty + difficultyAddedEachRound]; break;
+                    if (rewardThreshholdsMain.ContainsKey(currentDifficulty + difficultyAddedEachRound))
+                    {
+                        rewardList = rewardThreshholdsMain[currentDifficulty + difficultyAddedEachRound];
+                    }
+                    // Failsafe and when difficulty ecceeeds dictonary
+                    else
+                    {
+                        rewardList = rewardThreshholdsMain[maxKeyOfGMofMain];
+                    }
+                    break;
                 case SceneManaging.GameMode.hard2357:
-                    rewardList = rewardThreshholdsMain[currentDifficulty + difficultyAddedEachRound]; break;
+                    if (rewardThreshholdsMain.ContainsKey(currentDifficulty + difficultyAddedEachRound))
+                    {
+                        rewardList = rewardThreshholdsMain[currentDifficulty + difficultyAddedEachRound];
+                    }
+                    // Failsafe and when difficulty ecceeeds dictonary
+                    else
+                    {
+                        rewardList = rewardThreshholdsMain[maxKeyOfGMofMain];
+                    }
+                    break;
+                
+                // Daily
+                case SceneManaging.GameMode.daily23:
+                    if (rewardThreshholdsDaily.ContainsKey(currentDifficulty + difficultyAddedEachRound))
+                    {
+                        rewardList = rewardThreshholdsDaily[currentDifficulty + difficultyAddedEachRound];
+                    }
+                    // Failsafe and when difficulty ecceeeds dictonary
+                    else
+                    {
+                        rewardList = rewardThreshholdsDaily[maxKeyOfGMofDaily];
+                    }
+                    break;
+                case SceneManaging.GameMode.daily235:
+                    if (rewardThreshholdsDaily.ContainsKey(currentDifficulty + difficultyAddedEachRound))
+                    {
+                        rewardList = rewardThreshholdsDaily[currentDifficulty + difficultyAddedEachRound];
+                    }
+                    // Failsafe and when difficulty ecceeeds dictonary
+                    else
+                    {
+                        rewardList = rewardThreshholdsDaily[maxKeyOfGMofDaily];
+                    }
+                    break;
+                case SceneManaging.GameMode.daily2357:
+                    if (rewardThreshholdsDaily.ContainsKey(currentDifficulty + difficultyAddedEachRound))
+                    {
+                        rewardList = rewardThreshholdsDaily[currentDifficulty + difficultyAddedEachRound];
+                    }
+                    // Failsafe and when difficulty ecceeeds dictonary
+                    else
+                    {
+                        rewardList = rewardThreshholdsDaily[maxKeyOfGMofDaily];
+                    }
+                    break;
+                
+                // Training Modes
+                case SceneManaging.GameMode.easyAdditionSmallNumbers:
+                    if (rewardThreshholdAdditionSmallNumbers.ContainsKey(currentDifficulty + difficultyAddedEachRound))
+                    {
+                        rewardList = rewardThreshholdAdditionSmallNumbers[currentDifficulty + difficultyAddedEachRound];
+                    }
+                    // Failsafe and when difficulty ecceeeds dictonary
+                    else
+                    {
+                        rewardList = rewardThreshholdAdditionSmallNumbers[maxKeyAdditionOfSmallNumbers];
+                    }
+                    break;
+                case SceneManaging.GameMode.mediumAddition:
+                    if (rewardThresholdAdditionMoreNumbers.ContainsKey(currentDifficulty + difficultyAddedEachRound))
+                    {
+                        rewardList = rewardThresholdAdditionMoreNumbers[currentDifficulty + difficultyAddedEachRound];
+                    }
+                    // Failsafe and when difficulty ecceeeds dictonary
+                    else
+                    {
+                        rewardList = rewardThresholdAdditionMoreNumbers[maxKeyAdditionOfMoreNumbers];
+                    }
+                    break;
+                case SceneManaging.GameMode.multiplicationOnly:
+                    if (rewardThreshholdMultiplicationOnly.ContainsKey(currentDifficulty + difficultyAddedEachRound))
+                    {
+                        rewardList = rewardThreshholdMultiplicationOnly[currentDifficulty + difficultyAddedEachRound];
+                    }
+                    // Failsafe and when difficulty ecceeeds dictonary
+                    else
+                    {
+                        rewardList = rewardThreshholdMultiplicationOnly[maxKeyMultiplicationOnly];
+                    }
+                    break;
+                
                 default:
-                    rewardList = new List<int> { 0, 2, 4, }; break;
+                    rewardList = new List<int> { 0, 3, 7, }; break;
             }
 
             return rewardList;
@@ -1060,7 +1159,7 @@ namespace Programming.Enemy
             {54, new List<int>() {0, 18, 37} }, // 58 - 20 = 38 (weniger Puffer -1)
             {57, new List<int>() {0, 5, 10} }, // 58 - 48 = 10 (kein Puffer da Ende)
         };
-
+                
         #endregion
 
         #region GameMode: AdditionOfSmallNumbers
@@ -1103,42 +1202,42 @@ namespace Programming.Enemy
         {
             {3, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FB },
+                    new List<GM>() { GM.FB }, // 2
                 }
             },
             {6, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FB, GM.FB },
+                    new List<GM>() { GM.FB, GM.FB }, // 4
                 }
             },
             {9, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.Ads },
+                    new List<GM>() { GM.Ads }, // 4
                 }
             },
             {12, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.Ads, GM.Ads },
+                    new List<GM>() { GM.Ads, GM.Ads }, // 8
                 }
             },
             {15, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.AdsB },
+                    new List<GM>() { GM.AdsB }, // 4
                 }
             },
             {18, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.AdsB, GM.AdsB },
+                    new List<GM>() { GM.AdsB, GM.AdsB }, // 8
                 }
             },
             {21, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.AdsE },
+                    new List<GM>() { GM.AdsE }, // 4
                 }
             },
             {24, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.AdsE, GM.AdsE },
+                    new List<GM>() { GM.AdsE, GM.AdsE }, // 8
                 }
             },
             {27, new List<List<GM>>()
@@ -1152,6 +1251,21 @@ namespace Programming.Enemy
 
         static int maxKeyAdditionOfSmallNumbers = 27;
         static int startDifficultyAdditionOfSmallNumbers = 3;
+
+        private static Dictionary<int, List<int>> rewardThreshholdAdditionSmallNumbers = new Dictionary<int, List<int>>()
+        // Start with 7 Hand Cards, each Round +3
+        // HandCards - ActualDifficulty = CardsLeftMax
+        {
+            {3, new List<int>() {0, 1, 3} },    // 7 - 2 = 5       Puffer = 2
+            {6, new List<int>() {0, 2, 4} },    // 10 - 4 = 6      
+            {9, new List<int>() {0, 3, 7} },    // 13 - 4 = 9
+            {12, new List<int>() {0, 3, 6} },   // 16 - 8 = 8
+            {15, new List<int>() {0, 6, 13} },  // 19 - 4 = 15 
+            {18, new List<int>() {0, 6, 12} },  // 22 - 8 = 14
+            {21, new List<int>() {0, 9, 19} },  // 25 - 4 = 21
+            {24, new List<int>() {0, 9, 19} },  // 28 - 8 = 20  (weniger Puffer -1)
+            {27, new List<int>() {0, 5, 11} },  // 31 - 20 = 11 (kein Puffer da Ende)
+        };
 
         #endregion
 
@@ -1266,32 +1380,32 @@ namespace Programming.Enemy
         {
             {6, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FB },
+                    new List<GM>() { GM.FB }, // 2
                 }
             },
             {9, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FB, GM.FB },
+                    new List<GM>() { GM.FB, GM.FB }, // 4
                 }
             },
             {12, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.Ads },
+                    new List<GM>() { GM.Ads }, // 4
                 }
             },
             {15, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.Ads, GM.Ads },
+                    new List<GM>() { GM.Ads, GM.Ads }, // 8
                 }
             },
             {18, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.AdsE },
+                    new List<GM>() { GM.AdsE }, // 4
                 }
             },
             {21, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.AdsE, GM.AdsE },
+                    new List<GM>() { GM.AdsE, GM.AdsE }, // 8
                 }
             },
             {24, new List<List<GM>>()
@@ -1305,6 +1419,19 @@ namespace Programming.Enemy
 
         static int maxKeyAdditionOfMoreNumbers = 24;
         static int startDifficultyAdditionOfMoreNumbers = 6;
+
+        private static Dictionary<int, List<int>> rewardThresholdAdditionMoreNumbers = new Dictionary<int, List<int>>()
+        // Start with 10 Hand Cards, each Round +3
+        // HandCards - ActualDifficulty = CardsLeftMax
+        {
+            {6, new List<int>() {0, 3, 6} },    // 10 - 2 = 8      
+            {9, new List<int>() {0, 3, 7} },    // 13 - 4 = 9
+            {12, new List<int>() {0, 5, 10} },  // 16 - 4 = 12
+            {15, new List<int>() {0, 4, 9} },   // 19 - 8 = 11 
+            {18, new List<int>() {0, 8, 16} },  // 22 - 4 = 18
+            {21, new List<int>() {0, 8, 16} },  // 25 - 8 = 17  (weniger Puffer -1)
+            {24, new List<int>() {0, 5, 10} },  // 28 - 18 = 10 (kein Puffer da Ende)
+        };
 
         // Added a new Difficulty?
         //      Did you add all the new Generation Lists to the switchGameMode()?
@@ -1355,22 +1482,22 @@ namespace Programming.Enemy
         {
             {6, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FS },
+                    new List<GM>() { GM.FS }, // 2
                 }
             },
             {9, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FS, GM.FS },
+                    new List<GM>() { GM.FS, GM.FS }, // 4
                 }
             },
             {12, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.Ms },
+                    new List<GM>() { GM.Ms }, // 6
                 }
             },
             {15, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.M },
+                    new List<GM>() { GM.M }, // 4
                 }
             },
             {18, new List<List<GM>>()
@@ -1384,6 +1511,17 @@ namespace Programming.Enemy
 
         static int maxKeyMultiplicationOnly = 18;
         static int startDifficultyMultiplicationOnly = 6;
+
+        private static Dictionary<int, List<int>> rewardThreshholdMultiplicationOnly = new Dictionary<int, List<int>>()
+        // Start with 10 Hand Cards, each Round +3
+        // HandCards - ActualDifficulty = CardsLeftMax
+        {
+            {6, new List<int>() {0, 4, 8} },    // 10 - 2 = 8      
+            {9, new List<int>() {0, 4, 9} },    // 13 - 4 = 9
+            {12, new List<int>() {0, 5, 10} },  // 16 - 6 = 10
+            {15, new List<int>() {0, 7, 14} },  // 19 - 4 = 15 
+            {18, new List<int>() {0, 6, 12} },  // 22 - 10 = 12
+        };
 
         // Added a new Difficulty?
         //      Did you add all the new Generation Lists to the switchGameMode()?
@@ -1449,6 +1587,21 @@ namespace Programming.Enemy
 
         private static int maxKeyOfGMofDaily = 30;
         private static int startDifficultyDaily = 6;
+
+        private static Dictionary<int, List<int>> rewardThreshholdsDaily = new Dictionary<int, List<int>>()
+        // Start with 10 Hand Cards, each Round +3
+        // HandCards - ActualDifficulty = CardsLeftMax
+        {
+            {6, new List<int>() {0, 2, 4} },    // 10 - 4 = 6      Puffer = 2
+            {9, new List<int>() {0, 3, 7} },    // 13 - 4 = 9
+            {12, new List<int>() {0, 3, 6} },   // 16 - 8 = 8
+            {15, new List<int>() {0, 6, 13} },  // 19 - 4 = 15
+            {18, new List<int>() {0, 6, 12} },  // 22 - 8 = 14
+            {21, new List<int>() {0, 5, 11} },  // 25 - 12 = 13
+            {24, new List<int>() {0, 10, 20} }, // 28 - 6 = 22
+            {27, new List<int>() {0, 10, 20} }, // 31 - 10 = 21 (weniger Puffer -1)
+            {30, new List<int>() {0, 7, 14} },  // 34 - 20 = 14 (kein Puffer da Ende)
+        };
 
         #endregion
 

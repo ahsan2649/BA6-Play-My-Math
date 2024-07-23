@@ -81,6 +81,7 @@ namespace Programming.Rewards
         public void CountRewards()
         {
             _achievedValue += PlayerHandComponent.Instance.cardSlots.Aggregate(0, (handcardCount, cardSlot) => (handcardCount + (cardSlot.HasCard() ? 1 : 0)));
+            _achievedValue += 4;
             foreach (int threshold in thresholdValues)
             {
                 if (_achievedValue > threshold)
