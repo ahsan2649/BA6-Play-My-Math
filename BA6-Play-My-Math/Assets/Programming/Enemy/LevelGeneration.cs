@@ -58,12 +58,40 @@ namespace Programming.Enemy
 
         static List<Fraction> rewardList235 = new List<Fraction>()
         {
+            new Fraction(1,1),
+            new Fraction(2,1),
+            new Fraction(3,1),
+            new Fraction(6,1),
+            new Fraction(8,1),
+            new Fraction(9,1),
+            new Fraction(12,1),
+            new Fraction(16,1),
+            new Fraction(18,1),
+
             new Fraction(5,1),
+            new Fraction(10,1),
+            new Fraction(15,1),
         };
 
         static List<Fraction> rewardList2357 = new List<Fraction>()
         {
+            new Fraction(1,1),
+            new Fraction(2,1),
+            new Fraction(3,1),
+            new Fraction(6,1),
+            new Fraction(8,1),
+            new Fraction(9,1),
+            new Fraction(12,1),
+            new Fraction(16,1),
+            new Fraction(18,1),
+
+            new Fraction(5,1),
+            new Fraction(10,1),
+            new Fraction(15,1),
+
             new Fraction(7,1),
+            new Fraction(14,1),
+            new Fraction(21,1),
         };
 
         static List<Fraction> rewardListAdditionOfSmallNumbers = new List<Fraction>()
@@ -96,6 +124,15 @@ namespace Programming.Enemy
                     break;
                 case (SceneManaging.GameMode.easyAdditionSmallNumbers):
                     reward = GetRandomValueFromList(rewardListAdditionOfSmallNumbers);
+                    break;
+                case (SceneManaging.GameMode.mediumAddition):
+                    reward = GetRandomValueFromList(rewardList23);
+                    break;
+                case (SceneManaging.GameMode.multiplicationOnly):
+                    reward = GetRandomValueFromList(rewardList23);
+                    break;
+                default:
+                    reward = new Fraction(1,1);
                     break;
             }
 
