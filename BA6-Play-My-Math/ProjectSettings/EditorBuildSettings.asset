@@ -12,9 +12,9 @@ EditorBuildSettings:
     path: Assets/Level/Scenes/Week 5and6/Week5.unity
     guid: 4074da79e9b0d3f479459a465202a8fe
   - enabled: 1
-    path: Assets/Level/Scenes/Week 5and6/MainMenu.unity
+    path: Assets/Level/Scenes/MainMenu.unity
     guid: b40454d83df2fab4286fbc5a9ed83bc7
   - enabled: 1
-    path: Assets/Level/Scenes/FinalWeek.unity
+    path: Assets/Level/Scenes/MainGame.unity
     guid: 92bf5ec7fd420fe49869910c5030159b
   m_configObjects: {}

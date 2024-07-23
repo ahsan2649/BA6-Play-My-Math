@@ -1,11 +1,6 @@
-using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using Programming.ExtensionMethods;
 using Programming.Fraction_Engine;
 using Programming.ScriptableObjects;
-using TMPro;
-using UnityEditor.AssetImporters;
 using UnityEngine;
 
 namespace Programming.Enemy
@@ -16,7 +11,7 @@ namespace Programming.Enemy
 
         public enum GameMode { none, easy23, medium235, hard2357, easyAdditionSmallNumbers, mediumAddition, multiplicationOnly }
 
-        public static GameMode gameMode = GameMode.none;
+        public static GameMode gameMode = GameMode.easy23; //ZyKa! this should be none, but I set it to easy23 for now in order to test
 
         /// <summary>
         /// Returns a list of Fractions that can be used as the "Monster Deck". 

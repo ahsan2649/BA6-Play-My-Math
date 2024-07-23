@@ -1,22 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using Programming.ExtensionMethods;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneManaging : MonoBehaviour
+namespace Programming.OverarchingFunctionality
 {
-    public static SceneManaging Instance; 
-    public bool bTeacherMode; 
-    
-    private void Awake()
+    public class SceneManaging : MonoBehaviour
     {
-        this.MakeSingleton(ref Instance);
-        // DontDestroyOnLoad(this.gameObject); 
-    }
+        public static SceneManaging Instance; 
+        public bool bTeacherMode; 
+        
+        private void Awake()
+        {
+            this.MakeSingleton(ref Instance, true);
+        }
     
-    public void changeScene(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
+        public void changeScene(string sceneName)
+        {
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }

@@ -1,15 +1,13 @@
 using System.Collections.Generic;
-using System.Collections.Generic;
 using Programming.Card_Mechanism;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 namespace Programming.Visualisers
 {
-    public class DeckComponentVisualiser : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+    public class DeckComponentVisualiser : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private TMP_Text cardCountText;
         [SerializeField] private GameObject infoCanvas; 
@@ -18,7 +16,7 @@ namespace Programming.Visualisers
         [SerializeField] private CardCountRowVisualiser specialCardCountText;
 
         public UnityEvent onDeactivateVisualisation;
-
+        
         public void OnPointerDown(PointerEventData eventData)
         {
             UpdateInfoForDeckSingleton(); 
@@ -26,6 +24,18 @@ namespace Programming.Visualisers
         }
 
         public void OnPointerUp(PointerEventData eventData)
+        {
+            infoCanvas.SetActive(false);
+            onDeactivateVisualisation.Invoke();
+        }
+        
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            UpdateInfoForDeckSingleton(); 
+            infoCanvas.SetActive(true);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
         {
             infoCanvas.SetActive(false);
             onDeactivateVisualisation.Invoke();
