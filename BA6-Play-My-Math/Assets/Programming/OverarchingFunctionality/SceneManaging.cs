@@ -23,6 +23,7 @@ namespace Programming.OverarchingFunctionality
         public void ChangeScene(string sceneName)
         {
             SceneManager.LoadScene(sceneName);
+            Debug.Log("changeScene");
         }
 
         public void SetGameMode(string gameModeName)

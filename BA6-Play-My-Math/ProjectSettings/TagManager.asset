@@ -10,6 +10,7 @@ TagManager:
   - OperationBoardSlot
   - Bin
   - Test
+  - SceneManager
   layers:
   - Default
   - TransparentFX
