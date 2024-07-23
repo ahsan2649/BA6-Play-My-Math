@@ -17457,6 +17457,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
         type: 3}
+      propertyPath: availableOperations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: availableOperations.Array.data[2]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407643839301637565, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
       propertyPath: OnChangeOperation.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}

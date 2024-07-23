@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Programming.ExtensionMethods;
 using Programming.Fraction_Engine;
+using Programming.OverarchingFunctionality;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -41,7 +42,14 @@ namespace Programming.Operation_Board {
         private void Start()
         {
             _canvas.worldCamera = Camera.main;
-
+            if (SceneManaging.gameMode == SceneManaging.GameMode.easyAdditionSmallNumbers ||
+                SceneManaging.gameMode == SceneManaging.GameMode.mediumAddition)
+            {
+                availableOperations.Clear();
+                availableOperations.Add(Operation.Add);
+                availableOperations.Add(Operation.Subtract);
+            }
+            
             UpdateOp();
         }
 
