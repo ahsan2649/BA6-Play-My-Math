@@ -41,6 +41,7 @@ namespace Programming.Rewards
         public RectTransform Slider;
         public RectTransform Counter;
         public TextMeshProUGUI Count;
+        public TextMeshProUGUI RoundCounter;
         [FormerlySerializedAs("onBoardExit")]
         [Tooltip("Call GameManager.InitialiseLevel, which will will handle the rest")]
         [FormerlySerializedAs("OnBoardExit")]
@@ -52,6 +53,7 @@ namespace Programming.Rewards
         [SerializeField] private TMP_Text roundCounterText;
         [SerializeField] private List<RectTransform> thresholds = new();
 
+        public static int round = 0;
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -66,6 +68,8 @@ namespace Programming.Rewards
 
         public void StartRewarding()
         {
+            round++;
+            RoundCounter.text = "Round: " + round.ToString();
             ArrangeThresholds();
             CountRewards();
             StartCoroutine(AnimateCounter());

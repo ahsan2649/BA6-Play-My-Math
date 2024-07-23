@@ -10,7 +10,7 @@ public class Manager : MonoBehaviour
     [Tooltip("Hand.Fill \n EnemyLineup.StartLineup \n Tutorial.Start")][SerializeField] UnityEvent startLevelEvent;
     [Tooltip("RewardBoard.Enter \n DiscardPile.Clear \n PlayerHand.Clear \n Deck.Rebuild \n TutorialLevel.Win")] [SerializeField] private UnityEvent winEvent;
     [Tooltip("")] [SerializeField] private UnityEvent loseEvent;
-
+    
     private void Awake()
     {
         awakeEvent.Invoke();
