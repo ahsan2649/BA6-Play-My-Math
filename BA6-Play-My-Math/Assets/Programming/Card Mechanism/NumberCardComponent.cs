@@ -11,11 +11,14 @@ namespace Programming.Card_Mechanism
     {
         public Fraction oldValue;
         [SerializeField] Fraction value;
+        [SerializeField] private bool inDeck; 
 
         public UnityEvent onValueChange;
         
         public bool IsFractionPreview = false; 
         public bool IsFraction = false;
+        public FractionTextVisualiser fractionTextVisualiser; 
+        
         public bool CanCombineIntoFraction => IsFractionPreview || Value.IsWhole(); //needs to check for IsFraction as well, because Fractions are not over one while in preview mode, but are not counted as fractions  
         
         public Fraction Value
@@ -27,8 +30,6 @@ namespace Programming.Card_Mechanism
                 onValueChange.Invoke(); 
             }
         }
-
-
 
         private void Awake()
         {

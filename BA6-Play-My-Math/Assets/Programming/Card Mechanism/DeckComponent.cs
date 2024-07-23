@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Programming.ExtensionMethods;
 using Programming.Fraction_Engine;
 using Programming.ScriptableObjects;
+using Programming.Visualisers;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -77,10 +78,11 @@ namespace Programming.Card_Mechanism
 
                 // Disabling BaseCard, so they can't be dragged from Deck
                 card.GetComponentInChildren<CardMovementComponent>().enabled = false;
-                card.GetComponentInChildren<NumberCardComponent>().oldValue =
-                    card.GetComponentInChildren<NumberCardComponent>().Value = new Fraction(fraction);
+                NumberCardComponent numberCard = card.GetComponentInChildren<NumberCardComponent>(); 
+                numberCard.oldValue = numberCard.Value = new Fraction(fraction);
+                numberCard.fractionTextVisualiser.SetInDeck(true);
                 _cardsInDeck.Add(card.GetComponentInChildren<CardMovementComponent>());
-
+                
                 listIndex++;
             }
         }
@@ -94,6 +96,8 @@ namespace Programming.Card_Mechanism
 
             var pop = _cardsInDeck[0];
             _cardsInDeck.Remove(pop);
+            NumberCardComponent nC = pop.GetComponent<NumberCardComponent>();
+            nC.IsFractionPreview = false; 
 
             onDeckChanged.Invoke();
             return pop;

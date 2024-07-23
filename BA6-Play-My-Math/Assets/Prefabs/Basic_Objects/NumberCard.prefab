@@ -4092,6 +4092,7 @@ MonoBehaviour:
     difficulty: 0
     numerator: 2
     denominator: 3
+  inDeck: 0
   onValueChange:
     m_PersistentCalls:
       m_Calls:
@@ -4121,6 +4122,7 @@ MonoBehaviour:
         m_CallState: 2
   IsFractionPreview: 0
   IsFraction: 0
+  fractionTextVisualiser: {fileID: 2611788358771209873}
 --- !u!114 &1544295393093609449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8288,11 +8290,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -75
       objectReference: {fileID: 0}
-    - target: {fileID: 2638498968629059214, guid: 36f5c458def6e804c861c354335f29fb,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2769879803980202695, guid: 36f5c458def6e804c861c354335f29fb,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -8307,11 +8304,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WholeNumber
-      objectReference: {fileID: 0}
-    - target: {fileID: 3439618127209831467, guid: 36f5c458def6e804c861c354335f29fb,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5019277862887273849, guid: 36f5c458def6e804c861c354335f29fb,
         type: 3}

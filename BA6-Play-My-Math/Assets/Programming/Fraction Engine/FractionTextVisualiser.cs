@@ -17,7 +17,19 @@ namespace Programming.Visualisers
         [SerializeField] private TMP_Text numerator;
         [SerializeField] private TMP_Text denominator;
 
-        [SerializeField] private TMP_Text decimals; 
+        [SerializeField] private TMP_Text decimals;
+
+        public void SetInDeck(bool bInDeck)
+        {
+            if (bInDeck)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                gameObject.SetActive(true);
+            }
+        }
         
         public void SetFraction(Fraction fraction, bool showFullFraction = true)
         {
@@ -63,21 +75,6 @@ namespace Programming.Visualisers
         private void DisplayDecimals(float numerator, float denominator)
         {
             decimals.text = ((float) numerator / denominator).ToString(); 
-        }
-        
-        private void OnValidate()
-        {
-            if (numerator is null || denominator is null)
-            {
-                Debug.LogWarning("FractionTextVisualiser not all references set");
-                return; 
-            }
-            
-            if (numerator.text is not null && int.TryParse(numerator.text, out int outNumerator) && 
-                denominator.text is not null && int.TryParse(denominator.text, out int outDenominator))
-            {
-                _fraction = new Fraction(outNumerator, outDenominator); 
-            }
         }
     }
 }

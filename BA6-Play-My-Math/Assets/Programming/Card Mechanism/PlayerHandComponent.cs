@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using Programming.Visualisers;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Programming.Card_Mechanism
 {
@@ -50,6 +47,7 @@ namespace Programming.Card_Mechanism
                     if (shouldMove)
                     {
                         cardMovement.TransformToNewParentCoroutines();
+                        cardMovement.GetComponent<NumberCardComponent>().fractionTextVisualiser.SetInDeck(false);
                     }
                 }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Programming.Visualisers;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -47,6 +48,7 @@ namespace Programming.Card_Mechanism
 
             PutCardInBin(droppedCard);
             droppedCard.TransformToNewParentCoroutines();
+            droppedCard.GetComponent<NumberCardComponent>().fractionTextVisualiser.SetInDeck(true);
 
             PlayerHandComponent.Instance.HandPush(DeckComponent.Instance.DeckPop());
         }
