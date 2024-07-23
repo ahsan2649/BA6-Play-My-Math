@@ -139,22 +139,34 @@ namespace Programming.Enemy
             return reward; 
         }
 
-        ///// <summary>
-        ///// This function calculates the reward tupel based on the current difficulty. 
-        ///// Call this function BEFORE generating the next EnemyCue with generateEnemyCue.
-        ///// The tupel is formated like this: Tupel( cardLeftForOneReward, cardsLeftForTwoRewards, CardsLeftForThreeRewards )
-        ///// </summary>
-        ///// <returns></returns>
-        //public static List<int> generateRewardThresholdValues()
-        //{
-        //    //List<int> rewardTupel = new List<int> { ((int)(currentDifficulty * 0.1f)), ((int)(currentDifficulty * 0.5f)), currentDifficulty };
-        //    List<int> rewardTupel = new List<int> { 2, 4, 6 };
+        /// <summary>
+        /// This function calculates the reward tupel based on the current difficulty. 
+        /// Call this function BEFORE generating the next EnemyCue with generateEnemyCue.
+        /// The tupel is formated like this: Tupel( cardLeftForOneReward, cardsLeftForTwoRewards, CardsLeftForThreeRewards )
+        /// </summary>
+        /// <returns></returns>
+        public static List<int> generateRewardThresholdValues()
+        {
+            //List<int> rewardTupel = new List<int> { ((int)(currentDifficulty * 0.1f)), ((int)(currentDifficulty * 0.5f)), currentDifficulty };
+            List<int> rewardList = new List<int> { 2, 4, 6 };
 
-        //    return rewardTupel;
-        //}
+            switch (gameMode)
+            {
+                case SceneManaging.GameMode.easy23:
+                    rewardList = rewardThreshholdsMain[currentDifficulty + difficultyAddedEachRound]; break;
+                case SceneManaging.GameMode.medium235:
+                    rewardList = rewardThreshholdsMain[currentDifficulty + difficultyAddedEachRound]; break;
+                case SceneManaging.GameMode.hard2357:
+                    rewardList = rewardThreshholdsMain[currentDifficulty + difficultyAddedEachRound]; break;
+                default:
+                    rewardList = new List<int> { 0, 2, 4, }; break;
+            }
+
+            return rewardList;
+        }
 
         #endregion
-        
+
         private static Dictionary<int, List<List<GM>>> difficultyToGeneration = mainDifficultyToGeneration;
 
         // Generation Modes
@@ -924,39 +936,39 @@ namespace Programming.Enemy
             // Intro: Making Fractions
             {6, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FB, GM.FB }, 
+                    new List<GM>() { GM.FB, GM.FB },  // 4
                 }
             },
             {9, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FB, GM.FB, GM.FB }, 
+                    new List<GM>() { GM.FB, GM.FB, GM.FB },  //6
                 }
             },
             // Intro: Simplifying (to 1)
             {12, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.F1, GM.F1b },
+                    new List<GM>() { GM.F1, GM.F1b }, // 4
                 }
             },
             {15, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.F1, GM.F2 },
+                    new List<GM>() { GM.F1, GM.F2 }, // 4
                 }
             },
             // Intro: Simplified Fractions
             {18, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FS },
+                    new List<GM>() { GM.FS }, // 2
                 }
             },
             {21, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FS, GM.FS },
+                    new List<GM>() { GM.FS, GM.FS }, // 4
                 }
             },
             {24, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FB, GM.FS, GM.F1b },
+                    new List<GM>() { GM.FB, GM.FS, GM.F1b }, // 6
                 }
             },
             // Wall 1
@@ -968,17 +980,17 @@ namespace Programming.Enemy
             // Intro Ads
             {30, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.AdsB },
+                    new List<GM>() { GM.AdsB }, // 4
                 }
             },
             {33, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.AdsB, GM.Ads },
+                    new List<GM>() { GM.AdsB, GM.Ads }, // 8
                 }
             },
             {36, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FS, GM.Ads, GM.FB, GM.FB },
+                    new List<GM>() { GM.FS, GM.Ads, GM.FB, GM.FB }, // 10
                 }
             },
             // Wall 2
@@ -990,28 +1002,28 @@ namespace Programming.Enemy
             // Intro: Multiplication
             {42, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.Ms }, 
+                    new List<GM>() { GM.Ms }, // 6
                 }
             },
             {45, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.M },
+                    new List<GM>() { GM.M }, // 6
                 }
             },
             {48, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.FB, GM.F1b, GM.M },
+                    new List<GM>() { GM.FB, GM.F1b, GM.M }, // 8
                 }
             },
             {51, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.M, GM.Ms, GM.FB, GM.FS, GM.FS },
+                    new List<GM>() { GM.M, GM.Ms, GM.FB, GM.FS, GM.FS }, // 16
                 }
             },
             // Adding it all together, Final
             {54, new List<List<GM>>()
                 {
-                    new List<GM>() { GM.M, GM.Ms, GM.Ads, GM.FB, GM.FS, GM.FS },
+                    new List<GM>() { GM.M, GM.Ms, GM.Ads, GM.FB, GM.FS, GM.FS }, // 20
                 }
             },
             {57, new List<List<GM>>()
@@ -1024,6 +1036,30 @@ namespace Programming.Enemy
 
         private static int maxKeyOfGMofMain = 57;
         private static int startDifficultyMain = 6;
+
+        private static Dictionary<int, List<int>> rewardThreshholdsMain = new Dictionary<int, List<int>>()
+        // Start with 10 Hand Cards, each Round +3
+        // HandCards - ActualDifficulty = CardsLeftMax
+        {
+            {6, new List<int>() {0, 2, 4} },    // 10 - 4 = 6      Puffer = 2
+            {9, new List<int>() {0, 2, 5} },    // 13 - 6 = 7
+            {12, new List<int>() {0, 5, 10} },  // 16 - 4 = 12
+            {15, new List<int>() {0, 6, 13} },  // 19 - 4 = 15
+            {18, new List<int>() {0, 9, 18} },  // 22 - 2 = 20
+            {21, new List<int>() {0, 9, 19} },  // 25 - 4 = 21
+            {24, new List<int>() {0, 10, 20} }, // 28 - 6 = 22
+            {27, new List<int>() {0, 7, 15} },  // 31 - 14 = 17
+            {30, new List<int>() {0, 13, 26} }, // 34 - 4 = 30 (mehr Puffer +2)
+            {33, new List<int>() {0, 12, 25} }, // 37 - 8 = 29 (mehr Puffer +2)
+            {36, new List<int>() {0, 13, 27} }, // 40 - 10 = 30 (mehr Puffer +1)
+            {39, new List<int>() {0, 9, 18} },  // 43 - 24 = 19 (weniger Puffer -1)
+            {42, new List<int>() {0, 18, 36} }, // 46 - 6 = 40 (mehr Puffer +2)
+            {45, new List<int>() {0, 18, 41} }, // 49 - 4 = 45 (mehr Puffer +2)
+            {48, new List<int>() {0, 21, 42} }, // 52 - 8 = 44
+            {51, new List<int>() {0, 18, 37} }, // 55 - 16 = 39
+            {54, new List<int>() {0, 18, 37} }, // 58 - 20 = 38 (weniger Puffer -1)
+            {57, new List<int>() {0, 5, 10} }, // 58 - 48 = 10 (kein Puffer da Ende)
+        };
 
         #endregion
 
