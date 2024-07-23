@@ -1281,6 +1281,10 @@ namespace Programming.Enemy
         /// <returns></returns>
         static List<GM> getGenerationFromDifficulty(int difficulty)
         {
+            if (difficultyToGeneration is null)
+            {
+                updateGameMode(SceneManaging.gameMode);
+            }
             // Key is predefined
             if (difficultyToGeneration.ContainsKey(difficulty))
             {
