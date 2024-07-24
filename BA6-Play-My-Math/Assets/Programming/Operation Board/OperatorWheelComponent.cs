@@ -123,14 +123,23 @@ namespace Programming.Operation_Board {
 
         private void ShiftOp(bool direction)
         {
+            // Hotfixed by ChatGPT (Vin sendet Grüße :3)
             var currentIndex = availableOperations.IndexOf(currentOperation);
-            if (direction)
+
+            if (direction) // Moving right
             {
                 currentOperation = availableOperations[(currentIndex + 1) % availableOperations.Count];
-                return;
             }
-
-            currentOperation = availableOperations[Mathf.Abs((currentIndex - 1) % availableOperations.Count)];
+            else // Moving left
+            {
+                // Adjust to handle negative wrap-around
+                int newIndex = (currentIndex - 1) % availableOperations.Count;
+                if (newIndex < 0)
+                {
+                    newIndex += availableOperations.Count;
+                }
+                currentOperation = availableOperations[newIndex];
+            }
         }
 
         public void OnDrag(PointerEventData eventData)
