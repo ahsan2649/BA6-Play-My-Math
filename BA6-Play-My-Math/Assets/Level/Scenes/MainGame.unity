@@ -16552,6 +16552,18 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1535851239}
   m_SourcePrefab: {fileID: 100100000, guid: c7b9f56cb7fdcb74da703d0446666b47, type: 3}
+--- !u!114 &7032228656452835299 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 261723812817062083, guid: c7b9f56cb7fdcb74da703d0446666b47,
+    type: 3}
+  m_PrefabInstance: {fileID: 7032228656452835298}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535851232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471ad9d6a0052e049bcd7f3872207b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7099141878667090915
 Transform:
   m_ObjectHideFlags: 0
@@ -17115,7 +17127,7 @@ MonoBehaviour:
   _leftOperand: {fileID: 1766228133}
   _rightOperand: {fileID: 167184870}
   _operationWheel: {fileID: 1043615370}
-  finalizeButtonComponent: {fileID: 0}
+  finalizeButtonComponent: {fileID: 7032228656452835299}
   onOperationBoardChange:
     m_PersistentCalls:
       m_Calls:

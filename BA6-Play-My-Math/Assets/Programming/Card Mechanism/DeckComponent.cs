@@ -14,7 +14,6 @@ namespace Programming.Card_Mechanism
         public static DeckComponent Instance { get; private set; }
 
         public UnityEvent onDeckChanged;
-        
         [HideInInspector] private List<Fraction> initDeck = new List<Fraction>();
          public List<CardMovementComponent> _cardsInDeck = new();
         [SerializeField] private StartingDeckInfo startingDeck;
@@ -253,7 +252,27 @@ namespace Programming.Card_Mechanism
                     break;
                 default:
                     newStartingDeckInfo.numbers = new List<Fraction>();
-                    break; 
+                    break;
+                case (SceneManaging.GameMode.tutorial):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(1,1),
+                        new Fraction(2,1),
+                        new Fraction(3,1),
+                        new Fraction(1,1),
+                        new Fraction(2,1),
+                        new Fraction(3,1),
+                        new Fraction(1,1),
+                        new Fraction(2,1),
+                        new Fraction(3,1),
+                        new Fraction(1,1),
+                        new Fraction(2,1),
+                        new Fraction(3,1),
+                        new Fraction(1,1),
+                        new Fraction(2,1),
+                        new Fraction(3,1),
+                    };
+                    break;
             }
             return newStartingDeckInfo;
         }

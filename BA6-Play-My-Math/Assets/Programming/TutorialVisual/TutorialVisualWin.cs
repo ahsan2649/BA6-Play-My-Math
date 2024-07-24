@@ -1,4 +1,3 @@
-using Programming.Visualisers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -7,7 +6,6 @@ namespace Programming.TutorialVisual
 {
     public class TutorialVisualWin: TutorialVisualElement, IPointerClickHandler
     {
-        [SerializeField] private DeckComponentVisualiser deckComponentVisualiser;
         [SerializeField] private GameObject keepPlayingObject;
         [SerializeField] private GameObject gotoMainMenuObject; 
         

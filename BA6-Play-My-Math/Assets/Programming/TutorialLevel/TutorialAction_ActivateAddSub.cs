@@ -12,7 +12,7 @@ namespace Programming.TutorialLevel
         {
             base.InitialiseLevel(levelInfo);
             OperationBoardComponent.Instance.OperationWheel.SetPlateActive(true);
-            OperationBoardComponent.Instance.OperationWheel.SetWheelActive(true);
+            OperationBoardComponent.Instance.OperationWheel.SetWheelActive(false);
             OperationBoardComponent.Instance.RightOperand.SetActiveAndEnabled(true);
             OperationBoardComponent.Instance.FinalizeButton.SetActiveAndEnabled(true);
 

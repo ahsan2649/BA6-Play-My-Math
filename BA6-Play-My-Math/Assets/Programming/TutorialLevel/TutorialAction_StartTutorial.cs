@@ -21,10 +21,8 @@ namespace Programming.TutorialLevel
         
         public override void InitialiseLevel(TutorialLevelInfo levelInfo)
         {
-            base.StartLevel(levelInfo);
-            SetupInitDeck();
-            PlayerHandComponent.Instance.FillHand();
-
+            base.InitialiseLevel(levelInfo);
+            
             TutorialVisualManager.Instance.SpawnOrGetTutorial<TutorialVisualDragCard>(); 
             TutorialVisualManager.Instance.SpawnOrGetTutorial<TutorialVisualPlayCard>(); 
             TutorialVisualManager.Instance.SpawnOrGetTutorial<TutorialVisualThrowaway>();
@@ -32,7 +30,8 @@ namespace Programming.TutorialLevel
         
         public override void StartLevel(TutorialLevelInfo levelInfo)
         {
-            
+            base.StartLevel(levelInfo);
+            SetupStartingHand(); 
         }
 
         public override void UpdateLevel(TutorialLevelInfo levelInfo)
@@ -76,6 +75,16 @@ namespace Programming.TutorialLevel
             {
                 deck.AddCardToDeck(fraction, true, true);
             }
+        }
+
+        public void SetupStartingHand()
+        {
+            PlayerHandComponent hand = PlayerHandComponent.Instance;
+            hand.cardSlots[0].GetNumberCard().Value = new Fraction(1, 1); 
+            hand.cardSlots[1].GetNumberCard().Value = new Fraction(3, 1); 
+            hand.cardSlots[2].GetNumberCard().Value = new Fraction(2, 1); 
+            hand.cardSlots[3].GetNumberCard().Value = new Fraction(2, 1); 
+            hand.cardSlots[4].GetNumberCard().Value = new Fraction(3, 1); 
         }
     }
 }

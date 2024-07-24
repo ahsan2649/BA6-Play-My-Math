@@ -2749,7 +2749,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   awakeEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1068663803}
+        m_TargetAssemblyTypeName: Programming.Card_Mechanism.DeckComponent, Programming.CardMechanism
+        m_MethodName: CreateDeck
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   initialiseLevelEvent:
     m_PersistentCalls:
       m_Calls:
@@ -4391,7 +4403,8 @@ MonoBehaviour:
         enemyPoolInfo: {fileID: 11400000, guid: f4f72502feebc0743a55f3ccfcfde7db,
           type: 2}
       rewardThresholds: 000000000a0000000f000000
-      specialGenerate: {fileID: 0}
+      specialGenerate: {fileID: 11400000, guid: 0c0844e7b78707b4a9a96be3729756f0,
+        type: 2}
     rewards: {fileID: 11400000, guid: 8b6bab38faaa1194dbbef9d573e2ea07, type: 2}
     tutorialAction: {fileID: 11400000, guid: f83504461559a8a4cbf16cc356d4a193, type: 2}
   - level:
@@ -17533,6 +17546,18 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1535851239}
   m_SourcePrefab: {fileID: 100100000, guid: c7b9f56cb7fdcb74da703d0446666b47, type: 3}
+--- !u!114 &7032228656452835299 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 261723812817062083, guid: c7b9f56cb7fdcb74da703d0446666b47,
+    type: 3}
+  m_PrefabInstance: {fileID: 7032228656452835298}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535851232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471ad9d6a0052e049bcd7f3872207b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7099141878667090915
 Transform:
   m_ObjectHideFlags: 0
@@ -18076,6 +18101,11 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8655670241596817958, guid: 290a552d671f2dd40a4be2f43a843acc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8903780181744150300, guid: 290a552d671f2dd40a4be2f43a843acc,
         type: 3}
       propertyPath: m_fontSize
@@ -18137,7 +18167,7 @@ MonoBehaviour:
   _leftOperand: {fileID: 1766228133}
   _rightOperand: {fileID: 167184870}
   _operationWheel: {fileID: 1043615370}
-  finalizeButtonComponent: {fileID: 0}
+  finalizeButtonComponent: {fileID: 7032228656452835299}
   onOperationBoardChange:
     m_PersistentCalls:
       m_Calls:
