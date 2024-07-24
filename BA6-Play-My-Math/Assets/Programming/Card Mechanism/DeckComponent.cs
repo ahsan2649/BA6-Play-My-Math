@@ -206,6 +206,64 @@ namespace Programming.Card_Mechanism
                         new Fraction(14,1),
                     };
                     break;
+                // Daily
+                case (SceneManaging.GameMode.daily23):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(4,1),
+                        new Fraction(4,1),
+                        new Fraction(6,1),
+                        new Fraction(6,1),
+                        new Fraction(8,1),
+                        new Fraction(8,1),
+                        new Fraction(9,1),
+                        new Fraction(9,1),
+                        new Fraction(3,1),
+                        new Fraction(12,1),
+                    };
+                    break;
+                case (SceneManaging.GameMode.daily235):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(4,1),
+                        new Fraction(4,1),
+                        new Fraction(6,1),
+                        new Fraction(6,1),
+                        new Fraction(8,1),
+                        new Fraction(8,1),
+                        new Fraction(9,1),
+                        new Fraction(9,1),
+                        new Fraction(3,1),
+                        new Fraction(12,1),
+                        new Fraction(5,1),
+                        new Fraction(5,1),
+                        new Fraction(10,1),
+                        new Fraction(10,1),
+                    };
+                    break;
+                case (SceneManaging.GameMode.daily2357):
+                    newStartingDeckInfo.numbers = new List<Fraction>()
+                    {
+                        new Fraction(4,1),
+                        new Fraction(4,1),
+                        new Fraction(6,1),
+                        new Fraction(6,1),
+                        new Fraction(8,1),
+                        new Fraction(8,1),
+                        new Fraction(9,1),
+                        new Fraction(9,1),
+                        new Fraction(3,1),
+                        new Fraction(12,1),
+                        new Fraction(5,1),
+                        new Fraction(5,1),
+                        new Fraction(10,1),
+                        new Fraction(10,1),
+                        new Fraction(7,1),
+                        new Fraction(7,1),
+                        new Fraction(14,1),
+                        new Fraction(14,1),
+                    };
+                    break;
                 case (SceneManaging.GameMode.easyAdditionSmallNumbers):
                     newStartingDeckInfo.numbers = new List<Fraction>()
                     {

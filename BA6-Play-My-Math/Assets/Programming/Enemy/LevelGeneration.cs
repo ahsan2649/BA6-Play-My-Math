@@ -310,7 +310,8 @@ namespace Programming.Enemy
         /// <param name="gameMode"></param>
         public static void updateGameMode(SceneManaging.GameMode newGameMode)
         {
-            Debug.Log("Gamemode switched to " + gameMode.ToString());  
+            Debug.Log("Gamemode switched to " + gameMode.ToString());
+            Score.resetScore();
             // reset generations
             Sets = new Dictionary<GM, List<Fraction>>();
             // set generations according to gamemode
