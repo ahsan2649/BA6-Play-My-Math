@@ -92,7 +92,7 @@ MonoBehaviour:
   onTutorialStepFinished:
     m_PersistentCalls:
       m_Calls: []
-  bCanFinishBeforeActivate: 0
+  bCanFinishBeforeActivate: 1
   bFinished: 0
   opBoard: {fileID: 0}
   enemyZone: {fileID: 0}

@@ -29,6 +29,8 @@ namespace Programming.Operation_Board
             _canvas = GetComponent<Canvas>();
             
             _canvas.worldCamera = Camera.main;
+
+           
         }
 
         private void Start()
@@ -45,6 +47,11 @@ namespace Programming.Operation_Board
                 Debug.Log("Win from Attack Button!!");
                 lineupCompleteEvent.Invoke();
             }
+            foreach (GameObject enemyFraction in GameObject.FindGameObjectsWithTag("DisableOnMatch"))
+            {
+                enemyFraction.gameObject.SetActive(false);
+            }
+
         }
 
         public void OperationBoardEnableFighting()

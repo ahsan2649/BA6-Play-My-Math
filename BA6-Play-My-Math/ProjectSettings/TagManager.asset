@@ -11,6 +11,7 @@ TagManager:
   - Bin
   - Test
   - SceneManager
+  - DisableOnMatch
   layers:
   - Default
   - TransparentFX
