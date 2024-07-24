@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6400338380876323484}
-  - component: {fileID: 8501167749004506434}
-  - component: {fileID: 250971389457559983}
+  - component: {fileID: 3218651979361386869}
+  - component: {fileID: 8616469677740105761}
   m_Layer: 0
   m_Name: Creature 5
   m_TagString: Untagged
@@ -27,21 +27,21 @@ Transform:
   m_GameObject: {fileID: 3445566333529442140}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.0159237, y: 0, z: -25.826538}
-  m_LocalScale: {x: 1.5, y: 1, z: 9}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8501167749004506434
+--- !u!33 &3218651979361386869
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3445566333529442140}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &250971389457559983
+  m_Mesh: {fileID: -7339691661520998953, guid: 7dceee3093a417146b4f0e5e8cdc18e8, type: 3}
+--- !u!23 &8616469677740105761
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a34382b74ea86ae469a2108fb978d785, type: 2}
+  - {fileID: 2100000, guid: 908bd66b3a549164a898a10edff516b4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
