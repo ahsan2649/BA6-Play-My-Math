@@ -536,7 +536,6 @@ namespace Programming.Visualisers
             foreach(Vector3Int coordinates in visData.VisualisedCoordinates)
             {
                 GameObject figurePrefab;
-                bool bUseAdjustedScale = false; 
                 if (visData.VisualisedFraction.Denominator < figurePrefabs.Length && 
                     (coordinateIndex >= visData.VisualisedFraction.Numerator - visData.VisualisedFraction.Denominator || 
                      _boardVisualisationMode == BoardVisualisationMode.OneFigureVisualisation))
@@ -546,12 +545,10 @@ namespace Programming.Visualisers
                 else if (visData.VisualisedFraction.Denominator > figurePrefabs.Length)
                 {
                     figurePrefab = bigDenominatorFigure;
-                    bUseAdjustedScale = true; 
                 }
-                else //(coordinateIndex < visData.VisualisedFraction.Numerator - visData.VisualisedFraction.Denominator)
+                else
                 {
                     figurePrefab = blockFigure;
-                    bUseAdjustedScale = true; 
                 }
                 
                 GameObject newFigure = SpawnFigure(
@@ -561,9 +558,15 @@ namespace Programming.Visualisers
 
                 coordinateIndex++;
 
-                if (bUseAdjustedScale)
+                if (figurePrefab == blockFigure)
                 {
                     newFigure.transform.localScale = Vector3.Scale(visData.FigureOffsetAndSpacing.FigureSpacing, new Vector3(0.95f, 1.0f, 0.95f));
+                }
+
+                if (figurePrefab == bigDenominatorFigure)
+                {
+                    float minXY = Mathf.Min(visData.FigureOffsetAndSpacing.FigureSpacing.x, visData.FigureOffsetAndSpacing.FigureSpacing.z);
+                    newFigure.transform.localScale = Vector3.one * minXY; 
                 }
 
                 newFigure.transform.localScale *= Mathf.Pow(higherLayerFigureScaleFactor, coordinates.x);
