@@ -10,14 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b51ac1544a747a6906134abc038a878, type: 3}
-  m_Name: EP_1Or2Over3
+  m_Name: EP_2Over3
   m_EditorClassIdentifier: 
   enemiesWithProbability:
-  - fraction:
-      difficulty: 0
-      numerator: 1
-      denominator: 3
-    probability: 2
   - fraction:
       difficulty: 0
       numerator: 2

@@ -1,19 +1,20 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 namespace Programming.TutorialVisual
 {
-    public class TutorialVisualWin: TutorialVisualElement, IPointerClickHandler
+    public class TutorialVisualWin: MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private GameObject keepPlayingObject;
         [SerializeField] private GameObject gotoMainMenuObject; 
         
-        [SerializeField] private Scene mainMenu; 
+        [SerializeField] private Scene mainMenu;
         
         public void LoadMainMenu()
         {
-            SceneManager.LoadScene(mainMenu.buildIndex); 
+            SceneManager.LoadScene("MainMenu"); 
         }
 
         public void OnPointerClick(PointerEventData eventData)

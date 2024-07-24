@@ -4418,7 +4418,7 @@ MonoBehaviour:
       - enemyCount: 2
         enemyPoolInfo: {fileID: 11400000, guid: 4eb330f2c150e1c479e4063eb7d4cc68,
           type: 2}
-      rewardThresholds: 
+      rewardThresholds: 000000000a0000000f000000
       specialGenerate: {fileID: 11400000, guid: 1ab94f2ef621fed438c0451d84153312,
         type: 2}
     rewards: {fileID: 11400000, guid: 8b6bab38faaa1194dbbef9d573e2ea07, type: 2}
@@ -10530,7 +10530,7 @@ PrefabInstance:
     - target: {fileID: 6563345402922065816, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6563345402922065816, guid: dbd56fa18b1a44c4b8774b246ad00074,
         type: 3}
