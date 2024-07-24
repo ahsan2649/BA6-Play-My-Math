@@ -173,6 +173,7 @@ namespace Programming.Rewards
             Debug.Log("Board Enter");
             _achievedValue = DeckComponent.Instance._cardsInDeck.Count;
             _achievedValue += PlayerHandComponent.Instance.cardSlots.Aggregate(0, (handCardCount, cardSlot) => (handCardCount + (cardSlot.HasCard() ? 1 : 0)));
+            Score.addValueToScore(_achievedValue);
             // _achievedValue += 4;
             StartCoroutine(BoardEnterCoroutine());
         }

@@ -122,6 +122,17 @@ namespace Programming.Enemy
                 case (SceneManaging.GameMode.hard2357):
                     reward = GetRandomValueFromList(rewardList2357);
                     break;
+                // Daily
+                case (SceneManaging.GameMode.daily23):
+                    reward = GetRandomValueFromList(rewardList23);
+                    break;
+                case (SceneManaging.GameMode.daily235):
+                    reward = GetRandomValueFromList(rewardList235);
+                    break;
+                case (SceneManaging.GameMode.daily2357):
+                    reward = GetRandomValueFromList(rewardList2357);
+                    break;
+                // Special
                 case (SceneManaging.GameMode.easyAdditionSmallNumbers):
                     reward = GetRandomValueFromList(rewardListAdditionOfSmallNumbers);
                     break;

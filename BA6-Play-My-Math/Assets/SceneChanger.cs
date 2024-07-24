@@ -1,5 +1,6 @@
 using Programming.Enemy;
 using Programming.OverarchingFunctionality;
+using Programming.Rewards;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ public class SceneChanger : MonoBehaviour
     {
         scenemanager.GetComponent<SceneManaging>().SetGameMode(gameModeName);
         LevelGeneration.updateGameMode((GameMode)Enum.Parse(typeof(GameMode), gameModeName));
+        RewardBoardComponent.round = 0;
     }
 
   
