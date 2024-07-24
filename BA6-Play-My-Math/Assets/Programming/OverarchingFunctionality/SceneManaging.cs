@@ -2,6 +2,7 @@ using System;
 using Programming.ExtensionMethods;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace Programming.OverarchingFunctionality
 {
@@ -28,7 +29,7 @@ namespace Programming.OverarchingFunctionality
 
         public void SetGameMode(string gameModeName)
         {
-            gameMode = (GameMode) Enum.Parse(typeof(GameMode), gameModeName); 
+            gameMode = (GameMode) Enum.Parse(typeof(GameMode), gameModeName);
         }
     }
 }

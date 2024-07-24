@@ -1,7 +1,10 @@
+using Programming.Enemy;
 using Programming.OverarchingFunctionality;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Programming.OverarchingFunctionality.SceneManaging;
 
 public class SceneChanger : MonoBehaviour
 {
@@ -19,6 +22,7 @@ public class SceneChanger : MonoBehaviour
     public void setGameMode(string gameModeName)
     {
         scenemanager.GetComponent<SceneManaging>().SetGameMode(gameModeName);
+        LevelGeneration.updateGameMode((GameMode)Enum.Parse(typeof(GameMode), gameModeName));
     }
 
   
