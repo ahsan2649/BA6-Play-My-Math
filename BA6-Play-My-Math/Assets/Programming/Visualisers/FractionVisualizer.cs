@@ -565,7 +565,7 @@ namespace Programming.Visualisers
 
                 if (figurePrefab == bigDenominatorFigure)
                 {
-                    float minXY = Mathf.Min(visData.FigureOffsetAndSpacing.FigureSpacing.x, visData.FigureOffsetAndSpacing.FigureSpacing.z);
+                    float minXY = Mathf.Min(visData.FigureOffsetAndSpacing.FigureSpacing.x, visData.FigureOffsetAndSpacing.FigureSpacing.y);
                     newFigure.transform.localScale = Vector3.one * minXY; 
                 }
 

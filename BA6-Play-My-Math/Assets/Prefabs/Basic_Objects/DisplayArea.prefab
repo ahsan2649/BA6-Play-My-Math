@@ -113,9 +113,6 @@ MonoBehaviour:
   - {fileID: 5620110908895940353, guid: a7026184f6a61e8478cefef2eebd04f0, type: 3}
   - {fileID: 2309643572159523575, guid: 5201e60abb3a36c4984495e4cce1d748, type: 3}
   - {fileID: 8628195609858351110, guid: 2df7bb73e87851748849d80cd7e037c9, type: 3}
-  - {fileID: 8163352106378567890, guid: 3a059781ded563e4b879809bc06f66ae, type: 3}
-  - {fileID: 6119681423015686686, guid: 11094454c828d7c45955c7f8ce68a342, type: 3}
-  - {fileID: 6419866143431565417, guid: 6f743af656c37b445a1fc9c691e4f993, type: 3}
   blockFigure: {fileID: 2379754583559722417, guid: c8fbc74f7f26b4c4488bc161afb63e38,
     type: 3}
   bigDenominatorFigure: {fileID: 2379754583559722417, guid: ecf39b1bc3281d54098a926854809ca5,
@@ -474,12 +471,14 @@ MonoBehaviour:
   textVisualiserHeight: 4
   debug_divisorOrder: []
   debug_leftFraction:
+    difficulty: 0
     numerator: 0
     denominator: 1
   debug_leftModifyType: 0
   debug_leftModifyFactor: 0
   debug_operation: 3
   debug_rightFraction:
+    difficulty: 0
     numerator: 0
     denominator: 1
   debug_rightModifyType: 0
